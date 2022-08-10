@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/rodri/Documents/Android Studio/pid-tuner/app/src/main/res/drawable/toast_shape.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/rodri/Documents/Android Studio/pid-tuner/app/src/main/res/layout/layout_main.xml" value="0.3625" />
+        <entry key="..\:/Users/rodri/Documents/Android Studio/pid-tuner/app/src/main/res/layout/layout_model_list.xml" value="0.3625" />
+        <entry key="..\:/Users/rodri/Documents/Android Studio/pid-tuner/app/src/main/res/layout/layout_opening.xml" value="0.3625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -10,98 +10,98 @@ $$G(S) = \frac{Kp * e^{-\theta s}} {\tau S + 1}$$
 PID Tuner requires only Kp, $\theta$ and $\tau$ parameters to compute Kp, Ki and Kd for PID controller. Only IMC methods requires one more parameter, the Lambda $\lambda$.
 
 ## Available Tuning Methods
- The following methods are available for computing the controller parameters:
 
-- ###  Z&amp;N
+The following methods are available for computing the controller parameters:
 
-Ziegler-Nichols (Z&amp;N) is a PID tuning method in which two methods are proposed to obtain a model of the dynamics of a SISO process, analyzing it in closed-loop and open-loop.
+- ##  Z&amp;N
 
-The following table shows the equations for each PID parameter:
+	Ziegler-Nichols (Z&amp;N) is a PID tuning method in which two methods are proposed to obtain a model of the dynamics of a SISO process, analyzing it in closed-loop and open-loop.
+
+	The following table shows the equations for each PID parameter:
 
 - Open-Loop:
 
-|    Z&amp;N     | Kp                            |Ki                           | Kd           |
-|----------------|-------------------------------|-----------------------------|-             |
-|P               |$$\frac{\tau} {K*\theta}$$     |-                            |-             |
-|PI              |$$\frac{0.9\tau} {K*\theta}$$  |$$3.33\theta$$               |-             |
-|PID             |$$\frac{1.2\tau} {K*\theta}$$  |$$2\theta$$                 |$$0.5\theta$$ |
+	|    Z&amp;N     | Kp                            |Ki                           | Kd           |
+	|----------------|-------------------------------|-----------------------------|-             |
+	|P               |$$\frac{\tau} {K*\theta}$$     |-                            |-             |
+	|PI              |$$\frac{0.9\tau} {K*\theta}$$  |$$3.33\theta$$               |-             |
+	|PID             |$$\frac{1.2\tau} {K*\theta}$$  |$$2\theta$$                 |$$0.5\theta$$ |
 
 - Closed-Loop:
 
-|    Z&amp;N     | Kp            |Ki                           |  Kd             |
-|----------------|---------------|-----------------------------|-----------------|
-|P               |$$0.5Ku$$     |-                            |-                |
-|PI              |$$0.45Ku$$    |$$\frac{Pu} {1.2}$$          |-                |
-|PID             |$$0.6Ku$$   |$$\frac{Pu} {2}$$            |$$\frac{Pu} {8}$$|
+	|    Z&amp;N     | Kp            |Ki                           |  Kd             |
+	|----------------|---------------|-----------------------------|-----------------|
+	|P               |$$0.5Ku$$     |-                            |-                |
+	|PI              |$$0.45Ku$$    |$$\frac{Pu} {1.2}$$          |-                |
+	|PID             |$$0.6Ku$$   |$$\frac{Pu} {2}$$            |$$\frac{Pu} {8}$$|
 
-- ### CHR
+- ## CHR
 
-Chien, Hrones and Reswick (CHR) is a tuning method that proposes two performance criteria: the fastest possible response without overshoot and the fastest possible response with 20% overshoot.
+	Chien, Hrones and Reswick (CHR) is a tuning method that proposes two performance criteria: the fastest possible response without overshoot and the fastest possible response with 20% overshoot.
 
-The following table shows the equations for each PID parameter:
+	The following table shows the equations for each PID parameter:
 
 - Servo:
 
-|    CHR         | Kp                           |Ki            |  Kd                |
-|----------------|------------------------------|--------------|--------------------|
-|P               |$$\frac{0.3\tau}{K*\theta}$$  |-             |-                   |
-|PI              |$$\frac{0.35\tau}{K*\theta}$$ |$$1.16\tau$$  |-                   |
-|PID             |$$\frac{0.6\tau}{K*\theta}$$  |$$\tau$$      |$$\frac{\theta}{2}$$|
+	|    CHR         | Kp                           |Ki            |  Kd                |
+	|----------------|------------------------------|--------------|--------------------|
+	|P               |$$\frac{0.3\tau}{K*\theta}$$  |-             |-                   |
+	|PI              |$$\frac{0.35\tau}{K*\theta}$$ |$$1.16\tau$$  |-                   |
+	|PID             |$$\frac{0.6\tau}{K*\theta}$$  |$$\tau$$      |$$\frac{\theta}{2}$$|
 
 - Servo with 20% Overshoot:
 
-|    CHR         | Kp                           |Ki            |  Kd                |
-|----------------|------------------------------|--------------|--------------------|
-|P               |$$\frac{0.7\tau}{K*\theta}$$  |-             |-                   |
-|PI              |$$\frac{0.6\tau}{K*\theta}$$  |$$\tau$$      |-                   |
-|PID             |$$\frac{0.95\tau}{K*\theta}$$ |$$1.357\tau$$ |$$0.473\theta$$     |
+	|    CHR         | Kp                           |Ki            |  Kd                |
+	|----------------|------------------------------|--------------|--------------------|
+	|P               |$$\frac{0.7\tau}{K*\theta}$$  |-             |-                   |
+	|PI              |$$\frac{0.6\tau}{K*\theta}$$  |$$\tau$$      |-                   |
+	|PID             |$$\frac{0.95\tau}{K*\theta}$$ |$$1.357\tau$$ |$$0.473\theta$$     |
 
-- Regulation:
+- Regulator:
 
-|    CHR         | Kp                           |Ki              |  Kd                |
-|----------------|------------------------------|----------------|--------------------|
-|P               |$$\frac{0.3\tau}{K*\theta}$$  |-               |-                   |
-|PI              |$$\frac{0.6\tau}{K*\theta}$$  |$$4\tau$$       |-                   |
-|PID             |$$\frac{0.95\tau}{K*\theta}$$ |$$2.357\theta$$ |$$0.421\theta$$     |
+	|    CHR         | Kp                           |Ki              |  Kd                |
+	|----------------|------------------------------|----------------|--------------------|
+	|P               |$$\frac{0.3\tau}{K*\theta}$$  |-               |-                   |
+	|PI              |$$\frac{0.6\tau}{K*\theta}$$  |$$4\tau$$       |-                   |
+	|PID             |$$\frac{0.95\tau}{K*\theta}$$ |$$2.357\theta$$ |$$0.421\theta$$     |
 
-- Regulation with 20% Overshoot:
+- Regulator with 20% Overshoot:
 
-|    CHR         | Kp                           |Ki              |  Kd                |
-|----------------|------------------------------|----------------|--------------------|
-|P               |$$\frac{0.7\tau}{\tau}$$      |-               |-                   |
-|PI              |$$\frac{0.7\tau}{\theta}$$    |$$2.3\theta$$   |-                   |
-|PID             |$$\frac{1.2\tau}{\theta}$$    |$$2\theta$$     |$$0.421\theta$$     |
+	|    CHR         | Kp                           |Ki              |  Kd                |
+	|----------------|------------------------------|----------------|--------------------|
+	|P               |$$\frac{0.7\tau}{\tau}$$      |-               |-                   |
+	|PI              |$$\frac{0.7\tau}{\theta}$$    |$$2.3\theta$$   |-                   |
+	|PID             |$$\frac{1.2\tau}{\theta}$$    |$$2\theta$$     |$$0.421\theta$$     |
 
-- ### CC
+- ## CC
 
-Cohen-Coon (CC) is a method for tuning pid controller for higher dead time processes.
+	Cohen-Coon (CC) is a method for tuning pid controller for higher dead time processes.
 
-The following table shows the equations for each PID parameter:
+	The following table shows the equations for each PID parameter:
 
-|    Z&amp;N     | Kp                                                         |Ki   | Kd|
-|----------------|------------------------------------------------------------|-----|---|
-|P               |$$(1.03+0.35*(\frac{\theta}{\tau}))*\frac{\tau}{K *\theta}$$|-    |-  |
-|PI              |$$(0.9+0.083*(\frac{\theta}{\tau}))*\frac{\tau}{K *\theta}$$|  $$\frac{0.9+0.083*(\frac{\theta}{\tau})}{1.27 + 0.6*(\frac{\theta}{\tau})}*\theta$$   |-  |
-|PD              |$$\frac{1.24}{K}*(\frac{\tau}{\theta}+0.129)$$              |-    | $$0.27*\theta*(\frac{\tau-0.324*\theta}{\tau+0.129*\theta})$$  |
-|PID             |$$(1.35+0.25*(\frac{\theta}{\tau}))*\frac{\tau}{K *\theta}$$|$$\frac{1.35+0.25*(\frac{\theta}{\tau})}{0.54+0.33*(\frac{\theta}{\tau})}*\theta$$    |$$\frac{0.5*\theta}{1.35+0.25*(\frac{\theta}{\tau})}$$  |
+	|    Z&amp;N     | Kp                                                         |Ki   | Kd|
+	|----------------|------------------------------------------------------------|-----|---|
+	|P               |$$(1.03+0.35*(\frac{\theta}{\tau}))*\frac{\tau}{K *\theta}$$|-    |-  |
+	|PI              |$$(0.9+0.083*(\frac{\theta}{\tau}))*\frac{\tau}{K *\theta}$$|  $$\frac{0.9+0.083*(\frac{\theta}			{\tau})}{1.27 + 0.6*(\frac{\theta}{\tau})}*\theta$$   |-  |
+	|PD              |$$\frac{1.24}{K}*(\frac{\tau}{\theta}+0.129)$$              |-    | $$0.27*\theta*(\frac{\tau-0.324*\theta}{\tau+0.129*\theta})$$  |
+	|PID             |$$(1.35+0.25*(\frac{\theta}{\tau}))*\frac{\tau}{K *\theta}$$|$$\frac{1.35+0.25*(\frac{\theta}{\tau})}{0.54+0.33*(\frac{\theta}{\tau})}*\theta$$    		|$$\frac{0.5*\theta}{1.35+0.25*(\frac{\theta}{\tau})}$$  	|
 
 - ### IMC
 
-Internal Model Control (IMC) is a PID tuning method that aims to tune in such a way that the system response has a known dynamics and for that it uses a process model and a performance specification (lambda tuning) for the adjustment.
+	Internal Model Control (IMC) is a PID tuning method that aims to tune in such a way that the system response has a known dynamics and for that it uses a process model and a performance specification (lambda tuning) for the adjustment.
 
-The following table shows the equations for each PID parameter:
+	The following table shows the equations for each PID parameter:
 
-|    IMC         | Kp            |Ki                           |  Kd |~  |
-|----------------|---------------|-----------------------------|-----|- |
-|PI              |$$\frac{2\tau+\theta}{K*2\lambda}$$        |$$\tau + (\frac{\theta}{\tau})$$    |- |$$\frac{\lambda}{\theta}>1.7$$|
-|PID             |$$\frac{2\tau+\theta}{K*(2\lambda+\theta)}$$   |$$\tau + (\frac{\theta}{\tau})$$            |$$\frac{\tau*\theta}{2\tau+\theta}$$|$$\frac{\lambda}{\theta}>0.8$$|
+	|    IMC         | Kp            |Ki                           |  Kd |~  |
+	|----------------|---------------|-----------------------------|-----|- |
+	|PI              |$$\frac{2\tau+\theta}{K*2\lambda}$$        |$$\tau + (\frac{\theta}{\tau})$$    |- |$$\frac{\lambda}	{\theta}>1.7$$|
+	|PID             |$$\frac{2\tau+\theta}{K*(2\lambda+\theta)}$$   |$$\tau + (\frac{\theta}{\tau})$$            	|$$\frac{\tau*\theta}{2\tau+\theta}$$|$$\frac{\lambda}{\theta}>0.8$$|
 
 - ### IAE / ITAE
 
-**Integral Absolute Error (IAE)** is a tuning method proposed to eliminate the error in steady state integrating the absolute error over time. **Integral Time Absolute Error (ITAE)** is a tuning method proposed to eliminate the error in steady state using as an performance criterion the integrates the absolute error multiplied by the time over time.
+	**Integral Absolute Error (IAE)** is a tuning method proposed to eliminate the error in steady state integrating the absolute error over time. **Integral Time Absolute Error (ITAE)** is a tuning method proposed to eliminate the error in steady state using as an performance criterion the integrates the absolute error multiplied by the time over time.
 
-The following table shows the equations for each PID parameter:
-
+	The following table shows the equations for each PID parameter:
 - Servo:
 
 $$Kp = \frac{1}{K}*(A*(\frac{\theta}{\tau})^B)$$ 
@@ -111,6 +111,8 @@ $$Ki = \frac{\tau}{(C + D * \frac{\theta}{\tau})}$$
 $$Kd = E*(\frac{\theta}{\tau})^F$$ 
 
 > Where A, B, C, D, E and F are parameters from Table IAE/ITAE Servo.
+
+ IAE/ITAE Servo:
 
 |Controller  |Method   |A    |B     |C    |D     |E    |F    |
 |------------|---------|-----|------|-----|------|-----|-----|
@@ -129,6 +131,8 @@ $$Kd = E*(\frac{\theta}{\tau})^F$$
 
 > Where A, B, C, D, E and F are parameters from Table IAE/ITAE Regulator.
 
+IAE/ITAE Regulator:
+
 |Controller  |Method   |A    |B     |C    |D     |E    |F    |
 |------------|---------|-----|------|-----|------|-----|-----|
 |PI          |IAE      |0.984|-0.986|0.608|-0.707|-    |-    |
@@ -136,112 +140,16 @@ $$Kd = E*(\frac{\theta}{\tau})^F$$
 |PI          |ITAE     |0.859|-0.977|0.674|-0.68 |-    |-    |
 |PID         |ITAE     |1.357|-0.947|0.842|-0.738|0.381|0.995|
 
-- ### Tyreus-Luyben
+- ## Tyreus-Luyben
 
-Tyreus-Luyben (TL) is a more conservative PID adjustment method than that proposed by Ziegler-Nichols, as it consists of using the gain and the critical period for the adjustment, providing slow performance and small overshoot.
+	Tyreus-Luyben (TL) is a more conservative PID adjustment method than that proposed by Ziegler-Nichols, as it consists of using the gain and the critical period for the adjustment, providing slow performance and small overshoot.
 
-The following table shows the equations for each PID parameter:
+	The following table shows the equations for each PID parameter:
 
-|    Z&amp;N     | Kp                 |Ki                           |  Kd               |
-|----------------|--------------------|-----------------------------|-------------------|
-|P               |-                   |-                            |-                  |
-|PI              |$$\frac{Ku} {3.2}$$ |$$\frac{Pu} {0.45}$$         |-                  |
-|PID             |$$\frac{Ku} {3.2}$$ |$$\frac{Pu} {0.45}$$         |$$\frac{Pu} {6.3}$$|
+	|    Z&amp;N     | Kp                 |Ki                           |  Kd               |
+	|----------------|--------------------|-----------------------------|-------------------|
+	|P               |-                   |-                            |-                  |
+	|PI              |$$\frac{Ku} {3.2}$$ |$$\frac{Pu} {0.45}$$         |-                  |
+	|PID             |$$\frac{Ku} {3.2}$$ |$$\frac{Pu} {0.45}$$         |$$\frac{Pu} {6.3}$$|
 
-## Save a file
-
-You can save any file of the workspace to **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Save on**. Even if a file in the workspace is already synced, you can save it to another location. StackEdit can sync one file with multiple locations and accounts.
-
-## Synchronize a file
-
-Once your file is linked to a synchronized location, StackEdit will periodically synchronize it by downloading/uploading any modification. A merge will be performed if necessary and conflicts will be resolved.
-
-If you just have modified your file and you want to force syncing, click the **Synchronize now** button in the navigation bar.
-
-> **Note:** The **Synchronize now** button is disabled if you have no file to synchronize.
-
-## Manage file synchronization
-
-Since one file can be synced with multiple locations, you can list and manage synchronized locations by clicking **File synchronization** in the **Synchronize** sub-menu. This allows you to list and remove synchronized locations that are linked to your file.
-
-
-# Publication
-
-Publishing in StackEdit makes it simple for you to publish online your files. Once you're happy with a file, you can publish it to different hosting platforms like **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **WordPress** and **Zendesk**. With [Handlebars templates](http://handlebarsjs.com/), you have full control over what you export.
-
-> Before starting to publish, you must link an account in the **Publish** sub-menu.
-
-## Publish a File
-
-You can publish your file by opening the **Publish** sub-menu and by clicking **Publish to**. For some locations, you can choose between the following formats:
-
-- Markdown: publish the Markdown text on a website that can interpret it (**GitHub** for instance),
-- HTML: publish the file converted to HTML via a Handlebars template (on a blog for example).
-
-## Update a publication
-
-After publishing, StackEdit keeps your file linked to that publication which makes it easy for you to re-publish it. Once you have modified your file and you want to update your publication, click on the **Publish now** button in the navigation bar.
-
-> **Note:** The **Publish now** button is disabled if your file has not been published yet.
-
-## Manage file publication
-
-Since one file can be published to multiple locations, you can list and manage publish locations by clicking **File publication** in the **Publish** sub-menu. This allows you to list and remove publication locations that are linked to your file.
-
-
-# Markdown extensions
-
-StackEdit extends the standard Markdown syntax by adding extra **Markdown extensions**, providing you with some nice features.
-
-> **ProTip:** You can disable any **Markdown extension** in the **File properties** dialog.
-
-
-## SmartyPants
-
-SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
-
-|                |ASCII                          |HTML                         |
-|----------------|-------------------------------|-----------------------------|
-|Single backticks|`'Isn't this fun?'`            |'Isn't this fun?'            |
-|Quotes          |`"Isn't this fun?"`            |"Isn't this fun?"            |
-|Dashes          |`-- is en-dash, --- is em-dash`|-- is en-dash, --- is em-dash|
-
-
-## KaTeX
-
-You can render LaTeX mathematical expressions using [KaTeX](https://khan.github.io/KaTeX/):
-
-The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
-
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
-
-> You can find more information about **LaTeX** mathematical expressions [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
-
-
-## UML diagrams
-
-You can render UML diagrams using [Mermaid](https://mermaidjs.github.io/). For example, this will produce a sequence diagram:
-
-```mermaid
-sequenceDiagram
-Alice ->> Bob: Hello Bob, how are you?
-Bob-->>John: How about you John?
-Bob--x Alice: I am good thanks!
-Bob-x John: I am good thanks!
-Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
-
-Bob-->Alice: Checking with John...
-Alice->John: Yes... John, how are you?
-```
-
-And this will produce a flow chart:
-
-```mermaid
-graph LR
-A[Square Rect] -- Link text --> B((Circle))
-A --> C(Round Rect)
-B --> D{Rhombus}
-C --> D
-```
+	> Where Ku and Pu are, respectively., ultimate gain e ultimate period.

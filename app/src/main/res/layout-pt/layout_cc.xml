@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDarkBackground"
+    tools:context=".methods.CCActivity">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:text="@string/tvCohenCoonDesc"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.133" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutProcessParameters"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/DividerMethods"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/border_elevation"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DividerMethods"
+        app:layout_constraintVertical_bias="0.816">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="@color/colorTextHint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditTextGain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/hintGain"
+                android:inputType="numberDecimal"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorTextHint"
+                app:backgroundTint="@color/colorAccent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="@color/colorTextHint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditTextTimeConstant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/hintTime"
+                android:inputType="numberDecimal"
+                android:paddingTop="20dp"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorTextHint"
+                app:backgroundTint="@color/colorAccent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="@color/colorTextHint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EditTextTransportDelay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/hintDelay"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:paddingTop="20dp"
+                android:singleLine="true"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorTextHint"
+                app:backgroundTint="@color/colorAccent" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvCohenCoon"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/DividerMethods"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.081"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/DividerMethods"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@string/Controller"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DividerMethods"
+        app:layout_constraintVertical_bias="0.09" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:text="@string/ProcessParameters"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DividerMethods"
+        app:layout_constraintVertical_bias="0.318" />
+
+    <Button
+        android:id="@+id/ButtonCleanParameters"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:text="@string/btClean"
+        android:textAllCaps="false"
+        android:textColor="@color/button_text_colors"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
+
+    <Button
+        android:id="@+id/ButtonComputePID"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:text="@string/btCalculate"
+        android:textAllCaps="false"
+        android:textColor="@color/button_text_colors"
+        android:textSize="14sp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutController"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.294">
+
+        <CheckBox
+            android:id="@+id/CheckBoxP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/rbP"
+            android:textColor="@color/colorText"
+            app:buttonTint="@color/colorAccent" />
+
+        <CheckBox
+            android:id="@+id/CheckBoxPD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="@string/rbPD"
+            android:textColor="@color/colorText"
+            app:buttonTint="@color/colorAccent" />
+
+        <CheckBox
+            android:id="@+id/CheckBoxPI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="@string/rbPI"
+            android:textColor="@color/colorText"
+            app:buttonTint="@color/colorAccent" />
+
+        <CheckBox
+            android:id="@+id/CheckBoxPID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="@string/rbPID"
+            android:textColor="@color/colorText"
+            app:buttonTint="@color/colorAccent" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="257dp"
+        android:layout_height="102dp"
+        android:background="@drawable/border_model"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.524"
+        app:srcCompat="@drawable/first_order_dynamic" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

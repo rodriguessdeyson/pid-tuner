@@ -17,4 +17,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - IAE/ITAE tuning method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
 - Tyreus-Luyben tuning method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
 
-[1.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/rodriguessdeyson/pid-tuner/compare/main...pid-tuner-v1

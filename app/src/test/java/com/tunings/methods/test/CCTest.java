@@ -31,7 +31,7 @@ public class CCTest
 	public void computePD()
 	{
 		// Desired values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PD, 14, 2.32, 0.36);
+		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PD, 12.72, 0, 0.25);
 		ControllerParameters actualParameters = CC.Compute(ControlType.PD, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), actualParameters.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), actualParameters.getKI(), 0.01);

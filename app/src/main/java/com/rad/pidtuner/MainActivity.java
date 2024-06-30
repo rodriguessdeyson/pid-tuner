@@ -21,11 +21,6 @@ public class MainActivity extends AppCompatActivity
 	 */
 	private Button StartTuningButton;
 
-	/**
-	 * TextView reference to start settings.
-	 */
-	private TextView TextViewSettings;
-
 	//endregion
 
 	//region Constructor
@@ -62,7 +57,6 @@ public class MainActivity extends AppCompatActivity
 	private void StartViewContents()
 	{
 		StartTuningButton = findViewById(R.id.ButtonStart);
-		TextViewSettings  = findViewById(R.id.TextViewSettings);
 	}
 
 	/**
@@ -91,12 +85,6 @@ public class MainActivity extends AppCompatActivity
 	private void ControlsEvent()
 	{
 		StartTuningButton.setOnClickListener(v -> OpenTunings());
-
-		TextViewSettings.setOnClickListener(v ->
-		{
-			Intent goSettings = new Intent(MainActivity.this, PreferenceActivity.class);
-			startActivity(goSettings);
-		});
 	}
 
 	/**

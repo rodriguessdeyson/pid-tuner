@@ -4,14 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDarkBackground"
+    android:background="@drawable/column2"
     tools:context=".TuningActivity">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/roboto"
+        android:lineSpacingExtra="10sp"
+        android:text="@string/tvTuningMethods"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="30sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.636" />
+
+    <View
+        android:id="@+id/ViewContainer"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <TextView
+        android:id="@+id/TextViewTuningInfo"
+        android:layout_width="305dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:text="@string/tvTuningInfo"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.967"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/ListViewTuningMethods"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/list_background"
         android:dividerHeight="10dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbarThumbVertical="@color/colorAccent"
@@ -25,74 +76,21 @@
 
     </ListView>
 
-    <View
-        android:id="@+id/DividerMethods"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.104" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tvTuningMethods"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/DividerMethods"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.636" />
-
-    <TextView
-        android:id="@+id/TextViewTuningInfo"
-        android:layout_width="0dp"
-        android:layout_height="82dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center"
-        android:text="@string/tvTuningInfo"
-        android:textAlignment="gravity"
-        android:textColor="@color/colorText"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/HelpLayout"
-        layout="@layout/layout_tuning_help"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.93" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FloatingActionButtonHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/ivPidTunerHelpDescription"
         android:focusable="true"
-        android:src="@mipmap/ic_info"
-        app:backgroundTint="@color/colorDarkElevation"
+        android:src="@android:drawable/ic_menu_help"
+        app:backgroundTint="@color/colorButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.96"
-        app:tint="@null" />
+        app:tint="@color/colorButtonText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

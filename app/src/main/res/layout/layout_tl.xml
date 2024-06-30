@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DividerMethods"
+        app:layout_constraintTop_toBottomOf="@+id/ViewContainer"
         app:layout_constraintVertical_bias="0.409" />
 
     <ImageView
@@ -117,7 +117,7 @@
         android:id="@+id/LinearLayoutProcessParameters"
         android:layout_width="252dp"
         android:layout_height="145dp"
-        android:layout_below="@id/DividerMethods"
+        android:layout_below="@id/ViewContainer"
         android:layout_centerHorizontal="true"
         android:background="@drawable/border_elevation"
         android:gravity="center"
@@ -210,14 +210,14 @@
         android:text="@string/tvTL"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/DividerMethods"
+        app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/DividerMethods"
+        android:id="@+id/ViewContainer"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/colorAccent"

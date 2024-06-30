@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PID Tuner</string>
+    <string name="textHome">PID\nTuner</string>
     <string name="About">PID Tuner é um aplicativo desenvolvido para ajudar estudantes de engenharia a calcular parâmetros do controlador baseado nos métodos mais comuns disponíveis,\né apenas para fins de estudo.\n\n</string>
     <string name="Controller">Selecione o controlador desejado</string>
     <string name="DampingRatio">Fator de Amortecimento</string>

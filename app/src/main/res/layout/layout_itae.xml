@@ -75,7 +75,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DividerMethods"
+        app:layout_constraintTop_toBottomOf="@+id/ViewContainer"
         app:layout_constraintVertical_bias="0.369" />
 
     <ImageView
@@ -111,7 +111,7 @@
         android:id="@+id/LinearLayoutProcessParameters"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/DividerMethods"
+        android:layout_below="@id/ViewContainer"
         android:layout_centerHorizontal="true"
         android:background="@drawable/border_elevation"
         android:orientation="vertical"
@@ -119,7 +119,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DividerMethods"
+        app:layout_constraintTop_toBottomOf="@+id/ViewContainer"
         app:layout_constraintVertical_bias="0.836">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -241,14 +241,14 @@
         android:text="@string/tvITAE"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/DividerMethods"
+        app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.156"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/DividerMethods"
+        android:id="@+id/ViewContainer"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/colorAccent"

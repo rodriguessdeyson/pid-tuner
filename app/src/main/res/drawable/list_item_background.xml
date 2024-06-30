@@ -10,8 +10,8 @@
         android:bottom="10dp"/>
     <stroke
         android:width="0.1dp"
-        android:color="@color/colorDarkElevation"/>
+        android:color="@color/list_item"/>
     <solid
-        android:color="@color/colorDarkElevation"/>
+        android:color="@color/list_item"/>
 </shape>
 

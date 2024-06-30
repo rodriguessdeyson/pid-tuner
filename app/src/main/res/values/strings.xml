@@ -1,7 +1,10 @@
 <resources>
     <!--Welcome Layout and Main Layout-->
     <string name="app_name">PID Tuner</string>
-    <string name="strWelcome">"Welcome to PID Tuner\n \n PID Tuner gathers several PID controller tuning methods. Z&amp;N, CHR, CC, IMC, IAE and ITAE methods are available to calculate the controller parameters (Proportional, Integral and Derivative) using the process parameters  (Gain, Time Constant and Dead Time)"</string>
+    <string name="tvHome">PID\nTuner</string>
+    <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
+    <string name="ivPidTunerHelpDescription">PID Tuner help  icon. Goes to PID Tuner help page.</string>
+    <string name="strWelcome">"PID Tuner provides various methods for tuning PID controllers like Ziegler-Nichols, Tyreus-Luyben, Cohen-Coon, and more. \n\nThese methods help you calculate the Proportional, Integral, and Derivative parameters based on your process parameters: Gain, Time Constant, and Dead Time"</string>
     <string name="btStart">Start</string>
 
     <!--Tuning Information-->

@@ -8,28 +8,33 @@
     tools:context=".SplashOpening">
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_pidtuner"
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/ivPidTunerBackgroundDescription"
+        android:saveEnabled="false"
+        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.42" />
+        app:srcCompat="@drawable/waveformhome" />
 
     <TextView
         android:id="@+id/TextViewAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/colorText"
-        android:textSize="36sp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="@string/tvHome"
+        android:textAlignment="center"
+        android:textColor="@color/colorHomeText"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.811"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintVertical_bias="0.556" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

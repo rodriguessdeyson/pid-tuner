@@ -1,6 +1,5 @@
 package com.rad.pidtuner;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -92,7 +91,7 @@ public class TuningActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_tunning);
+		setContentView(R.layout.layout_tuning);
 
 		// Configures the database
 		ConfigureDatabase();

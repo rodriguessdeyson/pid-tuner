@@ -20,17 +20,21 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
     namespace 'com.rad.pidtuner'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.browser:browser:1.8.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.shamanland:xdroid-enum-format:0.2.4'
     implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.github.Nishant-Pathak:MathView:v1.1'
     testImplementation 'junit:junit:4.12'
 }

@@ -67,6 +67,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/roboto"
             android:text="@string/tvZNDesc"
             android:textAlignment="textStart"
             android:textColor="@color/colorSecondaryText"
@@ -74,6 +75,123 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ViewContainer" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutProcess"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextViewInfoZN">
+
+            <TextView
+                android:id="@+id/TextViewProcess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Process"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/RadioGroupProcess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/RadioButtonOpenedLoop"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/RadioButtonOpenedLoop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="false"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbOpened"
+                    android:textColor="@color/colorSecondaryText"
+                    app:buttonTint="@color/colorAccent"
+                    tools:layout_editor_absoluteX="98dp" />
+
+                <RadioButton
+                    android:id="@+id/RadioButtonClosedLoop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="false"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbClosed"
+                    android:textColor="@color/colorSecondaryText"
+                    app:buttonTint="@color/colorAccent"
+                    tools:layout_editor_absoluteX="228dp" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutControllerContainer"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LinearLayoutProcess">
+
+            <TextView
+                android:id="@+id/TextViewController"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Controller"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/CheckBoxP"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:checked="false"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbP"
+                    android:textColor="@color/colorSecondaryText"
+                    app:buttonTint="@color/colorAccent"
+                    tools:layout_editor_absoluteX="110dp" />
+
+                <CheckBox
+                    android:id="@+id/CheckBoxPI"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbPI"
+                    android:textColor="@color/colorSecondaryText"
+                    app:buttonTint="@color/colorAccent"
+                    tools:layout_editor_absoluteX="184dp" />
+
+                <CheckBox
+                    android:id="@+id/CheckBoxPID"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbPID"
+                    android:textColor="@color/colorSecondaryText"
+                    app:buttonTint="@color/colorAccent"
+                    tools:layout_editor_absoluteX="246dp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LinearLayoutProcessParameters"
@@ -180,112 +298,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextViewInfoZN">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Process"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="14sp" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checkedButton="@id/RadioButtonOpenedLoop"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/RadioButtonOpenedLoop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="false"
-                    android:paddingRight="2sp"
-                    android:text="@string/rbOpened"
-                    android:textColor="@color/colorSecondaryText"
-                    app:buttonTint="@color/colorAccent"
-                    tools:layout_editor_absoluteX="98dp" />
-
-                <RadioButton
-                    android:id="@+id/RadioButtonClosedLoop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="false"
-                    android:text="@string/rbClosed"
-                    android:textColor="@color/colorSecondaryText"
-                    app:buttonTint="@color/colorAccent"
-                    tools:layout_editor_absoluteX="228dp" />
-
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Controller"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="14sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/CheckBoxP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:text="@string/rbP"
-                    android:textColor="@color/colorSecondaryText"
-                    app:buttonTint="@color/colorAccent"
-                    tools:layout_editor_absoluteX="110dp" />
-
-                <CheckBox
-                    android:id="@+id/CheckBoxPI"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rbPI"
-                    android:textColor="@color/colorSecondaryText"
-                    app:buttonTint="@color/colorAccent"
-                    tools:layout_editor_absoluteX="184dp" />
-
-                <CheckBox
-                    android:id="@+id/CheckBoxPID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rbPID"
-                    android:textColor="@color/colorSecondaryText"
-                    app:buttonTint="@color/colorAccent"
-                    tools:layout_editor_absoluteX="246dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="0dp"
             android:layout_height="126dp"
@@ -297,7 +309,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            app:layout_constraintTop_toBottomOf="@+id/LinearLayoutControllerContainer"
+            tools:ignore="UseCompoundDrawables">
 
             <TextView
                 android:layout_width="match_parent"
@@ -312,6 +325,7 @@
                 android:layout_width="196dp"
                 android:layout_height="90dp"
                 android:background="@drawable/formula_container"
+                android:contentDescription="@string/ivFirstOrderFunctionDescription"
                 app:srcCompat="@drawable/first_order_dynamic" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

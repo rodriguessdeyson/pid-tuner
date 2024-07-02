@@ -5,272 +5,315 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDarkBackground"
-    tools:context=".methods.CCActivity">
+    android:background="@drawable/column3"
+    tools:context=".methods.IAEActivity">
 
-    <LinearLayout
-        android:layout_width="288dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Process"
-            android:textColor="@color/colorText"
-            android:textSize="14sp" />
-
-        <CheckBox
-            android:id="@+id/CheckBoxServo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:checked="false"
-            android:text="@string/rbServo"
-            android:textColor="@color/colorText"
-            android:textColorLink="@color/colorAccent"
-            app:buttonTint="@color/colorAccent" />
-
-        <CheckBox
-            android:id="@+id/CheckBoxRegulator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:checked="false"
-            android:text="@string/rbRegula"
-            android:textColor="@color/colorText"
-            android:textColorLink="@color/colorAccent"
-            app:buttonTint="@color/colorAccent" />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="393dp"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:text="@string/ProcessParameters"
-        android:textColor="@color/colorText"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ViewContainer"
-        app:layout_constraintVertical_bias="0.366" />
-
-    <ImageView
-        android:layout_width="196dp"
-        android:layout_height="90dp"
-        android:background="@drawable/border_model"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.541"
-        app:srcCompat="@drawable/first_order_dynamic" />
-
-    <TextView
-        android:id="@+id/TextViewInfoIAE"
-        android:layout_width="354dp"
-        android:layout_height="68dp"
-        android:gravity="center"
-        android:text="@string/tvIAEDesc"
-        android:textColor="@color/colorText"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.127" />
-
-    <Button
-        android:id="@+id/ButtonComputePID"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_style"
-        android:text="@string/btCalculate"
-        android:textAllCaps="false"
-        android:textColor="@color/button_text_colors"
-        android:textSize="14sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.938"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
-
-    <Button
-        android:id="@+id/ButtonCleanParameters"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_style"
-        android:text="@string/btClean"
-        android:textAllCaps="false"
-        android:textColor="@color/button_text_colors"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
-
-    <LinearLayout
-        android:id="@+id/LinearLayoutProcessParameters"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ViewContainer"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/border_elevation"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/TextViewInfoIAE"
-        app:layout_constraintVertical_bias="0.829">
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:textColorHint="@color/colorTextHint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EditTextGain"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/hintGain"
-                android:inputType="numberDecimal"
-                android:textColor="@color/colorText"
-                android:textColorHint="@color/colorTextHint"
-                app:backgroundTint="@color/colorAccent" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:textColorHint="@color/colorTextHint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EditTextTimeConstant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="@string/hintTime"
-                android:inputType="numberDecimal"
-                android:paddingTop="20dp"
-                android:textColor="@color/colorText"
-                android:textColorHint="@color/colorTextHint"
-                app:backgroundTint="@color/colorAccent" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:textColorHint="@color/colorTextHint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EditTextTransportDelay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="@string/hintDelay"
-                android:imeOptions="actionDone"
-                android:inputType="numberDecimal"
-                android:paddingTop="20dp"
-                android:singleLine="true"
-                android:textColor="@color/colorText"
-                android:textColorHint="@color/colorTextHint"
-                app:backgroundTint="@color/colorAccent" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
-
-    <LinearLayout
+    <View
+        android:id="@+id/ViewBackgroundContainer"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:background="@color/colorTertiary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.361">
+        app:layout_constraintVertical_bias="0.0">
 
-        <CheckBox
-            android:id="@+id/CheckBoxPI"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/TextViewIAE"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/rbPI"
-            android:textColor="@color/colorText"
-            app:buttonTint="@color/colorAccent" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/roboto"
+            android:lineSpacingExtra="10sp"
+            android:text="@string/tvIAE"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="30sp"
+            android:typeface="normal"
+            app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.486" />
 
-        <CheckBox
-            android:id="@+id/CheckBoxPID"
-            android:layout_width="wrap_content"
+        <View
+            android:id="@+id/ViewContainer"
+            android:layout_width="411dp"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.108" />
+
+        <TextView
+            android:id="@+id/TextViewInfoIAE"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:text="@string/rbPID"
-            android:textColor="@color/colorText"
-            app:buttonTint="@color/colorAccent" />
-    </LinearLayout>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/tvIAEDesc"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ViewContainer" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tvIAE"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.156"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/LinearLayoutProcess"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextViewInfoIAE">
 
-    <View
-        android:id="@+id/ViewContainer"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.104" />
+            <TextView
+                android:id="@+id/TextViewProcess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Process"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="14sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Controller"
-        android:textColor="@color/colorText"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.316" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/CheckBoxServo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbServo"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textColorLink="@color/colorAccent"
+                    app:buttonTint="@color/colorAccent" />
+
+                <CheckBox
+                    android:id="@+id/CheckBoxRegulator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbRegula"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textColorLink="@color/colorAccent"
+                    app:buttonTint="@color/colorAccent" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutControllerContainer"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LinearLayoutProcess">
+
+            <TextView
+                android:id="@+id/TextViewController"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Controller"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/CheckBoxPI"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbPI"
+                    android:textColor="@color/colorSecondaryText"
+                    app:buttonTint="@color/colorAccent"
+                    tools:layout_editor_absoluteX="184dp" />
+
+                <CheckBox
+                    android:id="@+id/CheckBoxPID"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:paddingStart="2sp"
+                    android:paddingEnd="2sp"
+                    android:text="@string/rbPID"
+                    android:textColor="@color/colorSecondaryText"
+                    app:buttonTint="@color/colorAccent"
+                    tools:layout_editor_absoluteX="246dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutProcessParameters"
+            android:layout_width="0dp"
+            android:layout_height="234dp"
+            android:layout_below="@id/ViewContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/ButtonComputePID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TextInputLayoutGain"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorTextHint"
+                tools:layout_editor_absoluteX="5dp"
+                tools:layout_editor_absoluteY="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/EditTextGain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/hintGain"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textColorHint="@color/colorTextHint"
+                    app:backgroundTint="@color/colorAccent"
+                    tools:layout_editor_absoluteY="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TextInputLayoutTimeConstant"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorTextHint"
+                tools:layout_editor_absoluteX="5dp"
+                tools:layout_editor_absoluteY="63dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/EditTextTimeConstant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/hintTime"
+                    android:inputType="numberDecimal"
+                    android:paddingTop="20dp"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textColorHint="@color/colorTextHint"
+                    app:backgroundTint="@color/colorAccent"
+                    tools:layout_editor_absoluteY="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TextInputLayoutTransportDelay"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorTextHint"
+                tools:layout_editor_absoluteX="5dp"
+                tools:layout_editor_absoluteY="128dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/EditTextTransportDelay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/hintDelay"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:paddingTop="20dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textColorHint="@color/colorTextHint"
+                    app:backgroundTint="@color/colorAccent"
+                    tools:layout_editor_absoluteY="6dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/ButtonComputePID"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/button_style"
+            android:text="@string/btCalculate"
+            android:textAllCaps="false"
+            android:textColor="@color/button_text_colors"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="0dp"
+            android:layout_height="126dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LinearLayoutControllerContainer"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/ProcessParameters"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="196dp"
+                android:layout_height="90dp"
+                android:background="@drawable/formula_container"
+                android:contentDescription="@string/ivFirstOrderFunctionDescription"
+                app:srcCompat="@drawable/first_order_dynamic" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

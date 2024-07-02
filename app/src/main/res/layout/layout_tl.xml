@@ -13,7 +13,7 @@
         android:layout_height="48dp"
         android:gravity="center"
         android:text="@string/ProcessParameters"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorSecondaryText"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         android:layout_height="68dp"
         android:gravity="center"
         android:text="@string/tvTLDesc"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorSecondaryText"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Process"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorSecondaryText"
             android:textSize="14sp" />
 
         <RadioButton
@@ -75,7 +75,7 @@
             android:layout_marginStart="25dp"
             android:checkable="true"
             android:text="@string/rbClosed"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorSecondaryText"
             app:buttonTint="@color/colorAccent" />
 
     </RadioGroup>
@@ -145,7 +145,7 @@
                 android:ems="10"
                 android:hint="@string/hintKu"
                 android:inputType="numberDecimal"
-                android:textColor="@color/colorText"
+                android:textColor="@color/colorSecondaryText"
                 android:textColorHint="@color/colorTextHint"
                 app:backgroundTint="@color/colorAccent" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -168,7 +168,7 @@
                 android:hint="@string/hintPu"
                 android:inputType="numberDecimal"
                 android:paddingTop="20dp"
-                android:textColor="@color/colorText"
+                android:textColor="@color/colorSecondaryText"
                 android:textColorHint="@color/colorTextHint"
                 app:backgroundTint="@color/colorAccent" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -191,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rbPI"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorSecondaryText"
             app:buttonTint="@color/colorAccent" />
 
         <CheckBox
@@ -200,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:text="@string/rbPID"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorSecondaryText"
             app:buttonTint="@color/colorAccent" />
     </LinearLayout>
 
@@ -232,7 +232,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Controller"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorSecondaryText"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

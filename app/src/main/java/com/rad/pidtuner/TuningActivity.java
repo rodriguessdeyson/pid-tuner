@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,7 +48,7 @@ public class TuningActivity extends AppCompatActivity
 	/**
 	 * List with all available tuning methods.
 	 */
-	private ArrayList<TuningMethod> TuningMethods = new ArrayList<>();
+	private final ArrayList<TuningMethod> TuningMethods = new ArrayList<>();
 
 	/**
 	 * Object adapter for list view to show tuning methods.
@@ -105,14 +106,15 @@ public class TuningActivity extends AppCompatActivity
 
 		// Build a list with all tuning methods.
 		BuildTuningMethodsList();
-	}
 
-	@Override
-	public void onBackPressed()
-	{
-		if (IsReturnLocked)
-			return;
-		super.onBackPressed();
+		getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+			@Override
+			public void handleOnBackPressed() {
+				if (IsReturnLocked)
+					return;
+				finish();
+			}
+		});
 	}
 
 	//endregion

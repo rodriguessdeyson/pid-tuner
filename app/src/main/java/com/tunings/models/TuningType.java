@@ -47,7 +47,7 @@ public enum TuningType implements Parcelable
 	/**
 	 * Selected enum.
 	 */
-	private int Tuning;
+	private final int Tuning;
 
 	/**
 	 * Enum constructor.

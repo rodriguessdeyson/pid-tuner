@@ -31,7 +31,7 @@ public enum ControlType implements Parcelable
 	/**
 	 * Selected enum.
 	 */
-	private int Control;
+	private final int Control;
 
 	/**
 	 * Enum constructor.
@@ -40,11 +40,6 @@ public enum ControlType implements Parcelable
 	ControlType(int control)
 	{
 		this.Control = control;
-	}
-
-	ControlType(Parcel in)
-	{
-		Control = in.readInt();
 	}
 
 	public static final Creator<ControlType> CREATOR = new Creator<ControlType>()

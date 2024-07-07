@@ -11,8 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.rad.pidtuner.database.DataAccess;
-import com.rad.pidtuner.database.SettingModel;
+
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
@@ -25,7 +24,6 @@ import com.tunings.models.TuningMethod;
 import com.tunings.models.TuningType;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ZNActivity extends AppCompatActivity
 {

@@ -15,49 +15,42 @@ public enum ControlProcessType implements Parcelable
 	/**
 	 * Servo process.
 	 */
-	@EnumString(R.string.rbServo)
 	Servo(0),
 
 	/**
 	 * Servo process with 20% Overshoot.
 	 */
-	@EnumString(R.string.rbServo20)
 	Servo20(1),
 
 	/**
 	 * Regulation process.
 	 */
-	@EnumString(R.string.rbRegula)
 	Regulator(2),
 
 	/**
 	 * Regulation process with 20% Overshoot.
 	 */
-	@EnumString(R.string.rbRegula20)
 	Regulator20(3),
 
 	/**
 	 * Lambda Tuning Process.
 	 */
-	@EnumString(R.string.rbLambda)
 	LambdaTuning(4),
 
 	/**
 	 * Opened loop Feedback
 	 */
-	@EnumString(R.string.rbOpened)
 	Open(5),
 
 	/**
 	 * Closed Loop Feedback.
 	 */
-	@EnumString(R.string.rbClosed)
 	Closed(6);
 
 	/**
 	 * Selected enum.
 	 */
-	private int Process;
+	private final int Process;
 
 	/**
 	 * Enum constructor.
@@ -66,11 +59,6 @@ public enum ControlProcessType implements Parcelable
 	ControlProcessType(int process)
 	{
 		this.Process = process;
-	}
-
-	ControlProcessType(Parcel in)
-	{
-		Process = in.readInt();
 	}
 
 	public static final Creator<ControlProcessType> CREATOR = new Creator<ControlProcessType>()

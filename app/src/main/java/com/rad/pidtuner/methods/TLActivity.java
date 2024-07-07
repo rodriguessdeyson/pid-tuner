@@ -12,8 +12,6 @@ import android.widget.RadioButton;
 
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
-import com.rad.pidtuner.database.DataAccess;
-import com.rad.pidtuner.database.SettingModel;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.TL;

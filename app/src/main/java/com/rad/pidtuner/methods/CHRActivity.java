@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
-import com.rad.pidtuner.database.DataAccess;
-import com.rad.pidtuner.database.SettingModel;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.CHR;
@@ -25,8 +23,6 @@ import com.tunings.models.TuningMethod;
 import com.tunings.models.TuningType;
 
 import java.util.ArrayList;
-import java.util.Locale;
-
 public class CHRActivity extends AppCompatActivity
 {
 	//region Attributes

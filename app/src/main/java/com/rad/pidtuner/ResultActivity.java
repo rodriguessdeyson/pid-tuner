@@ -1,5 +1,6 @@
 package com.rad.pidtuner;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -17,7 +18,6 @@ import com.tunings.models.ControlType;
 import com.tunings.models.ControllerParameters;
 import com.tunings.models.TuningMethod;
 import com.rad.pidtuner.database.DataAccess;
-import com.rad.pidtuner.database.SettingModel;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -77,13 +77,14 @@ public class ResultActivity extends AppCompatActivity
 
 		// Builds the result layout.
 		BuildResult();
-	}
 
-	@Override
-	public void onBackPressed()
-	{
-		TuningDatabase.Update();
-		super.onBackPressed();
+		getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+			@Override
+			public void handleOnBackPressed() {
+				TuningDatabase.Update();
+				finish();
+			}
+		});
 	}
 
 	//endregion

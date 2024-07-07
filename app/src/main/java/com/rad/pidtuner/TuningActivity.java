@@ -1,5 +1,6 @@
 package com.rad.pidtuner;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -275,7 +276,8 @@ public class TuningActivity extends AppCompatActivity
 			default:
 				throw new InvalidParameterException(tuning.toString());
 		}
-		startActivity(startTuning);
+		ActivityOptions options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);
+		startActivity(startTuning, options.toBundle());
 	}
 
 	//region Tunings

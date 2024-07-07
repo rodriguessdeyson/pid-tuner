@@ -35,11 +35,6 @@ public class TLActivity extends AppCompatActivity
 	private Button ComputeButton;
 
 	/**
-	 Button reference to clean event.
-	 */
-	private Button CleanButton;
-
-	/**
 	 CheckBox reference to Proportional-integral parameter.
 	 */
 	private CheckBox CheckBoxPI;
@@ -86,20 +81,11 @@ public class TLActivity extends AppCompatActivity
 	private void InitializeViews()
 	{
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		CleanButton                   = findViewById(R.id.ButtonCleanParameters);
 		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
 		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
 		RadioButtonClosed             = findViewById(R.id.RadioButtonClosedLoop);
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
-
-		DataAccess dbAccess = new DataAccess(this, "Tuner");
-		SettingModel userSettings = dbAccess.ReadConfiguration();
-		if (userSettings.isSameParameters())
-		{
-			EditTextProcessGain.setText(userSettings.getKu().toString());
-			EditTextProcessTimeConstant.setText(userSettings.getPu().toString());
-		}
 	}
 
 	/**
@@ -115,13 +101,6 @@ public class TLActivity extends AppCompatActivity
 				return;
 
 			ComputeController();
-		});
-
-		// Handle the button click.
-		CleanButton.setOnClickListener(v ->
-		{
-			EditTextProcessGain.setText("");
-			EditTextProcessTimeConstant.setText("");
 		});
 	}
 

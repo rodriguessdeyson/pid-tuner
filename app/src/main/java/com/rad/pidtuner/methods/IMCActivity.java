@@ -43,11 +43,6 @@ public class IMCActivity extends AppCompatActivity
 	private Button ComputeButton;
 
 	/**
-	 Button reference to clean event.
-	 */
-	private Button CleanButton;
-
-	/**
 	 * Button of the models types.
 	 */
 	private ImageButton[] ImageModelButton;
@@ -149,7 +144,6 @@ public class IMCActivity extends AppCompatActivity
 	private void InitializeViews()
 	{
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		CleanButton                   = findViewById(R.id.ButtonCleanParameters);
 		FBClose                       = findViewById(R.id.FloatingActionButtonClose);
 		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
 		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
@@ -160,7 +154,7 @@ public class IMCActivity extends AppCompatActivity
 		EditTextLambdaTuning          = findViewById(R.id.EditTextLambda);
 		ViewPIDModels                 = findViewById(R.id.ViewPIDModels);
 		ImageViewSelectedModel        = findViewById(R.id.ImageViewSelectedModel);
-		LinearLayoutController        = findViewById(R.id.LinearLayoutController);
+		LinearLayoutController        = findViewById(R.id.LinearLayoutControllerContainer);
 		LayoutGain                    = findViewById(R.id.TextInputLayoutGain);
 		LayoutTimeConstant            = findViewById(R.id.TextInputLayoutTimeConstant);
 		LayoutTransportDelay          = findViewById(R.id.TextInputLayoutTransportDelay);
@@ -170,16 +164,6 @@ public class IMCActivity extends AppCompatActivity
 		ImageModelButton[2]           = findViewById(R.id.ImageButtonModel3);
 		ImageModelButton[3]           = findViewById(R.id.ImageButtonModel4);
 		ImageModelButton[4]           = findViewById(R.id.ImageButtonModel5);
-
-		DataAccess dbAccess = new DataAccess(this, "Tuner");
-		SettingModel userSettings = dbAccess.ReadConfiguration();
-		if (userSettings.isSameParameters())
-		{
-			EditTextProcessGain.setText(userSettings.getGain().toString());
-			EditTextProcessTimeConstant.setText(userSettings.getTime().toString());
-			EditTextProcessTransportDelay.setText(userSettings.getTransport().toString());
-			EditTextLambdaTuning.setText(userSettings.getLambda().toString());
-		}
 	}
 
 	/**
@@ -208,7 +192,7 @@ public class IMCActivity extends AppCompatActivity
 			}
 			else
 			{
-				ViewUtils.FadeOut(getApplicationContext(), CleanButton, ComputeButton);
+				ViewUtils.FadeOut(getApplicationContext(), ComputeButton);
 				ViewUtils.FadeIn(getApplicationContext(), ImageViewSelectedModel, ViewPIDModels);
 			}
 		});
@@ -217,7 +201,7 @@ public class IMCActivity extends AppCompatActivity
 		ImageViewSelectedModel.setOnClickListener(v ->
 		{
 			ViewUtils.FadeIn(getApplicationContext(), ViewPIDModels);
-			ViewUtils.FadeOut(getApplicationContext(), CleanButton, ComputeButton);
+			ViewUtils.FadeOut(getApplicationContext(), ComputeButton);
 		});
 
 		// Handle the ImageButton click for models.
@@ -230,7 +214,6 @@ public class IMCActivity extends AppCompatActivity
 			ViewUtils.FadeIn(getApplicationContext(),
 				ImageViewSelectedModel,
 				ComputeButton,
-				CleanButton,
 				EditTextProcessGain,
 				EditTextProcessTimeConstant);
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
@@ -246,7 +229,6 @@ public class IMCActivity extends AppCompatActivity
 				.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model2, null));
 			ViewUtils.FadeIn(getApplicationContext(), ImageViewSelectedModel,
 				ComputeButton,
-				CleanButton,
 				EditTextProcessGain,
 				EditTextProcessTimeConstant,
 				EditTextProcessTransportDelay);
@@ -264,7 +246,6 @@ public class IMCActivity extends AppCompatActivity
 
 			ViewUtils.FadeIn(getApplicationContext(), ImageViewSelectedModel,
 				ComputeButton,
-				CleanButton,
 				EditTextProcessGain,
 				EditTextProcessTimeConstant,
 				EditTextProcessTransportDelay);
@@ -281,8 +262,7 @@ public class IMCActivity extends AppCompatActivity
 				.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model4, null));
 
 			ViewUtils.FadeIn(getApplicationContext(), ImageViewSelectedModel,
-				ComputeButton,
-				CleanButton);
+				ComputeButton);
 			ViewUtils.FadeOut(getApplicationContext(),
 				LinearLayoutController,
 				EditTextProcessTimeConstant,
@@ -298,7 +278,6 @@ public class IMCActivity extends AppCompatActivity
 
 			ViewUtils.FadeIn(getApplicationContext(), ImageViewSelectedModel,
 				ComputeButton,
-				CleanButton,
 				EditTextProcessGain,
 				EditTextProcessTimeConstant);
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
@@ -319,14 +298,6 @@ public class IMCActivity extends AppCompatActivity
 			ComputeController();
 		});
 
-		// Handle the button click.
-		CleanButton.setOnClickListener(v ->
-		{
-			EditTextProcessGain.setText("");
-			EditTextProcessTimeConstant.setText("");
-			EditTextProcessTransportDelay.setText("");
-		});
-
 		// Handle the cancel button.
 		FBClose.setOnClickListener(v ->
 		{
@@ -335,7 +306,7 @@ public class IMCActivity extends AppCompatActivity
 				SwitchUseFirstOrderDynamic.setChecked(true);
 			}
 			ViewUtils.FadeOut(getApplicationContext(), ViewPIDModels);
-			ViewUtils.FadeIn(getApplicationContext(), CleanButton, ComputeButton);
+			ViewUtils.FadeIn(getApplicationContext(), ComputeButton);
 		});
 	}
 

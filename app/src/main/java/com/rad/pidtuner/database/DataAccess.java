@@ -56,19 +56,6 @@ public class DataAccess
 		SQLiteDatabase = AppContext
 				.openOrCreateDatabase(Database, Context.MODE_PRIVATE, null);
 
-		// Create a table to persist all settings.
-		SQLiteDatabase.execSQL(
-				"CREATE TABLE IF NOT EXISTS UserSettings(" +
-				"Id             INTEGER PRIMARY KEY AUTOINCREMENT," +
-				"SameParameters INTEGER NOT NULL," +
-				"Gain           INTEGER," +
-				"Time           INTEGER," +
-				"Transport      INTEGER," +
-				"Ku             INTEGER," +
-				"Pu             INTEGER," +
-				"Lambda         INTEGER," +
-				"DecimalPlaces  INTEGER NOT NULL)");
-
 		// Create a table to manipulate add show.
 		SQLiteDatabase.execSQL(
 				"CREATE TABLE IF NOT EXISTS AdShowed(" +
@@ -92,35 +79,6 @@ public class DataAccess
 	{
 		if (SQLiteDatabase.isOpen())
 			SQLiteDatabase.close();
-	}
-
-	/**
-	 * Inserts into opened database a new configuration.
-	 * @param configuration A configuration of the device.
-	 */
-	public void Insert(SettingModel configuration)
-	{
-		OpenDatabase();
-		SQLiteDatabase.execSQL(
-			"INSERT INTO UserSettings("                     +
-				"SameParameters,"                           +
-				"Gain     ,"                                +
-				"Time     ,"                                +
-				"Transport,"                                +
-				"Ku       ,"                                +
-				"Pu       ,"                                +
-				"Lambda   ,"                                +
-				"DecimalPlaces)"                            +
-				"VALUES("                                   +
-				"'"+ configuration.getSameParameters() +"'," +
-				"'"+ configuration.getGain() +"',"          +
-				"'"+ configuration.getTime() +"',"          +
-				"'"+ configuration.getTransport() +"',"     +
-				"'"+ configuration.getKu() +"',"            +
-				"'"+ configuration.getPu() +"',"            +
-				"'"+ configuration.getLambda() +"',"        +
-				"'"+ configuration.getDecimalPlaces() +"')" + ";");
-		CloseDatabase();
 	}
 
 	/**
@@ -188,62 +146,20 @@ public class DataAccess
 		return lastShowed;
 	}
 
-	/**
-	 * Updates an existing configuration to a new configuration.
-	 * @param configuration A new configuration.
-	 */
-	public void Update(SettingModel configuration)
-	{
-		OpenDatabase();
-		SQLiteDatabase.execSQL(
-			"UPDATE UserSettings SET " +
-				"SameParameters =" + "'" + configuration.getSameParameters() + "'," +
-				"Gain           =" + "'" + configuration.getGain()          + "'," +
-				"Time           =" + "'" + configuration.getTime()          + "'," +
-				"Transport      =" + "'" + configuration.getTransport()     + "'," +
-				"Ku             =" + "'" + configuration.getKu()            + "'," +
-				"Pu             =" + "'" + configuration.getPu()            + "'," +
-				"Lambda         =" + "'" + configuration.getLambda()        + "'," +
-				"DecimalPlaces  =" + "'" + configuration.getDecimalPlaces() + "'" +
-				"WHERE Id =" + "'" + 1 + "'" + ";");
-		CloseDatabase();
-	}
 
 	/**
 	 * Reads the configurations already in database.
 	 * @return A SettingModel configurations.
 	 */
-	public SettingModel ReadConfiguration()
+	public boolean ReadConfiguration()
 	{
-		// Create an configuration list with all devices configured.
-		SettingModel configuration = null;
-
-		// Creates the query to retrieve all devices.
-		String selectQuery = "SELECT * FROM UserSettings;";
-
-		// Get all devices configured.
+		String selectQuery = "SELECT * FROM AdShowed;";
 		OpenDatabase();
 		Cursor dbCursor = SQLiteDatabase.rawQuery(selectQuery, null);
-
-		// If rows exist, get the values.
-		if (dbCursor.getCount() > 0)
-		{
-			configuration = new SettingModel();
-			while(dbCursor.moveToNext())
-			{
-				configuration.setSameParameters(dbCursor.getInt(1));
-				configuration.setGain(dbCursor.getDouble(2));
-				configuration.setTime(dbCursor.getDouble(3));
-				configuration.setTransport(dbCursor.getDouble(4));
-				configuration.setKu(dbCursor.getDouble(5));
-				configuration.setPu(dbCursor.getDouble(6));
-				configuration.setLambda(dbCursor.getDouble(7));
-				configuration.setDecimalPlaces(dbCursor.getInt(8));
-			}
-		}
+		int hasSetting = dbCursor.getCount();
 		dbCursor.close();
-		return configuration;
-	}
+        return hasSetting > 0;
+    }
 
 	//endregion
 }

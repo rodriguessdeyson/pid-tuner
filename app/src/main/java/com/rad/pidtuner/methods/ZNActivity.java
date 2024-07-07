@@ -37,11 +37,6 @@ public class ZNActivity extends AppCompatActivity
 	private Button ComputeButton;
 
 	/**
-	 Button reference to clean event.
-	 */
-	private Button CleanButton;
-
-	/**
 	 CheckBox reference to Proportional parameter.
 	 */
 	private CheckBox CheckBoxP;
@@ -117,7 +112,6 @@ public class ZNActivity extends AppCompatActivity
 	private void InitializeViews()
 	{
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		CleanButton                   = findViewById(R.id.ButtonCleanParameters);
 		CheckBoxP                     = findViewById(R.id.CheckBoxP);
 		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
 		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
@@ -129,21 +123,6 @@ public class ZNActivity extends AppCompatActivity
 		LayoutGain                    = findViewById(R.id.TextInputLayoutGain);
 		LayoutTimeConstant            = findViewById(R.id.TextInputLayoutTimeConstant);
 		LayoutTransportDelay          = findViewById(R.id.TextInputLayoutTransportDelay);
-
-		DataAccess dbAccess = new DataAccess(this, "Tuner");
-		SettingModel userSettings = dbAccess.ReadConfiguration();
-		if (userSettings.isSameParameters())
-		{
-			// Locale.
-			Locale currentLocale = getResources().getConfiguration().locale;
-
-			EditTextProcessGain.setText(String.format(
-					currentLocale, "%." + userSettings.getDecimalPlaces() + "f", userSettings.getGain()));
-			EditTextProcessTimeConstant.setText(String.format(
-					currentLocale, "%." + userSettings.getDecimalPlaces() + "f", userSettings.getTime()));
-			EditTextProcessTransportDelay.setText(String.format(
-					currentLocale, "%." + userSettings.getDecimalPlaces() + "f", userSettings.getTransport()));
-		}
 	}
 
 	/**
@@ -162,29 +141,12 @@ public class ZNActivity extends AppCompatActivity
 			ComputeController();
 		});
 
-		// Handle the button click.
-		CleanButton.setOnClickListener(v ->
-		{
-			EditTextProcessGain.setText("");
-			EditTextProcessTimeConstant.setText("");
-			EditTextProcessTransportDelay.setText("");
-		});
-
 		RadioButtonOpened.setOnClickListener(v ->
 		{
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			EditTextProcessGain.setEnabled(true);
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 			LayoutTransportDelay.setHint(getResources().getString(R.string.hintDelay));
-
-			DataAccess dbAccess = new DataAccess(this, "Tuner");
-			SettingModel userSettings = dbAccess.ReadConfiguration();
-			if (userSettings.isSameParameters())
-			{
-				EditTextProcessGain.setText(userSettings.getGain().toString());
-				EditTextProcessTimeConstant.setText(userSettings.getTime().toString());
-				EditTextProcessTransportDelay.setText(userSettings.getTransport().toString());
-			}
 		});
 
 		RadioButtonClosed.setOnClickListener(v ->
@@ -195,14 +157,6 @@ public class ZNActivity extends AppCompatActivity
 			EditTextProcessGain.setEnabled(false);
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintKu));
 			LayoutTransportDelay.setHint(getResources().getString(R.string.hintPu));
-
-			DataAccess dbAccess = new DataAccess(this, "Tuner");
-			SettingModel userSettings = dbAccess.ReadConfiguration();
-			if (userSettings.isSameParameters())
-			{
-				EditTextProcessTimeConstant.setText(userSettings.getKu().toString());
-				EditTextProcessTransportDelay.setText(userSettings.getPu().toString());
-			}
 		});
 	}
 

@@ -35,11 +35,6 @@ public class ITAEActivity extends AppCompatActivity
 	private Button ComputeButton;
 
 	/**
-	 Button reference to clean event.
-	 */
-	private Button CleanButton;
-
-	/**
 	 CheckBox reference to Proportional-Integral parameter.
 	 */
 	private CheckBox CheckBoxPI;
@@ -96,7 +91,6 @@ public class ITAEActivity extends AppCompatActivity
 	private void InitializeViews()
 	{
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		CleanButton                   = findViewById(R.id.ButtonCleanParameters);
 		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
 		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
 		CheckBoxServo                 = findViewById(R.id.CheckBoxServo);
@@ -104,15 +98,6 @@ public class ITAEActivity extends AppCompatActivity
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
 		EditTextProcessTransportDelay = findViewById(R.id.EditTextTransportDelay);
-
-		DataAccess dbAccess = new DataAccess(this, "Tuner");
-		SettingModel userSettings = dbAccess.ReadConfiguration();
-		if (userSettings.isSameParameters())
-		{
-			EditTextProcessGain.setText(userSettings.getGain().toString());
-			EditTextProcessTimeConstant.setText(userSettings.getTime().toString());
-			EditTextProcessTransportDelay.setText(userSettings.getTransport().toString());
-		}
 	}
 
 	/**
@@ -128,14 +113,6 @@ public class ITAEActivity extends AppCompatActivity
 				return;
 
 			ComputeController();
-		});
-
-		// Handle the button click.
-		CleanButton.setOnClickListener(v ->
-		{
-			EditTextProcessGain.setText("");
-			EditTextProcessTimeConstant.setText("");
-			EditTextProcessTransportDelay.setText("");
 		});
 	}
 

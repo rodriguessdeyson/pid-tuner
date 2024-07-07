@@ -1,5 +1,6 @@
 package com.rad.pidtuner;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -67,16 +68,6 @@ public class MainActivity extends AppCompatActivity
 		// Creates the database.
 		DataAccess tuningDatabase = new DataAccess(this, "Tuner");
 		tuningDatabase.CreateDatabase();
-		if (tuningDatabase.ReadConfiguration() == null)
-		{
-			// Creates the default configuration;
-			SettingModel model = new SettingModel();
-			model.setDecimalPlaces(2);
-			model.setSameParameters(0);
-
-			// Inserts the first configuration.
-			tuningDatabase.Insert(model);
-		}
 	}
 
 	/**
@@ -93,7 +84,9 @@ public class MainActivity extends AppCompatActivity
 	private void OpenTunings()
 	{
 		Intent goTuning = new Intent(MainActivity.this, TuningActivity.class);
-		startActivity(goTuning);
+		ActivityOptions options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);
+
+		startActivity(goTuning, options.toBundle());
 	}
 
 	//endregion

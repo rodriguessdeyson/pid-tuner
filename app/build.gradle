@@ -5,7 +5,7 @@ android {
     defaultConfig {
         compileSdk 34
         applicationId "rad.com.free.pidtuner"
-        minSdkVersion 20
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 5
         versionName "1.0"
@@ -20,9 +20,6 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
     namespace 'com.rad.pidtuner'
 }
 
@@ -35,6 +32,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.shamanland:xdroid-enum-format:0.2.4'
     implementation 'com.google.android.material:material:1.12.0'
-    implementation 'com.github.Nishant-Pathak:MathView:v1.1'
     testImplementation 'junit:junit:4.12'
 }

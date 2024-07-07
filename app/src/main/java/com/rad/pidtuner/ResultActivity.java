@@ -150,12 +150,6 @@ public class ResultActivity extends AppCompatActivity
 	 */
 	private void BuildResult()
 	{
-		// Read the database.
-		DataAccess UserSettings = new DataAccess(this, "Tuner");
-		SettingModel settingModel = UserSettings.ReadConfiguration();
-		String decimalPlaces = String.valueOf(settingModel.getDecimalPlaces());
-
-		// Locale.
 		Locale currentLocale = getResources().getConfiguration().locale;
 
 		// Initialize new inflater.
@@ -169,7 +163,7 @@ public class ResultActivity extends AppCompatActivity
 				mainHeader.setText(method.getTuningName());
 				mainHeader.setTextSize(18);
 				mainHeader.setGravity(Gravity.CENTER);
-				mainHeader.setTextColor(ContextCompat.getColor(this, R.color.colorText));
+				mainHeader.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText));
 				LinearResultContainer.addView(mainHeader);
 				for (ControlType cType : method.getControlTypes())
 				{
@@ -185,9 +179,9 @@ public class ResultActivity extends AppCompatActivity
 					{
 						if (parameter.getType() == cType)
 						{
-							tvKP.setText(String.format(currentLocale, "%." + decimalPlaces + "f", parameter.getKP()));
-							tvKI.setText(String.format(currentLocale, "%." + decimalPlaces + "f", parameter.getKI()));
-							tvKD.setText(String.format(currentLocale, "%." + decimalPlaces + "f", parameter.getKD()));
+							tvKP.setText(String.format(currentLocale, "%.3f", parameter.getKP()));
+							tvKI.setText(String.format(currentLocale, "%.3f", parameter.getKI()));
+							tvKD.setText(String.format(currentLocale, "%.3f", parameter.getKD()));
 						}
 					}
 					LinearResultContainer.addView(resultView);
@@ -201,7 +195,7 @@ public class ResultActivity extends AppCompatActivity
 					mainHeader.setText(String.format("%s - %s", method.getTuningName(), pType));
 					mainHeader.setTextSize(18);
 					mainHeader.setGravity(Gravity.CENTER);
-					mainHeader.setTextColor(ContextCompat.getColor(this, R.color.colorText));
+					mainHeader.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText));
 					LinearResultContainer.addView(mainHeader);
 					for (ControlType cType : method.getControlTypes())
 					{
@@ -217,9 +211,9 @@ public class ResultActivity extends AppCompatActivity
 						{
 							if (parameter.getType() == cType)
 							{
-								tvKP.setText(String.format(currentLocale, "%." + decimalPlaces + "f", parameter.getKP()));
-								tvKI.setText(String.format(currentLocale, "%." + decimalPlaces + "f", parameter.getKI()));
-								tvKD.setText(String.format(currentLocale, "%." + decimalPlaces + "f", parameter.getKD()));
+								tvKP.setText(String.format(currentLocale, "%.3f", parameter.getKP()));
+								tvKI.setText(String.format(currentLocale, "%.3f", parameter.getKI()));
+								tvKD.setText(String.format(currentLocale, "%.3f", parameter.getKD()));
 							}
 						}
 						LinearResultContainer.addView(resultView);

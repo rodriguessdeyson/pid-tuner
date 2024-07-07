@@ -21,12 +21,12 @@ public class DataAccess
 	/**
 	 * Activity context references.
 	 */
-	private Context AppContext;
+	private final Context AppContext;
 
 	/**
 	 * Name of the database to be opened.
 	 */
-	private String Database;
+	private final String Database;
 
 	//endregion
 
@@ -149,7 +149,7 @@ public class DataAccess
 
 	/**
 	 * Reads the configurations already in database.
-	 * @return A SettingModel configurations.
+	 * @return if has some configuration.
 	 */
 	public boolean ReadConfiguration()
 	{

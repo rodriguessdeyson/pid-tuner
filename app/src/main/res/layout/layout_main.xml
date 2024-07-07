@@ -58,8 +58,8 @@
 
     <Button
         android:id="@+id/ButtonStart"
-        android:layout_width="280dp"
-        android:layout_height="50dp"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
         android:text="@string/btStart"
         app:backgroundTint="@color/colorButton"
         app:layout_constraintBottom_toBottomOf="parent"

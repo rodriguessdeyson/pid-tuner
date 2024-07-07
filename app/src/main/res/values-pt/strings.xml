@@ -1,92 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
-    <string name="textHome">PID\nTuner</string>
-    <string name="About">PID Tuner é um aplicativo desenvolvido para ajudar estudantes de engenharia a calcular parâmetros do controlador baseado nos métodos mais comuns disponíveis,\né apenas para fins de estudo.\n\n</string>
-    <string name="Controller">Selecione o controlador desejado</string>
-    <string name="DampingRatio">Fator de Amortecimento</string>
-    <string name="DampingRatioError">Fator de Amortecimento não pode ficar Vazio</string>
-    <string name="Gain">Ganho</string>
-    <string name="GainError">Ganho não pode ficar vazio</string>
-    <string name="KuError">Ganho último não pode ficar vazio</string>
-    <string name="Process">Processo</string>
-    <string name="ProcessParameters">Insira os parâmetros para o processo de primeira ordem + tempo morto (atraso de transporte)</string>
-    <string name="PuError">Período Último não pode ficar vazio</string>
-    <string name="SecondTimeConstant">Constante de Tempo</string>
-    <string name="TimeConstant">Constante de Tempo</string>
-    <string name="TimeConstantError">Constante de Tempo não pode ficar vazio</string>
-    <string name="TransportDelay">Atraso de Transporte</string>
-    <string name="TransportDelayError">Atraso de Transporte não pode ficar vazio</string>
-    <string name="btCalculate">Calcular</string>
-    <string name="btClean">Limpar</string>
-    <string name="hintClosed">Malha Fechada</string>
-    <string name="hintDampingRatio">Fator de Amortecimento</string>
-    <string name="hintDelay">Atraso de Transporte</string>
-    <string name="hintGain">Ganho</string>
-    <string name="hintKu">Ganho Último (Ku)</string>
-    <string name="hintLambda">Lambda (λ)</string>
-    <string name="hintPu">Período último (Pu)</string>
-    <string name="hintSecondTimeConstant">Segunda Constante de Tempo</string>
-    <string name="hintTime">Constante de Tempo</string>
-    <string name="pref_decimal_places">Casas Decimais</string>
-    <string name="pref_decimal_places_summary">Ajuste o número de casa decimais.</string>
-    <string name="pref_set_all">Todos os Parâmetros</string>
-    <string name="pref_set_all_summary">Defina um Ganho (Kp), Constante de Tempo (τ) e Atraso de Transporte (θ) para todos os métodos. Será chamada somente uma vez.</string>
-    <string name="rbClosed">Malha Fechada</string>
-    <string name="rbOpened">Malha Aberta</string>
+    <string name="tvHome">PID\nTuner</string>
+    <string name="strWelcome">Bem-vindo ao PID Tuner\n\nPID Tuner reúne vários métodos de sintonia de Controlador PID. Os métodos Z&amp;N, CHR, IMC, IAE e ITAE estão disponíveis para calcular os parâmetros (Proporcional, Integral e Derivativo) do controlador escolhido usando os parâmetros do processo (Ganho, Constante de Tempo e Atraso de Transporte)</string>
+    <string name="btStart">Iniciar</string>
+    <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
+    <string name="ivPidTunerHelpDescription">PID Tuner help  icon. Goes to PID Tuner help page.</string>
+    <string name="ivFirstOrderFunctionDescription">First order function.</string>
+    <string name="About">PID Tuner é um aplicativo desenvolvido para ajudar estudantes de engenharia a calcular parâmetros do controlador baseado nos métodos mais comuns disponíveis, é apenas para fins de estudo.\n\n</string>
+
+    <!--Tuning Information-->
+    <string name="tvTuningMethods">Métodos de sintonia</string>
+    <string name="tvTuningInfo">Selecione o método de sintonia para obter os ganhos proporcional, integral e derivativo</string>
+    <string name="tvHelp">Ajuda</string>
+
+    <!--Cohen-Coon (CC) Method-->
+    <string name="tvCohenCoonDesc">Cohen-Coon (CC) é um método para sintonizar controlador para processos com alto atraso de transporte</string>
+
+    <!--Chien-Hrones-Reswick (CHR) Method-->
+    <string name="tvCHRDesc">Chien, Hrones and Reswick (CHR) é um método de ajuste que propõe dois critérios de desempenho: a resposta mais rápida possível sem overshoot e a resposta mais rápida possível com 20% overshoot.</string>
     <string name="rbRegula">Regulação</string>
     <string name="rbRegula20">Regu. 20% UP</string>
-    <string name="strDetails">Tabelas Detalhadas</string>
 
-    <string name="strDetails1">Z&amp;N - Malha Fechada</string>
-    <string name="strDetails2">Z&amp;N - Malha Aberta</string>
+    <!--Integral of Absolute Error (IAE) Method-->
+    <string name="tvIAEDesc">Integral Absolute Error (IAE) é um método de ajuste proposto para eliminar o erro em regime permanente usando como critério de desempenho a integral de uma função de erro dentro de uma janela de tempo.</string>
 
-
-    <string name="strDetails5">CHR - Regulação 0% Overshoot</string>
-    <string name="strDetails6">CHR - Regulação 20% Overshoot</string>
-    <string name="strDetails9">IAE/ITAE Regulação</string>
+    <!--Integral of Absolute Error (IMC) Method-->
+    <string name="tvIMCDesc">"Internal Model Control (IMC) é um método de ajuste PID que visa sintonizar de forma que a resposta do sistema tenha uma dinâmica conhecida e para isso utiliza um modelo de processo e uma especificação de desempenho (ajuste lambda) para o ajuste."</string>
+    <string name="swUseLambda">Sintonia Lambda:</string>
+    <string name="hintLambda">Lambda (λ)</string>
+    <string name="swFirstOrder">Modelo de primeira ordem?</string>
+    <string name="SecondTimeConstant">Constante de Tempo</string>
+    <string name="hintSecondTimeConstant">Segunda Constante de Tempo</string>
+    <string name="DampingRatio">Fator de Amortecimento</string>
+    <string name="hintDampingRatio">Fator de Amortecimento</string>
+    <string name="DampingRatioError">Fator de Amortecimento não pode ficar Vazio</string>
+    <string name="tvModelTitle">Escolha um Modelo de Processo</string>
     <string name="tvModelResult1">Modelo 1: Controlador PI </string>
     <string name="tvModelResult2">Modelo 2: Controlador PID </string>
     <string name="tvModelResult3">Modelo 3: Controlador PID</string>
     <string name="tvModelResult4">Modelo 4: Controlador P</string>
     <string name="tvModelResult5">Modelo 5: Controlador PD</string>
-    <string name="tvModelTitle">Escolha um Modelo de Processo</string>
 
+    <!--Integral Time Absolute Error (ITAE) Method-->
+    <string name="tvITAEDesc">Integral Time Absolute Error (ITAE) é um método de ajuste proposto para eliminar o erro em regime permanente usando como critério de desempenho a integral de uma função de erro dentro de uma janela de tempo.</string>
+
+    <!--Tyreus-Luyben (TL) Method-->
+    <string name="tvTLDesc">"Tyreus-Luyben (TL) é um método de ajuste PID mais conservador que o proposto por Ziegler-Nichols, pois consiste em utilizar o ganho e o período crítico para o ajuste, proporcionando desempenho lento e pequeno overshoot."</string>
+
+    <!--Ziegler & Nichols (TL) Method-->
+    <string name="tvZNDesc">"Ziegler-Nichols (Z&amp;N) é um método de sintonia PID no qual dois métodos são propostos para obter um modelo da dinâmica de um processo SISO, analisando-o em malha fechada e malha aberta."</string>
+
+    <!--Process Result-->
+    <string name="tvProcessResults">Resultado</string>
+    <string name="tvConfiguredResult">Os parâmetros do controlador foram calculados para a seguinte configuração:</string>
+
+    <!--Validation Messages-->
+    <string name="ProcessTypeIsRequired">É necessário pelo menos um tipo de processo</string>
+    <string name="ControllerTypeIsRequired">É necessário pelo menos um tipo de controlador</string>
+    <string name="GainError">Ganho não pode ficar vazio</string>
+    <string name="KuError">Ganho último não pode ficar vazio</string>
+    <string name="PuError">Período Último não pode ficar vazio</string>
+    <string name="TimeConstantError">Constante de Tempo não pode ficar vazio</string>
+    <string name="TransportDelayError">Atraso de Transporte não pode ficar vazio</string>
+    <string name="SecondTimeConstantError">A segunda constante de tempo não pode estar vazia</string>
+    <string name="LambdaTuningValueRequired">O valor lambda não pode estar vazio</string>
+
+    <!--App-->
+    <string name="Process">Processo</string>
+    <string name="Controller">Selecione o controlador desejado</string>
+    <string name="ProcessParameters">Insira os parâmetros para o processo de primeira ordem + tempo morto (atraso de transporte)</string>
+    <string name="rbOpened">Malha Aberta</string>
+    <string name="rbClosed">Malha Fechada</string>
+    <string name="Gain">Ganho</string>
+    <string name="TimeConstant">Constante de Tempo</string>
+    <string name="TransportDelay">Atraso de Transporte</string>
+    <string name="btCalculate">Calcular</string>
+    <string name="hintGain">Ganho</string>
+    <string name="hintTime">Constante de Tempo</string>
+    <string name="hintDelay">Atraso de Transporte</string>
+    <string name="hintClosed">Malha Fechada</string>
+    <string name="hintKu">Ganho Último (Ku)</string>
+    <string name="hintPu">Período último (Pu)</string>
+
+    <!--Help Strings -->
     <string name="strHelp">Bem-vindo ao PID Tuner\n\nPID Tuner reúne vários métodos de sintonia de Controlador PID.\nOs métodos Z&amp;N, CHR, IMC, IAE e ITAE estão disponíveis para calcular os parâmetros \n(Proporcional, Integral e Derivativo) do controlador escolhido usando os parâmetros do processo \n(Ganho, Constante de Tempo e Atraso de Transporte).\n\nEste guia irá ajudar a entender como preencher e calcular os parâmetros para os métodos: Ziegler-Nichols e IMC.\n\n- Função de Primeira Ordem -</string>
-
-    <string name="strHelp10">\n- Método do Modelo Interno IMC -</string>
-    <string name="strHelp11">O método Sintonia Lambda é um forma do Modelo Interno (IMC).\nSeu nome vem da letra Grega chamada lambda (λ) e é um parâmetro necessário para calcular o parâmetro do controlador, além é claro, do Ganho do Processo, Constate de Tempo e do Atraso de Transporte.\n\nO parâmetro lambda é uma especificação do usuário sobre performance/robustez que especifica o quão rápido ou quanto tempo o controlador deve gastar para processar a resposta do sistema (Y) para alcançar o que fora definido no setpoint.</string>
-    <string name="strHelp12">O método IMC no PID Tuner é baseado na técnica proposta por Morari e Zafiriou em \'Robust Process Control\' de sintonia para controlador PID  para funções de primeira ordem mais tempo morto (Atraso de Transporte).</string>
-    <string name="strHelp13">Para mais informações sobre os Métodos de Sintonias aqui disponíveis em PID Tuner, Veja as tabelas detalhadas.</string>
     <string name="strHelp2">A equação acima mostra uma função de primeira ordem com tempo morto (Atraso de Transporte),\n</string>
     <string name="strHelp3">Em que:\n- Kp (K) é o Ganho do Processo;\n- θ é o Atraso de Transporte do Processo;\n- τ é a Constante de Tempo do Processo.</string>
     <string name="strHelp4">PID Tuner requere apenas os parâmetros Kp, θ and τ para calcular Kp, Ki, Kd para o controlador escolhido, apenas o método IMC requere um parâmetro a mais, Lambda λ.</string>
     <string name="strHelp5">Para Controlador:\n- P:   Kp é calculado;\n- PI:  Kp e Ki são calculados;\n- PD:  Kp e Kd são calculados;\n- PID: Kp, Ki e Kd são calculados.</string>
     <string name="strHelp6">\n- Ziegler-Nichols -</string>
-    <string name="tvHelp">Ajuda</string>
     <string name="strHelp7">\nZiegler e Nichols propuseram duas abordagem para sintonia do controlador, a primeira abordagem é baseado no sistema de malha aberta, e o segundo é baseado no sistema de malha fechado.\n\nO método de Malha aberta (planta) refere-se a métodos de sintonia de controlador quando ele está em estado manual, é baseado na resposta do degrau.</string>
     <string name="strHelp8">O método de malha fechada (planta) refere-se a métodos de sintonia de controlador quando ele está em estado automático.\nÉ baseado na resposta com oscilações sustentada.\nA figura abaixo mostra a resposta ao degrau quando o ganho é levantado até o Ganho último, causando oscilações sustentadas.; o gráfico ajuda a obter o Período Útimo (PU).</string>
     <string name="strHelp9">\n\nNo PID Tuner, o Método de Ziegler-Nichols para Malha Aberta necessita apenas do Ganho do Processo, Constante de Tempo e o Atraso de Transporte. Já para Malha Fechada, o método necessita do Ganho Último (Ku) e do Período Último (Pu).\n\nPS: o método Tyreus-Luyben de sintonia é um método de malha fechada, então ele necessita apenas do Ganho Último (Ku) e Período Último (Pu). </string>
-
-    <string name="strWelcome">Bem-vindo ao PID Tuner\n\nPID Tuner reúne vários métodos de sintonia de Controlador PID. Os métodos Z&amp;N, CHR, IMC, IAE e ITAE estão disponíveis para calcular os parâmetros (Proporcional, Integral e Derivativo) do controlador escolhido usando os parâmetros do processo (Ganho, Constante de Tempo e Atraso de Transporte)</string>
-    <string name="btStart">Iniciar</string>
-    <string name="tvTuningMethods">Métodos de sintonia</string>
-    <string name="tvTuningInfo">Selecione o método de sintonia para obter os ganhos proporcional, integral e derivativo</string>
-    <string name="tvSettings">Configurações</string>
-    <string name="tvCohenCoonDesc">Cohen-Coon (CC) é um método para sintonizar controlador para processos com alto atraso de transporte</string>
-    <string name="tvCHRDesc">Chien, Hrones and Reswick (CHR) é um método de ajuste que propõe dois critérios de desempenho: a resposta mais rápida possível sem overshoot e a resposta mais rápida possível com 20% overshoot.</string>
-    <string name="tvIAEDesc">Integral Absolute Error (IAE) é um método de ajuste proposto para eliminar o erro em regime permanente usando como critério de desempenho a integral de uma função de erro dentro de uma janela de tempo.</string>
-    <string name="tvIMCDesc">" Internal Model Control (IMC) é um método de ajuste PID que visa sintonizar de forma que a resposta do sistema tenha uma dinâmica conhecida e para isso utiliza um modelo de processo e uma especificação de desempenho (ajuste lambda) para o ajuste."</string>
-    <string name="swUseLambda">Sintonia Lambda:</string>
-    <string name="swFirstOrder">Modelo de primeira ordem?</string>
-    <string name="tvITAEDesc">Integral Time Absolute Error (ITAE) é um método de ajuste proposto para eliminar o erro em regime permanente usando como critério de desempenho a integral de uma função de erro dentro de uma janela de tempo.</string>
-    <string name="tvTLDesc">" Tyreus-Luyben (TL) é um método de ajuste PID mais conservador que o proposto por Ziegler-Nichols, pois consiste em utilizar o ganho e o período crítico para o ajuste, proporcionando desempenho lento e pequeno overshoot."</string>
-    <string name="tvZNDesc">" Ziegler-Nichols (Z&amp;N) é um método de sintonia PID no qual dois métodos são propostos para obter um modelo da dinâmica de um processo SISO, analisando-o em malha fechada e malha aberta."</string>
-    <string name="tvProcessResults">Resultado</string>
-    <string name="tvConfiguredResult">Os parâmetros do controlador foram calculados para a seguinte configuração:</string>
-    <string name="ProcessTypeIsRequired">É necessário pelo menos um tipo de processo</string>
-    <string name="ControllerTypeIsRequired">É necessário pelo menos um tipo de controlador</string>
-    <string name="SecondTimeConstantError">A segunda constante de tempo não pode estar vazia</string>
-    <string name="LambdaTuningValueRequired">O valor lambda não pode estar vazio</string>
-    <string name="InvalidDecimalPlacesValue">O valor é inválido.</string>
+    <string name="strHelp10">\n- Método do Modelo Interno IMC -</string>
+    <string name="strHelp11">O método Sintonia Lambda é um forma do Modelo Interno (IMC).\nSeu nome vem da letra Grega chamada lambda (λ) e é um parâmetro necessário para calcular o parâmetro do controlador, além é claro, do Ganho do Processo, Constate de Tempo e do Atraso de Transporte.\n\nO parâmetro lambda é uma especificação do usuário sobre performance/robustez que especifica o quão rápido ou quanto tempo o controlador deve gastar para processar a resposta do sistema (Y) para alcançar o que fora definido no setpoint.</string>
+    <string name="strHelp12">O método IMC no PID Tuner é baseado na técnica proposta por Morari e Zafiriou em \'Robust Process Control\' de sintonia para controlador PID  para funções de primeira ordem mais tempo morto (Atraso de Transporte).</string>
+    <string name="strHelp13">Para mais informações sobre os Métodos de Sintonias aqui disponíveis em PID Tuner, Veja as tabelas detalhadas.</string>
+    <string name="strDetails">Tabelas Detalhadas</string>
+    <string name="strDetails0" translatable="false">Tyreus-Luyben</string>
+    <string name="strDetails1">Z&amp;N - Malha Fechada</string>
+    <string name="strDetails2">Z&amp;N - Malha Aberta</string>
+    <string name="strDetails5">CHR - Regulação 0% Overshoot</string>
+    <string name="strDetails6">CHR - Regulação 20% Overshoot</string>
+    <string name="strDetails9">IAE/ITAE Regulação</string>
 </resources>

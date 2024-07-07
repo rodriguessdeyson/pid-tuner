@@ -4,8 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDarkBackground"
+    android:background="@drawable/column3"
     tools:context=".ResultActivity">
+
+    <View
+        android:id="@+id/ViewBackgroundContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorTertiary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/LinearLayoutProcessParameters"
@@ -13,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ViewContainer"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/border_elevation"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,14 +36,14 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/colorSecondaryText" />
 
         <TextView
             android:id="@+id/TextViewTimeConstant"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/colorSecondaryText" />
 
         <TextView
             android:id="@+id/TextViewTransportDelay"
@@ -42,14 +51,14 @@
             android:layout_height="40dp"
             android:gravity="center"
             android:singleLine="true"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/colorSecondaryText" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tvProcessResults"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorSecondaryText"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +84,7 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:text="@string/tvConfiguredResult"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorSecondaryText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

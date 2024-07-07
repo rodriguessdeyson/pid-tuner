@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border_elevation"
     android:focusableInTouchMode="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/tvProcessResults"
-                android:textColor="@color/colorText"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="18sp" />
 
             <View
@@ -52,7 +51,7 @@
                     android:gravity="center"
                     android:text="@string/Kp"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorText"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="18sp" />
 
                 <TextView
@@ -62,7 +61,7 @@
                     android:gravity="center"
                     android:text="@string/Ki"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorText"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="18sp" />
 
                 <TextView
@@ -72,7 +71,7 @@
                     android:gravity="center"
                     android:text="@string/Kd"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorText"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -91,7 +90,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="-"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="18sp" />
 
                 <TextView
@@ -101,7 +100,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="-"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="18sp" />
 
                 <TextView
@@ -111,7 +110,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="-"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="18sp" />
 
             </LinearLayout>

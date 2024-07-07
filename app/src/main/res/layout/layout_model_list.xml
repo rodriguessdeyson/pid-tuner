@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDarkBackground">
+    android:background="@drawable/column3">
+
+    <View
+        android:id="@+id/ViewBackgroundContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorTertiary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FloatingActionButtonClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:backgroundTint="@color/colorCloseButton"
+        android:focusable="true"
+        android:tint="@color/colorButtonText"
+        app:backgroundTint="@color/colorButtonPressed"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.100000024"
-        app:srcCompat="@mipmap/ic_close" />
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
     <TextView
         android:id="@+id/TextViewModelTitle"
@@ -28,7 +40,7 @@
         android:layout_gravity="center"
         android:text="@string/tvModelTitle"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorSecondaryText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
@@ -59,7 +71,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="45dp"
                 android:layout_weight="1"
-                android:background="@drawable/border_model"
+                android:background="@drawable/formula_container"
                 android:contentDescription="@string/tvModelResult1"
                 android:src="@drawable/model1" />
 
@@ -69,7 +81,7 @@
                 android:layout_gravity="center"
                 android:text="@string/tvModelResult1"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText"
+                android:textColor="@color/colorSecondaryText"
                 android:visibility="visible" />
 
             <ImageButton
@@ -79,7 +91,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/border_model"
+                android:background="@drawable/formula_container"
                 android:contentDescription="@string/tvModelResult2"
                 android:src="@drawable/model2" />
 
@@ -89,7 +101,7 @@
                 android:layout_gravity="center"
                 android:text="@string/tvModelResult2"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorSecondaryText" />
 
             <ImageButton
                 android:id="@+id/ImageButtonModel3"
@@ -98,7 +110,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/border_model"
+                android:background="@drawable/formula_container"
                 android:contentDescription="@string/tvModelResult3"
                 android:src="@drawable/model3" />
 
@@ -108,7 +120,7 @@
                 android:layout_gravity="center"
                 android:text="@string/tvModelResult3"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorSecondaryText" />
 
             <ImageButton
                 android:id="@+id/ImageButtonModel4"
@@ -117,7 +129,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/border_model"
+                android:background="@drawable/formula_container"
                 android:contentDescription="@string/tvModelResult4"
                 android:src="@drawable/model4" />
 
@@ -127,7 +139,7 @@
                 android:layout_gravity="center"
                 android:text="@string/tvModelResult4"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorSecondaryText" />
 
             <ImageButton
                 android:id="@+id/ImageButtonModel5"
@@ -136,7 +148,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/border_model"
+                android:background="@drawable/formula_container"
                 android:contentDescription="@string/tvModelResult5"
                 android:src="@drawable/model5" />
 
@@ -146,7 +158,7 @@
                 android:layout_gravity="center"
                 android:text="@string/tvModelResult5"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorSecondaryText" />
 
         </LinearLayout>
     </ScrollView>

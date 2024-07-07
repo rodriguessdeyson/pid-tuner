@@ -50,7 +50,7 @@
 
         <View
             android:id="@+id/ViewContainer"
-            android:layout_width="411dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"

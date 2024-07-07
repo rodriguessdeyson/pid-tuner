@@ -1,5 +1,5 @@
 <resources>
-    <!--Welcome Layout and Main Layout-->
+    <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID\nTuner</string>
     <string name="strWelcome">"PID Tuner provides various methods for tuning PID controllers like Ziegler-Nichols, Tyreus-Luyben, Cohen-Coon, and more. \n\nThese methods help you calculate the Proportional, Integral, and Derivative parameters based on your process parameters: Gain, Time Constant, and Dead Time"</string>
@@ -7,11 +7,11 @@
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
     <string name="ivPidTunerHelpDescription">PID Tuner help  icon. Goes to PID Tuner help page.</string>
     <string name="ivFirstOrderFunctionDescription">First order function.</string>
+    <string name="About">PID Tuner is an application developed to help engineering students to compute controller parameters based on most common methods available, it is only for study purposes.</string>
 
     <!--Tuning Information-->
     <string name="tvTuningMethods">Tuning Methods</string>
     <string name="tvTuningInfo">Select the tuning method to obtain the proportional, integral and derivative parameters</string>
-    <string name="tvSettings">Settings</string>
     <string name="tvHelp">Help</string>
 
     <!--Cohen-Coon (CC) Method-->
@@ -22,6 +22,10 @@
     <string name="tvCHR" translatable="false">Chien-Hrones-Reswick</string>
     <string name="tvCHRDesc">Chien, Hrones and Reswick (CHR) is a tuning method that proposes two performance criteria: the fastest possible response without overshoot and the fastest possible response with 20% overshoot.</string>
     <string name="swIs20UP" translatable="false">20% UP?</string>
+    <string name="rbServo" translatable="false">Servo</string>
+    <string name="rbServo20" translatable="false">Servo 20% UP</string>
+    <string name="rbRegula">Regulator</string>
+    <string name="rbRegula20">Regu. 20% UP</string>
 
     <!--Integral of Absolute Error (IAE) Method-->
     <string name="tvIAE" translatable="false">Integral Absolute Error</string>
@@ -29,15 +33,26 @@
 
     <!--Integral of Absolute Error (IMC) Method-->
     <string name="tvIMC" translatable="false">Internal Model Control</string>
+    <string name="tvIMCDesc">Internal Model Control (IMC) is a PID tuning method that aims to tune in such a way that the system response has a known dynamics and for that it uses a process model and a performance specification (lambda tuning) for the adjustment.</string>
     <string name="swUseLambda">Lambda Tuning:</string>
+    <string name="hintLambda">Lambda (λ)</string>
     <string name="rbLambda" translatable="false">Lambda</string>
     <string name="swFirstOrder">First Order Model?</string>
+    <string name="SecondTimeConstant">Time Constant</string>
+    <string name="hintSecondTimeConstant">Second Time Constant (τ)</string>
+    <string name="DampingRatio">Damping Ratio</string>
+    <string name="DampingRatioError">Damping Ratio cannot be empty</string>
+    <string name="hintDampingRatio">Damping Ratio (ε)</string>
+    <string name="tvModelTitle">Choose the Process Model with the controller</string>
+    <string name="tvModelResult1">Model 1: PI Controller</string>
+    <string name="tvModelResult2">Model 2: PID Controller</string>
+    <string name="tvModelResult3">Model 3: PID Controller</string>
+    <string name="tvModelResult4">Model 4: P Controller</string>
+    <string name="tvModelResult5">Model 5: PD Controller</string>
 
     <!--Integral Time Absolute Error (ITAE) Method-->
     <string name="tvITAE" translatable="false">Integral Time Absolute Error</string>
     <string name="tvITAEDesc">Integral Time Absolute Error (ITAE) is a tuning method proposed to eliminate the error in steady state using as an performance criterion the integral of an error function within a time window.</string>
-
-    <!--Rule of Thumb (RT) Method-->
 
     <!--Tyreus-Luyben (TL) Method-->
     <string name="tvTL" translatable="false">Tyreus-Luyben</string>
@@ -50,30 +65,32 @@
     <!--Process Result-->
     <string name="tvProcessResults">Results</string>
     <string name="tvConfiguredResult">The controller parameters were computed for the following configuration: </string>
+
+    <!--Validation Messages-->
     <string name="ProcessTypeIsRequired">At least one process type is required</string>
     <string name="ControllerTypeIsRequired">At least one controller type is required</string>
-    <!--ZN-->
+    <string name="GainError">Gain cannot be empty</string>
+    <string name="KuError">Ultimate Gain cannot be empty</string>
+    <string name="PuError">Ultimate Period cannot be empty</string>
+    <string name="TimeConstantError">Time Constant cannot be empty</string>
+    <string name="TransportDelayError">Transport Delay cannot be empty.</string>
+    <string name="SecondTimeConstantError">Second Time Constant cannot be empty</string>
+    <string name="LambdaTuningValueRequired">Lambda value cannot be empty</string>
+
+    <!--App-->
+    <string name="Process">Process</string>
+    <string name="Controller">Select the desired controller</string>
+    <string name="ProcessParameters">Enter the parameters for first order + dead time (transport delay) process</string>
     <string name="rbOpened">Opened Loop</string>
     <string name="rbClosed">Closed Loop</string>
     <string name="rbP" translatable="false">P</string>
     <string name="rbPI" translatable="false">PI</string>
     <string name="rbPD" translatable="false">PD</string>
     <string name="rbPID" translatable="false">PID</string>
-    <string name="Process">Process</string>
-    <string name="Controller">Select the desired controller</string>
-    <string name="ProcessParameters">Enter the parameters for first order + dead time (transport delay) process</string>
     <string name="Gain">Gain</string>
     <string name="TimeConstant">Time Constant</string>
     <string name="TransportDelay">Transport Delay</string>
-    <string name="GainError">Gain cannot be empty</string>
-    <string name="TimeConstantError">Time Constant cannot be empty</string>
-    <string name="SecondTimeConstantError">Second Time Constant cannot be empty</string>
-    <string name="LambdaTuningValueRequired">Lambda value cannot be empty</string>
-    <string name="TransportDelayError">Transport Delay cannot be empty.</string>
-    <string name="KuError">Ultimate Gain cannot be empty</string>
-    <string name="PuError">Ultimate Period cannot be empty</string>
     <string name="btCalculate">Compute</string>
-    <string name="btClean">Clean</string>
     <string name="Kp" translatable="false">Kp</string>
     <string name="Ki" translatable="false">Ki</string>
     <string name="Kd" translatable="false">Kd</string>
@@ -84,48 +101,8 @@
     <string name="hintKu">Ultimate Gain (Ku)</string>
     <string name="hintPu">Ultimate Period (Pu)</string>
 
-    <!--Tyreus-Luyben-->
-    <string name="Title2" translatable="false">Tyreus-Luyben</string>
-
-    <!--ruleofthumb-->
-
-    <!--CHR-->
-    <string name="rbServo" translatable="false">Servo</string>
-    <string name="rbServo20" translatable="false">Servo 20% UP</string>
-    <string name="rbRegula">Regulator</string>
-    <string name="rbRegula20">Regu. 20% UP</string>
-
-    <!--CC-->
-
-    <!--IMC-->
-    <string name="hintLambda">Lambda (λ)</string>
-
-    <!--IMC - Models-->
-    <string name="SecondTimeConstant">Time Constant</string>
-    <string name="hintSecondTimeConstant">Second Time Constant (τ)</string>
-    <string name="DampingRatio">Damping Ratio</string> <!--Fator de amortecimento-->
-    <string name="DampingRatioError">Damping Ratio cannot be empty</string>
-    <string name="hintDampingRatio">Damping Ratio (ε)</string>
-    <string name="tvModelTitle">Choose the Process Model with the controller</string>
-    <string name="tvModelResult1">Model 1: PI Controller</string>
-    <string name="tvModelResult2">Model 2: PID Controller</string>
-    <string name="tvModelResult3">Model 3: PID Controller</string>
-    <string name="tvModelResult4">Model 4: P Controller</string>
-    <string name="tvModelResult5">Model 5: PD Controller</string>
-
-    <!--IAE-->
-
-    <!--ITAE-->
-
-    <!--Preferences-->
-    <string name="InvalidDecimalPlacesValue">The value is not valid.</string>
-    <string name="pref_set_all">All Parameters</string>
-    <string name="pref_set_all_summary">Set Gain (Kp), Time Constant (τ) and Transport Delay (θ) parameter to all methods. It will be called only once.</string>
-    <string name="pref_decimal_places">Decimal Places</string>
-    <string name="pref_decimal_places_summary">Set the number of decimal places.</string>
-
     <!--Help Strings -->
-    <string name="strHelp">Welcome to PID Tuner\nPID Tuner gathers several PID controller tuning methods.\nZ&amp;N, CHR, CC, IMC, IAE and ITAE methods are available to calculate the controller parameters \n(Proportional, Integral and Derivative) using the process parameters \n(Gain, Time Constant and Dead Time).\n\nThis guide will help to understand how to compute the controllers parameters for two methods: Ziegler-Nichols and IMC.\n\n- First Order Function -</string>
+    <string name="strHelp">Welcome to PID Tuner\nPID Tuner gathers several PID controller tuning methods.\nZ&amp;N, CHR, CC, IMC, IAE and ITAE methods are available to calculate the controller parameters \n(Proportional, Integral and Derivative) using the process parameters \n(Gain, Time Constant and Dead Time).\n\nThis guide will help to understand how to compute the controllers parameters.\n\n- First Order Function -</string>
     <string name="strHelp2">The equation above shows the first order function with dead time (Transport Delay),\n</string>
     <string name="strHelp3">where:\n- Kp (K) is the Process Gain;\n- θ is the Transport Delay;\n- τ is the Process Time Constant.</string>
     <string name="strHelp4">PID Turner requires only Kp, θ and τ parameters to compute Kp, Ki and Kd for PID Controller, only IMC Method requires one more parameter, Lambda λ.</string>
@@ -139,6 +116,7 @@
     <string name="strHelp12">The IMC Method in PID Tuner is based on technique proposed by Morari and Zafiriou in \'Robust Process Control\' of PID tunings for first order plus dead time function.</string>
     <string name="strHelp13">For more information about the Tuning Methods, check the tables.</string>
     <string name="strDetails">Detailed Tables</string>
+    <string name="strDetails0" translatable="false">Tyreus-Luyben</string>
     <string name="strDetails1">Z&amp;N - Closed-Loop</string>
     <string name="strDetails2">Z&amp;N - Opened-Loop</string>
     <string name="strDetails3" translatable="false">CHR - Servo 0% Overshoot </string>
@@ -150,8 +128,5 @@
     <string name="strDetails9">IAE/ITAE Regulator</string>
     <string name="strDetails10" translatable="false">IAE/ITAE Servo</string>
 
-    <string name="About">PID Tuner is an application developed to help engineering students to compute controller parameters based on most common methods available,\nit is only for study purposes.\n\n</string>
 
-    <!--Compare All Methods Pro-->
-    <string name="tvIMCDesc">Internal Model Control (IMC) is a PID tuning method that aims to tune in such a way that the system response has a known dynamics and for that it uses a process model and a performance specification (lambda tuning) for the adjustment.</string>
 </resources>

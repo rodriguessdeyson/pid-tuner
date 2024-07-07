@@ -7,15 +7,26 @@
     android:background="@drawable/column2"
     tools:context=".TuningActivity">
 
+    <View
+        android:id="@+id/ViewBackgroundContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorTertiary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/roboto"
         android:lineSpacingExtra="10sp"
         android:text="@string/tvTuningMethods"
-        android:textColor="@color/colorPrimaryText"
+        android:textColor="@color/colorSecondaryText"
         android:textSize="30sp"
         android:typeface="normal"
         app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
@@ -23,7 +34,7 @@
         app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.636" />
+        app:layout_constraintVertical_bias="0.486" />
 
     <View
         android:id="@+id/ViewContainer"
@@ -32,14 +43,14 @@
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <TextView
         android:id="@+id/TextViewTuningInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="71dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -47,7 +58,7 @@
         android:gravity="center|start"
         android:text="@string/tvTuningInfo"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryText"
+        android:textColor="@color/colorSecondaryText"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -92,5 +103,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.96"
         app:tint="@color/colorButtonText" />
+
+    <include
+        android:id="@+id/HelpLayout"
+        layout="@layout/layout_tuning_help"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

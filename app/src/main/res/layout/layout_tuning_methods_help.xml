@@ -4,12 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/border_elevation">
+    android:background="@drawable/column1">
+
+    <View
+        android:id="@+id/ViewBackgroundContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorTertiary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,13 +34,16 @@
             android:weightSum="1">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:fontFamily="@font/roboto"
                 android:gravity="center"
                 android:text="@string/strHelp"
+                android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:typeface="normal" />
 
             <View
                 android:layout_width="match_parent"
@@ -41,51 +56,52 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/border_model"
+                android:background="@drawable/formula_container"
+                android:contentDescription="@string/ivFirstOrderFunctionDescription"
                 android:scaleType="fitCenter"
                 android:src="@drawable/first_order_dynamic" />
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:gravity="center"
                 android:text="@string/strHelp2"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:typeface="normal" />
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/roboto"
                 android:text="@string/strHelp3"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:typeface="normal" />
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:gravity="center"
                 android:text="@string/strHelp4"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:typeface="normal" />
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:text="@string/strHelp5"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/strHelp6"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:typeface="normal" />
 
             <View
                 android:layout_width="match_parent"
@@ -94,81 +110,16 @@
                 android:background="@color/colorAccent" />
 
             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/strHelp7"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/strHelp8"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="250dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/border_model"
-                android:src="@drawable/ultimategain" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/strHelp9"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/strHelp10"
-                android:textAlignment="gravity"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
-
-            <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/colorAccent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/strHelp11"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/strHelp12"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:gravity="center"
                 android:text="@string/strHelp13"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:typeface="normal" />
 
             <Button
                 android:id="@+id/ButtonDetailedTables"
@@ -176,10 +127,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/button_text_colors"
-                app:backgroundTint="@null"
                 android:background="@drawable/button_style"
-                android:text="@string/strDetails" />
+                android:text="@string/strDetails"
+                android:textColor="@color/button_text_colors"
+                app:backgroundTint="@null" />
 
             <View
                 android:layout_width="match_parent"
@@ -188,13 +139,15 @@
                 android:background="@color/colorAccent" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:fontFamily="@font/roboto"
                 android:gravity="center"
                 android:text="@string/About"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:typeface="normal" />
 
         </LinearLayout>
     </ScrollView>

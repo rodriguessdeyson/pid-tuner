@@ -50,7 +50,7 @@
 
         <View
             android:id="@+id/ViewContainer"
-            android:layout_width="411dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -157,13 +157,14 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LinearLayoutProcess">
+            app:layout_constraintTop_toBottomOf="@+id/LinearLayoutProcess"
+            tools:visibility="gone">
 
             <TextView
                 android:id="@+id/TextViewController"
@@ -250,7 +251,7 @@
                 tools:layout_editor_absoluteY="63dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/EditTextTimeConstant"
+                    android:id="@+id/EditTextParam01"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -273,7 +274,7 @@
                 tools:layout_editor_absoluteY="128dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/EditTextTransportDelay"
+                    android:id="@+id/EditTextParam02"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -311,7 +312,7 @@
             android:layout_width="0dp"
             android:layout_height="126dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
             android:orientation="vertical"
@@ -329,7 +330,34 @@
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/ImageViewSelectedModel"
+                android:layout_width="196dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="2sp"
+                android:background="@drawable/formula_container"
+                android:contentDescription="@string/app_name"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.465"
+                tools:srcCompat="@drawable/model1" />
         </LinearLayout>
+
+        <include
+            android:id="@+id/ViewPIDModels"
+            layout="@layout/layout_model_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

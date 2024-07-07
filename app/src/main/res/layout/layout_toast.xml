@@ -9,5 +9,5 @@
         android:id="@+id/TextViewMessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/colorPrimaryText" />
+        android:textColor="@color/colorSecondaryText" />
 </LinearLayout>

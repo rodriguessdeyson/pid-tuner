@@ -10,118 +10,172 @@ import java.security.InvalidParameterException;
 
 public class CHR
 {
-	@org.jetbrains.annotations.NotNull
-	public static ControllerParameters Compute(ControlType controlType, @NotNull ControlProcessType cpType,
-		double kGain, double tTime, double tDelay)
+	public static ControllerParameters ComputeServo(ControlType controlType, double kGain, double tTime, double tDelay)
 	{
-		// Proportional Gain.
-		double kp;
-
-		// Integral gain.
-		double ki;
-
-		// Derivative gain.
-		double kd;
-		switch (cpType)
+		switch (controlType)
 		{
-			case Servo:
-				switch (controlType)
-				{
-					case P:
-						kp = (0.3 * tTime) / (kGain * tDelay);
-						ki = 0;
-						kd = 0;
-						break;
-					case PI:
-						kp = (0.35 * tTime) / (kGain * tDelay);
-						ki = 1.16 * tTime;
-						kd = 0;
-						break;
-					case PID:
-						kp = (0.6 * tTime) / (kGain * tDelay);
-						ki = tTime;
-						kd = (tDelay / 2);
-						break;
-					default:
-						throw new InvalidParameterException(controlType.toString());
-				}
-				break;
-			case Servo20:
-				switch (controlType)
-				{
-					case P:
-						kp = (0.7 * tTime) / (kGain * tDelay);
-						ki = 0;
-						kd = 0;
-						break;
-					case PI:
-						kp = (0.6 * tTime) / (kGain * tDelay);
-						ki = tTime;
-						kd = 0;
-						break;
-					case PID:
-						kp = (0.95 * tTime) / (kGain*tDelay);
-						ki = 1.357 * tTime;
-						kd = 0.473 * tDelay;
-						break;
-					default:
-						throw new InvalidParameterException(controlType.toString());
-				}
-				break;
-			case Regulator:
-				switch (controlType)
-				{
-					case P:
-						kp = (0.3 * tTime) / (kGain * tDelay);
-						ki = 0;
-						kd = 0;
-						break;
-					case PI:
-						kp = (0.6 * tTime) / (kGain * tDelay);
-						ki = 4 * tDelay;
-						kd = 0;
-						break;
-					case PID:
-						kp = (0.95 * tTime) / (kGain * tDelay);
-						ki = 2.375 * tDelay;
-						kd = 0.421 * tDelay;
-						break;
-					default:
-						throw new InvalidParameterException(controlType.toString());
-				}
-				break;
-			case Regulator20:
-				switch (controlType)
-				{
-					case P:
-						kp = (0.7 * tTime) / tDelay;
-						ki = 0;
-						kd = 0;
-						break;
-					case PI:
-						kp = (0.7 * tTime) / tDelay;
-						ki = 2.3 * tDelay;
-						kd = 0;
-						break;
-					case PID:
-						kp = (1.2 * tTime) / tDelay;
-						ki = 2 * tDelay;
-						kd = 0.42 * tDelay;
-						break;
-					default:
-						throw new InvalidParameterException(controlType.toString());
-				}
-				break;
+			case P:
+				return ServoPController(kGain, tTime, tDelay);
+			case PI:
+				return ServoPIController(kGain, tTime, tDelay);
+			case PID:
+				return ServoPIDController(kGain, tTime, tDelay);
 			default:
-				throw new InvalidParameterException(cpType.toString());
+				throw new InvalidParameterException(controlType.toString());
 		}
+	}
 
-		// Create the return object.
-		ControllerParameters chr = new ControllerParameters();
-		chr.setKP(kp);
-		chr.setKI(ki);
-		chr.setKD(kd);
-		chr.setType(controlType);
-		return chr;
+	public static ControllerParameters ComputeServo20UP(ControlType controlType, double kGain, double tTime, double tDelay)
+	{
+		switch (controlType)
+		{
+			case P:
+				return Servo20UPPController(kGain, tTime, tDelay);
+			case PI:
+				return Servo20UPPIController(kGain, tTime, tDelay);
+			case PID:
+				return Servo20UPPIDController(kGain, tTime, tDelay);
+			default:
+				throw new InvalidParameterException(controlType.toString());
+		}
+	}
+
+	public static ControllerParameters ComputeRegulator(ControlType controlType, double kGain, double tTime, double tDelay)
+	{
+		switch (controlType)
+		{
+			case P:
+				return RegulatorPController(kGain, tTime, tDelay);
+			case PI:
+				return RegulatorPIController(kGain, tTime, tDelay);
+			case PID:
+				return RegulatorPIDController(kGain, tTime, tDelay);
+			default:
+				throw new InvalidParameterException(controlType.toString());
+		}
+	}
+
+	public static ControllerParameters ComputeRegulator20UP(ControlType controlType, double kGain, double tTime, double tDelay)
+	{
+		switch (controlType)
+		{
+			case P:
+				return Regulator20UPPController(kGain, tTime, tDelay);
+			case PI:
+				return Regulator20UPPIController(kGain, tTime, tDelay);
+			case PID:
+				return Regulator20UPPIDController(kGain, tTime, tDelay);
+			default:
+				throw new InvalidParameterException(controlType.toString());
+		}
+	}
+
+	private static ControllerParameters ServoPController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.3 * tTime) / (kGain * tDelay);
+		double ki = 0;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.P, kp, ki, kd);
+	}
+
+	private static ControllerParameters ServoPIController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.35 * tTime) / (kGain * tDelay);
+		double ki = 1.16 * tTime;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+	}
+
+	private static ControllerParameters ServoPIDController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.6 * tTime) / (kGain * tDelay);
+		double ki = tTime;
+		double kd = (tDelay / 2);
+
+		return new ControllerParameters(ControlType.P, kp, ki, kd);
+	}
+
+	private static ControllerParameters Servo20UPPController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.7 * tTime) / (kGain * tDelay);
+		double ki = 0;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.P, kp, ki, kd);
+	}
+
+	private static ControllerParameters Servo20UPPIController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.6 * tTime) / (kGain * tDelay);
+		double ki = tTime;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+	}
+
+	private static ControllerParameters Servo20UPPIDController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.95 * tTime) / (kGain*tDelay);
+		double ki = 1.357 * tTime;
+		double kd = 0.473 * tDelay;
+
+		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+	}
+
+	private static ControllerParameters RegulatorPController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.3 * tTime) / (kGain * tDelay);
+		double ki = 0;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.P, kp, ki, kd);
+	}
+
+	private static ControllerParameters RegulatorPIController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.6 * tTime) / (kGain * tDelay);
+		double ki = 4 * tDelay;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+	}
+
+	private static ControllerParameters RegulatorPIDController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.95 * tTime) / (kGain * tDelay);
+		double ki = 2.375 * tDelay;
+		double kd = 0.421 * tDelay;
+
+		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+	}
+
+	private static ControllerParameters Regulator20UPPController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.7 * tTime) / tDelay;
+		double ki = 0;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.P, kp, ki, kd);
+	}
+
+	private static ControllerParameters Regulator20UPPIController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (0.7 * tTime) / tDelay;
+		double ki = 2.3 * tDelay;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+	}
+
+	private static ControllerParameters Regulator20UPPIDController(double kGain, double tTime, double tDelay)
+	{
+		double kp = (1.2 * tTime) / tDelay;
+		double ki = 2 * tDelay;
+		double kd = 0.42 * tDelay;
+
+		return new ControllerParameters(ControlType.PID, kp, ki, kd);
 	}
 }
+

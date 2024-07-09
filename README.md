@@ -35,6 +35,20 @@ The following methods are available for computing the controller parameters:
 	|PI              |$$0.45Ku$$    |$$\frac{Pu} {1.2}$$          |-                |
 	|PID             |$$0.6Ku$$   |$$\frac{Pu} {2}$$            |$$\frac{Pu} {8}$$|
 
+- ### Tyreus-Luyben
+
+	Tyreus-Luyben (TL) is a more conservative PID adjustment method than that proposed by Ziegler-Nichols, as it consists of using the gain and the critical period for the adjustment, providing slow performance and small overshoot.
+
+	The following table shows the equations for each PID parameter:
+
+	|    Z&amp;N     | Kp                 |Ki                           |  Kd               |
+	|----------------|--------------------|-----------------------------|-------------------|
+	|P               |-                   |-                            |-                  |
+	|PI              |$$\frac{Ku} {3.2}$$ |$$\frac{Pu} {0.45}$$         |-                  |
+	|PID             |$$\frac{Ku} {3.2}$$ |$$\frac{Pu} {0.45}$$         |$$\frac{Pu} {6.3}$$|
+
+	> Where Ku and Pu are, respectively, ultimate gain e ultimate period.
+
 - ## CHR
 
 	Chien, Hrones and Reswick (CHR) is a tuning method that proposes two performance criteria: the fastest possible response without overshoot and the fastest possible response with 20% overshoot.
@@ -102,54 +116,40 @@ The following methods are available for computing the controller parameters:
 	**Integral Absolute Error (IAE)** is a tuning method proposed to eliminate the error in steady state integrating the absolute error over time. **Integral Time Absolute Error (ITAE)** is a tuning method proposed to eliminate the error in steady state using as an performance criterion the integrates the absolute error multiplied by the time over time.
 
 	The following table shows the equations for each PID parameter:
-- Servo:
 
-$$Kp = \frac{1}{K}*(A*(\frac{\theta}{\tau})^B)$$ 
+	- Servo:
 
-$$Ki = \frac{\tau}{(C + D * \frac{\theta}{\tau})}$$ 
+	$$Kp = \frac{1}{K}*(A*(\frac{\theta}{\tau})^B)$$
 
-$$Kd = E*(\frac{\theta}{\tau})^F$$ 
+	$$Ki = \frac{\tau}{(C + D * \frac{\theta}{\tau})}$$
 
-> Where A, B, C, D, E and F are parameters from Table IAE/ITAE Servo.
+	$$Kd = E*(\frac{\theta}{\tau})^F$$
+	> Where A, B, C, D, E and F are parameters from Table IAE/ITAE Servo.
 
- IAE/ITAE Servo:
+	IAE/ITAE Servo:
 
-|Controller  |Method   |A    |B     |C    |D     |E    |F    |
-|------------|---------|-----|------|-----|------|-----|-----|
-|PI          |IAE      |0.758|-0.861|1.02 |-0.323|-    |-    |
-|PID         |IAE      |1.086|-0.869|0.740|-0.130|0.348|0.914|
-|PI          |ITAE     |0.586|-0.916|1.03 |-0.165|-    |-    |
-|PID         |ITAE     |0.965|-0.850|0.796|-0.147|0.308|0.929|
+	|Controller  |Method   |A    |B     |C    |D     |E    |F    |
+	|------------|---------|-----|------|-----|------|-----|-----|
+	|PI          |IAE      |0.758|-0.861|1.02 |-0.323|-    |-    |
+	|PID         |IAE      |1.086|-0.869|0.740|-0.130|0.348|0.914|
+	|PI          |ITAE     |0.586|-0.916|1.03 |-0.165|-    |-    |
+	|PID         |ITAE     |0.965|-0.850|0.796|-0.147|0.308|0.929|
 
-- Regulator:
+	- Regulator:
 
-$$Kp = \frac{1}{K}*(A*(\frac{\theta}{\tau})^B)$$ 
+	$$Kp = \frac{1}{K}*(A*(\frac{\theta}{\tau})^B)$$
 
-$$Ki = \frac{\tau}{(C * (\frac{\theta}{\tau})^D)}$$ 
+	$$Ki = \frac{\tau}{(C * (\frac{\theta}{\tau})^D)}$$
 
-$$Kd = E*(\frac{\theta}{\tau})^F$$ 
+	$$Kd = E*(\frac{\theta}{\tau})^F$$
 
-> Where A, B, C, D, E and F are parameters from Table IAE/ITAE Regulator.
+	> Where A, B, C, D, E and F are parameters from Table IAE/ITAE Regulator.
 
-IAE/ITAE Regulator:
+	IAE/ITAE Regulator:
 
-|Controller  |Method   |A    |B     |C    |D     |E    |F    |
-|------------|---------|-----|------|-----|------|-----|-----|
-|PI          |IAE      |0.984|-0.986|0.608|-0.707|-    |-    |
-|PID         |IAE      |1.435|-0.921|0.878|-0.749|0.482|1.137|
-|PI          |ITAE     |0.859|-0.977|0.674|-0.68 |-    |-    |
-|PID         |ITAE     |1.357|-0.947|0.842|-0.738|0.381|0.995|
-
-- ## Tyreus-Luyben
-
-	Tyreus-Luyben (TL) is a more conservative PID adjustment method than that proposed by Ziegler-Nichols, as it consists of using the gain and the critical period for the adjustment, providing slow performance and small overshoot.
-
-	The following table shows the equations for each PID parameter:
-
-	|    Z&amp;N     | Kp                 |Ki                           |  Kd               |
-	|----------------|--------------------|-----------------------------|-------------------|
-	|P               |-                   |-                            |-                  |
-	|PI              |$$\frac{Ku} {3.2}$$ |$$\frac{Pu} {0.45}$$         |-                  |
-	|PID             |$$\frac{Ku} {3.2}$$ |$$\frac{Pu} {0.45}$$         |$$\frac{Pu} {6.3}$$|
-
-	> Where Ku and Pu are, respectively., ultimate gain e ultimate period.
+	|Controller  |Method   |A    |B     |C    |D     |E    |F    |
+	|------------|---------|-----|------|-----|------|-----|-----|
+	|PI          |IAE      |0.984|-0.986|0.608|-0.707|-    |-    |
+	|PID         |IAE      |1.435|-0.921|0.878|-0.749|0.482|1.137|
+	|PI          |ITAE     |0.859|-0.977|0.674|-0.68 |-    |-    |
+	|PID         |ITAE     |1.357|-0.947|0.842|-0.738|0.381|0.995|

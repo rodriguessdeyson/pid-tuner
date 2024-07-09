@@ -157,15 +157,15 @@ public class ResultActivity extends AppCompatActivity
 		LayoutInflater inflater = getLayoutInflater();
 		for (TuningMethod method : TuningMethods)
 		{
-			// Checks if the process type is null.
-			if (method.getControlProcessTypes() == null)
+			for (ControlProcessType pType : method.getControlProcessTypes())
 			{
 				TextView mainHeader = new TextView(getApplicationContext());
-				mainHeader.setText(method.getTuningName());
+				mainHeader.setText(String.format("%s - %s", method.getTuningName(), pType));
 				mainHeader.setTextSize(18);
 				mainHeader.setGravity(Gravity.CENTER);
 				mainHeader.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText));
 				LinearResultContainer.addView(mainHeader);
+
 				for (ControlType cType : method.getControlTypes())
 				{
 					@SuppressLint("InflateParams")
@@ -186,39 +186,6 @@ public class ResultActivity extends AppCompatActivity
 						}
 					}
 					LinearResultContainer.addView(resultView);
-				}
-			}
-			else
-			{
-				for (ControlProcessType pType : method.getControlProcessTypes())
-				{
-					TextView mainHeader = new TextView(getApplicationContext());
-					mainHeader.setText(String.format("%s - %s", method.getTuningName(), pType));
-					mainHeader.setTextSize(18);
-					mainHeader.setGravity(Gravity.CENTER);
-					mainHeader.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText));
-					LinearResultContainer.addView(mainHeader);
-					for (ControlType cType : method.getControlTypes())
-					{
-						@SuppressLint("InflateParams")
-						View resultView = inflater.inflate(R.layout.layout_pid_parameters, null);
-						TextView tvResultFor = resultView.findViewById(R.id.TextViewControllerParameters);
-						TextView tvKP = resultView.findViewById(R.id.TextViewKPR);
-						TextView tvKI = resultView.findViewById(R.id.TextViewKIR);
-						TextView tvKD = resultView.findViewById(R.id.TextViewKDR);
-
-						tvResultFor.setText(cType.toString());
-						for (ControllerParameters parameter : method.getParameters())
-						{
-							if (parameter.getType() == cType)
-							{
-								tvKP.setText(String.format(currentLocale, "%.3f", parameter.getKP()));
-								tvKI.setText(String.format(currentLocale, "%.3f", parameter.getKI()));
-								tvKD.setText(String.format(currentLocale, "%.3f", parameter.getKD()));
-							}
-						}
-						LinearResultContainer.addView(resultView);
-					}
 				}
 			}
 		}

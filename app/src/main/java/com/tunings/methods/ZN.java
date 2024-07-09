@@ -8,73 +8,87 @@ import java.security.InvalidParameterException;
 
 public class ZN
 {
-	public static ControllerParameters Compute(ControlProcessType loopType, ControlType controlType,
-		Double kGain, Double tTime, Double tDelay, Double kuGain, Double uPeriod)
+	public static ControllerParameters ComputeOpenLoop(ControlType controlType, double kGain, double tTime, double tDelay)
 	{
-		// Proportional Gain.
-		double kp;
-
-		// Integral gain.
-		double ki;
-
-		// Derivative gain.
-		double kd;
-		switch (loopType)
+		switch (controlType)
 		{
-			case Open:
-				switch (controlType)
-				{
-					case P:
-						kp = tTime / (kGain * tDelay);
-						ki = 0;
-						kd = 0;
-						break;
-					case PI:
-						kp = 0.9 * tTime / (kGain * tDelay);
-						ki = 3.33 * tDelay;
-						kd = 0;
-						break;
-					case PID:
-						kp = 1.2 * tTime / (kGain * tDelay);
-						ki = 2 * tDelay;
-						kd = 0.5 * tDelay;
-						break;
-					default:
-						throw new InvalidParameterException(controlType.toString());
-				}
-				break;
-			case Closed:
-				switch (controlType)
-				{
-					case P:
-						kp = 0.5 * kuGain;
-						ki = 0;
-						kd = 0;
-						break;
-					case PI:
-						kp = 0.45 * kuGain;
-						ki = (uPeriod / 1.2);
-						kd = 0;
-						break;
-					case PID:
-						kp = 0.6 * kuGain;
-						ki = uPeriod / 2;
-						kd = uPeriod / 8;
-						break;
-					default:
-						throw new InvalidParameterException(controlType.toString());
-				}
-				break;
+			case P:
+				return OpenLoopPController(kGain, tTime, tDelay);
+			case PI:
+				return OpenLoopPIController(kGain, tTime, tDelay);
+			case PID:
+				return OpenLoopPIDController(kGain, tTime, tDelay);
 			default:
-				throw new InvalidParameterException(loopType.toString());
+				throw new InvalidParameterException(controlType.toString());
 		}
+	}
 
-		// Create the return object.
-		ControllerParameters zn = new ControllerParameters();
-		zn.setKP(kp);
-		zn.setKI(ki);
-		zn.setKD(kd);
-		zn.setType(controlType);
-		return zn;
+	public static ControllerParameters ComputeClosedLoop(ControlType controlType, double kuGain, double uPeriod)
+	{
+		switch (controlType)
+		{
+			case P:
+				return ClosedLoopPController(kuGain, uPeriod);
+			case PI:
+				return ClosedLoopPIController(kuGain, uPeriod);
+			case PID:
+				return ClosedLoopPIDController(kuGain, uPeriod);
+			default:
+				throw new InvalidParameterException(controlType.toString());
+		}
+	}
+
+	private static ControllerParameters OpenLoopPController(double kGain, double tTime, double tDelay)
+	{
+		double kp = tTime / (kGain * tDelay);
+		double ki = 0;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.P, kp, ki, kd);
+	}
+
+	private static ControllerParameters OpenLoopPIController(double kGain, double tTime, double tDelay)
+	{
+		double kp = 0.9 * tTime / (kGain * tDelay);
+		double ki = 3.33 * tDelay;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+	}
+
+	private static ControllerParameters OpenLoopPIDController(double kGain, double tTime, double tDelay)
+	{
+		double kp = 1.2 * tTime / (kGain * tDelay);
+		double ki = 2 * tDelay;
+		double kd = 0.5 * tDelay;
+
+		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+	}
+
+	private static ControllerParameters ClosedLoopPController(double kuGain, double uPeriod)
+	{
+		double kp = 0.5 * kuGain;
+		double ki = 0;
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.P, kp, ki, kd);
+	}
+
+	private static ControllerParameters ClosedLoopPIController(double kuGain, double uPeriod)
+	{
+		double kp = 0.45 * kuGain;
+		double ki = (uPeriod / 1.2);
+		double kd = 0;
+
+		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+	}
+
+	private static ControllerParameters ClosedLoopPIDController(double kuGain, double uPeriod)
+	{
+		double kp = 0.6 * kuGain;
+		double ki = uPeriod / 2;
+		double kd = uPeriod / 8;
+
+		return new ControllerParameters(ControlType.PID, kp, ki, kd);
 	}
 }

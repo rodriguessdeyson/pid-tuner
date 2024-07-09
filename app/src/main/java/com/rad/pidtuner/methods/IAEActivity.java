@@ -20,6 +20,7 @@ import com.tunings.models.ControllerParameters;
 import com.tunings.models.TuningMethod;
 import com.tunings.models.TuningType;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public class IAEActivity extends AppCompatActivity
@@ -192,12 +193,18 @@ public class IAEActivity extends AppCompatActivity
 			{
 				for (ControlProcessType pType : tuning.getControlProcessTypes())
 				{
-					ControllerParameters cp = IAE.Compute(
-							controller,
-							pType,
-							pGain,
-							pTime,
-							pDead);
+					ControllerParameters cp;
+					switch (pType)
+					{
+						case Servo:
+							cp = IAE.ComputeServo(controller, pGain, pTime, pDead);
+							break;
+						case Regulator:
+							cp = IAE.ComputeRegulator(controller, pGain, pTime, pDead);
+							break;
+						default:
+							throw new InvalidParameterException(pType.toString());
+					}
 					parameters.add(cp);
 				}
 			}

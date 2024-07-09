@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import com.rad.pidtuner.TuningActivity;
-
 import java.util.ArrayList;
 
 /**
@@ -17,21 +15,6 @@ public class TuningMethod implements Parcelable
 	//region Properties
 
 	/**
-	 * Indicator of the tuning type.
-	 */
-	private TuningType TuningType;
-
-	/**
-	 * Indicator of the Control type.
-	 */
-	private ArrayList<ControlType> ControlTypes;
-
-	/**
-	 * Indicator of the process types.
-	 */
-	private ArrayList<ControlProcessType> ControlProcessTypes;
-
-	/**
 	 * Name of the tuning.
 	 */
 	private String TuningName;
@@ -40,6 +23,17 @@ public class TuningMethod implements Parcelable
 	 * Small tuning description.
 	 */
 	private String TuningDescription;
+
+	/**
+	 * Indicator of the tuning type.
+	 */
+	private TuningType TuningType;
+
+	/**
+	 * Indicator of the process types.
+	 */
+	private ArrayList<ControlProcessType> ControlProcessTypes;
+
 
 	/**
 	 * Parameters of the specified controller.

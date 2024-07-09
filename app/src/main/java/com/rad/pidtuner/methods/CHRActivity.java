@@ -22,7 +22,10 @@ import com.tunings.models.ControllerParameters;
 import com.tunings.models.TuningMethod;
 import com.tunings.models.TuningType;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.InvalidPropertiesFormatException;
+
 public class CHRActivity extends AppCompatActivity
 {
 	//region Attributes
@@ -211,6 +214,7 @@ public class CHRActivity extends AppCompatActivity
 		Double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
 		Double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 		Double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+
 		ArrayList<ControllerParameters> parameters = new ArrayList<>();
 		for (TuningMethod tuning : tuningMethods)
 		{
@@ -218,12 +222,24 @@ public class CHRActivity extends AppCompatActivity
 			{
 				for (ControlProcessType pType : tuning.getControlProcessTypes())
 				{
-					ControllerParameters cp = CHR.Compute(
-						controller,
-						pType,
-						pGain,
-						pTime,
-						pDead);
+					ControllerParameters cp;
+					switch (pType)
+					{
+                        case Servo:
+							cp = CHR.ComputeServo(controller, pGain, pTime, pDead);
+                            break;
+                        case Servo20:
+							cp = CHR.ComputeServo20UP(controller, pGain, pTime, pDead);
+                            break;
+                        case Regulator:
+							cp = CHR.ComputeRegulator(controller, pGain, pTime, pDead);
+                            break;
+                        case Regulator20:
+							cp = CHR.ComputeRegulator20UP(controller, pGain, pTime, pDead);
+                            break;
+						default:
+							throw new InvalidParameterException(pType.toString());
+                    }
 					parameters.add(cp);
 				}
 			}

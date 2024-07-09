@@ -267,22 +267,14 @@ public class ZNActivity extends AppCompatActivity
 				{
 					if (pType == ControlProcessType.Open)
 					{
-						ControllerParameters cp = ZN.Compute(
-								pType,
-								controller, pGain, pTime, pDead,
-								null,
-								null);
+						ControllerParameters cp = ZN.ComputeOpenLoop(controller, pGain, pTime, pDead);
 
 						// Updates the result.
 						parameters.add(cp);
 					}
 					else
 					{
-						ControllerParameters cp = ZN.Compute(
-								pType,
-								controller, null, null, null,
-								pTime,
-								pDead);
+						ControllerParameters cp = ZN.ComputeClosedLoop(controller, pTime, pDead);
 
 						// Updates the result.
 						parameters.add(cp);

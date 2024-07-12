@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.tunings.types.*;
+
 import java.util.ArrayList;
 
 /**
@@ -29,16 +31,11 @@ public class TuningMethod implements Parcelable
 	 */
 	private TuningType TuningType;
 
-	/**
-	 * Indicator of the process types.
-	 */
-	private ArrayList<ControlProcessType> ControlProcessTypes;
-
 
 	/**
 	 * Parameters of the specified controller.
 	 */
-	private ArrayList<ControllerParameters> Parameters;
+	private ArrayList<ControllerParameters> Controller;
 
 	//endregion
 
@@ -50,12 +47,10 @@ public class TuningMethod implements Parcelable
 
 	protected TuningMethod(Parcel in)
 	{
-		TuningType          = in.readParcelable(com.tunings.models.TuningType.class.getClassLoader());
-		ControlTypes        = in.createTypedArrayList(ControlType.CREATOR);
-		ControlProcessTypes = in.createTypedArrayList(ControlProcessType.CREATOR);
+		TuningType          = in.readParcelable(TuningType.class.getClassLoader());
 		TuningName          = in.readString();
 		TuningDescription   = in.readString();
-		Parameters          = in.createTypedArrayList(ControllerParameters.CREATOR);
+		Controller          = in.createTypedArrayList(ControllerParameters.CREATOR);
 	}
 
 	public static final Creator<TuningMethod> CREATOR = new Creator<TuningMethod>()
@@ -75,7 +70,7 @@ public class TuningMethod implements Parcelable
 	 * Sets the tuning type.
 	 * @param tuningType The tuning type selected.
 	 */
-	public void setTuningType(com.tunings.models.TuningType tuningType)
+	public void setTuningType(TuningType tuningType)
 	{
 		TuningType = tuningType;
 	}
@@ -99,37 +94,19 @@ public class TuningMethod implements Parcelable
 	}
 
 	/**
-	 *  Sets a set of control types.
-	 * @param controlTypes Control type.
-	 */
-	public void setControlTypes(ArrayList<ControlType> controlTypes)
-	{
-		ControlTypes = controlTypes;
-	}
-
-	/**
-	 * Sets a set of control process types.
-	 * @param controlProcessTypes An array-list with all desired control process type.
-	 */
-	public void setControlProcessTypes(ArrayList<com.tunings.models.ControlProcessType> controlProcessTypes)
-	{
-		ControlProcessTypes = controlProcessTypes;
-	}
-
-	/**
 	 * Sets a set of control parameters.
-	 * @param parameters An Array-List with all controller parameters.
+	 * @param controller An Array-List with all controller parameters.
 	 */
-	public void setParameters(ArrayList<ControllerParameters> parameters)
+	public void setParameters(ArrayList<ControllerParameters> controller)
 	{
-		Parameters = parameters;
+		Controller = controller;
 	}
 
 	/**
 	 * Gets the tuning type.
 	 * @return Tuning type.
 	 */
-	public com.tunings.models.TuningType getTuningType()
+	public TuningType getTuningType()
 	{
 		return TuningType;
 	}
@@ -158,25 +135,7 @@ public class TuningMethod implements Parcelable
 	 */
 	public ArrayList<ControllerParameters> getParameters()
 	{
-		return Parameters;
-	}
-
-	/**
-	 * Gets the Tuning controller types.
-	 * @return Tuning controller types.
-	 */
-	public ArrayList<ControlType> getControlTypes()
-	{
-		return ControlTypes;
-	}
-
-	/**
-	 * Gets the Tuning type.
-	 * @return Tuning type.
-	 */
-	public ArrayList<com.tunings.models.ControlProcessType> getControlProcessTypes()
-	{
-		return ControlProcessTypes;
+		return Controller;
 	}
 
 	@NonNull
@@ -195,11 +154,9 @@ public class TuningMethod implements Parcelable
 	public void writeToParcel(Parcel dest, int flags)
 	{
 		dest.writeParcelable(TuningType, flags);
-		dest.writeTypedList(ControlTypes);
-		dest.writeTypedList(ControlProcessTypes);
 		dest.writeString(TuningName);
 		dest.writeString(TuningDescription);
-		dest.writeTypedList(Parameters);
+		dest.writeTypedList(Controller);
 	}
 
 	//endregion

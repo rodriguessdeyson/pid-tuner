@@ -3,6 +3,9 @@ package com.tunings.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.tunings.types.ControlProcessType;
+import com.tunings.types.ControlType;
+
 /**
  * Allow to manipulate the controller parameters.
  */
@@ -17,9 +20,11 @@ public class ControllerParameters implements Parcelable
 	 * @param kd Derivative gain.
 	 * @param controlType Type of control.
 	 */
-	public ControllerParameters(ControlType controlType, double kp, double ki, double kd)
+	public ControllerParameters(com.tunings.types.ControlProcessType controlProcessType, com.tunings.types.ControlType controlType,
+								double kp, double ki, double kd)
 	{
-		setType(controlType);
+		setControlProcessType(controlProcessType);
+		setControlType(controlType);
 		setKP(kp);
 		setKD(kd);
 		setKI(ki);
@@ -35,11 +40,15 @@ public class ControllerParameters implements Parcelable
 	//endregion
 
 	//region Properties
+	/**
+	 * Type of process.
+	 */
+	private ControlProcessType ControlProcessType;
 
 	/**
 	 * Type of controller that the parameters are of.
 	 */
-	private ControlType Type;
+	private ControlType ControlType;
 
 	/**
 	 * Proportional Gain.
@@ -62,10 +71,11 @@ public class ControllerParameters implements Parcelable
 
 	protected ControllerParameters(Parcel in)
 	{
-		Type = in.readParcelable(ControlType.class.getClassLoader());
-		KP   = in.readDouble();
-		KI   = in.readDouble();
-		KD   = in.readDouble();
+		ControlProcessType = in.readParcelable(ControlProcessType.class.getClassLoader());
+		ControlType        = in.readParcelable(ControlType.class.getClassLoader());
+		KP                 = in.readDouble();
+		KI                 = in.readDouble();
+		KD                 = in.readDouble();
 	}
 
 	public static final Creator<ControllerParameters> CREATOR = new Creator<ControllerParameters>()
@@ -82,6 +92,14 @@ public class ControllerParameters implements Parcelable
 			return new ControllerParameters[size];
 		}
 	};
+
+	public void setControlProcessType(ControlProcessType type) {
+		ControlProcessType = type;
+	}
+
+	public void setControlType(ControlType type) {
+		ControlType = type;
+	}
 
 	/**
 	 * Set proportional gain.
@@ -110,6 +128,14 @@ public class ControllerParameters implements Parcelable
 		this.KD = kd;
 	}
 
+	public ControlProcessType getControlProcessType() {
+		return ControlProcessType;
+	}
+
+	public ControlType getControlType() {
+		return ControlType;
+	}
+
 	/**
 	 * Get proportional gain.
 	 */
@@ -134,14 +160,6 @@ public class ControllerParameters implements Parcelable
 		return KD;
 	}
 
-	public void setType(ControlType type) {
-		Type = type;
-	}
-
-	public ControlType getType() {
-		return Type;
-	}
-
 	@Override
 	public int describeContents() {
 		return 0;
@@ -150,7 +168,8 @@ public class ControllerParameters implements Parcelable
 	@Override
 	public void writeToParcel(Parcel dest, int flags)
 	{
-		dest.writeParcelable(Type, flags);
+		dest.writeParcelable(ControlProcessType, flags);
+		dest.writeParcelable(ControlType, flags);
 		dest.writeDouble(KP);
 		dest.writeDouble(KI);
 		dest.writeDouble(KD);

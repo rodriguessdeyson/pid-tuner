@@ -1,14 +1,11 @@
-package com.tunings.models;
+package com.tunings.types;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import com.rad.pidtuner.R;
-
 import xdroid.enumformat.EnumFormat;
-import xdroid.enumformat.EnumString;
 
 public enum ControlProcessType implements Parcelable
 {

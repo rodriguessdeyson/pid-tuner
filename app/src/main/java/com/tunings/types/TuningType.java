@@ -1,4 +1,4 @@
-package com.tunings.models;
+package com.tunings.types;
 
 import android.os.Parcel;
 import android.os.Parcelable;

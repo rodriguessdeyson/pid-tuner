@@ -1,5 +1,6 @@
 package com.tunings.methods;
 
+import com.tunings.models.ControlProcessType;
 import com.tunings.models.ControlType;
 import com.tunings.models.ControllerParameters;
 
@@ -39,7 +40,7 @@ public class IAE
 		double ki = (tTime / (1.02 + ((-0.323) * (tDelay / tTime))));
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Servo, ControlType.PI, kp, ki, kd);
 	}
 
 	private static ControllerParameters	ServoPIDController(double kGain, double tTime, double tDelay)
@@ -48,7 +49,7 @@ public class IAE
 		double ki = (tTime / (0.740 + ((-0.130) * (tDelay / tTime))));
 		double kd = (tTime * (0.348 * Math.pow((tDelay / tTime), (0.914))));
 
-		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Servo, ControlType.PID, kp, ki, kd);
 	}
 
 	private static ControllerParameters	RegulatorPIController(double kGain, double tTime, double tDelay)
@@ -57,7 +58,7 @@ public class IAE
 		double ki = (tTime / (0.608 * Math.pow((tDelay / tTime), (-0.707))));
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Regulator, ControlType.PI, kp, ki, kd);
 	}
 
 	private static ControllerParameters	RegulatorPIDController(double kGain, double tTime, double tDelay)
@@ -66,6 +67,6 @@ public class IAE
 		double ki = (tTime / (0.878 * Math.pow((tDelay / tTime), (-0.749))));
 		double kd = (tTime * (0.482 * Math.pow((tDelay / tTime), (1.137))));
 
-		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Regulator, ControlType.PID, kp, ki, kd);
 	}
 }

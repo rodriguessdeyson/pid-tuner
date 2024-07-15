@@ -44,7 +44,7 @@ public class ZN
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.P, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Open, ControlType.P, kp, ki, kd);
 	}
 
 	private static ControllerParameters OpenLoopPIController(double kGain, double tTime, double tDelay)
@@ -53,7 +53,7 @@ public class ZN
 		double ki = 3.33 * tDelay;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Open, ControlType.PI, kp, ki, kd);
 	}
 
 	private static ControllerParameters OpenLoopPIDController(double kGain, double tTime, double tDelay)
@@ -62,7 +62,7 @@ public class ZN
 		double ki = 2 * tDelay;
 		double kd = 0.5 * tDelay;
 
-		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Open, ControlType.PID, kp, ki, kd);
 	}
 
 	private static ControllerParameters ClosedLoopPController(double kuGain, double uPeriod)
@@ -71,7 +71,7 @@ public class ZN
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.P, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Closed, ControlType.P, kp, ki, kd);
 	}
 
 	private static ControllerParameters ClosedLoopPIController(double kuGain, double uPeriod)
@@ -80,7 +80,7 @@ public class ZN
 		double ki = (uPeriod / 1.2);
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Closed, ControlType.PI, kp, ki, kd);
 	}
 
 	private static ControllerParameters ClosedLoopPIDController(double kuGain, double uPeriod)
@@ -89,6 +89,6 @@ public class ZN
 		double ki = uPeriod / 2;
 		double kd = uPeriod / 8;
 
-		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Closed, ControlType.PID, kp, ki, kd);
 	}
 }

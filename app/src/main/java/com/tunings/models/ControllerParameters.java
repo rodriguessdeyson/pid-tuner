@@ -3,9 +3,6 @@ package com.tunings.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.tunings.types.ControlProcessType;
-import com.tunings.types.ControlType;
-
 /**
  * Allow to manipulate the controller parameters.
  */
@@ -20,10 +17,25 @@ public class ControllerParameters implements Parcelable
 	 * @param kd Derivative gain.
 	 * @param controlType Type of control.
 	 */
-	public ControllerParameters(com.tunings.types.ControlProcessType controlProcessType, com.tunings.types.ControlType controlType,
+	public ControllerParameters(ControlProcessType controlProcessType, ControlType controlType,
 								double kp, double ki, double kd)
 	{
 		setControlProcessType(controlProcessType);
+		setControlType(controlType);
+		setKP(kp);
+		setKD(kd);
+		setKI(ki);
+	}
+
+	/**
+	 * Sets the controller gains values.
+	 * @param kp Proportional gain.
+	 * @param ki Integral gain.
+	 * @param kd Derivative gain.
+	 * @param controlType Type of control.
+	 */
+	public ControllerParameters(ControlType controlType, double kp, double ki, double kd)
+	{
 		setControlType(controlType);
 		setKP(kp);
 		setKD(kd);

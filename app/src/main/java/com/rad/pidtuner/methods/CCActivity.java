@@ -161,46 +161,31 @@ public class CCActivity extends AppCompatActivity
 	 */
 	private void ComputeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
+		// Gets the process types.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
+		if (CheckBoxPD.isChecked()) controlTypes.add(ControlType.PD);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
+
+		// Process the tuning.
+		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+
+		ArrayList<ControllerParameters> controllerParameters = new ArrayList<>();
+		for (ControlType controlType: controlTypes)
+			controllerParameters.add(CC.Compute(controlType, pGain, pTime, pDead));
 
 		// Gets the tuning basics information.
 		TuningMethod openTuning = new TuningMethod();
 		openTuning.setTuningName("Cohen-Coon");
 		openTuning.setTuningType(TuningType.CC);
-
-		// Gets the process types.
-		ArrayList<ControlType> controlTypes = new ArrayList<>();
-		if (CheckBoxP.isChecked())
-			controlTypes.add(ControlType.P);
-		if (CheckBoxPD.isChecked())
-			controlTypes.add(ControlType.PD);
-		if (CheckBoxPI.isChecked())
-			controlTypes.add(ControlType.PI);
-		if (CheckBoxPID.isChecked())
-			controlTypes.add(ControlType.PID);
-		openTuning.setControlTypes(controlTypes);
-		tuningMethods.add(openTuning);
-
-		// Process the tuning.
-		Double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		Double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (TuningMethod tuning : tuningMethods)
-		{
-			for (ControlType controller: tuning.getControlTypes())
-			{
-				ControllerParameters cp = CC.Compute(controller, pGain, pTime, pDead);
-
-				// Updates the result.
-				parameters.add(cp);
-			}
-			tuning.setParameters(parameters);
-		}
+		openTuning.setParameters(controllerParameters);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CCActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
+		resultActivity.putExtra("RESULT", openTuning);
 		resultActivity.putExtra("Gain", pGain);
 		resultActivity.putExtra("Time", pTime);
 		resultActivity.putExtra("Dead", pDead);

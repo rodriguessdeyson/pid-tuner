@@ -2,8 +2,8 @@ package com.tunings.models.test;
 
 import static org.junit.Assert.assertEquals;
 
-import com.tunings.types.ControlProcessType;
-import com.tunings.types.ControlType;
+import com.tunings.models.ControlProcessType;
+import com.tunings.models.ControlType;
 import com.tunings.models.ControllerParameters;
 import com.tunings.models.TuningMethod;
 

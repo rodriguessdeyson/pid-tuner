@@ -24,7 +24,6 @@ import com.tunings.models.TuningType;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.InvalidPropertiesFormatException;
 
 public class CHRActivity extends AppCompatActivity
 {
@@ -173,82 +172,58 @@ public class CHRActivity extends AppCompatActivity
 
 	private void ComputeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
-
-		// Gets the tuning basics information.
-		TuningMethod chrMethod = new TuningMethod();
-		chrMethod.setTuningName("Chien-Hrones-Reswick");
-		chrMethod.setTuningType(TuningType.CHR);
-
 		// Gets the selected process.
 		ArrayList<ControlProcessType> processTypes = new ArrayList<>();
 		if (CheckBoxServo.isChecked())
-		{
-			if (SwitchIs20.isChecked())
-				processTypes.add(ControlProcessType.Servo20);
-			else
-				processTypes.add(ControlProcessType.Servo);
-
-		}
+			processTypes.add(SwitchIs20.isChecked() ? ControlProcessType.Servo20 : ControlProcessType.Servo);
 		if (CheckBoxRegulator.isChecked())
-		{
-			if (SwitchIs20.isChecked())
-				processTypes.add(ControlProcessType.Regulator20);
-			else
-				processTypes.add(ControlProcessType.Regulator);
-		}
-		chrMethod.setControlProcessTypes(processTypes);
+			processTypes.add(SwitchIs20.isChecked() ? ControlProcessType.Regulator20 : ControlProcessType.Regulator);
 
 		// Gets the control to compute.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
-		if (CheckBoxP.isChecked())
-			controlTypes.add(ControlType.P);
-		if (CheckBoxPI.isChecked())
-			controlTypes.add(ControlType.PI);
-		if (CheckBoxPID.isChecked())
-			controlTypes.add(ControlType.PID);
-		chrMethod.setControlTypes(controlTypes);
-		tuningMethods.add(chrMethod);
+		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
 		// Process the tuning.
-		Double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		Double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
 		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (TuningMethod tuning : tuningMethods)
+		for (ControlType controlType : controlTypes)
 		{
-			for (ControlType controller: tuning.getControlTypes())
+			for (ControlProcessType processType : processTypes)
 			{
-				for (ControlProcessType pType : tuning.getControlProcessTypes())
+				switch (processType)
 				{
-					ControllerParameters cp;
-					switch (pType)
-					{
-                        case Servo:
-							cp = CHR.ComputeServo(controller, pGain, pTime, pDead);
-                            break;
-                        case Servo20:
-							cp = CHR.ComputeServo20UP(controller, pGain, pTime, pDead);
-                            break;
-                        case Regulator:
-							cp = CHR.ComputeRegulator(controller, pGain, pTime, pDead);
-                            break;
-                        case Regulator20:
-							cp = CHR.ComputeRegulator20UP(controller, pGain, pTime, pDead);
-                            break;
-						default:
-							throw new InvalidParameterException(pType.toString());
-                    }
-					parameters.add(cp);
+					case Servo:
+						parameters.add(CHR.ComputeServo(controlType, pGain, pTime, pDead));
+						break;
+					case Servo20:
+						parameters.add(CHR.ComputeServo20UP(controlType, pGain, pTime, pDead));
+						break;
+					case Regulator:
+						parameters.add(CHR.ComputeRegulator(controlType, pGain, pTime, pDead));
+						break;
+					case Regulator20:
+						parameters.add(CHR.ComputeRegulator20UP(controlType, pGain, pTime, pDead));
+						break;
+					default:
+						throw new InvalidParameterException(controlType.toString());
 				}
 			}
-			tuning.setParameters(parameters);
 		}
+
+		// Gets the tuning information.
+		TuningMethod chrMethod = new TuningMethod();
+		chrMethod.setTuningName("Chien-Hrones-Reswick");
+		chrMethod.setTuningType(TuningType.CHR);
+		chrMethod.setParameters(parameters);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CHRActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
+		resultActivity.putExtra("RESULT", chrMethod);
 		resultActivity.putExtra("Gain", pGain);
 		resultActivity.putExtra("Time", pTime);
 		resultActivity.putExtra("Dead", pDead);

@@ -12,12 +12,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tunings.models.TuningType;
 import com.tunings.models.ControlProcessType;
 import com.tunings.models.ControlType;
 import com.tunings.models.ControllerParameters;
 import com.tunings.models.TuningMethod;
 import com.rad.pidtuner.database.DataAccess;
+import com.tunings.models.TuningType;
 
 import java.util.ArrayList;
 import java.util.Locale;

@@ -8,36 +8,19 @@ import java.security.InvalidParameterException;
 
 public class RT
 {
-	public static ControllerParameters Compute(ControlType controlType, ControlProcessType loopType,
+	public static ControllerParameters Compute(ControlType controlType, ControlProcessType controlProcessType,
 		double kuGain, double uPeriod)
 	{
-		// Proportional Gain.
-		double kp;
+		if (controlProcessType != ControlProcessType.Closed)
+			throw new InvalidParameterException(controlProcessType.toString());
 
-		// Integral gain.
-		double ki;
+		if (controlType != ControlType.PID)
+			throw new InvalidParameterException(controlType.toString());
 
-		// Derivative gain.
-		double kd;
-		if (loopType == ControlProcessType.Closed)
-		{
-			if (controlType == ControlType.PID)
-			{
-				kp = 0.5 * kuGain;
-				ki = 0.8 * uPeriod;
-				kd = 0.1 * ki;
-			}
-			else
-				throw new InvalidParameterException(controlType.toString());
-		}
-		else
-			throw new InvalidParameterException(loopType.toString());
+		double kp = 0.5 * kuGain;
+		double ki = 0.8 * uPeriod;
+		double kd = 0.1 * ki;
 
-		ControllerParameters rt = new ControllerParameters();
-		rt.setKP(kp);
-		rt.setKI(ki);
-		rt.setKD(kd);
-		rt.setType(controlType);
-		return rt;
+        return new ControllerParameters(ControlProcessType.Closed, ControlType.PID, kp, ki, kd);
 	}
 }

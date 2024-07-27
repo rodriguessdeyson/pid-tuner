@@ -25,6 +25,8 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -38,6 +40,8 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -51,6 +55,8 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -64,6 +70,8 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -77,6 +85,8 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -90,6 +100,8 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -103,6 +115,8 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -116,6 +130,8 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -129,5 +145,7 @@ public class CHRTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 }

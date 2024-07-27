@@ -1,7 +1,6 @@
 package com.tunings.methods.test;
 
 import com.tunings.methods.ZN;
-import com.tunings.models.ControlProcessType;
 import com.tunings.models.ControlType;
 import com.tunings.models.ControllerParameters;
 
@@ -26,6 +25,8 @@ public class ZNTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -39,6 +40,8 @@ public class ZNTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -52,6 +55,8 @@ public class ZNTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -65,6 +70,8 @@ public class ZNTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -78,6 +85,8 @@ public class ZNTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
@@ -91,5 +100,7 @@ public class ZNTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.1);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 }

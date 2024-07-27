@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
@@ -41,11 +40,6 @@ public class TLActivity extends AppCompatActivity
 	 CheckBox reference to Proportional-Derivative-integral parameter.
 	 */
 	private CheckBox CheckBoxPID;
-
-	/**
-	 CheckBox reference to Proportional-Derivative-integral parameter.
-	 */
-	private RadioButton RadioButtonClosed;
 
 	/**
 	 EditText reference to process gain parameter.
@@ -81,7 +75,6 @@ public class TLActivity extends AppCompatActivity
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
 		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
 		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
-		RadioButtonClosed             = findViewById(R.id.RadioButtonClosedLoop);
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
 	}
@@ -131,56 +124,29 @@ public class TLActivity extends AppCompatActivity
 
 	private void ComputeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
+		// Gets the control to compute.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (CheckBoxPI.isChecked())
+			controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked())
+			controlTypes.add(ControlType.PID);
 
-		// Check which is enabled.
-		if (RadioButtonClosed.isChecked())
-		{
-			// Gets the tuning basics information.
-			TuningMethod closedTuning = new TuningMethod();
-			closedTuning.setTuningName("Tyreus and Luyben");
-			closedTuning.setTuningType(TuningType.TL);
+		double pTime = Parser.GetDouble(EditTextProcessGain.getText().toString());
+		double pDead = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 
-			// Gets the all control process type.
-			ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-			processTypes.add(ControlProcessType.Closed);
-			closedTuning.setControlProcessTypes(processTypes);
+		ArrayList<ControllerParameters> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(TL.Compute(ControlProcessType.Closed, controlType, pTime, pDead));
 
-			ArrayList<ControlType> controlTypes = new ArrayList<>();
-			if (CheckBoxPI.isChecked())
-				controlTypes.add(ControlType.PI);
-			if (CheckBoxPID.isChecked())
-				controlTypes.add(ControlType.PID);
-			closedTuning.setControlTypes(controlTypes);
-			tuningMethods.add(closedTuning);
-		}
-
-		// Process the tuning.
-		Double pTime = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pDead = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (TuningMethod tuning : tuningMethods)
-		{
-			for (ControlType controller: tuning.getControlTypes())
-			{
-				for (ControlProcessType pType : tuning.getControlProcessTypes())
-				{
-					ControllerParameters cp = TL.Compute(
-						pType,
-						controller,
-							pTime,
-							pDead
-					);
-					// Updates the result.
-					parameters.add(cp);
-				}
-			}
-			tuning.setParameters(parameters);
-		}
+		// Gets the tuning basics information.
+		TuningMethod closedTuning = new TuningMethod();
+		closedTuning.setTuningName("Tyreus and Luyben");
+		closedTuning.setTuningType(TuningType.TL);
+		closedTuning.setParameters(controllerParameters);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(TLActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
+		resultActivity.putExtra("RESULT", closedTuning);
 		resultActivity.putExtra("Gain", 0);
 		resultActivity.putExtra("Time", pTime);
 		resultActivity.putExtra("Dead", pDead);

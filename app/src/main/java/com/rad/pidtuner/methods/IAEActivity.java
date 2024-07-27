@@ -158,62 +158,51 @@ public class IAEActivity extends AppCompatActivity
 
 	private void ComputeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
-
-		// Gets the tuning basics information.
-		TuningMethod chrMethod = new TuningMethod();
-		chrMethod.setTuningName("Integral of Absolute Error ");
-		chrMethod.setTuningType(TuningType.IAE);
-
 		// Gets the selected process.
 		ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-		if (CheckBoxServo.isChecked())
-			processTypes.add(ControlProcessType.Servo);
-		if (CheckBoxRegulator.isChecked())
-			processTypes.add(ControlProcessType.Regulator);
-		chrMethod.setControlProcessTypes(processTypes);
+		if (CheckBoxServo.isChecked()) processTypes.add(ControlProcessType.Servo);
+		if (CheckBoxRegulator.isChecked())  processTypes.add(ControlProcessType.Regulator);
 
 		// Gets the control to compute.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
-		if (CheckBoxPI.isChecked())
-			controlTypes.add(ControlType.PI);
-		if (CheckBoxPID.isChecked())
-			controlTypes.add(ControlType.PID);
-		chrMethod.setControlTypes(controlTypes);
-		tuningMethods.add(chrMethod);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
 		// Process the tuning.
-		Double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		Double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+
 		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (TuningMethod tuning : tuningMethods)
+		for (ControlProcessType processType : processTypes)
 		{
-			for (ControlType controller: tuning.getControlTypes())
+			for (ControlType controller: controlTypes)
 			{
-				for (ControlProcessType pType : tuning.getControlProcessTypes())
+				ControllerParameters cp;
+				switch (processType)
 				{
-					ControllerParameters cp;
-					switch (pType)
-					{
-						case Servo:
-							cp = IAE.ComputeServo(controller, pGain, pTime, pDead);
-							break;
-						case Regulator:
-							cp = IAE.ComputeRegulator(controller, pGain, pTime, pDead);
-							break;
-						default:
-							throw new InvalidParameterException(pType.toString());
-					}
-					parameters.add(cp);
+					case Servo:
+						cp = IAE.ComputeServo(controller, pGain, pTime, pDead);
+						break;
+					case Regulator:
+						cp = IAE.ComputeRegulator(controller, pGain, pTime, pDead);
+						break;
+					default:
+						throw new InvalidParameterException(processType.toString());
 				}
+				parameters.add(cp);
 			}
-			tuning.setParameters(parameters);
 		}
+
+		// Gets the tuning basics information.
+		TuningMethod iaeMethod = new TuningMethod();
+		iaeMethod.setTuningName("Integral of Absolute Error ");
+		iaeMethod.setTuningType(TuningType.IAE);
+		iaeMethod.setParameters(parameters);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(IAEActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
+		resultActivity.putExtra("RESULT", iaeMethod);
 		resultActivity.putExtra("Gain", pGain);
 		resultActivity.putExtra("Time", pTime);
 		resultActivity.putExtra("Dead", pDead);

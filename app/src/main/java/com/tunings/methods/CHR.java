@@ -4,8 +4,6 @@ import com.tunings.models.ControlProcessType;
 import com.tunings.models.ControlType;
 import com.tunings.models.ControllerParameters;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.security.InvalidParameterException;
 
 public class CHR
@@ -76,7 +74,7 @@ public class CHR
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.P, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Servo, ControlType.P, kp, ki, kd);
 	}
 
 	private static ControllerParameters ServoPIController(double kGain, double tTime, double tDelay)
@@ -85,7 +83,7 @@ public class CHR
 		double ki = 1.16 * tTime;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Servo, ControlType.PI, kp, ki, kd);
 	}
 
 	private static ControllerParameters ServoPIDController(double kGain, double tTime, double tDelay)
@@ -94,7 +92,7 @@ public class CHR
 		double ki = tTime;
 		double kd = (tDelay / 2);
 
-		return new ControllerParameters(ControlType.P, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Servo, ControlType.P, kp, ki, kd);
 	}
 
 	private static ControllerParameters Servo20UPPController(double kGain, double tTime, double tDelay)
@@ -103,7 +101,7 @@ public class CHR
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.P, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Servo20, ControlType.P, kp, ki, kd);
 	}
 
 	private static ControllerParameters Servo20UPPIController(double kGain, double tTime, double tDelay)
@@ -112,7 +110,7 @@ public class CHR
 		double ki = tTime;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Servo20, ControlType.PI, kp, ki, kd);
 	}
 
 	private static ControllerParameters Servo20UPPIDController(double kGain, double tTime, double tDelay)
@@ -121,7 +119,7 @@ public class CHR
 		double ki = 1.357 * tTime;
 		double kd = 0.473 * tDelay;
 
-		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Servo20, ControlType.PID, kp, ki, kd);
 	}
 
 	private static ControllerParameters RegulatorPController(double kGain, double tTime, double tDelay)
@@ -130,7 +128,7 @@ public class CHR
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.P, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Regulator, ControlType.P, kp, ki, kd);
 	}
 
 	private static ControllerParameters RegulatorPIController(double kGain, double tTime, double tDelay)
@@ -139,7 +137,7 @@ public class CHR
 		double ki = 4 * tDelay;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Regulator, ControlType.PI, kp, ki, kd);
 	}
 
 	private static ControllerParameters RegulatorPIDController(double kGain, double tTime, double tDelay)
@@ -148,7 +146,7 @@ public class CHR
 		double ki = 2.375 * tDelay;
 		double kd = 0.421 * tDelay;
 
-		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Regulator, ControlType.PID, kp, ki, kd);
 	}
 
 	private static ControllerParameters Regulator20UPPController(double kGain, double tTime, double tDelay)
@@ -157,7 +155,7 @@ public class CHR
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.P, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Regulator20, ControlType.P, kp, ki, kd);
 	}
 
 	private static ControllerParameters Regulator20UPPIController(double kGain, double tTime, double tDelay)
@@ -166,7 +164,7 @@ public class CHR
 		double ki = 2.3 * tDelay;
 		double kd = 0;
 
-		return new ControllerParameters(ControlType.PI, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Regulator20, ControlType.PI, kp, ki, kd);
 	}
 
 	private static ControllerParameters Regulator20UPPIDController(double kGain, double tTime, double tDelay)
@@ -175,7 +173,7 @@ public class CHR
 		double ki = 2 * tDelay;
 		double kd = 0.42 * tDelay;
 
-		return new ControllerParameters(ControlType.PID, kp, ki, kd);
+		return new ControllerParameters(ControlProcessType.Regulator20, ControlType.PID, kp, ki, kd);
 	}
 }
 

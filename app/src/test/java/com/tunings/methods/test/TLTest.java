@@ -18,25 +18,29 @@ public class TLTest
 	public void computeClosedPI()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PI, 1.56, 5.632, 0);
+		ControllerParameters expectedParameters = new ControllerParameters(ControlProcessType.Closed, ControlType.PI, 1.56, 5.632, 0);
 
 		// Calculated values.
 		ControllerParameters sut = TL.Compute(ControlProcessType.Closed, ControlType.PI, KuGain, PuGain);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeClosedPID()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PID, 2.27, 5.632, 0.41);
+		ControllerParameters expectedParameters = new ControllerParameters(ControlProcessType.Closed, ControlType.PID, 2.27, 5.632, 0.41);
 
 		// Calculated values.
 		ControllerParameters sut = TL.Compute(ControlProcessType.Closed, ControlType.PID, KuGain, PuGain);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 }

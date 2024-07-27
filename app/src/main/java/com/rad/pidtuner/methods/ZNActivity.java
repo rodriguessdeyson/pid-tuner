@@ -17,7 +17,6 @@ import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.ZN;
-import com.tunings.models.ControlProcessType;
 import com.tunings.models.ControlType;
 import com.tunings.models.ControllerParameters;
 import com.tunings.models.TuningMethod;
@@ -209,87 +208,62 @@ public class ZNActivity extends AppCompatActivity
 
 	private void ComputeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
-
-		// Check which is enabled.
-		if (RadioButtonOpened.isChecked())
-		{
-			// Gets the tuning basics information.
-			TuningMethod openTuning = new TuningMethod();
-			openTuning.setTuningName("Ziegler and Nichols");
-			openTuning.setTuningType(TuningType.ZN);
-
-			// Gets the all control process type.
-			ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-			processTypes.add(ControlProcessType.Open);
-			openTuning.setControlProcessTypes(processTypes);
-
-			ArrayList<ControlType> controlTypes = new ArrayList<>();
-			if (CheckBoxP.isChecked())
-				controlTypes.add(ControlType.P);
-			if (CheckBoxPI.isChecked())
-				controlTypes.add(ControlType.PI);
-			if (CheckBoxPID.isChecked())
-				controlTypes.add(ControlType.PID);
-			openTuning.setControlTypes(controlTypes);
-			tuningMethods.add(openTuning);
-		}
-		if (RadioButtonClosed.isChecked())
-		{
-			// Gets the tuning basics information.
-			TuningMethod closedTuning = new TuningMethod();
-			closedTuning.setTuningName("Ziegler and Nichols");
-			closedTuning.setTuningType(TuningType.ZN);
-
-			// Gets the all control process type.
-			ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-			processTypes.add(ControlProcessType.Closed);
-			closedTuning.setControlProcessTypes(processTypes);
-
-			ArrayList<ControlType> controlTypes = new ArrayList<>();
-			if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
-			if (CheckBoxPI.isChecked())	controlTypes.add(ControlType.PI);
-			if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
-			closedTuning.setControlTypes(controlTypes);
-			tuningMethods.add(closedTuning);
-		}
-
 		// Process the tuning.
-		Double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		Double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (TuningMethod tuning : tuningMethods)
-		{
-			for (ControlType controller: tuning.getControlTypes())
-			{
-				for (ControlProcessType pType : tuning.getControlProcessTypes())
-				{
-					if (pType == ControlProcessType.Open)
-					{
-						ControllerParameters cp = ZN.ComputeOpenLoop(controller, pGain, pTime, pDead);
+		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
-						// Updates the result.
-						parameters.add(cp);
-					}
-					else
-					{
-						ControllerParameters cp = ZN.ComputeClosedLoop(controller, pTime, pDead);
-
-						// Updates the result.
-						parameters.add(cp);
-					}
-				}
-			}
-			tuning.setParameters(parameters);
-		}
+		TuningMethod tuningMethod = RadioButtonOpened.isChecked()
+				? BuildOpenTuningParameters(pGain, pTime, pDead)
+				: BuildCloseTuningParameters(pTime, pDead);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
+		resultActivity.putExtra("RESULT", tuningMethod);
 		resultActivity.putExtra("Gain", pGain);
 		resultActivity.putExtra("Time", pTime);
 		resultActivity.putExtra("Dead", pDead);
 		startActivity(resultActivity);
+	}
+
+	private TuningMethod BuildOpenTuningParameters(double pGain, double pTime, double pDead)
+	{
+		// Gets the control to compute.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
+
+		ArrayList<ControllerParameters> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(ZN.ComputeOpenLoop(controlType, pGain, pTime, pDead));
+
+		// Gets the tuning basics information.
+		TuningMethod openTuning = new TuningMethod();
+		openTuning.setTuningName("Ziegler and Nichols");
+		openTuning.setTuningType(TuningType.ZN);
+		openTuning.setParameters(controllerParameters);
+
+		return openTuning;
+	}
+
+	private TuningMethod BuildCloseTuningParameters(double pTime, double pDead)
+	{
+		// Gets the control to compute.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
+
+		ArrayList<ControllerParameters> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(ZN.ComputeClosedLoop(controlType, pTime, pDead));
+
+		// Gets the tuning basics information.
+		TuningMethod openTuning = new TuningMethod();
+		openTuning.setTuningName("Ziegler and Nichols");
+		openTuning.setTuningType(TuningType.ZN);
+		openTuning.setParameters(controllerParameters);
+		return openTuning;
 	}
 }

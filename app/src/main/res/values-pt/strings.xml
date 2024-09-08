@@ -1,8 +1,9 @@
 <resources>
+
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID\nTuner</string>
-    <string name="strWelcome">O PID Tuning é um aplicativo abrangente projetado para ajudar engenheiros e profissionais de sistemas de controle a ajustar controladores PID usando vários métodos de ajuste estabelecidos.\nO aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.</string>
+    <string name="strWelcome">PID Tuner é um aplicativo abrangente projetado para ajudar engenheiros e profissionais de sistemas de controle a ajustar controladores PID usando vários métodos de ajuste estabelecidos.\nO aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.</string>
     <string name="btStart">Iniciar</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
     <string name="ivPidTunerHelpDescription">Ícone de ajuda do PID Tuner. Vai para a página de ajuda do PID Tuner.</string>
@@ -15,18 +16,16 @@
     <string name="tvHelp">Ajuda</string>
 
     <!--Cohen-Coon (CC) Method-->
-    <string name="tvCohenCoonDesc">O método Cohen-Coon (CC) otimiza o ajuste de PID para sistemas com atrasos, melhorando a rejeição de perturbações.</string>
+    <string name="tvCohenCoonDesc">O método Cohen-Coon é uma técnica popular de ajuste de PID, principalmente para sistemas de primeira ordem com atraso. Ele visa melhorar a rejeição de perturbações e tem melhor desempenho em processos com tempo morto.</string>
 
     <!--Chien-Hrones-Reswick (CHR) Method-->
-    <string name="tvCHRDesc">Focado no acompanhamento de setpoint ou rejeição de perturbações, com fórmulas de ajuste específicas.</string>
-    <string name="rbRegula">Regulação</string>
-    <string name="rbRegula20">Regu. 20% UP</string>
+    <string name="tvCHRDesc">Este método se concentra em otimizar o controlador para acompanhamento de setpoint ou rejeição de perturbações. Ele oferece fórmulas de ajuste específicas baseadas na resposta desejada do sistema, como mínimo overshoot ou resposta rápida.</string>
 
     <!--Integral of Absolute Error (IAE) Method-->
-    <string name="tvIAEDesc">O método IAE minimiza o erro absoluto ao longo do tempo, priorizando um controle mais suave.</string>
+    <string name="tvIAEDesc">O método IAE minimiza o erro absoluto ao longo do tempo. Ele prioriza a acumulação total de erros, levando a um controle mais suave, mas potencialmente com tempos de resposta mais lentos.</string>
 
     <!--Integral of Absolute Error (IMC) Method-->
-    <string name="tvIMCDesc">IMC utiliza um modelo do processo para ajuste oferecendo controle robusto mesmo com incertezas.</string>
+    <string name="tvIMCDesc">O IMC baseia-se no princípio de que o controlador contém um modelo explícito do processo. Ele oferece uma maneira sistemática de ajustar controladores, com a capacidade de lidar com incertezas no modelo e atrasos no processo.</string>
     <string name="swUseLambda">Sintonia Lambda:</string>
     <string name="hintLambda">Lambda (λ)</string>
     <string name="swFirstOrder">Modelo de primeira ordem?</string>
@@ -43,13 +42,15 @@
     <string name="tvModelResult5">Modelo 5: Controlador PD</string>
 
     <!--Integral Time Absolute Error (ITAE) Method-->
-    <string name="tvITAEDesc">O ITAE reduz o erro absoluto ponderado pelo tempo, resultando em respostas menos oscilatórias.</string>
+    <string name="tvITAEDesc">O ITAE minimiza o integral do erro absoluto ponderado pelo tempo, focando na redução do erro em períodos mais longos. Geralmente, resulta em respostas menos oscilatórias em comparação com outros métodos.</string>
 
     <!--Tyreus-Luyben (TL) Method-->
-    <string name="tvTLDesc">Ajuste equilibrado para sistemas mais lentos e oscilatórios, com comportamento menos agressivo.</string>
+    <string name="tvTLMethod">Método empregado</string>
+    <string name="tvTLDesc">Este método é semelhante ao Ziegler-Nichols, mas é mais adequado para ajustar controladores PI e PID em sistemas mais lentos e oscilatórios. Ele oferece um controle mais estável e com comportamento menos agressivo.</string>
 
     <!--Ziegler & Nichols (TL) Method-->
-    <string name="tvZNDesc">Ziegler-Nichols é um método experimental para respostas rápidas e agressivas, frequentemente com oscilações.</string>
+    <string name="tvZNMethod">Método empregado</string>
+    <string name="tvZNDesc">Um dos primeiros métodos de ajuste, o Ziegler-Nichols usa testes experimentais para definir os parâmetros PID. Ele visa uma resposta agressiva e rápida, mas muitas vezes resulta em overshoot e oscilações.</string>
 
     <!--Process Result-->
     <string name="tvProcessResults">Resultado</string>
@@ -67,15 +68,20 @@
     <string name="LambdaTuningValueRequired">O valor lambda não pode estar vazio</string>
 
     <!--App-->
-    <string name="Process">Processo</string>
-    <string name="Controller">Selecione o controlador desejado</string>
-    <string name="ProcessParameters">Insira os parâmetros para o processo de primeira ordem + tempo morto</string>
+    <string name="tvProcess">Processo</string>
+    <string name="tvFirstOrderProcess">Função de primeira ordem com atraso de transporte (tempo morto)</string>
+    <string name="tvProcessParameters">Parâmetros</string>
+    <string name="tvCriteria">Critério</string>
+    <string name="tvController">Controlador</string>
+    <string name="tvControllerConfiguration">Configurações do controlador</string>
+    <string name="tvControllerConfigurationSelection">Selecione o controlador desejado</string>
+    <string name="tvControllerConfigurationCriteriaSelection">Selecione o critério e o controlador desejado</string>
+
+    <string name="cbRegula">Regulação</string>
     <string name="rbOpened">Malha Aberta</string>
     <string name="rbClosed">Malha Fechada</string>
-    <string name="Gain">Ganho</string>
-    <string name="TimeConstant">Constante de Tempo</string>
-    <string name="TransportDelay">Atraso de Transporte</string>
-    <string name="btCalculate">Calcular</string>
+
+    <string name="btnCalculate">Calcular</string>
     <string name="hintGain">Ganho</string>
     <string name="hintTime">Constante de Tempo</string>
     <string name="hintDelay">Atraso de Transporte</string>
@@ -98,10 +104,10 @@
     <string name="strHelp12">O método IMC no PID Tuner é baseado na técnica proposta por Morari e Zafiriou em \'Robust Process Control\' de sintonia para controlador PID  para funções de primeira ordem mais tempo morto (Atraso de Transporte).</string>
     <string name="strHelp13">Para mais informações sobre os Métodos de Sintonias aqui disponíveis em PID Tuner, Veja as tabelas detalhadas.</string>
     <string name="strDetails">Tabelas Detalhadas</string>
-    <string name="strDetails0" translatable="false">Tyreus-Luyben</string>
     <string name="strDetails1">Z&amp;N - Malha Fechada</string>
     <string name="strDetails2">Z&amp;N - Malha Aberta</string>
     <string name="strDetails5">CHR - Regulação 0% Overshoot</string>
     <string name="strDetails6">CHR - Regulação 20% Overshoot</string>
     <string name="strDetails9">IAE/ITAE Regulação</string>
+    <string name="btnOpenTuning">Aberto</string>
 </resources>

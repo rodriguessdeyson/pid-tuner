@@ -108,7 +108,6 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:padding="4dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/ImageViewSelectedModel"
                             app:layout_constraintStart_toStartOf="parent"
@@ -119,9 +118,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:text="@string/Process"
+                                android:text="@string/tvProcess"
                                 android:textColor="@color/colorPrimaryText"
-                                android:textSize="14sp"
+                                android:textSize="16sp"
                                 android:typeface="normal" />
 
                             <TextView
@@ -129,7 +128,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/roboto"
-                                android:text="@string/ProcessParameters"
+                                android:text="@string/tvFirstOrderProcess"
                                 android:textColor="@color/colorSecondaryText"
                                 android:textSize="13sp" />
 
@@ -182,6 +181,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/LinearLayoutHeader"
                     app:layout_constraintVertical_bias="0.0">
+
+                    <TextView
+                        android:id="@+id/TextViewParameterHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvProcessParameters"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/TextInputLayoutGain"
@@ -297,7 +306,6 @@
             app:layout_constraintTop_toBottomOf="@+id/CardViewProcessConfiguration">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ConstraintLayoutControllerContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -306,38 +314,31 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/TextViewControllerHeader"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvControllerConfiguration"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
 
-                        <TextView
-                            android:id="@+id/TextViewControllerHeader"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:text="Controller Configuration"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="14sp"
-                            android:typeface="normal" />
-
-                        <TextView
-                            android:id="@+id/TextViewControllerInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:text="Fill the controller desired"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="13sp" />
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/TextViewControllerInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvControllerConfigurationSelection"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -345,8 +346,13 @@
                     android:id="@+id/LinearLayoutControllerBody"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="8dp"
                     android:showDividers="end"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -355,42 +361,23 @@
                     app:layout_constraintTop_toBottomOf="@+id/LinearLayoutControllerHeader"
                     app:layout_constraintVertical_bias="0.751">
 
-                    <TextView
-                        android:id="@+id/TextViewController"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Controller"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <CheckBox
+                        android:id="@+id/CheckBoxPI"
+                        android:layout_width="70dp"
                         android:layout_height="match_parent"
-                        android:gravity="start|center_horizontal"
-                        android:orientation="horizontal">
+                        android:buttonTint="@color/colorAccent"
+                        android:text="@string/cbPI"
+                        android:textColor="@color/colorPrimaryText"
+                        tools:layout_editor_absoluteX="184dp" />
 
-                        <CheckBox
-                            android:id="@+id/CheckBoxPI"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            android:paddingStart="2sp"
-                            android:paddingEnd="2sp"
-                            android:text="@string/rbPI"
-                            android:textColor="@color/colorPrimaryText"
-                            app:buttonTint="@color/colorAccent"
-                            tools:layout_editor_absoluteX="184dp" />
-
-                        <CheckBox
-                            android:id="@+id/CheckBoxPID"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            android:paddingStart="2sp"
-                            android:paddingEnd="2sp"
-                            android:text="@string/rbPID"
-                            android:textColor="@color/colorPrimaryText"
-                            app:buttonTint="@color/colorAccent"
-                            tools:layout_editor_absoluteX="246dp" />
-                    </LinearLayout>
+                    <CheckBox
+                        android:id="@+id/CheckBoxPID"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:buttonTint="@color/colorAccent"
+                        android:text="@string/cbPID"
+                        android:textColor="@color/colorPrimaryText"
+                        tools:layout_editor_absoluteX="246dp" />
 
                 </LinearLayout>
 
@@ -419,7 +406,7 @@
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:text="@string/btCalculate"
+                android:text="@string/btnCalculate"
                 app:backgroundTint="@color/colorButton" />
         </LinearLayout>
 

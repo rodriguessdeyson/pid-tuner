@@ -1,12 +1,12 @@
 <resources>
+
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID\nTuner</string>
-    <string name="strWelcome">PID Tuning is a comprehensive app designed to help engineers and control systems professionals fine-tune PID controllers using various established tuning methods.\nThe app provides intuitive tools for selecting and applying different tuning algorithms based on system characteristics and desired performance.</string>
+    <string name="strWelcome">PID Tuner is a comprehensive app designed to help engineers and control systems professionals fine-tune PID controllers using various established tuning methods.\nThe app provides intuitive tools for selecting and applying different tuning algorithms based on system characteristics and desired performance.</string>
     <string name="btStart">Start</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
     <string name="ivPidTunerHelpDescription">PID Tuner help icon. Goes to PID Tuner help page.</string>
-    <string name="ivFirstOrderFunctionDescription">First order function.</string>
     <string name="About">PID Tuner is an application developed to help engineering students to compute controller parameters based on most common methods available, it is only for study purposes.</string>
 
     <!--Tuning Information-->
@@ -16,24 +16,19 @@
 
     <!--Cohen-Coon (CC) Method-->
     <string name="tvCohenCoon" translatable="false">Cohen-Coon</string>
-    <string name="tvCohenCoonDesc">Optimizes PID tuning for systems with time delays, enhancing disturbance rejection.</string>
+    <string name="tvCohenCoonDesc">The Cohen-Coon method is a popular PID tuning technique mainly for first-order systems with time delay. It aims to improve disturbance rejection and has better performance for processes with dead time.</string>
 
     <!--Chien-Hrones-Reswick (CHR) Method-->
     <string name="tvCHR" translatable="false">Chien-Hrones-Reswick</string>
     <string name="swIs20UP" translatable="false">20% UP?</string>
-    <string name="rbServo" translatable="false">Servo</string>
-    <string name="rbServo20" translatable="false">Servo 20% UP</string>
-    <string name="rbRegula">Regulator</string>
-    <string name="rbRegula20">Regu. 20% UP</string>
-    <string name="tvCriteria">Criteria</string>
 
     <!--Integral of Absolute Error (IAE) Method-->
     <string name="tvIAE" translatable="false">Integral Absolute Error</string>
-    <string name="tvIAEDesc">The IAE minimizes total absolute error over time, prioritizing smoother control.</string>
+    <string name="tvIAEDesc">The IAE method minimizes the absolute error over time. It prioritizes the total error accumulation, leading to smoother control but potentially slower response times.</string>
 
     <!--Integral of Absolute Error (IMC) Method-->
     <string name="tvIMC" translatable="false">Internal Model Control</string>
-    <string name="tvIMCDesc">IMC uses a model of the process for tuning providing robust control even with uncertainties.</string>
+    <string name="tvIMCDesc">IMC is based on the principle that the controller contains an explicit model of the process. It provides a systematic way of tuning controllers with the ability to handle model uncertainties and process delays.</string>
     <string name="swUseLambda">Lambda Tuning:</string>
     <string name="hintLambda">Lambda (λ)</string>
     <string name="rbLambda" translatable="false">Lambda</string>
@@ -52,15 +47,17 @@
 
     <!--Integral Time Absolute Error (ITAE) Method-->
     <string name="tvITAE" translatable="false">Integral Time Absolute Error</string>
-    <string name="tvITAEDesc">ITAE reduces time-weighted absolute error, leading to less oscillatory responses.</string>
+    <string name="tvITAEDesc">ITAE minimizes the integral of time-weighted absolute error, focusing on reducing error over longer periods. It generally results in less oscillatory responses compared to other methods.</string>
 
     <!--Tyreus-Luyben (TL) Method-->
     <string name="tvTL" translatable="false">Tyreus-Luyben</string>
-    <string name="tvTLDesc">Balanced tuning for slower, more oscillatory systems, with less aggressive behavior.</string>
+    <string name="tvTLMethod">Method</string>
+    <string name="tvTLDesc">This method is similar to Ziegler-Nichols but is better suited for tuning PI and PID controllers in slower, more oscillatory systems. It provides more stable control with less aggressive behavior.</string>
 
     <!--Ziegler & Nichols (TL) Method-->
     <string name="tvZN" translatable="false">Ziegler-Nichols</string>
-    <string name="tvZNDesc">Ziegler-Nichols is an experimental method for fast and aggressive response, often resulting in oscillations.</string>
+    <string name="tvZNMethod">Method</string>
+    <string name="tvZNDesc">One of the earliest tuning methods, Ziegler-Nichols uses experimental testing to set PID parameters. It aims for an aggressive, fast response but often results in overshoot and oscillations.</string>
 
     <!--Process Result-->
     <string name="tvProcessResults">Results</string>
@@ -77,20 +74,29 @@
     <string name="SecondTimeConstantError">Second Time Constant cannot be empty</string>
     <string name="LambdaTuningValueRequired">Lambda value cannot be empty</string>
 
-    <!--App-->
-    <string name="Process">Process</string>
-    <string name="Controller">Select the desired controller</string>
-    <string name="ProcessParameters">Enter the parameters for first order + dead time process</string>
+    <!--App Common-->
+    <string name="tvProcess">Process</string>
+    <string name="tvFirstOrderProcess">First order function with transport delay (dead time)</string>
+    <string name="tvProcessParameters">Parameters</string>
+    <string name="tvCriteria">Criteria</string>
+    <string name="tvController">Controller</string>
+    <string name="tvControllerConfiguration">Controller Configuration</string>
+    <string name="tvControllerConfigurationSelection">Select the desired controller</string>
+    <string name="tvControllerConfigurationCriteriaSelection">Select the criteria and desired controller</string>
+
+    <string name="cbServo" translatable="false">Servo</string>
+    <string name="cbRegula">Regulator</string>
+    <string name="cbP" translatable="false">P</string>
+    <string name="cbPI" translatable="false">PI</string>
+    <string name="cbPD" translatable="false">PD</string>
+    <string name="cbPID" translatable="false">PID</string>
+
     <string name="rbOpened">Opened Loop</string>
     <string name="rbClosed">Closed Loop</string>
-    <string name="rbP" translatable="false">P</string>
-    <string name="rbPI" translatable="false">PI</string>
-    <string name="rbPD" translatable="false">PD</string>
-    <string name="rbPID" translatable="false">PID</string>
-    <string name="Gain">Gain</string>
-    <string name="TimeConstant">Time Constant</string>
-    <string name="TransportDelay">Transport Delay</string>
-    <string name="btCalculate">Compute</string>
+
+    <string name="ivFirstOrderFunctionDescription">First order function.</string>
+
+    <string name="btnCalculate">Compute</string>
     <string name="Kp" translatable="false">Kp</string>
     <string name="Ki" translatable="false">Ki</string>
     <string name="Kd" translatable="false">Kd</string>
@@ -127,8 +133,7 @@
     <string name="strDetails8" translatable="false">Internal Model Control</string>
     <string name="strDetails9">IAE/ITAE Regulator</string>
     <string name="strDetails10" translatable="false">IAE/ITAE Servo</string>
-    <string name="btnOpenTuning">Open</string>
-    <string name="tvCHRDesc">Focuses on setpoint tracking or disturbance rejection, offering different tuning formulas for system response.</string>
-
+    <string name="tvCHRDesc">This method focuses on optimizing the controller for either setpoint tracking or disturbance rejection. It provides specific tuning formulas based on the desired system response, like minimal overshoot or fast response.</string>
+    <string name="btnOpenTuning">Opened</string>
 
 </resources>

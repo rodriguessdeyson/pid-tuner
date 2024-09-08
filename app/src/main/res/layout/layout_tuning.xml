@@ -80,22 +80,12 @@
             android:elevation="5dp"
             android:fadingEdge="none"
             android:foregroundGravity="center"
+            android:padding="16dp"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbarThumbVertical="@color/colorAccent"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
     </androidx.cardview.widget.CardView>
-
-    <include
-        android:id="@+id/HelpLayout"
-        layout="@layout/layout_tuning_help"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FloatingActionButtonHelp"
@@ -119,5 +109,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         tools:visibility="visible" />
+
+    <include
+        android:id="@+id/HelpLayout"
+        layout="@layout/layout_tuning_help"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

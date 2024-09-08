@@ -1,14 +1,13 @@
 package com.tunings.methods;
 
-import com.tunings.models.ControlProcessType;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
+import com.tunings.models.ControllerParameter;
 
 import java.security.InvalidParameterException;
 
 public class ZN
 {
-	public static ControllerParameters ComputeOpenLoop(ControlType controlType, double kGain, double tTime, double tDelay)
+	public static ControllerParameter ComputeOpenLoop(ControlType controlType, double kGain, double tTime, double tDelay)
 	{
 		switch (controlType)
 		{
@@ -23,7 +22,7 @@ public class ZN
 		}
 	}
 
-	public static ControllerParameters ComputeClosedLoop(ControlType controlType, double kuGain, double uPeriod)
+	public static ControllerParameter ComputeClosedLoop(ControlType controlType, double kuGain, double uPeriod)
 	{
 		switch (controlType)
 		{
@@ -38,57 +37,57 @@ public class ZN
 		}
 	}
 
-	private static ControllerParameters OpenLoopPController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter OpenLoopPController(double kGain, double tTime, double tDelay)
 	{
 		double kp = tTime / (kGain * tDelay);
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameters(ControlProcessType.Open, ControlType.P, kp, ki, kd);
+		return new ControllerParameter(ControlType.P, kp, ki, kd);
 	}
 
-	private static ControllerParameters OpenLoopPIController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter OpenLoopPIController(double kGain, double tTime, double tDelay)
 	{
 		double kp = 0.9 * tTime / (kGain * tDelay);
 		double ki = 3.33 * tDelay;
 		double kd = 0;
 
-		return new ControllerParameters(ControlProcessType.Open, ControlType.PI, kp, ki, kd);
+		return new ControllerParameter(ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameters OpenLoopPIDController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter OpenLoopPIDController(double kGain, double tTime, double tDelay)
 	{
 		double kp = 1.2 * tTime / (kGain * tDelay);
 		double ki = 2 * tDelay;
 		double kd = 0.5 * tDelay;
 
-		return new ControllerParameters(ControlProcessType.Open, ControlType.PID, kp, ki, kd);
+		return new ControllerParameter(ControlType.PID, kp, ki, kd);
 	}
 
-	private static ControllerParameters ClosedLoopPController(double kuGain, double uPeriod)
+	private static ControllerParameter ClosedLoopPController(double kuGain, double uPeriod)
 	{
 		double kp = 0.5 * kuGain;
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameters(ControlProcessType.Closed, ControlType.P, kp, ki, kd);
+		return new ControllerParameter(ControlType.P, kp, ki, kd);
 	}
 
-	private static ControllerParameters ClosedLoopPIController(double kuGain, double uPeriod)
+	private static ControllerParameter ClosedLoopPIController(double kuGain, double uPeriod)
 	{
 		double kp = 0.45 * kuGain;
 		double ki = (uPeriod / 1.2);
 		double kd = 0;
 
-		return new ControllerParameters(ControlProcessType.Closed, ControlType.PI, kp, ki, kd);
+		return new ControllerParameter(ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameters ClosedLoopPIDController(double kuGain, double uPeriod)
+	private static ControllerParameter ClosedLoopPIDController(double kuGain, double uPeriod)
 	{
 		double kp = 0.6 * kuGain;
 		double ki = uPeriod / 2;
 		double kd = uPeriod / 8;
 
-		return new ControllerParameters(ControlProcessType.Closed, ControlType.PID, kp, ki, kd);
+		return new ControllerParameter(ControlType.PID, kp, ki, kd);
 	}
 }

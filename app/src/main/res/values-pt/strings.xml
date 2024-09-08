@@ -2,11 +2,11 @@
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID\nTuner</string>
-    <string name="strWelcome">Bem-vindo ao PID Tuner\n\nPID Tuner reúne vários métodos de sintonia de Controlador PID. Os métodos Z&amp;N, CHR, IMC, IAE e ITAE estão disponíveis para calcular os parâmetros (Proporcional, Integral e Derivativo) do controlador escolhido usando os parâmetros do processo (Ganho, Constante de Tempo e Atraso de Transporte)</string>
+    <string name="strWelcome">O PID Tuning é um aplicativo abrangente projetado para ajudar engenheiros e profissionais de sistemas de controle a ajustar controladores PID usando vários métodos de ajuste estabelecidos.\nO aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.</string>
     <string name="btStart">Iniciar</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
-    <string name="ivPidTunerHelpDescription">PID Tuner help  icon. Goes to PID Tuner help page.</string>
-    <string name="ivFirstOrderFunctionDescription">First order function.</string>
+    <string name="ivPidTunerHelpDescription">Ícone de ajuda do PID Tuner. Vai para a página de ajuda do PID Tuner.</string>
+    <string name="ivFirstOrderFunctionDescription">Função de primeira ordem.</string>
     <string name="About">PID Tuner é um aplicativo desenvolvido para ajudar estudantes de engenharia a calcular parâmetros do controlador baseado nos métodos mais comuns disponíveis, é apenas para fins de estudo.\n\n</string>
 
     <!--Tuning Information-->
@@ -15,18 +15,18 @@
     <string name="tvHelp">Ajuda</string>
 
     <!--Cohen-Coon (CC) Method-->
-    <string name="tvCohenCoonDesc">Cohen-Coon (CC) é um método para sintonizar controlador para processos com alto atraso de transporte</string>
+    <string name="tvCohenCoonDesc">O método Cohen-Coon (CC) otimiza o ajuste de PID para sistemas com atrasos, melhorando a rejeição de perturbações.</string>
 
     <!--Chien-Hrones-Reswick (CHR) Method-->
-    <string name="tvCHRDesc">Chien, Hrones and Reswick (CHR) é um método de ajuste que propõe dois critérios de desempenho: a resposta mais rápida possível sem overshoot e a resposta mais rápida possível com 20% overshoot.</string>
+    <string name="tvCHRDesc">Focado no acompanhamento de setpoint ou rejeição de perturbações, com fórmulas de ajuste específicas.</string>
     <string name="rbRegula">Regulação</string>
     <string name="rbRegula20">Regu. 20% UP</string>
 
     <!--Integral of Absolute Error (IAE) Method-->
-    <string name="tvIAEDesc">Integral Absolute Error (IAE) é um método de ajuste proposto para eliminar o erro em regime permanente usando como critério de desempenho a integral de uma função de erro dentro de uma janela de tempo.</string>
+    <string name="tvIAEDesc">O método IAE minimiza o erro absoluto ao longo do tempo, priorizando um controle mais suave.</string>
 
     <!--Integral of Absolute Error (IMC) Method-->
-    <string name="tvIMCDesc">"Internal Model Control (IMC) é um método de ajuste PID que visa sintonizar de forma que a resposta do sistema tenha uma dinâmica conhecida e para isso utiliza um modelo de processo e uma especificação de desempenho (ajuste lambda) para o ajuste."</string>
+    <string name="tvIMCDesc">IMC utiliza um modelo do processo para ajuste oferecendo controle robusto mesmo com incertezas.</string>
     <string name="swUseLambda">Sintonia Lambda:</string>
     <string name="hintLambda">Lambda (λ)</string>
     <string name="swFirstOrder">Modelo de primeira ordem?</string>
@@ -43,13 +43,13 @@
     <string name="tvModelResult5">Modelo 5: Controlador PD</string>
 
     <!--Integral Time Absolute Error (ITAE) Method-->
-    <string name="tvITAEDesc">Integral Time Absolute Error (ITAE) é um método de ajuste proposto para eliminar o erro em regime permanente usando como critério de desempenho a integral de uma função de erro dentro de uma janela de tempo.</string>
+    <string name="tvITAEDesc">O ITAE reduz o erro absoluto ponderado pelo tempo, resultando em respostas menos oscilatórias.</string>
 
     <!--Tyreus-Luyben (TL) Method-->
-    <string name="tvTLDesc">"Tyreus-Luyben (TL) é um método de ajuste PID mais conservador que o proposto por Ziegler-Nichols, pois consiste em utilizar o ganho e o período crítico para o ajuste, proporcionando desempenho lento e pequeno overshoot."</string>
+    <string name="tvTLDesc">Ajuste equilibrado para sistemas mais lentos e oscilatórios, com comportamento menos agressivo.</string>
 
     <!--Ziegler & Nichols (TL) Method-->
-    <string name="tvZNDesc">"Ziegler-Nichols (Z&amp;N) é um método de sintonia PID no qual dois métodos são propostos para obter um modelo da dinâmica de um processo SISO, analisando-o em malha fechada e malha aberta."</string>
+    <string name="tvZNDesc">Ziegler-Nichols é um método experimental para respostas rápidas e agressivas, frequentemente com oscilações.</string>
 
     <!--Process Result-->
     <string name="tvProcessResults">Resultado</string>
@@ -69,7 +69,7 @@
     <!--App-->
     <string name="Process">Processo</string>
     <string name="Controller">Selecione o controlador desejado</string>
-    <string name="ProcessParameters">Insira os parâmetros para o processo de primeira ordem + tempo morto (atraso de transporte)</string>
+    <string name="ProcessParameters">Insira os parâmetros para o processo de primeira ordem + tempo morto</string>
     <string name="rbOpened">Malha Aberta</string>
     <string name="rbClosed">Malha Fechada</string>
     <string name="Gain">Ganho</string>

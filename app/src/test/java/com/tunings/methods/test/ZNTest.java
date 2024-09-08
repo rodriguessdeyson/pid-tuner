@@ -2,7 +2,7 @@ package com.tunings.methods.test;
 
 import com.tunings.methods.ZN;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
+import com.tunings.models.ControllerParameter;
 
 import org.junit.Test;
 
@@ -18,89 +18,83 @@ public class ZNTest
 	public void computeOpenP()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.P, 10, 0, 0);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.P, 10, 0, 0);
 
 		// Calculated values.
-		ControllerParameters sut = ZN.ComputeOpenLoop(ControlType.P, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = ZN.ComputeOpenLoop(ControlType.P, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeOpenPI()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PI, 9, 3.33, 0);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PI, 9, 3.33, 0);
 
 		// Calculated values.
-		ControllerParameters sut = ZN.ComputeOpenLoop(ControlType.PI, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = ZN.ComputeOpenLoop(ControlType.PI, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeOpenPID()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PID, 12, 2, 0.5);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PID, 12, 2, 0.5);
 
 		// Calculated values.
-		ControllerParameters sut = ZN.ComputeOpenLoop(ControlType.PID, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = ZN.ComputeOpenLoop(ControlType.PID, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeClosedP()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.P, 2.5, 0, 0);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.P, 2.5, 0, 0);
 
 		// Calculated values.
-		ControllerParameters sut = ZN.ComputeClosedLoop(ControlType.P, 5.0, 9.0);
+		ControllerParameter sut = ZN.ComputeClosedLoop(ControlType.P, 5.0, 9.0);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeClosedPI()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PI, 2.25, 7.5, 0);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PI, 2.25, 7.5, 0);
 
 		// Calculated values.
-		ControllerParameters sut = ZN.ComputeClosedLoop(ControlType.PI, 5.0, 9.0);
+		ControllerParameter sut = ZN.ComputeClosedLoop(ControlType.PI, 5.0, 9.0);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeClosedPID()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PID, 3, 4.5, 1.12);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PID, 3, 4.5, 1.12);
 
 		// Calculated values.
-		ControllerParameters sut = ZN.ComputeClosedLoop(ControlType.PID, 5.0, 9.0);
+		ControllerParameter sut = ZN.ComputeClosedLoop(ControlType.PID, 5.0, 9.0);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.1);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 }

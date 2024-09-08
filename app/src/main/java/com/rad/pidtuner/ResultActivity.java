@@ -9,17 +9,17 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tunings.models.ControlProcessType;
-import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
+import com.charts.services.ChartServices;
+import com.tunings.models.ControllerParameter;
+import com.tunings.models.Tuning;
 import com.rad.pidtuner.database.DataAccess;
-import com.tunings.models.TuningType;
+import com.tunings.models.TuningConfiguration;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity
@@ -47,9 +47,9 @@ public class ResultActivity extends AppCompatActivity
 	private TextView TransportDelay;
 
 	/**
-	 * List with the processed tuning.
+	 * Tuning method.
 	 */
-	private ArrayList<TuningMethod> TuningMethods;
+	private Tuning Tuning;
 
 	/**
 	 * LinearLayout where the result will take place.
@@ -105,9 +105,6 @@ public class ResultActivity extends AppCompatActivity
 	 */
 	private void StartViewContents()
 	{
-		Gain                  = findViewById(R.id.TextViewGain);
-		TimeConstant          = findViewById(R.id.TextViewTimeConstant);
-		TransportDelay        = findViewById(R.id.TextViewTransportDelay);
 		LinearResultContainer = findViewById(R.id.LinearLayoutResults);
 	}
 
@@ -117,33 +114,7 @@ public class ResultActivity extends AppCompatActivity
 	private void RetrieveResults()
 	{
 		// Deserialize the result.
-		TuningMethods = getIntent().getParcelableArrayListExtra("RESULT");
-
-		// Maps the parameters.
-		String gain  = String.valueOf(getIntent().getDoubleExtra("Gain", 0));
-		String time  = String.valueOf(getIntent().getDoubleExtra("Time", 0));
-		String dead  = String.valueOf(getIntent().getDoubleExtra("Dead", 0));
-
-		// Gets the IMC only properties.
-		TuningType tuningType = TuningMethods.get(0).getTuningType();
-		if (tuningType == TuningType.IMC)
-		{
-			String title = String.valueOf(getIntent().getStringExtra("TitleName"));
-			TransportDelay.setText(String.format("%s: %s", title, dead));
-		}
-		else if ((tuningType == TuningType.ZN || tuningType == TuningType.TL) &&
-			TuningMethods.get(0).getControlProcessTypes().get(0) == ControlProcessType.Closed)
-		{
-			Gain.setText(getString(R.string.rbClosed));
-			TimeConstant.setText(String.format("%s: %s", getString(R.string.hintKu), time));
-			TransportDelay.setText(String.format("%s: %s", getString(R.string.hintPu), dead));
-			return;
-		}
-		else
-			TransportDelay.setText(String.format("%s: %s", getResources().getString(R.string.TransportDelay), dead));
-
-		Gain.setText(String.format("%s: %s", getResources().getString(R.string.Gain), gain));
-		TimeConstant.setText(String.format("%s: %s", getResources().getString(R.string.TimeConstant), time));
+		Tuning = getIntent().getParcelableExtra("RESULT");
 	}
 
 	/**
@@ -153,42 +124,53 @@ public class ResultActivity extends AppCompatActivity
 	{
 		Locale currentLocale = getResources().getConfiguration().locale;
 
-		// Initialize new inflater.
-		LayoutInflater inflater = getLayoutInflater();
-		for (TuningMethod method : TuningMethods)
+		TextView header = findViewById(R.id.TextViewTuningName);
+		header.setText(Tuning.getTuningName());
+
+		for (TuningConfiguration configuration : Tuning.getConfiguration())
 		{
-			for (ControlProcessType pType : method.getControlProcessTypes())
+			TextView tuningConfiguration = new TextView(getApplicationContext());
+			tuningConfiguration.setId(configuration.getProcessType().ordinal());
+			tuningConfiguration.setText(String.format("%s", configuration.getProcessType()));
+			tuningConfiguration.setTextSize(18);
+			tuningConfiguration.setGravity(Gravity.CENTER);
+			tuningConfiguration.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+			LinearResultContainer.addView(tuningConfiguration);
+
+			LayoutInflater inflater = getLayoutInflater();
+			for (ControllerParameter controllerParameter : configuration.getControllerParameters())
 			{
-				TextView mainHeader = new TextView(getApplicationContext());
-				mainHeader.setText(String.format("%s - %s", method.getTuningName(), pType));
-				mainHeader.setTextSize(18);
-				mainHeader.setGravity(Gravity.CENTER);
-				mainHeader.setTextColor(ContextCompat.getColor(this, R.color.colorSecondaryText));
-				LinearResultContainer.addView(mainHeader);
+				@SuppressLint("InflateParams")
+				View resultView = inflater.inflate(R.layout.layout_result_pid_parameters, null);
+				resultView.setId(controllerParameter.getControlType().ordinal());
+				resultView.setPadding(0, 10, 0, 10);
 
-				for (ControlType cType : method.getControlTypes())
-				{
-					@SuppressLint("InflateParams")
-					View resultView = inflater.inflate(R.layout.layout_pid_parameters, null);
-					TextView tvResultFor = resultView.findViewById(R.id.TextViewControllerParameters);
-					TextView tvKP = resultView.findViewById(R.id.TextViewKPR);
-					TextView tvKI = resultView.findViewById(R.id.TextViewKIR);
-					TextView tvKD = resultView.findViewById(R.id.TextViewKDR);
+				TextView tvResultFor = resultView.findViewById(R.id.TextViewControllerParameters);
+				TextView tvKP = resultView.findViewById(R.id.TextViewKPR);
+				TextView tvKI = resultView.findViewById(R.id.TextViewKIR);
+				TextView tvKD = resultView.findViewById(R.id.TextViewKDR);
+				WebView chartWebView = resultView.findViewById(R.id.WebViewPlotly);
+				chartWebView.getSettings().setJavaScriptEnabled(true);
+				chartWebView.setWebViewClient(new WebViewClient());
+				chartWebView.loadUrl("https://assistencia-hml.abraseuatendimento.com.br/carsystem/2/3fd86cbc5f984593a950ffe0853867bea953d7681a1c4e8b8284f65c4cf80ba0/servicos");
+				// String pidPlot = ChartServices.plot(configuration.getGain(),
+						// configuration.getTimeConstant(), configuration.getTransportDelay(),
+						// controllerParameter.getKP(), controllerParameter.getKI(), controllerParameter.getKD());
+				// chartWebView.loadDataWithBaseURL(null, pidPlot, "text/html", null, null);
 
-					tvResultFor.setText(cType.toString());
-					for (ControllerParameters parameter : method.getParameters())
-					{
-						if (parameter.getType() == cType)
-						{
-							tvKP.setText(String.format(currentLocale, "%.3f", parameter.getKP()));
-							tvKI.setText(String.format(currentLocale, "%.3f", parameter.getKI()));
-							tvKD.setText(String.format(currentLocale, "%.3f", parameter.getKD()));
-						}
-					}
-					LinearResultContainer.addView(resultView);
-				}
+				tvResultFor.setText(String.format("%s", controllerParameter.getControlType().toString()));
+				tvKP.setText(String.format(currentLocale, "%.3f", controllerParameter.getKP()));
+				tvKI.setText(String.format(currentLocale, "%.3f", controllerParameter.getKI()));
+				tvKD.setText(String.format(currentLocale, "%.3f", controllerParameter.getKD()));
+
+				LinearResultContainer.addView(resultView);
 			}
 		}
+	}
+
+	private String buildPlot(TuningConfiguration configuration, ControllerParameter parameter)
+	{
+		return "<div id=\"plot\"></div>";
 	}
 
 	//endregion

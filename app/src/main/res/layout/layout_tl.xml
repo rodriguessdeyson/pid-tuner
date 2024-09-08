@@ -1,285 +1,385 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@drawable/column3"
-tools:context=".methods.TLActivity">
-
-<View
-    android:id="@+id/ViewBackgroundContainer"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:background="@color/colorTertiary"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/constraintLayout"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.0">
-
-    <TextView
-        android:id="@+id/TextViewTL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="@font/roboto"
-        android:lineSpacingExtra="10sp"
-        android:text="@string/tvTL"
-        android:textColor="@color/colorSecondaryText"
-        android:textSize="30sp"
-        android:typeface="normal"
-        app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.486" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/middle_background"
+    tools:context=".methods.TLActivity">
 
     <View
-        android:id="@+id/ViewContainer"
+        android:id="@+id/ViewBackgroundContainer"
         android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
+        android:layout_height="0dp"
+        android:background="@color/colorSecondaryAlt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/MainLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108" />
-
-    <TextView
-        android:id="@+id/TextViewInfoTL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/tvTLDesc"
-        android:textAlignment="textStart"
-        android:textColor="@color/colorSecondaryText"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ViewContainer" />
-
-    <LinearLayout
-        android:id="@+id/LinearLayoutProcess"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewInfoTL">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/TextViewProcess"
-            android:layout_width="wrap_content"
+            android:id="@+id/TextViewTL"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/Process"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="14sp" />
-
-        <RadioGroup
-            android:id="@+id/RadioGroupProcess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checkedButton="@id/RadioButtonClosedLoop"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/RadioButtonClosedLoop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkable="true"
-                android:paddingStart="2sp"
-                android:paddingEnd="2sp"
-                android:text="@string/rbClosed"
-                android:textColor="@color/colorSecondaryText"
-                app:buttonTint="@color/colorAccent"
-                tools:layout_editor_absoluteX="228dp" />
-
-        </RadioGroup>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearLayoutControllerContainer"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LinearLayoutProcess">
-
-        <TextView
-            android:id="@+id/TextViewController"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Controller"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/CheckBoxPI"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:paddingStart="2sp"
-                android:paddingEnd="2sp"
-                android:text="@string/rbPI"
-                android:textColor="@color/colorSecondaryText"
-                app:buttonTint="@color/colorAccent"
-                tools:layout_editor_absoluteX="184dp" />
-
-            <CheckBox
-                android:id="@+id/CheckBoxPID"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:paddingStart="2sp"
-                android:paddingEnd="2sp"
-                android:text="@string/rbPID"
-                android:textColor="@color/colorSecondaryText"
-                app:buttonTint="@color/colorAccent"
-                tools:layout_editor_absoluteX="246dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearLayoutProcessParameters"
-        android:layout_width="0dp"
-        android:layout_height="234dp"
-        android:layout_below="@id/ViewContainer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/ButtonComputePID"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="5dp"
-            android:textColorHint="@color/colorTextHint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EditTextGain"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/hintKu"
-                android:inputType="numberDecimal"
-                android:textColor="@color/colorSecondaryText"
-                android:textColorHint="@color/colorTextHint"
-                app:backgroundTint="@color/colorAccent" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:textColorHint="@color/colorTextHint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EditTextTimeConstant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="@string/hintPu"
-                android:inputType="numberDecimal"
-                android:paddingTop="20dp"
-                android:textColor="@color/colorSecondaryText"
-                android:textColorHint="@color/colorTextHint"
-                app:backgroundTint="@color/colorAccent" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/ButtonComputePID"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="36dp"
-        android:background="@drawable/button_style"
-        android:text="@string/btCalculate"
-        android:textAllCaps="false"
-        android:textColor="@color/button_text_colors"
-        android:textSize="14sp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="126dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LinearLayoutControllerContainer"
-        tools:ignore="UseCompoundDrawables">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/ProcessParameters"
-            android:textAlignment="viewStart"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="14sp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto"
+            android:lineSpacingExtra="10sp"
+            android:text="@string/tvTL"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="30sp"
+            android:typeface="normal"
+            app:layout_constraintBottom_toTopOf="@+id/ViewContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:layout_width="196dp"
-            android:layout_height="90dp"
-            android:background="@drawable/formula_container"
-            android:contentDescription="@string/ivFirstOrderFunctionDescription"
-            app:srcCompat="@drawable/first_order_dynamic" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:id="@+id/ImageViewMethodInfo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/TextViewTL"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/TextViewTL"
+            app:layout_constraintTop_toTopOf="@+id/TextViewTL"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
+
+        <View
+            android:id="@+id/ViewContainer"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.082" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/CardViewProcessConfiguration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/colorTertiary"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ViewContainer">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="4dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/ImageViewFirstOrderProcess"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/TextViewProcessHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:text="@string/Process"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="16sp"
+                                android:typeface="normal" />
+
+                            <TextView
+                                android:id="@+id/TextViewProcessInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/roboto"
+                                android:text="@string/ProcessParameters"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ImageViewFirstOrderProcess"
+                            android:layout_width="130dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/formula_container"
+                            android:contentDescription="@string/ivFirstOrderFunctionDescription"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/first_order_dynamic" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:showDividers="end"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/LinearLayoutHeader"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <TextView
+                        android:id="@+id/TextViewProcess"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Process"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="14sp" />
+
+                    <RadioGroup
+                        android:id="@+id/RadioGroupProcess"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checkedButton="@id/RadioButtonClosedLoop"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/RadioButtonClosedLoop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:paddingStart="2sp"
+                            android:paddingEnd="2sp"
+                            android:text="@string/rbClosed"
+                            android:textColor="@color/colorPrimaryText"
+                            app:buttonTint="@color/colorAccent"
+                            tools:layout_editor_absoluteX="228dp" />
+
+                    </RadioGroup>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/TextInputLayoutGain"
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColorHint="@color/colorTextHint"
+                        tools:layout_editor_absoluteX="5dp"
+                        tools:layout_editor_absoluteY="5dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/EditTextGain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="@string/hintKu"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/colorSecondaryText"
+                            android:textColorHint="@color/colorTextHint"
+                            app:backgroundTint="@color/colorAccent"
+                            tools:layout_editor_absoluteY="5dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/TextInputLayoutTimeConstant"
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColorHint="@color/colorTextHint"
+                        tools:layout_editor_absoluteX="5dp"
+                        tools:layout_editor_absoluteY="63dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/EditTextTimeConstant"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="@string/hintPu"
+                            android:inputType="numberDecimal"
+                            android:paddingTop="20dp"
+                            android:textColor="@color/colorSecondaryText"
+                            android:textColorHint="@color/colorTextHint"
+                            app:backgroundTint="@color/colorAccent"
+                            tools:layout_editor_absoluteY="5dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/CardViewControllerConfiguration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/colorTertiary"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CardViewProcessConfiguration">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutControllerHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/TextViewControllerHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:text="Controller Configuration"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="16sp"
+                            android:typeface="normal" />
+
+                        <TextView
+                            android:id="@+id/TextViewControllerInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:text="Fill the controller desired"
+                            android:textColor="@color/colorSecondaryText"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutControllerBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:showDividers="end"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/LinearLayoutControllerHeader"
+                    app:layout_constraintVertical_bias="0.751">
+
+                    <TextView
+                        android:id="@+id/TextViewController"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Controller"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="start|center_horizontal"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/CheckBoxPI"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:paddingStart="2sp"
+                            android:paddingEnd="2sp"
+                            android:text="@string/rbPI"
+                            android:textColor="@color/colorPrimaryText"
+                            app:buttonTint="@color/colorAccent"
+                            tools:layout_editor_absoluteX="184dp" />
+
+                        <CheckBox
+                            android:id="@+id/CheckBoxPID"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:paddingStart="2sp"
+                            android:paddingEnd="2sp"
+                            android:text="@string/rbPID"
+                            android:textColor="@color/colorPrimaryText"
+                            app:buttonTint="@color/colorAccent"
+                            tools:layout_editor_absoluteX="246dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CardViewControllerConfiguration"
+            app:layout_constraintVertical_bias="1.0">
+
+            <Button
+                android:id="@+id/ButtonComputePID"
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:text="@string/btCalculate"
+                app:backgroundTint="@color/colorButton" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

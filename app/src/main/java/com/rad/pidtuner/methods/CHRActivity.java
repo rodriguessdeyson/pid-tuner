@@ -7,19 +7,22 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
+import com.rad.pidtuner.utils.BottomSheetDialog;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.CHR;
-import com.tunings.models.ControlProcessType;
+import com.tunings.models.ProcessType;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
+import com.tunings.models.ControllerParameter;
+import com.tunings.models.Tuning;
+import com.tunings.models.TuningConfiguration;
 import com.tunings.models.TuningType;
 
 import java.security.InvalidParameterException;
@@ -79,6 +82,7 @@ public class CHRActivity extends AppCompatActivity
 	 */
 	private EditText EditTextProcessTransportDelay;
 
+	private ImageView ImageViewMethodInfo;
 	//endregion
 
 	@Override
@@ -110,6 +114,7 @@ public class CHRActivity extends AppCompatActivity
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
 		EditTextProcessTransportDelay = findViewById(R.id.EditTextTransportDelay);
+		ImageViewMethodInfo           = findViewById(R.id.ImageViewMethodInfo);
 	}
 
 	/**
@@ -125,6 +130,13 @@ public class CHRActivity extends AppCompatActivity
 				return;
 
 			ComputeController();
+		});
+
+		ImageViewMethodInfo.setOnClickListener(v ->
+		{
+			BottomSheetDialog bottomSheet = new BottomSheetDialog();
+			bottomSheet.show(getSupportFragmentManager(),
+					"ModalBottomSheet");
 		});
 	}
 
@@ -172,61 +184,65 @@ public class CHRActivity extends AppCompatActivity
 
 	private void ComputeController()
 	{
-		// Gets the selected process.
-		ArrayList<ControlProcessType> processTypes = new ArrayList<>();
+		// Get the selected process.
+		ArrayList<ProcessType> processTypes = new ArrayList<>();
 		if (CheckBoxServo.isChecked())
-			processTypes.add(SwitchIs20.isChecked() ? ControlProcessType.Servo20 : ControlProcessType.Servo);
+			processTypes.add(SwitchIs20.isChecked() ? ProcessType.Servo20 : ProcessType.Servo);
 		if (CheckBoxRegulator.isChecked())
-			processTypes.add(SwitchIs20.isChecked() ? ControlProcessType.Regulator20 : ControlProcessType.Regulator);
+			processTypes.add(SwitchIs20.isChecked() ? ProcessType.Regulator20 : ProcessType.Regulator);
 
-		// Gets the control to compute.
+		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
 		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
 		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
-		// Process the tuning.
+		// Get the transfer function parameters.
 		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
 		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (ControlType controlType : controlTypes)
+		// Compute the CHR Controller.
+		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
+		for (ProcessType processType : processTypes)
 		{
-			for (ControlProcessType processType : processTypes)
+			ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+			for (ControlType controlType :  controlTypes)
 			{
+				ControllerParameter cp;
 				switch (processType)
 				{
 					case Servo:
-						parameters.add(CHR.ComputeServo(controlType, pGain, pTime, pDead));
+						cp = CHR.ComputeServo(controlType, pGain, pTime, pDead);
+						controllerParameters.add(cp);
 						break;
 					case Servo20:
-						parameters.add(CHR.ComputeServo20UP(controlType, pGain, pTime, pDead));
+						cp = CHR.ComputeServo20UP(controlType, pGain, pTime, pDead);
+						controllerParameters.add(cp);
 						break;
 					case Regulator:
-						parameters.add(CHR.ComputeRegulator(controlType, pGain, pTime, pDead));
+						cp = CHR.ComputeRegulator(controlType, pGain, pTime, pDead);
+						controllerParameters.add(cp);
 						break;
 					case Regulator20:
-						parameters.add(CHR.ComputeRegulator20UP(controlType, pGain, pTime, pDead));
+						cp = CHR.ComputeRegulator20UP(controlType, pGain, pTime, pDead);
+						controllerParameters.add(cp);
 						break;
 					default:
-						throw new InvalidParameterException(controlType.toString());
+						throw new InvalidParameterException(processType.toString());
 				}
 			}
+			configuration.add(new TuningConfiguration(processType, controllerParameters, pGain,
+				pTime, pDead));
 		}
 
-		// Gets the tuning information.
-		TuningMethod chrMethod = new TuningMethod();
-		chrMethod.setTuningName("Chien-Hrones-Reswick");
-		chrMethod.setTuningType(TuningType.CHR);
-		chrMethod.setParameters(parameters);
+		// Get the tuning information.
+		Tuning chrMethod = new Tuning("Chien-Hrones-Reswick", "", TuningType.CHR,
+				configuration);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CHRActivity.this, ResultActivity.class);
 		resultActivity.putExtra("RESULT", chrMethod);
-		resultActivity.putExtra("Gain", pGain);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
 		startActivity(resultActivity);
 	}
 }

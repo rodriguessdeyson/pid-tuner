@@ -127,10 +127,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/button_style"
                 android:text="@string/strDetails"
-                android:textColor="@color/button_text_colors"
-                app:backgroundTint="@null" />
+                android:textColor="@color/text_input_box_stroke_color"
+                app:backgroundTint="@color/colorButton" />
 
             <View
                 android:layout_width="match_parent"

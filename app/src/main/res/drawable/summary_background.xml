@@ -10,8 +10,8 @@
         android:bottom="10dp"/>
     <stroke
         android:width="0.1dp"
-        android:color="@color/colorBackground"/>
+        android:color="@color/colorTertiary"/>
     <solid
-        android:color="@color/colorBackground"/>
+        android:color="@color/colorTertiary"/>
 </shape>
 

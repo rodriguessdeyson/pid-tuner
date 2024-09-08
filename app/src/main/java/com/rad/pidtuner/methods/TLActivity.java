@@ -14,10 +14,11 @@ import com.rad.pidtuner.ResultActivity;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.TL;
-import com.tunings.models.ControlProcessType;
+import com.tunings.models.ProcessType;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
+import com.tunings.models.ControllerParameter;
+import com.tunings.models.Tuning;
+import com.tunings.models.TuningConfiguration;
 import com.tunings.models.TuningType;
 
 import java.util.ArrayList;
@@ -124,32 +125,32 @@ public class TLActivity extends AppCompatActivity
 
 	private void ComputeController()
 	{
-		// Gets the control to compute.
+		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
-		if (CheckBoxPI.isChecked())
-			controlTypes.add(ControlType.PI);
-		if (CheckBoxPID.isChecked())
-			controlTypes.add(ControlType.PID);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
+		// Get the transfer function parameters.
 		double pTime = Parser.GetDouble(EditTextProcessGain.getText().toString());
 		double pDead = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 
-		ArrayList<ControllerParameters> controllerParameters = new ArrayList<>();
+		// Compute the TL Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType : controlTypes)
-			controllerParameters.add(TL.Compute(ControlProcessType.Closed, controlType, pTime, pDead));
+			controllerParameters.add(TL.Compute(ProcessType.Closed, controlType, pTime, pDead));
 
-		// Gets the tuning basics information.
-		TuningMethod closedTuning = new TuningMethod();
-		closedTuning.setTuningName("Tyreus and Luyben");
-		closedTuning.setTuningType(TuningType.TL);
-		closedTuning.setParameters(controllerParameters);
+		// Set the tuning configuration.
+		TuningConfiguration config = new TuningConfiguration(ProcessType.None,
+				controllerParameters, pTime, pDead);
+		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
+		configuration.add(config);
+
+		// Get the tuning information.
+		Tuning tlTuning = new Tuning("Tyreus and Luyben", "", TuningType.TL, configuration);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(TLActivity.this, ResultActivity.class);
-		resultActivity.putExtra("RESULT", closedTuning);
-		resultActivity.putExtra("Gain", 0);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
+		resultActivity.putExtra("RESULT", tlTuning);
 		startActivity(resultActivity);
 	}
 }

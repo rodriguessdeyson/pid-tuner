@@ -2,10 +2,10 @@
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID\nTuner</string>
-    <string name="strWelcome">"PID Tuner provides various methods for tuning PID controllers like Ziegler-Nichols, Tyreus-Luyben, Cohen-Coon, and more. \n\nThese methods help you calculate the Proportional, Integral, and Derivative parameters based on your process parameters: Gain, Time Constant, and Dead Time"</string>
+    <string name="strWelcome">PID Tuning is a comprehensive app designed to help engineers and control systems professionals fine-tune PID controllers using various established tuning methods.\nThe app provides intuitive tools for selecting and applying different tuning algorithms based on system characteristics and desired performance.</string>
     <string name="btStart">Start</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
-    <string name="ivPidTunerHelpDescription">PID Tuner help  icon. Goes to PID Tuner help page.</string>
+    <string name="ivPidTunerHelpDescription">PID Tuner help icon. Goes to PID Tuner help page.</string>
     <string name="ivFirstOrderFunctionDescription">First order function.</string>
     <string name="About">PID Tuner is an application developed to help engineering students to compute controller parameters based on most common methods available, it is only for study purposes.</string>
 
@@ -16,24 +16,24 @@
 
     <!--Cohen-Coon (CC) Method-->
     <string name="tvCohenCoon" translatable="false">Cohen-Coon</string>
-    <string name="tvCohenCoonDesc">Cohen-Coon (CC) is a method for tuning pid controller for higher dead time processes</string>
+    <string name="tvCohenCoonDesc">Optimizes PID tuning for systems with time delays, enhancing disturbance rejection.</string>
 
     <!--Chien-Hrones-Reswick (CHR) Method-->
     <string name="tvCHR" translatable="false">Chien-Hrones-Reswick</string>
-    <string name="tvCHRDesc">Chien, Hrones and Reswick (CHR) is a tuning method that proposes two performance criteria: the fastest possible response without overshoot and the fastest possible response with 20% overshoot.</string>
     <string name="swIs20UP" translatable="false">20% UP?</string>
     <string name="rbServo" translatable="false">Servo</string>
     <string name="rbServo20" translatable="false">Servo 20% UP</string>
     <string name="rbRegula">Regulator</string>
     <string name="rbRegula20">Regu. 20% UP</string>
+    <string name="tvCriteria">Criteria</string>
 
     <!--Integral of Absolute Error (IAE) Method-->
     <string name="tvIAE" translatable="false">Integral Absolute Error</string>
-    <string name="tvIAEDesc">Integral Absolute Error (IAE) is a tuning method proposed to eliminate the error in steady state using as an performance criterion the integral of an error function within a time window.</string>
+    <string name="tvIAEDesc">The IAE minimizes total absolute error over time, prioritizing smoother control.</string>
 
     <!--Integral of Absolute Error (IMC) Method-->
     <string name="tvIMC" translatable="false">Internal Model Control</string>
-    <string name="tvIMCDesc">Internal Model Control (IMC) is a PID tuning method that aims to tune in such a way that the system response has a known dynamics and for that it uses a process model and a performance specification (lambda tuning) for the adjustment.</string>
+    <string name="tvIMCDesc">IMC uses a model of the process for tuning providing robust control even with uncertainties.</string>
     <string name="swUseLambda">Lambda Tuning:</string>
     <string name="hintLambda">Lambda (λ)</string>
     <string name="rbLambda" translatable="false">Lambda</string>
@@ -52,15 +52,15 @@
 
     <!--Integral Time Absolute Error (ITAE) Method-->
     <string name="tvITAE" translatable="false">Integral Time Absolute Error</string>
-    <string name="tvITAEDesc">Integral Time Absolute Error (ITAE) is a tuning method proposed to eliminate the error in steady state using as an performance criterion the integral of an error function within a time window.</string>
+    <string name="tvITAEDesc">ITAE reduces time-weighted absolute error, leading to less oscillatory responses.</string>
 
     <!--Tyreus-Luyben (TL) Method-->
     <string name="tvTL" translatable="false">Tyreus-Luyben</string>
-    <string name="tvTLDesc">Tyreus-Luyben (TL) is a more conservative PID adjustment method than that proposed by Ziegler-Nichols, as it consists of using the gain and the critical period for the adjustment, providing slow performance and small overshoot.</string>
+    <string name="tvTLDesc">Balanced tuning for slower, more oscillatory systems, with less aggressive behavior.</string>
 
     <!--Ziegler & Nichols (TL) Method-->
     <string name="tvZN" translatable="false">Ziegler-Nichols</string>
-    <string name="tvZNDesc">Ziegler-Nichols (Z&amp;N) is a PID tuning method in which two methods are proposed to obtain a model of the dynamics of a SISO process, analyzing it in closed-loop and open-loop.</string>
+    <string name="tvZNDesc">Ziegler-Nichols is an experimental method for fast and aggressive response, often resulting in oscillations.</string>
 
     <!--Process Result-->
     <string name="tvProcessResults">Results</string>
@@ -80,7 +80,7 @@
     <!--App-->
     <string name="Process">Process</string>
     <string name="Controller">Select the desired controller</string>
-    <string name="ProcessParameters">Enter the parameters for first order + dead time (transport delay) process</string>
+    <string name="ProcessParameters">Enter the parameters for first order + dead time process</string>
     <string name="rbOpened">Opened Loop</string>
     <string name="rbClosed">Closed Loop</string>
     <string name="rbP" translatable="false">P</string>
@@ -127,6 +127,8 @@
     <string name="strDetails8" translatable="false">Internal Model Control</string>
     <string name="strDetails9">IAE/ITAE Regulator</string>
     <string name="strDetails10" translatable="false">IAE/ITAE Servo</string>
+    <string name="btnOpenTuning">Open</string>
+    <string name="tvCHRDesc">Focuses on setpoint tracking or disturbance rejection, offering different tuning formulas for system response.</string>
 
 
 </resources>

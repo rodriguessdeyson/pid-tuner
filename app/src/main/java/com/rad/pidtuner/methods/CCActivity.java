@@ -15,10 +15,13 @@ import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.CC;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
+import com.tunings.models.ControllerParameter;
+import com.tunings.models.ProcessType;
+import com.tunings.models.TuningConfiguration;
+import com.tunings.models.Tuning;
 import com.tunings.models.TuningType;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CCActivity extends AppCompatActivity
@@ -161,34 +164,35 @@ public class CCActivity extends AppCompatActivity
 	 */
 	private void ComputeController()
 	{
-		// Gets the process types.
+		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
 		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
 		if (CheckBoxPD.isChecked()) controlTypes.add(ControlType.PD);
 		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
-		// Process the tuning.
+		// Get the transfer function parameters.
 		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
 		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
-		ArrayList<ControllerParameters> controllerParameters = new ArrayList<>();
+		// Compute the CC Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType: controlTypes)
 			controllerParameters.add(CC.Compute(controlType, pGain, pTime, pDead));
 
-		// Gets the tuning basics information.
-		TuningMethod openTuning = new TuningMethod();
-		openTuning.setTuningName("Cohen-Coon");
-		openTuning.setTuningType(TuningType.CC);
-		openTuning.setParameters(controllerParameters);
+		// Set the tuning configuration.
+		TuningConfiguration config = new TuningConfiguration(ProcessType.None,
+			controllerParameters, pGain, pTime, pDead);
+
+		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
+		configuration.add(config);
+		// Get the tuning information.
+		Tuning ccMethod = new Tuning("Cohen-Coon", "", TuningType.CC, configuration);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CCActivity.this, ResultActivity.class);
-		resultActivity.putExtra("RESULT", openTuning);
-		resultActivity.putExtra("Gain", pGain);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
+		resultActivity.putExtra("RESULT", ccMethod);
 		startActivity(resultActivity);
 	}
 }

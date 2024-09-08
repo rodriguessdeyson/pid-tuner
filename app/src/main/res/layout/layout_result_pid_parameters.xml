@@ -17,22 +17,28 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/TextViewControllerParameters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:fontFamily="@font/roboto"
+                android:lineSpacingExtra="10sp"
                 android:text="@string/tvProcessResults"
                 android:textColor="@color/colorSecondaryText"
-                android:textSize="18sp" />
+                android:textSize="14sp"
+                android:typeface="normal" />
 
             <View
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
                 android:background="@color/colorAccent" />
@@ -48,31 +54,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="@string/Kp"
                     android:textAllCaps="false"
                     android:textColor="@color/colorSecondaryText"
-                    android:textSize="18sp" />
+                    android:textSize="14sp"
+                    android:typeface="normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="@string/Ki"
                     android:textAllCaps="false"
                     android:textColor="@color/colorSecondaryText"
-                    android:textSize="18sp" />
+                    android:textSize="14sp"
+                    android:typeface="normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="@string/Kd"
                     android:textAllCaps="false"
                     android:textColor="@color/colorSecondaryText"
-                    android:textSize="18sp" />
+                    android:textSize="14sp"
+                    android:typeface="normal" />
 
             </LinearLayout>
 
@@ -88,33 +100,45 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="@color/colorSecondaryText"
-                    android:textSize="18sp" />
+                    android:textSize="14sp"
+                    android:typeface="normal" />
 
                 <TextView
                     android:id="@+id/TextViewKIR"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="@color/colorSecondaryText"
-                    android:textSize="18sp" />
+                    android:textSize="14sp"
+                    android:typeface="normal" />
 
                 <TextView
                     android:id="@+id/TextViewKDR"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="@color/colorSecondaryText"
-                    android:textSize="18sp" />
+                    android:textSize="14sp"
+                    android:typeface="normal" />
 
             </LinearLayout>
 
+            <WebView
+                android:id="@+id/WebViewPlotly"
+                android:layout_width="match_parent"
+                android:layout_height="350dp" />
+
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

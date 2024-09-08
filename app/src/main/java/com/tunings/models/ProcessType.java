@@ -3,46 +3,47 @@ package com.tunings.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-
-import xdroid.enumformat.EnumFormat;
-
-public enum ControlProcessType implements Parcelable
+public enum ProcessType implements Parcelable
 {
+	/**
+	 * No process type.
+	 */
+	None(0),
+
 	/**
 	 * Servo process.
 	 */
-	Servo(0),
+	Servo(1),
 
 	/**
 	 * Servo process with 20% Overshoot.
 	 */
-	Servo20(1),
+	Servo20(2),
 
 	/**
 	 * Regulation process.
 	 */
-	Regulator(2),
+	Regulator(3),
 
 	/**
 	 * Regulation process with 20% Overshoot.
 	 */
-	Regulator20(3),
+	Regulator20(4),
 
 	/**
 	 * Lambda Tuning Process.
 	 */
-	LambdaTuning(4),
+	LambdaTuning(5),
 
 	/**
 	 * Opened loop Feedback
 	 */
-	Open(5),
+	Open(6),
 
 	/**
 	 * Closed Loop Feedback.
 	 */
-	Closed(6);
+	Closed(7);
 
 	/**
 	 * Selected enum.
@@ -53,33 +54,25 @@ public enum ControlProcessType implements Parcelable
 	 * Enum constructor.
 	 * @param process Index of the enum.
 	 */
-	ControlProcessType(int process)
+	ProcessType(int process)
 	{
 		this.Process = process;
 	}
 
-	public static final Creator<ControlProcessType> CREATOR = new Creator<ControlProcessType>()
+	public static final Creator<ProcessType> CREATOR = new Creator<ProcessType>()
 	{
 		@Override
-		public ControlProcessType createFromParcel(Parcel in)
+		public ProcessType createFromParcel(Parcel in)
 		{
 			return values()[in.readInt()];
 		}
 
 		@Override
-		public ControlProcessType[] newArray(int size)
+		public ProcessType[] newArray(int size)
 		{
-			return new ControlProcessType[size];
+			return new ProcessType[size];
 		}
 	};
-
-	@NonNull
-	@Override
-	public String toString()
-	{
-		EnumFormat enumFormat = EnumFormat.getInstance();
-		return enumFormat.format(this);
-	}
 
 	@Override
 	public int describeContents()

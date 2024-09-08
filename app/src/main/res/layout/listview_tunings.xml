@@ -8,10 +8,11 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="130dp"
+        android:layout_height="150dp"
         android:background="@drawable/list_item_background"
         android:gravity="center"
         android:orientation="vertical"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,23 +20,22 @@
 
         <TextView
             android:id="@+id/TextViewTuningType"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto"
             android:text="@string/app_name"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@color/colorPrimaryDarkText"
             android:textSize="20sp"
             android:typeface="normal" />
 
         <TextView
             android:id="@+id/TextViewTuningInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fontFamily="@font/roboto"
-            android:gravity="center"
             android:text="@string/tvCHRDesc"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@color/colorPrimaryDarkText"
+            android:textSize="14sp"
             android:typeface="normal" />
     </LinearLayout>
 

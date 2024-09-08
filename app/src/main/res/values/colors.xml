@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark Mode App. -->
+    <!-- App. -->
     <color name="colorPrimary">#7F7B77</color>
-    <color name="colorSecondary">#1E1415</color>
-    <color name="colorTertiary">#E6121012</color>
-    <color name="colorAccent">#CC6010</color>
-
-    <!-- Buttons-->
-    <color name="colorButton">#121012</color>
-    <color name="colorButtonPressed">#3E383E</color>
-    <color name="colorButtonText">#FFFFFF</color>
+    <color name="colorSecondary">#121012</color>
+    <color name="colorSecondaryAlt">#CC0B0F12</color>
+    <color name="colorTertiary">#FF0B0F12</color>
+    <color name="colorAccent">#CC8D46</color>
 
     <!--Text-->
-    <color name="colorHomeText">#7F7B77</color>
-    <color name="colorPrimaryText">#1E1415</color>
-    <color name="colorSecondaryText">#BBACA1</color>
-    <color name="colorTextHint">#969696</color>
+    <color name="colorPrimaryText">#ECDCC9</color>
+    <color name="colorPrimaryDarkText">#101419</color>
+    <color name="colorSecondaryText">#CC8D46</color>
+    <color name="colorTextHint">#B3B3B3</color>
+
+    <!-- Buttons-->
+    <color name="colorButton">#CC8D46</color>
+    <color name="colorButtonText">#101419</color>
 
     <!--Backgrounds-->
+    <color name="primaryBackground">#313539</color>
     <color name="list_item">#BBACA1</color>
     <color name="colorBackground">#59BBACA1</color>
     <color name="formula">#FF333333</color>

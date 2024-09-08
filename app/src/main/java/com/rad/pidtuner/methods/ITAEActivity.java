@@ -13,13 +13,16 @@ import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
+import com.tunings.methods.IAE;
 import com.tunings.methods.ITAE;
-import com.tunings.models.ControlProcessType;
+import com.tunings.models.ProcessType;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
+import com.tunings.models.ControllerParameter;
+import com.tunings.models.Tuning;
+import com.tunings.models.TuningConfiguration;
 import com.tunings.models.TuningType;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public class ITAEActivity extends AppCompatActivity
@@ -158,51 +161,54 @@ public class ITAEActivity extends AppCompatActivity
 
 	private void ComputeController()
 	{
-		// Gets the selected process.
-		ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-		if (CheckBoxServo.isChecked()) processTypes.add(ControlProcessType.Servo);
-		if (CheckBoxRegulator.isChecked()) processTypes.add(ControlProcessType.Regulator);
+		// Get the selected process.
+		ArrayList<ProcessType> processTypes = new ArrayList<>();
+		if (CheckBoxServo.isChecked()) processTypes.add(ProcessType.Servo);
+		if (CheckBoxRegulator.isChecked()) processTypes.add(ProcessType.Regulator);
 
-		// Gets the control to compute.
+		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
 		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
-		// Process the tuning.
+		// Get the transfer function parameters.
 		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
 		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-
-		for (ControlProcessType processType : processTypes)
+		// Compute the ITAE Controller.
+		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
+		for (ProcessType processType : processTypes)
 		{
-			for (ControlType controlType: controlTypes)
+			ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+			for (ControlType controlType :  controlTypes)
 			{
+				ControllerParameter cp;
 				switch (processType)
 				{
-                    case Servo:
-						parameters.add(ITAE.ComputeServo(controlType, pGain, pTime, pDead));
-                        break;
-                    case Regulator:
-						parameters.add(ITAE.ComputerRegulator(controlType, pGain, pTime, pDead));
-                        break;
-                }
+					case Servo:
+						cp = ITAE.ComputeServo(controlType, pGain, pTime, pDead);
+						controllerParameters.add(cp);
+						break;
+					case Regulator:
+						cp = ITAE.ComputeRegulator(controlType, pGain, pTime, pDead);
+						controllerParameters.add(cp);
+						break;
+					default:
+						throw new InvalidParameterException(processType.toString());
+				}
 			}
+			configuration.add(new TuningConfiguration(processType, controllerParameters, pGain,
+				pTime, pDead));
 		}
 
-		// Gets the tuning basics information.
-		TuningMethod itaeMethod = new TuningMethod();
-		itaeMethod.setTuningName("Integral Time of Absolute Error ");
-		itaeMethod.setTuningType(TuningType.ITAE);
-		itaeMethod.setParameters(parameters);
+		// Get the tuning information.
+		Tuning itaeMethod = new Tuning("Integral Time of Absolute Error", "", TuningType.ITAE,
+				configuration);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ITAEActivity.this, ResultActivity.class);
 		resultActivity.putExtra("RESULT", itaeMethod);
-		resultActivity.putExtra("Gain", pGain);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
 		startActivity(resultActivity);
 	}
 }

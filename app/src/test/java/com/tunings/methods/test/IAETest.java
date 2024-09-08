@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 import com.tunings.methods.IAE;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
+import com.tunings.models.ControllerParameter;
 
 public class IAETest
 {
@@ -18,59 +18,55 @@ public class IAETest
 	public void computeRegulatorPI()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PI, 9.621, 2.636, 0);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PI, 9.621, 2.636, 0);
 
 		// Calculated values.
-		ControllerParameters sut = IAE.ComputeRegulator(ControlType.PI, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IAE.ComputeRegulator(ControlType.PI, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeRegulatorPID()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PID, 12.637, 1.706, 0.387);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PID, 12.637, 1.706, 0.387);
 
 		// Calculated values.
-		ControllerParameters sut = IAE.ComputeRegulator(ControlType.PID, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IAE.ComputeRegulator(ControlType.PID, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeServoPI()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PI, 6.06, 5.23, 0);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PI, 6.06, 5.23, 0);
 
 		// Calculated values.
-		ControllerParameters sut = IAE.ComputeServo(ControlType.PI, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IAE.ComputeServo(ControlType.PI, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 
 	@Test
 	public void computeServoPID()
 	{
 		// Expected values.
-		ControllerParameters expectedParameters = new ControllerParameters(ControlType.PID, 8.796, 7.003, 0.400);
+		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PID, 8.796, 7.003, 0.400);
 
 		// Calculated values.
-		ControllerParameters sut = IAE.ComputeServo(ControlType.PID, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IAE.ComputeServo(ControlType.PID, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
-		assertEquals("Check Control Process Type", expectedParameters.getControlProcessType(), sut.getControlProcessType());
 	}
 }

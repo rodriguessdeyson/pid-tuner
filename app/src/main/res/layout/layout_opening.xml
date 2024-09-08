@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/waveformhome"
+    android:background="@drawable/end_background"
     tools:context=".SplashOpening">
 
     <TextView
@@ -15,7 +15,7 @@
         android:gravity="center"
         android:text="@string/tvHome"
         android:textAlignment="center"
-        android:textColor="@color/colorHomeText"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

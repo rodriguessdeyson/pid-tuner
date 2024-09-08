@@ -1,18 +1,18 @@
 package com.tunings.methods;
 
-import com.tunings.models.ControlProcessType;
+import com.tunings.models.ProcessType;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
+import com.tunings.models.ControllerParameter;
 
 import java.security.InvalidParameterException;
 
 public class RT
 {
-	public static ControllerParameters Compute(ControlType controlType, ControlProcessType controlProcessType,
-		double kuGain, double uPeriod)
+	public static ControllerParameter Compute(ControlType controlType, ProcessType processType,
+                                              double kuGain, double uPeriod)
 	{
-		if (controlProcessType != ControlProcessType.Closed)
-			throw new InvalidParameterException(controlProcessType.toString());
+		if (processType != ProcessType.Closed)
+			throw new InvalidParameterException(processType.toString());
 
 		if (controlType != ControlType.PID)
 			throw new InvalidParameterException(controlType.toString());
@@ -21,6 +21,6 @@ public class RT
 		double ki = 0.8 * uPeriod;
 		double kd = 0.1 * ki;
 
-        return new ControllerParameters(ControlProcessType.Closed, ControlType.PID, kp, ki, kd);
+        return new ControllerParameter(ControlType.PID, kp, ki, kd);
 	}
 }

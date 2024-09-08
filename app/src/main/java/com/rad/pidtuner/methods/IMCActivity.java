@@ -12,15 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.tunings.methods.IMC;
-import com.tunings.models.ControlProcessType;
+import com.tunings.methods.ZN;
+import com.tunings.models.ProcessType;
 import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
-import com.tunings.models.TuningType;
+import com.tunings.models.ControllerParameter;
+import com.tunings.models.Tuning;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.rad.pidtuner.R;
@@ -28,6 +29,8 @@ import com.rad.pidtuner.ResultActivity;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.rad.pidtuner.utils.ViewUtils;
+import com.tunings.models.TuningConfiguration;
+import com.tunings.models.TuningType;
 
 import java.util.ArrayList;
 
@@ -98,7 +101,7 @@ public class IMCActivity extends AppCompatActivity
 	/**
 	 * Linear layout reference to controller container.
 	 */
-	private  LinearLayout LinearLayoutController;
+	private ConstraintLayout ConstraintLayoutControllerContainer;
 
 	/**
 	 * Reference of the selected transfer model.
@@ -152,7 +155,7 @@ public class IMCActivity extends AppCompatActivity
 		EditTextLambdaTuning          = findViewById(R.id.EditTextLambda);
 		ViewPIDModels                 = findViewById(R.id.ViewPIDModels);
 		ImageViewSelectedModel        = findViewById(R.id.ImageViewSelectedModel);
-		LinearLayoutController        = findViewById(R.id.LinearLayoutControllerContainer);
+		ConstraintLayoutControllerContainer        = findViewById(R.id.ConstraintLayoutControllerContainer);
 		LayoutGain                    = findViewById(R.id.TextInputLayoutGain);
 		LayoutTimeConstant            = findViewById(R.id.TextInputLayoutTimeConstant);
 		LayoutTransportDelay          = findViewById(R.id.TextInputLayoutTransportDelay);
@@ -178,7 +181,7 @@ public class IMCActivity extends AppCompatActivity
 					ViewUtils.FadeOut(getApplicationContext(), ImageViewSelectedModel, ViewPIDModels);
 				else
 					ViewUtils.FadeOut(getApplicationContext(), ImageViewSelectedModel);
-				ViewUtils.FadeIn(getApplicationContext(), LinearLayoutController);
+				ViewUtils.FadeIn(getApplicationContext(), ConstraintLayoutControllerContainer);
 				ViewUtils.FadeIn(getApplicationContext(),
 						EditTextProcessGain,
 						EditTextProcessTimeConstant,
@@ -216,7 +219,7 @@ public class IMCActivity extends AppCompatActivity
 				EditTextProcessTimeConstant);
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
-			ViewUtils.FadeOut(getApplicationContext(), LinearLayoutController, EditTextProcessTransportDelay,
+			ViewUtils.FadeOut(getApplicationContext(), ConstraintLayoutControllerContainer, EditTextProcessTransportDelay,
 				ViewPIDModels);
 		});
 		ImageModelButton[1].setOnClickListener(v ->
@@ -233,7 +236,7 @@ public class IMCActivity extends AppCompatActivity
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 			LayoutTransportDelay.setHint(getResources().getString(R.string.hintSecondTimeConstant));
-			ViewUtils.FadeOut(getApplicationContext(), LinearLayoutController, ViewPIDModels);
+			ViewUtils.FadeOut(getApplicationContext(), ConstraintLayoutControllerContainer, ViewPIDModels);
 		});
 		ImageModelButton[2].setOnClickListener(v ->
 		{
@@ -250,7 +253,7 @@ public class IMCActivity extends AppCompatActivity
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 			LayoutTransportDelay.setHint(getResources().getString(R.string.hintDampingRatio));
-			ViewUtils.FadeOut(getApplicationContext(), LinearLayoutController, ViewPIDModels);
+			ViewUtils.FadeOut(getApplicationContext(), ConstraintLayoutControllerContainer, ViewPIDModels);
 		});
 		ImageModelButton[3].setOnClickListener(v ->
 		{
@@ -262,7 +265,7 @@ public class IMCActivity extends AppCompatActivity
 			ViewUtils.FadeIn(getApplicationContext(), ImageViewSelectedModel,
 				ComputeButton);
 			ViewUtils.FadeOut(getApplicationContext(),
-				LinearLayoutController,
+					ConstraintLayoutControllerContainer,
 				EditTextProcessTimeConstant,
 				EditTextProcessTransportDelay,
 				ViewPIDModels);
@@ -281,7 +284,7 @@ public class IMCActivity extends AppCompatActivity
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 			ViewUtils.FadeOut(getApplicationContext(),
-				LinearLayoutController,
+					ConstraintLayoutControllerContainer,
 				EditTextProcessTransportDelay,
 				ViewPIDModels);
 		});
@@ -321,277 +324,228 @@ public class IMCActivity extends AppCompatActivity
 		// If the dynamic is first order, compute this validation.
 		if (SwitchUseFirstOrderDynamic.isChecked())
 		{
-			// Validates if at least one controller type is checked.
-			if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
-			{
-				Logger.Show(this, R.string.ControllerTypeIsRequired);
-				return false;
-			}
-
-			// Validates if the process data are filled.
-			if (EditTextProcessGain.getText().toString().isEmpty())
-			{
-				EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-				Logger.Show(this, R.string.GainError);
-				return false;
-			}
-
-			// Validates if the time constant data are filled.
-			if (EditTextProcessTimeConstant.getText().toString().isEmpty())
-			{
-				EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-				Logger.Show(this, R.string.TimeConstantError);
-				return false;
-			}
-
-			// Validates if the dead time data are filled.
-			if (EditTextProcessTransportDelay.getText().toString().isEmpty())
-			{
-				EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
-				Logger.Show(this, R.string.TransportDelayError);
-				return false;
-			}
+			return ValidateFirstOrderDynamic();
 		}
-		else
+
+		switch (ModelSelected)
 		{
-			switch (ModelSelected)
-			{
-				case PI_Controller_Model:
-				case PD_Controller_Model:
+			case P_Controller_Model:
+				return ValidatePModel();
+			case PI_Controller_Model:
+			case PD_Controller_Model:
+				return ValidatePIAndPIDModel();
+			case PID_Controller_Model1:
+				return ValidatePIDModel1();
+			case PID_Controller_Model2:
+				return ValidatePIDModel2();
+		}
+		return true;
+	}
 
-					// Validates if the process data are filled.
-					if (EditTextProcessGain.getText().toString().isEmpty())
-					{
-						EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-						Logger.Show(this, R.string.GainError);
-						return false;
-					}
+	private boolean ValidateFirstOrderDynamic()
+	{
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
+		{
+			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			return false;
+		}
 
-					// Validates if the time constant data are filled.
-					if (EditTextProcessTimeConstant.getText().toString().isEmpty())
-					{
-						EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-						Logger.Show(this, R.string.TimeConstantError);
-						return false;
-					}
-					break;
-				case PID_Controller_Model1:
+		// Validates if the process data are filled.
+		if (EditTextProcessGain.getText().toString().isEmpty())
+		{
+			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
+			Logger.Show(this, R.string.GainError);
+			return false;
+		}
 
-					// Validates if the process data are filled.
-					if (EditTextProcessGain.getText().toString().isEmpty())
-					{
-						EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-						Logger.Show(this, R.string.GainError);
-						return false;
-					}
+		// Validates if the time constant data are filled.
+		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
+		{
+			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
+			Logger.Show(this, R.string.TimeConstantError);
+			return false;
+		}
 
-					// Validates if the time constant data are filled.
-					if (EditTextProcessTimeConstant.getText().toString().isEmpty())
-					{
-						EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-						Logger.Show(this, R.string.TimeConstantError);
-						return false;
-					}
+		// Validates if the dead time data are filled.
+		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
+		{
+			EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
+			Logger.Show(this, R.string.TransportDelayError);
+			return false;
+		}
+		return true;
+	}
 
-					// Validates if the dead time data are filled.
-					if (EditTextProcessTransportDelay.getText().toString().isEmpty())
-					{
-						EditTextProcessTransportDelay.setError(getResources().getString(R.string.SecondTimeConstantError));
-						Logger.Show(this, R.string.SecondTimeConstantError);
-						return false;
-					}
-					break;
-				case PID_Controller_Model2:
+	private boolean ValidatePModel()
+	{
+		// Validates if the process data are filled.
+		if (EditTextProcessGain.getText().toString().isEmpty())
+		{
+			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
+			Logger.Show(this, R.string.GainError);
+			return false;
+		}
+		return true;
+	}
 
-					// Validates if the process data are filled.
-					if (EditTextProcessGain.getText().toString().isEmpty())
-					{
-						EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-						Logger.Show(this, R.string.GainError);
-						return false;
-					}
+	private boolean ValidatePIAndPIDModel()
+	{
+		// Validates if the process data are filled.
+		if (EditTextProcessGain.getText().toString().isEmpty())
+		{
+			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
+			Logger.Show(this, R.string.GainError);
+			return false;
+		}
 
-					// Validates if the time constant data are filled.
-					if (EditTextProcessTimeConstant.getText().toString().isEmpty())
-					{
-						EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-						Logger.Show(this, R.string.TimeConstantError);
-						return false;
-					}
+		// Validates if the time constant data are filled.
+		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
+		{
+			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
+			Logger.Show(this, R.string.TimeConstantError);
+			return false;
+		}
+		return true;
+	}
 
-					// Validates if the dead time data are filled.
-					if (EditTextProcessTransportDelay.getText().toString().isEmpty())
-					{
-						EditTextProcessTransportDelay.setError(getResources().getString(R.string.DampingRatioError));
-						Logger.Show(this, R.string.DampingRatioError);
-						return false;
-					}
-					break;
-				case P_Controller_Model:
+	private boolean ValidatePIDModel1()
+	{
+		// Validates if the process data are filled.
+		if (EditTextProcessGain.getText().toString().isEmpty())
+		{
+			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
+			Logger.Show(this, R.string.GainError);
+			return false;
+		}
 
-					// Validates if the process data are filled.
-					if (EditTextProcessGain.getText().toString().isEmpty())
-					{
-						EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-						Logger.Show(this, R.string.GainError);
-						return false;
-					}
-					break;
-			}
+		// Validates if the time constant data are filled.
+		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
+		{
+			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
+			Logger.Show(this, R.string.TimeConstantError);
+			return false;
+		}
+
+		// Validates if the dead time data are filled.
+		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
+		{
+			EditTextProcessTransportDelay.setError(getResources().getString(R.string.SecondTimeConstantError));
+			Logger.Show(this, R.string.SecondTimeConstantError);
+			return false;
+		}
+		return true;
+	}
+
+	private boolean ValidatePIDModel2()
+	{
+		// Validates if the process data are filled.
+		if (EditTextProcessGain.getText().toString().isEmpty())
+		{
+			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
+			Logger.Show(this, R.string.GainError);
+			return false;
+		}
+
+		// Validates if the time constant data are filled.
+		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
+		{
+			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
+			Logger.Show(this, R.string.TimeConstantError);
+			return false;
+		}
+
+		// Validates if the dead time data are filled.
+		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
+		{
+			EditTextProcessTransportDelay.setError(getResources().getString(R.string.DampingRatioError));
+			Logger.Show(this, R.string.DampingRatioError);
+			return false;
 		}
 		return true;
 	}
 
 	private void ComputeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
-		String usedParameter = getResources().getString(R.string.TransportDelay);
+		// Get the transfer function parameters.
+		double gain             = Parser.GetDouble(EditTextProcessGain.getText().toString());
+		double timeConstant     = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
+		double dynamicParameter = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+		double lambda           = Parser.GetDouble(EditTextLambdaTuning.getText().toString());
 
-		// Gets the tuning basics information.
-		TuningMethod imcMethod = new TuningMethod();
-		imcMethod.setTuningName("Internal Model Control");
-		imcMethod.setTuningType(TuningType.IMC);
+		Tuning imcMethod = SwitchUseFirstOrderDynamic.isChecked() ?
+			FirstOrderModelTuning(gain, timeConstant, dynamicParameter, lambda) :
+			ModelBasedTuning(gain, timeConstant, dynamicParameter, lambda);
 
-		// Gets the selected process.
-		ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-		processTypes.add(ControlProcessType.LambdaTuning);
-		imcMethod.setControlProcessTypes(processTypes);
+		// Pass through intent to the next activity the results information.
+		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
+		resultActivity.putExtra("RESULT", imcMethod);
+		startActivity(resultActivity);
+	}
 
-		// Gets the control to compute.
+	/**
+	 * Generates the IMC first order model tuning.
+	 * @param gain Gain.
+	 * @param timeConstant Time constant.
+	 * @param transportDelay Transport delay.
+	 * @param lambda Lambda.
+	 * @return Tuning configuration.
+	 */
+	private Tuning FirstOrderModelTuning(double gain, double timeConstant, double transportDelay,
+										 double lambda)
+	{
+		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
 		if (SwitchUseFirstOrderDynamic.isChecked())
 		{
 			if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
 			if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 		}
-		else
-		{
-			switch (ModelSelected)
-			{
-				case PI_Controller_Model:
-					controlTypes.add(ControlType.PI);
-					break;
-				case PID_Controller_Model1:
-				case PID_Controller_Model2:
-					controlTypes.add(ControlType.PID);
-					break;
-				case P_Controller_Model:
-					controlTypes.add(ControlType.P);
-					break;
-				case PD_Controller_Model:
-					controlTypes.add(ControlType.PD);
-					break;
-			}
-		}
-		imcMethod.setControlTypes(controlTypes);
-		tuningMethods.add(imcMethod);
 
-		// Process the tuning.
-		Double pGain      = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pTime      = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		Double pDead      = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
-		Double pLambda    = Parser.GetDouble(EditTextLambdaTuning.getText().toString());
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
+		// Compute the IMC Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(IMC.ComputeLambdaTuning(controlType, gain, timeConstant,
+					transportDelay, lambda));
 
-		if (SwitchUseFirstOrderDynamic.isChecked())
-		{
-			for (TuningMethod tuning : tuningMethods)
-			{
-				for (ControlType controller: tuning.getControlTypes())
-				{
-					for (ControlProcessType pType : tuning.getControlProcessTypes())
-					{
-						ControllerParameters cp = IMC
-							.Compute(controller, pType, pLambda, pGain, pTime, pDead);
-						parameters.add(cp);
-					}
-				}
-				tuning.setParameters(parameters);
-			}
-		}
-		else
-		{
-			ControllerParameters cp;
-			switch (ModelSelected)
-			{
-				case P_Controller_Model:
-					cp = IMC.Compute(
-						ControlType.P,
-						ControlProcessType.LambdaTuning,
-						ModelSelected,
-						pLambda,
-						pDead,
-						pGain,
-						pTime,
-						pDead);
-					parameters.add(cp);
-					tuningMethods.get(0).setParameters(parameters);
-					break;
-				case PD_Controller_Model:
-					cp = IMC.Compute(
-						ControlType.PD,
-						ControlProcessType.LambdaTuning,
-						ModelSelected,
-						pLambda,
-						pDead,
-						pGain,
-						pTime,
-						pDead);
-					parameters.add(cp);
-					tuningMethods.get(0).setParameters(parameters);
-					break;
-				case PI_Controller_Model:
-					cp = IMC.Compute(
-						ControlType.PI,
-						ControlProcessType.LambdaTuning,
-						ModelSelected,
-						pLambda,
-						pDead,
-						pGain,
-						pTime,
-						pDead);
-					parameters.add(cp);
-					tuningMethods.get(0).setParameters(parameters);
-					break;
-				case PID_Controller_Model1:
-					usedParameter = getResources().getString(R.string.SecondTimeConstant);
-					cp = IMC.Compute(
-							ControlType.PID,
-							ControlProcessType.LambdaTuning,
-							ModelSelected,
-							pLambda,
-							pDead,
-							pGain,
-							pTime,
-							pDead);
-					parameters.add(cp);
-					tuningMethods.get(0).setParameters(parameters);
-					break;
-				case PID_Controller_Model2:
-						usedParameter = getResources().getString(R.string.DampingRatio);
-					cp = IMC.Compute(
-						ControlType.PID,
-						ControlProcessType.LambdaTuning,
-						ModelSelected,
-						pLambda,
-						pDead,
-						pGain,
-						pTime,
-						pDead);
-					parameters.add(cp);
-					tuningMethods.get(0).setParameters(parameters);
-					break;
-			}
-		}
+		// Set the tuning configuration.
+		TuningConfiguration config = new TuningConfiguration(ProcessType.LambdaTuning,
+				controllerParameters, gain, timeConstant, transportDelay);
+		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
+		configuration.add(config);
 
-		// Pass through intent to the next activity the results information.
-		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
-		resultActivity.putExtra("Gain", pGain);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
-		resultActivity.putExtra("TitleName", usedParameter);
-		startActivity(resultActivity);
+		// Get the tuning information.
+		return new Tuning("Internal Model Control", "", TuningType.IMC, configuration);
+	}
+
+	/**
+	 * Generates the IMC model bases tuning.
+	 * @param gain Gain.
+	 * @param timeConstant Time constant.
+	 * @param dynamicParameter dynamic parameter (Second time constant or Dumping ratio)
+	 * @param lambda Lambda.
+	 * @return Tuning configuration.
+	 */
+	private Tuning ModelBasedTuning(double gain, double timeConstant, double dynamicParameter,
+									double lambda)
+	{
+		// Compute the IMC Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+			controllerParameters.add(IMC.ComputeLambdaTuning(ModelSelected,
+					gain,
+					timeConstant,
+					dynamicParameter,
+					dynamicParameter,
+					lambda));
+
+		// Set the tuning configuration.
+		TuningConfiguration config = new TuningConfiguration(ProcessType.LambdaTuning,
+				controllerParameters, gain, timeConstant, lambda, dynamicParameter);
+		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
+		configuration.add(config);
+
+		// Get the tuning information.
+		return new Tuning("Internal Model Control", "", TuningType.IMC, configuration);
 	}
 }
 

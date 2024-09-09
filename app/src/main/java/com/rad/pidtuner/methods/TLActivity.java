@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
+import com.rad.pidtuner.utils.BottomSheetDialog;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.TL;
@@ -52,6 +54,11 @@ public class TLActivity extends AppCompatActivity
 	 */
 	private EditText EditTextProcessTimeConstant;
 
+	/**
+	 * ImageView reference to show about dialog.
+	 */
+	private ImageView ImageViewMethodInfo;
+
 	//endregion
 
 	@Override
@@ -78,6 +85,7 @@ public class TLActivity extends AppCompatActivity
 		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
+		ImageViewMethodInfo           = findViewById(R.id.ImageViewMethodInfo);
 	}
 
 	/**
@@ -93,6 +101,16 @@ public class TLActivity extends AppCompatActivity
 				return;
 
 			ComputeController();
+		});
+
+		ImageViewMethodInfo.setOnClickListener(v ->
+		{
+			String title = getResources().getString(R.string.tl_about_title);
+			String description = getResources().getString(R.string.tl_about_description);
+
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description);
+			bottomSheet.show(getSupportFragmentManager(),
+					"ModalBottomSheet");
 		});
 	}
 

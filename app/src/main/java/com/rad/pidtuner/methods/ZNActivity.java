@@ -1,6 +1,7 @@
 package com.rad.pidtuner.methods;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,10 +9,12 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import com.rad.pidtuner.utils.BottomSheetDialog;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
@@ -90,6 +93,11 @@ public class ZNActivity extends AppCompatActivity
 	 */
 	private TextInputLayout LayoutTransportDelay;
 
+	/**
+	 * ImageView reference to show about dialog.
+	 */
+	private ImageView ImageViewMethodInfo;
+
 	//endregion
 
 	@Override
@@ -122,6 +130,7 @@ public class ZNActivity extends AppCompatActivity
 		LayoutGain                    = findViewById(R.id.TextInputLayoutGain);
 		LayoutTimeConstant            = findViewById(R.id.TextInputLayoutTimeConstant);
 		LayoutTransportDelay          = findViewById(R.id.TextInputLayoutTransportDelay);
+		ImageViewMethodInfo           = findViewById(R.id.ImageViewMethodInfo);
 	}
 
 	/**
@@ -138,6 +147,16 @@ public class ZNActivity extends AppCompatActivity
 				return;
 
 			ComputeController();
+		});
+
+		ImageViewMethodInfo.setOnClickListener(v ->
+		{
+			String title = getString(R.string.zn_about_title);
+			String description = getString(R.string.zn_about_description);
+
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description);
+			bottomSheet.show(getSupportFragmentManager(),
+					"ModalBottomSheet");
 		});
 
 		RadioButtonOpened.setOnClickListener(v ->

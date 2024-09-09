@@ -18,6 +18,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rad.pidtuner.database.DataAccess;
@@ -28,6 +29,7 @@ import com.rad.pidtuner.methods.IMCActivity;
 import com.rad.pidtuner.methods.ITAEActivity;
 import com.rad.pidtuner.methods.TLActivity;
 import com.rad.pidtuner.methods.ZNActivity;
+import com.rad.pidtuner.utils.ViewUtils;
 import com.tunings.models.Tuning;
 import com.tunings.models.TuningType;
 
@@ -75,6 +77,8 @@ public class TuningActivity extends AppCompatActivity
 	 * Reference to help layout.
 	 */
 	private View HelpContainer;
+
+	private CardView CardViewTunings;
 
 	/**
 	 * Reference to help layout.
@@ -141,6 +145,7 @@ public class TuningActivity extends AppCompatActivity
 		HelpContainer             = findViewById(R.id.HelpLayout);
 		HelpTables                = findViewById(R.id.IncludeTables);
 		ButtonTuningMethodsTables = findViewById(R.id.ButtonDetailedTables);
+		CardViewTunings           = findViewById(R.id.CardViewTunings);
 
 		ListView listView  = findViewById(R.id.ListViewTuningMethods);
 		TuningAdapter      = new ArrayAdapter<Tuning>(this, android.R.layout.simple_list_item_1,
@@ -189,7 +194,8 @@ public class TuningActivity extends AppCompatActivity
 		// Handle the click to show help.
 		FBHelp.setOnClickListener(v ->
 		{
-			HelpContainer.setVisibility(View.VISIBLE);
+			ViewUtils.FadeOut(getApplicationContext(), CardViewTunings);
+			ViewUtils.FadeIn(getApplicationContext(), HelpContainer);
 			IsReturnLocked = true;
 		});
 
@@ -200,7 +206,8 @@ public class TuningActivity extends AppCompatActivity
 				HelpTables.setVisibility(View.GONE);
 			else
 			{
-				HelpContainer.setVisibility(View.INVISIBLE);
+				ViewUtils.FadeOut(getApplicationContext(), HelpContainer);
+				ViewUtils.FadeIn(getApplicationContext(), CardViewTunings);
 				IsReturnLocked = false;
 			}
 		});

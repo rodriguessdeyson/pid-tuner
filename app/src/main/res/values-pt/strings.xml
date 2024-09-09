@@ -2,13 +2,13 @@
 
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
-    <string name="tvHome">PID\nTuner</string>
-    <string name="strWelcome">PID Tuner é um aplicativo abrangente projetado para ajudar engenheiros e profissionais de sistemas de controle a ajustar controladores PID usando vários métodos de ajuste estabelecidos.\nO aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.</string>
+    <string name="tvHome">PID<br/>Tuner</string>
+    <string name="strWelcome">PID Tuner é um aplicativo abrangente projetado para ajudar engenheiros e profissionais de sistemas de controle a ajustar controladores PID usando vários métodos de ajuste estabelecidos.<br/>O aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.</string>
     <string name="btStart">Iniciar</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
     <string name="ivPidTunerHelpDescription">Ícone de ajuda do PID Tuner. Vai para a página de ajuda do PID Tuner.</string>
     <string name="ivFirstOrderFunctionDescription">Função de primeira ordem.</string>
-    <string name="About">PID Tuner é um aplicativo desenvolvido para ajudar estudantes de engenharia a calcular parâmetros do controlador baseado nos métodos mais comuns disponíveis, é apenas para fins de estudo.\n\n</string>
+    <string name="About">PID Tuner é um aplicativo desenvolvido para ajudar estudantes de engenharia a calcular parâmetros do controlador baseado nos métodos mais comuns disponíveis, é apenas para fins de estudo.<br/><br/></string>
 
     <!--Tuning Information-->
     <string name="tvTuningMethods">Métodos de sintonia</string>
@@ -17,12 +17,69 @@
 
     <!--Cohen-Coon (CC) Method-->
     <string name="tvCohenCoonDesc">O método Cohen-Coon é uma técnica popular de ajuste de PID, principalmente para sistemas de primeira ordem com atraso. Ele visa melhorar a rejeição de perturbações e tem melhor desempenho em processos com tempo morto.</string>
+    <string name="cc_about_title">Método de ajuste Cohen-Coon (CC)</string>
+    <string name="cc_about_description"><Data><![CDATA[
+        O método Cohen-Coon (CC) é uma técnica amplamente utilizada para ajuste de controladores PID, especialmente para sistemas de primeira ordem com atraso de tempo. Ele oferece fórmulas para calcular os parâmetros PID com base na resposta dinâmica do sistema.
+        <br/><br/>O método CC melhora tanto o acompanhamento de setpoint quanto a rejeição de perturbações, sendo ideal para sistemas com tempo morto significativo.
+        <br/><br/><b><font color="#CC8D46">Principais Características</font></b>
+        <br/><br/><b>1. Projetado para Sistemas com Tempo Morto</b>
+        <br/>O método CC é adequado para sistemas com um atraso de tempo notável (tempo morto), onde outros métodos de ajuste podem não ser tão eficazes.
+
+        <br/><br/><b>2. Controle Equilibrado</b>
+        <br/>Ele oferece um equilíbrio entre resposta rápida e mínimo overshoot, sendo uma boa escolha para processos que exigem tempos de resposta moderados a rápidos sem oscilações excessivas.
+
+        <br/><br/><b>3. Tratamento de Setpoint e Perturbações</b>
+        <br/>O ajuste Cohen-Coon pode ser configurado para otimizar tanto mudanças de setpoint quanto rejeição de perturbações, melhorando o desempenho geral do sistema em várias condições.
+
+        <br/><br/><b><font color="#CC8D46">Parâmetros de Ajuste</font></b>:
+        <br/><br/>O método calcula os parâmetros PID (ganho proporcional, tempo integral e tempo derivativo) usando um modelo de processo que considera a constante de tempo, o ganho do processo e o tempo morto do sistema. As fórmulas são diretas e aplicáveis a uma ampla gama de processos industriais.
+]]> </Data></string>
 
     <!--Chien-Hrones-Reswick (CHR) Method-->
     <string name="tvCHRDesc">Este método se concentra em otimizar o controlador para acompanhamento de setpoint ou rejeição de perturbações. Ele oferece fórmulas de ajuste específicas baseadas na resposta desejada do sistema, como mínimo overshoot ou resposta rápida.</string>
+    <string name="chr_about_title">Método de ajuste Chien-Hrones-Reswick (CHR)</string>
+    <string name="chr_about_description"><Data><![CDATA[
+        O método Chien-Hrones-Reswick (CHR) é uma técnica de ajuste de controladores PID que otimiza os parâmetros com foco no comportamento do sistema, seja para acompanhamento de setpoint ou rejeição de perturbações.
+        <br/><br/>Ele fornece regras de ajuste diferentes dependendo dos objetivos de controle.
+        <br/><br/><b><font color="#CC8D46">Principais Características</font></b>
+        <br/><br/><b>1. Acompanhamento de Setpoint vs. Rejeição de Perturbações</b>
+        <br/>O CHR oferece dois critérios de ajuste:
+
+           <br/><br/>- Acompanhamento de Setpoint: Prioriza a resposta rápida a mudanças no setpoint.
+           <br/><br/>- Rejeição de Perturbações: Foca em minimizar os efeitos das perturbações, mantendo a estabilidade.
+
+        <br/><br/><b>2. Mínimo Overshoot e Resposta Rápida</b>
+        <br/>O ajuste CHR pode ser configurado para mínimo overshoot ou tempos de resposta rápidos, conforme o comportamento desejado.
+
+        <br/><br/><b>3. Adequado para Sistemas de Segunda Ordem</b>
+        <br/>Este método é particularmente eficaz para sistemas que podem ser modelados como de segunda ordem, equilibrando estabilidade e desempenho.
+
+        <br/><br/><b><font color="#CC8D46">Parâmetros de Ajuste</font></b>:
+        <br/><br/>O método CHR usa fórmulas para calcular os ganhos do controlador PID (proporcional, integral e derivativo) com base na dinâmica do sistema e no objetivo de ajuste (acompanhamento de setpoint ou rejeição de perturbações).
+]]> </Data></string>
 
     <!--Integral of Absolute Error (IAE) Method-->
     <string name="tvIAEDesc">O método IAE minimiza o erro absoluto ao longo do tempo. Ele prioriza a acumulação total de erros, levando a um controle mais suave, mas potencialmente com tempos de resposta mais lentos.</string>
+    <string name="iae_about_title">Método de Ajuste Integral do Erro Absoluto (IAE)</string>
+    <string name="iae_about_description"><Data><![CDATA[
+        O método Integral do Erro Absoluto (IAE) se concentra em minimizar o erro absoluto total ao longo do tempo. É amplamente utilizado em sistemas de controle onde o desempenho suave e de longo prazo é priorizado em vez da rapidez na resposta.
+        <br/><br/>O ajuste IAE dá ênfase à redução do erro acumulado, resultando em uma resposta mais gradual e estável.
+        <br/><br/><b><font color="#CC8D46">Principais Características:</font></b>
+        <br/><br/><b>1. Minimização do Erro</b>
+        <br/>O ajuste IAE busca minimizar o erro absoluto entre o setpoint e a variável de processo ao longo do tempo. Ele integra o erro para dar mais peso às desvios de longo prazo em relação ao setpoint.
+
+        <br/><br/><b>2. Controle Mais Suave</b>
+        <br/>Priorizando a redução do erro de longo prazo, o ajuste IAE resulta em ações de controle mais suaves, com menos mudanças agressivas na saída, sendo ideal para processos em que o overshoot e as oscilações devem ser evitados..
+
+        <br/><br/><b>3. Maior Tempo de Estabilização</b>
+        <br/>Devido ao foco na minimização do erro total, sistemas ajustados com IAE geralmente apresentam um tempo de estabilização mais longo, trocando a rapidez por estabilidade e menor overshoot.
+
+        <br/><br/><b>4. Robusto na Presença de Ruído</b>
+        <br/>O ajuste IAE é robusto quando se lida com ruídos no sistema, pois evita mudanças abruptas no controle e foca na correção de erro a longo prazo.
+
+        <br/><br/><b><font color="#CC8D46">Parâmetros de Ajuste</font></b>:
+        <br/><br/>O IAE é geralmente utilizado como critério de desempenho para o ajuste de controladores, e os parâmetros PID (ganhos proporcional, integral e derivativo) são ajustados para minimizar o integral do erro absoluto ao longo do tempo. É frequentemente equilibrado com outros métodos de ajuste para atingir o desempenho desejado tanto em condições transitórias quanto em regime permanente.
+   ]]> </Data></string>
 
     <!--Integral of Absolute Error (IMC) Method-->
     <string name="tvIMCDesc">O IMC baseia-se no princípio de que o controlador contém um modelo explícito do processo. Ele oferece uma maneira sistemática de ajustar controladores, com a capacidade de lidar com incertezas no modelo e atrasos no processo.</string>
@@ -40,17 +97,102 @@
     <string name="tvModelResult3">Modelo 3: Controlador PID</string>
     <string name="tvModelResult4">Modelo 4: Controlador P</string>
     <string name="tvModelResult5">Modelo 5: Controlador PD</string>
+    <string name="imc_about_title">Método de Ajuste de Controle de Modelo Interno (IMC)</string>
+    <string name="imc_about_description"><Data><![CDATA[
+        O método Controle de Modelo Interno (IMC) é uma abordagem baseada em modelo para o ajuste de PID, onde o controlador é projetado com base em um modelo interno do processo.
+        O objetivo principal do IMC é fornecer controle robusto e estável, mesmo na presença de incertezas e perturbações no processo. É amplamente utilizado em aplicações industriais devido à sua simplicidade e eficácia.
+        <br/><br/><b><font color="#CC8D46">Principais Características</font></b>
+        <br/><br/><b>1. Abordagem Baseada em Modelo</b>
+        <br/>O IMC utiliza um modelo matemático do processo para projetar o controlador, assumindo que quanto melhor o modelo corresponder ao processo real, melhor será o desempenho do controle.
+
+        <br/><br/><b>2. Robusto a Perturbações e Incertezas no Processo</b>
+        <br/>O ajuste IMC fornece um controlador mais robusto contra perturbações e variações nos parâmetros do sistema, tornando-o altamente eficaz para sistemas com incertezas ou ruídos.
+
+        <br/><br/><b>3. Desempenho Ajustável via Filtro</b>
+        <br/>O ajuste IMC inclui um filtro passa-baixa que pode ser ajustado para equilibrar entre desempenho (velocidade de resposta) e robustez (estabilidade frente a perturbações). Isso permite ajustes flexíveis dependendo do nível de agressividade desejado.
+
+        <br/><br/><b><font color="#CC8D46">Parâmetros de Ajuste</font></b>
+        <br/><br/>O método IMC calcula os parâmetros PID com base no modelo do processo, que normalmente inclui ganho do processo, constante de tempo e tempo morto. A constante de tempo do filtro é selecionada para controlar a troca entre velocidade e estabilidade. O controlador PID resultante tende a ser estável e menos agressivo, com ações de controle mais suaves.
+
+        <br/><br/><b><font color="#CC8D46">Lambda (λ)</font></b>
+        <br/><br/>No ajuste do Controle de Modelo Interno (IMC), o parâmetro lambda (λ) desempenha um papel crucial na determinação do trade-off entre desempenho e robustez do sistema. Lambda é a constante de tempo do filtro e afeta diretamente o ajuste do controlador PID.
+
+        <br/><br/>No método de ajuste IMC, após desenvolver um modelo matemático do processo (geralmente um modelo de primeira ordem mais tempo morto ou de ordem superior), os parâmetros PID são calculados usando o modelo do processo e o valor λ.
+]]> </Data></string>
 
     <!--Integral Time Absolute Error (ITAE) Method-->
     <string name="tvITAEDesc">O ITAE minimiza o integral do erro absoluto ponderado pelo tempo, focando na redução do erro em períodos mais longos. Geralmente, resulta em respostas menos oscilatórias em comparação com outros métodos.</string>
+    <string name="itae_about_title">Método de Ajuste Integral do Tempo do Erro Absoluto (ITAE)</string>
+    <string name="itae_about_description"><Data><![CDATA[
+        O método Integral do Tempo do Erro Absoluto (ITAE) se concentra em minimizar o erro absoluto ponderado pelo tempo entre a variável de processo e o setpoint. O ITAE dá mais ênfase aos erros que persistem ao longo do tempo, resultando em ações de controle mais suaves e com menos overshoot e oscilações.
+        <br/><br/>É particularmente útil em sistemas onde o desempenho a longo prazo e a estabilidade são mais importantes do que a velocidade de resposta imediata.
+        <br/><br/><b><font color="#CC8D46">Principais Características:</font></b>
+        <br/><br/><b>1. Minimização do Erro Ponderado pelo Tempo:</b>
+        <br/>O ITAE dá mais importância aos erros que ocorrem ao longo de períodos mais longos, buscando reduzir o erro geral a longo prazo, em vez de focar em correções de curto prazo.
+
+        <br/><br/><b>2. Redução de Overshoot e Oscilações</b>
+        <br/>O método é conhecido por produzir ações de controle menos agressivas, resultando em respostas mais suaves, com mínimo overshoot e menos oscilações em comparação com outros métodos de ajuste.
+
+        <br/><br/><b>3. Melhor Estabilidade a Longo Prazo</b>
+        <br/>O ajuste ITAE geralmente resulta em uma resposta inicial mais lenta, mas com melhor estabilidade a longo prazo, sendo adequado para processos onde evitar o overshoot e garantir transições suaves são críticos.
+
+        <br/><br/><b>4. Resposta Atrasada para Redução de Ruído</b>
+        <br/>Devido à natureza ponderada pelo tempo do erro, o ITAE tende a atrasar ligeiramente a ação corretiva, o que ajuda a reduzir o impacto de ruídos e perturbações de curto prazo.
+
+        <br/><br/><b><font color="#CC8D46">Parâmetros de Ajuste</font></b>:
+        <br/><br/>O ajuste ITAE regula os parâmetros PID (ganhos proporcional, integral e derivativo) para minimizar o integral do erro absoluto ponderado pelo tempo. Isso resulta em uma resposta do sistema mais lenta, mas mais estável, garantindo mínimo overshoot e correções mais suaves ao longo do tempo.
+]]> </Data></string>
 
     <!--Tyreus-Luyben (TL) Method-->
     <string name="tvTLMethod">Método empregado</string>
     <string name="tvTLDesc">Este método é semelhante ao Ziegler-Nichols, mas é mais adequado para ajustar controladores PI e PID em sistemas mais lentos e oscilatórios. Ele oferece um controle mais estável e com comportamento menos agressivo.</string>
+    <string name="tl_about_title">Método de Ajuste Tyreus-Luyben (TL)</string>
+    <string name="tl_about_description"><Data><![CDATA[
+        O método Tyreus-Luyben (TL) é uma variação do método Ziegler-Nichols, mas mais conservador, projetado para fornecer melhor estabilidade e controle com comportamento menos agressivo.
+        <br/><br/>Ele é amplamente utilizado para sistemas que apresentam comportamento oscilatório, especialmente para processos onde a estabilidade é mais importante do que respostas rápidas.
+        <br/><br/><b><font color="#CC8D46">Principais Características</font></b>
+        <br/><br/><b>1. Sistemas Oscilatórios</b>
+        <br/>O ajuste TL é especialmente útil para controlar sistemas que tendem a oscilar, pois é projetado para reduzir o risco de overshoot e minimizar oscilações, mantendo um desempenho adequado.
+
+        <br/><br/><b>2. Ajuste Conservador</b>
+        <br/>Comparado a outros métodos como Ziegler-Nichols, o TL produz configurações PID mais conservadoras, resultando em um controle mais estável e suave. Ele prioriza a estabilidade, evitando ajustes agressivos que poderiam causar instabilidade.
+
+        <br/><br/><b>3. Principalmente para Controladores PI e PID</b>
+        <br/>O método oferece diretrizes específicas para ajuste de controladores Proporcional-Integral (PI) e Proporcional-Integral-Derivativo (PID), com diferentes conjuntos de parâmetros, dependendo se o controle derivativo é utilizado.
+
+        <br/><br/><b>4. Procedimento Passo a Passo</b>
+        <br/>Semelhante ao Ziegler-Nichols, o método TL requer que o sistema seja ajustado até atingir o ganho e período último por tentativa e erro, e depois os parâmetros do controlador são calculados com base nesses valores.
+
+        <br/><br/><b><font color="#CC8D46">Procedimento de Ajuste</font></b>:
+        <br/><br/><b>1. Coloque o sistema no modo manual e aumente lentamente o ganho proporcional (Kp) até que o sistema exiba oscilações sustentadas (no ganho último (Ku) e período último (PU).</b>
+
+        <br/><br/><b>2. Use as fórmulas para calcular os parâmetros do PI ou PID.</b>
+]]> </Data></string>
 
     <!--Ziegler & Nichols (TL) Method-->
     <string name="tvZNMethod">Método empregado</string>
     <string name="tvZNDesc">Um dos primeiros métodos de ajuste, o Ziegler-Nichols usa testes experimentais para definir os parâmetros PID. Ele visa uma resposta agressiva e rápida, mas muitas vezes resulta em overshoot e oscilações.</string>
+    <string name="zn_about_title">Método de Ajuste Ziegler-Nichols (ZN)</string>
+    <string name="zn_about_description"><Data><![CDATA[
+    O método Ziegler-Nichols (ZN) é uma das técnicas mais utilizadas para o ajuste de controladores PID. Ele fornece configurações iniciais para os ganhos proporcional, integral e derivativo de um controlador. Existem dois principais métodos Ziegler-Nichols: malha aberta e malha fechada.
+        <br/><br/>Esses métodos buscam equilibrar resposta rápida e mínima oscilação, mas o controlador resultante pode precisar de ajustes finos adicionais.
+        <br/><br/><b><font color="#CC8D46">Principais Características</font></b>
+        <br/><br/><b>1. Ajuste Agressivo</b>
+        <br/>Ziegler-Nichols tende a produzir um ajuste mais agressivo, o que pode levar a uma resposta rápida, mas pode causar overshoot e oscilações.
+
+        <br/><br/><b>2. Bom Ponto de Partida</b>
+        <br/>Este método fornece uma boa estimativa inicial dos parâmetros PID, mas geralmente requer ajuste fino adicional para otimização.
+
+        <br/><br/><b>3. Amplamente Utilizado</b>
+        <br/>O método Ziegler-Nichols é simples e amplamente aplicável, tornando-o uma escolha popular em muitos processos industriais.
+
+        <br/><br/><b><font color="#CC8D46">Procedimento de Ajuste</font></b>:
+        <br/><br/><b>1. Ajuste Ziegler-Nichols de Malha Aberta (Método da Curva de Reação):</b>
+        <br/>Este método é usado para processos onde a resposta do sistema a um degrau pode ser observada. O controlador é inicialmente colocado em modo manual e é aplicado um degrau na entrada. A resposta da saída é analisada e os parâmetros do controlador são ajustados com base nesses dados.
+
+        <br/><br/><b>2. Ajuste Ziegler-Nichols de Malha Fechada (Método do Ganho Último):</b>
+        <br/>Este método requer que o sistema esteja em modo de malha fechada, e o ganho proporcional (Kp) é aumentado até que o sistema oscile com amplitude constante. O ganho último (Ku) e o período último (Pu) são então usados para calcular os parâmetros PID.
+]]> </Data></string>
 
     <!--Process Result-->
     <string name="tvProcessResults">Resultado</string>
@@ -90,17 +232,17 @@
     <string name="hintPu">Período último (Pu)</string>
 
     <!--Help Strings -->
-    <string name="strHelp">Bem-vindo ao PID Tuner\n\nPID Tuner reúne vários métodos de sintonia de Controlador PID.\nOs métodos Z&amp;N, CHR, IMC, IAE e ITAE estão disponíveis para calcular os parâmetros \n(Proporcional, Integral e Derivativo) do controlador escolhido usando os parâmetros do processo \n(Ganho, Constante de Tempo e Atraso de Transporte).\n\nEste guia irá ajudar a entender como preencher e calcular os parâmetros para os métodos: Ziegler-Nichols e IMC.\n\n- Função de Primeira Ordem -</string>
-    <string name="strHelp2">A equação acima mostra uma função de primeira ordem com tempo morto (Atraso de Transporte),\n</string>
-    <string name="strHelp3">Em que:\n- Kp (K) é o Ganho do Processo;\n- θ é o Atraso de Transporte do Processo;\n- τ é a Constante de Tempo do Processo.</string>
+    <string name="strHelp">Bem-vindo ao PID Tuner<br/><br/>PID Tuner reúne vários métodos de sintonia de Controlador PID.<br/>Os métodos Z&amp;N, CHR, IMC, IAE e ITAE estão disponíveis para calcular os parâmetros <br/>(Proporcional, Integral e Derivativo) do controlador escolhido usando os parâmetros do processo <br/>(Ganho, Constante de Tempo e Atraso de Transporte).<br/><br/>Este guia irá ajudar a entender como preencher e calcular os parâmetros para os métodos: Ziegler-Nichols e IMC.<br/><br/>- Função de Primeira Ordem -</string>
+    <string name="strHelp2">A equação acima mostra uma função de primeira ordem com tempo morto (Atraso de Transporte),<br/></string>
+    <string name="strHelp3">Em que:<br/>- Kp (K) é o Ganho do Processo;<br/>- θ é o Atraso de Transporte do Processo;<br/>- τ é a Constante de Tempo do Processo.</string>
     <string name="strHelp4">PID Tuner requere apenas os parâmetros Kp, θ and τ para calcular Kp, Ki, Kd para o controlador escolhido, apenas o método IMC requere um parâmetro a mais, Lambda λ.</string>
-    <string name="strHelp5">Para Controlador:\n- P:   Kp é calculado;\n- PI:  Kp e Ki são calculados;\n- PD:  Kp e Kd são calculados;\n- PID: Kp, Ki e Kd são calculados.</string>
-    <string name="strHelp6">\n- Ziegler-Nichols -</string>
-    <string name="strHelp7">\nZiegler e Nichols propuseram duas abordagem para sintonia do controlador, a primeira abordagem é baseado no sistema de malha aberta, e o segundo é baseado no sistema de malha fechado.\n\nO método de Malha aberta (planta) refere-se a métodos de sintonia de controlador quando ele está em estado manual, é baseado na resposta do degrau.</string>
-    <string name="strHelp8">O método de malha fechada (planta) refere-se a métodos de sintonia de controlador quando ele está em estado automático.\nÉ baseado na resposta com oscilações sustentada.\nA figura abaixo mostra a resposta ao degrau quando o ganho é levantado até o Ganho último, causando oscilações sustentadas.; o gráfico ajuda a obter o Período Útimo (PU).</string>
-    <string name="strHelp9">\n\nNo PID Tuner, o Método de Ziegler-Nichols para Malha Aberta necessita apenas do Ganho do Processo, Constante de Tempo e o Atraso de Transporte. Já para Malha Fechada, o método necessita do Ganho Último (Ku) e do Período Último (Pu).\n\nPS: o método Tyreus-Luyben de sintonia é um método de malha fechada, então ele necessita apenas do Ganho Último (Ku) e Período Último (Pu). </string>
-    <string name="strHelp10">\n- Método do Modelo Interno IMC -</string>
-    <string name="strHelp11">O método Sintonia Lambda é um forma do Modelo Interno (IMC).\nSeu nome vem da letra Grega chamada lambda (λ) e é um parâmetro necessário para calcular o parâmetro do controlador, além é claro, do Ganho do Processo, Constate de Tempo e do Atraso de Transporte.\n\nO parâmetro lambda é uma especificação do usuário sobre performance/robustez que especifica o quão rápido ou quanto tempo o controlador deve gastar para processar a resposta do sistema (Y) para alcançar o que fora definido no setpoint.</string>
+    <string name="strHelp5">Para Controlador:<br/>- P:   Kp é calculado;<br/>- PI:  Kp e Ki são calculados;<br/>- PD:  Kp e Kd são calculados;<br/>- PID: Kp, Ki e Kd são calculados.</string>
+    <string name="strHelp6"><br/>- Ziegler-Nichols -</string>
+    <string name="strHelp7"><br/>Ziegler e Nichols propuseram duas abordagem para sintonia do controlador, a primeira abordagem é baseado no sistema de malha aberta, e o segundo é baseado no sistema de malha fechado.<br/><br/>O método de Malha aberta (planta) refere-se a métodos de sintonia de controlador quando ele está em estado manual, é baseado na resposta do degrau.</string>
+    <string name="strHelp8">O método de malha fechada (planta) refere-se a métodos de sintonia de controlador quando ele está em estado automático.<br/>É baseado na resposta com oscilações sustentada.<br/>A figura abaixo mostra a resposta ao degrau quando o ganho é levantado até o Ganho último, causando oscilações sustentadas.; o gráfico ajuda a obter o Período Útimo (PU).</string>
+    <string name="strHelp9"><br/><br/>No PID Tuner, o Método de Ziegler-Nichols para Malha Aberta necessita apenas do Ganho do Processo, Constante de Tempo e o Atraso de Transporte. Já para Malha Fechada, o método necessita do Ganho Último (Ku) e do Período Último (Pu).<br/><br/>PS: o método Tyreus-Luyben de sintonia é um método de malha fechada, então ele necessita apenas do Ganho Último (Ku) e Período Último (Pu). </string>
+    <string name="strHelp10"><br/>- Método do Modelo Interno IMC -</string>
+    <string name="strHelp11">O método Sintonia Lambda é um forma do Modelo Interno (IMC).<br/>Seu nome vem da letra Grega chamada lambda (λ) e é um parâmetro necessário para calcular o parâmetro do controlador, além é claro, do Ganho do Processo, Constate de Tempo e do Atraso de Transporte.<br/><br/>O parâmetro lambda é uma especificação do usuário sobre performance/robustez que especifica o quão rápido ou quanto tempo o controlador deve gastar para processar a resposta do sistema (Y) para alcançar o que fora definido no setpoint.</string>
     <string name="strHelp12">O método IMC no PID Tuner é baseado na técnica proposta por Morari e Zafiriou em \'Robust Process Control\' de sintonia para controlador PID  para funções de primeira ordem mais tempo morto (Atraso de Transporte).</string>
     <string name="strHelp13">Para mais informações sobre os Métodos de Sintonias aqui disponíveis em PID Tuner, Veja as tabelas detalhadas.</string>
     <string name="strDetails">Tabelas Detalhadas</string>

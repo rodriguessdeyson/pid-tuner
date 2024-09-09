@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
+import com.rad.pidtuner.utils.BottomSheetDialog;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.CHR;
@@ -69,6 +71,11 @@ public class IAEActivity extends AppCompatActivity
 	 */
 	private EditText EditTextProcessTransportDelay;
 
+	/**
+	 * ImageView reference to show about dialog.
+	 */
+	private ImageView ImageViewMethodInfo;
+
 	//endregion
 
 	@Override
@@ -98,6 +105,7 @@ public class IAEActivity extends AppCompatActivity
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
 		EditTextProcessTransportDelay = findViewById(R.id.EditTextTransportDelay);
+		ImageViewMethodInfo           = findViewById(R.id.ImageViewMethodInfo);
 	}
 
 	/**
@@ -113,6 +121,16 @@ public class IAEActivity extends AppCompatActivity
 				return;
 
 			ComputeController();
+		});
+
+		ImageViewMethodInfo.setOnClickListener(v ->
+		{
+			String title = getResources().getString(R.string.iae_about_title);
+			String description = getResources().getString(R.string.iae_about_description);
+
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description);
+			bottomSheet.show(getSupportFragmentManager(),
+					"ModalBottomSheet");
 		});
 	}
 

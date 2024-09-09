@@ -15,6 +15,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
 import com.rad.pidtuner.utils.BottomSheetDialog;
+import com.rad.pidtuner.utils.BottomSheetDialogType;
 import com.rad.pidtuner.utils.Logger;
 import com.rad.pidtuner.utils.Parser;
 import com.tunings.methods.CHR;
@@ -82,7 +83,11 @@ public class CHRActivity extends AppCompatActivity
 	 */
 	private EditText EditTextProcessTransportDelay;
 
+	/**
+	 * ImageView reference to show about dialog.
+	 */
 	private ImageView ImageViewMethodInfo;
+
 	//endregion
 
 	@Override
@@ -134,7 +139,10 @@ public class CHRActivity extends AppCompatActivity
 
 		ImageViewMethodInfo.setOnClickListener(v ->
 		{
-			BottomSheetDialog bottomSheet = new BottomSheetDialog();
+			String title = getResources().getString(R.string.chr_about_title);
+			String description = getResources().getString(R.string.chr_about_description);
+
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description);
 			bottomSheet.show(getSupportFragmentManager(),
 					"ModalBottomSheet");
 		});

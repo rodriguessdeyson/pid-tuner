@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.rad.pidtuner.utils.BottomSheetDialog;
 import com.tunings.methods.IMC;
 import com.tunings.methods.ZN;
 import com.tunings.models.ProcessType;
@@ -99,9 +101,14 @@ public class IMCActivity extends AppCompatActivity
 	private View ViewPIDModels;
 
 	/**
-	 * Linear layout reference to controller container.
+	 * CardView reference to process container.
 	 */
-	private ConstraintLayout ConstraintLayoutControllerContainer;
+	private CardView CardViewProcessConfiguration;
+
+	/**
+	 * CardView reference to controller container.
+	 */
+	private CardView CardViewControllerConfiguration;
 
 	/**
 	 * Reference of the selected transfer model.
@@ -122,6 +129,11 @@ public class IMCActivity extends AppCompatActivity
 	 * Layout for hint transport delay.
 	 */
 	private TextInputLayout LayoutTransportDelay;
+
+	/**
+	 * ImageView reference to show about dialog.
+	 */
+	private ImageView ImageViewMethodInfo;
 
 	//endregion
 
@@ -144,27 +156,29 @@ public class IMCActivity extends AppCompatActivity
 	@SuppressLint("SetTextI18n")
 	private void InitializeViews()
 	{
-		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		FBClose                       = findViewById(R.id.FloatingActionButtonClose);
-		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
-		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
-		SwitchUseFirstOrderDynamic    = findViewById(R.id.SwitchUseFirstOrderDynamic);
-		EditTextProcessGain           = findViewById(R.id.EditTextGain);
-		EditTextProcessTimeConstant   = findViewById(R.id.EditTextParam01);
-		EditTextProcessTransportDelay = findViewById(R.id.EditTextParam02);
-		EditTextLambdaTuning          = findViewById(R.id.EditTextLambda);
-		ViewPIDModels                 = findViewById(R.id.ViewPIDModels);
-		ImageViewSelectedModel        = findViewById(R.id.ImageViewSelectedModel);
-		ConstraintLayoutControllerContainer        = findViewById(R.id.ConstraintLayoutControllerContainer);
-		LayoutGain                    = findViewById(R.id.TextInputLayoutGain);
-		LayoutTimeConstant            = findViewById(R.id.TextInputLayoutTimeConstant);
-		LayoutTransportDelay          = findViewById(R.id.TextInputLayoutTransportDelay);
-		ImageModelButton              = new ImageButton[5];
-		ImageModelButton[0]           = findViewById(R.id.ImageButtonModel1);
-		ImageModelButton[1]           = findViewById(R.id.ImageButtonModel2);
-		ImageModelButton[2]           = findViewById(R.id.ImageButtonModel3);
-		ImageModelButton[3]           = findViewById(R.id.ImageButtonModel4);
-		ImageModelButton[4]           = findViewById(R.id.ImageButtonModel5);
+		ComputeButton                   = findViewById(R.id.ButtonComputePID);
+		FBClose                         = findViewById(R.id.FloatingActionButtonClose);
+		CheckBoxPI                      = findViewById(R.id.CheckBoxPI);
+		CheckBoxPID                     = findViewById(R.id.CheckBoxPID);
+		SwitchUseFirstOrderDynamic      = findViewById(R.id.SwitchUseFirstOrderDynamic);
+		EditTextProcessGain             = findViewById(R.id.EditTextGain);
+		EditTextProcessTimeConstant     = findViewById(R.id.EditTextParam01);
+		EditTextProcessTransportDelay   = findViewById(R.id.EditTextParam02);
+		EditTextLambdaTuning            = findViewById(R.id.EditTextLambda);
+		ViewPIDModels                   = findViewById(R.id.ViewPIDModels);
+		ImageViewSelectedModel          = findViewById(R.id.ImageViewSelectedModel);
+		CardViewProcessConfiguration    = findViewById(R.id.CardViewProcessConfiguration);
+		CardViewControllerConfiguration = findViewById(R.id.CardViewControllerConfiguration);
+		LayoutGain                      = findViewById(R.id.TextInputLayoutGain);
+		LayoutTimeConstant              = findViewById(R.id.TextInputLayoutTimeConstant);
+		LayoutTransportDelay            = findViewById(R.id.TextInputLayoutTransportDelay);
+		ImageViewMethodInfo             = findViewById(R.id.ImageViewMethodInfo);
+		ImageModelButton                = new ImageButton[5];
+		ImageModelButton[0]             = findViewById(R.id.ImageButtonModel1);
+		ImageModelButton[1]             = findViewById(R.id.ImageButtonModel2);
+		ImageModelButton[2]             = findViewById(R.id.ImageButtonModel3);
+		ImageModelButton[3]             = findViewById(R.id.ImageButtonModel4);
+		ImageModelButton[4]             = findViewById(R.id.ImageButtonModel5);
 	}
 
 	/**
@@ -181,7 +195,7 @@ public class IMCActivity extends AppCompatActivity
 					ViewUtils.FadeOut(getApplicationContext(), ImageViewSelectedModel, ViewPIDModels);
 				else
 					ViewUtils.FadeOut(getApplicationContext(), ImageViewSelectedModel);
-				ViewUtils.FadeIn(getApplicationContext(), ConstraintLayoutControllerContainer);
+				ViewUtils.FadeIn(getApplicationContext(), CardViewControllerConfiguration, CardViewProcessConfiguration);
 				ViewUtils.FadeIn(getApplicationContext(),
 						EditTextProcessGain,
 						EditTextProcessTimeConstant,
@@ -219,9 +233,10 @@ public class IMCActivity extends AppCompatActivity
 				EditTextProcessTimeConstant);
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
-			ViewUtils.FadeOut(getApplicationContext(), ConstraintLayoutControllerContainer, EditTextProcessTransportDelay,
+			ViewUtils.FadeOut(getApplicationContext(), CardViewControllerConfiguration, CardViewProcessConfiguration, EditTextProcessTransportDelay,
 				ViewPIDModels);
 		});
+
 		ImageModelButton[1].setOnClickListener(v ->
 		{
 			// Notify the model selected.
@@ -236,8 +251,9 @@ public class IMCActivity extends AppCompatActivity
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 			LayoutTransportDelay.setHint(getResources().getString(R.string.hintSecondTimeConstant));
-			ViewUtils.FadeOut(getApplicationContext(), ConstraintLayoutControllerContainer, ViewPIDModels);
+			ViewUtils.FadeOut(getApplicationContext(), CardViewControllerConfiguration, CardViewProcessConfiguration, ViewPIDModels);
 		});
+
 		ImageModelButton[2].setOnClickListener(v ->
 		{
 			// Notify the model selected.
@@ -253,8 +269,9 @@ public class IMCActivity extends AppCompatActivity
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 			LayoutTransportDelay.setHint(getResources().getString(R.string.hintDampingRatio));
-			ViewUtils.FadeOut(getApplicationContext(), ConstraintLayoutControllerContainer, ViewPIDModels);
+			ViewUtils.FadeOut(getApplicationContext(), CardViewControllerConfiguration, CardViewProcessConfiguration, ViewPIDModels);
 		});
+
 		ImageModelButton[3].setOnClickListener(v ->
 		{
 			// Notify the model selected.
@@ -265,11 +282,12 @@ public class IMCActivity extends AppCompatActivity
 			ViewUtils.FadeIn(getApplicationContext(), ImageViewSelectedModel,
 				ComputeButton);
 			ViewUtils.FadeOut(getApplicationContext(),
-					ConstraintLayoutControllerContainer,
+					CardViewControllerConfiguration, CardViewProcessConfiguration,
 				EditTextProcessTimeConstant,
 				EditTextProcessTransportDelay,
 				ViewPIDModels);
 		});
+
 		ImageModelButton[4].setOnClickListener(v ->
 		{
 			// Notify the model selected.
@@ -284,7 +302,7 @@ public class IMCActivity extends AppCompatActivity
 			LayoutGain.setHint(getResources().getString(R.string.hintGain));
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 			ViewUtils.FadeOut(getApplicationContext(),
-					ConstraintLayoutControllerContainer,
+					CardViewControllerConfiguration, CardViewProcessConfiguration,
 				EditTextProcessTransportDelay,
 				ViewPIDModels);
 		});
@@ -297,6 +315,16 @@ public class IMCActivity extends AppCompatActivity
 				return;
 
 			ComputeController();
+		});
+
+		ImageViewMethodInfo.setOnClickListener(v ->
+		{
+			String title = getResources().getString(R.string.imc_about_title);
+			String description = getResources().getString(R.string.imc_about_description);
+
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description);
+			bottomSheet.show(getSupportFragmentManager(),
+					"ModalBottomSheet");
 		});
 
 		// Handle the cancel button.

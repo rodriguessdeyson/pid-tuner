@@ -94,9 +94,9 @@ public class ZNActivity extends AppCompatActivity
 	private TextInputLayout LayoutTransportDelay;
 
 	/**
-	 * ImageView reference to show about dialog.
+	 * Button reference to show about dialog.
 	 */
-	private ImageView ImageViewMethodInfo;
+	private Button ButtonMethodInfo;
 
 	//endregion
 
@@ -130,7 +130,7 @@ public class ZNActivity extends AppCompatActivity
 		LayoutGain                    = findViewById(R.id.TextInputLayoutGain);
 		LayoutTimeConstant            = findViewById(R.id.TextInputLayoutTimeConstant);
 		LayoutTransportDelay          = findViewById(R.id.TextInputLayoutTransportDelay);
-		ImageViewMethodInfo           = findViewById(R.id.ImageViewMethodInfo);
+		ButtonMethodInfo              = findViewById(R.id.ButtonMethodInfo);
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class ZNActivity extends AppCompatActivity
 			ComputeController();
 		});
 
-		ImageViewMethodInfo.setOnClickListener(v ->
+		ButtonMethodInfo.setOnClickListener(v ->
 		{
 			String title = getString(R.string.zn_about_title);
 			String description = getString(R.string.zn_about_description);

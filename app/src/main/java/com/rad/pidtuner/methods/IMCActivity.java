@@ -131,9 +131,9 @@ public class IMCActivity extends AppCompatActivity
 	private TextInputLayout LayoutTransportDelay;
 
 	/**
-	 * ImageView reference to show about dialog.
+	 * Button reference to show about dialog.
 	 */
-	private ImageView ImageViewMethodInfo;
+	private Button ButtonMethodInfo;
 
 	//endregion
 
@@ -172,7 +172,7 @@ public class IMCActivity extends AppCompatActivity
 		LayoutGain                      = findViewById(R.id.TextInputLayoutGain);
 		LayoutTimeConstant              = findViewById(R.id.TextInputLayoutTimeConstant);
 		LayoutTransportDelay            = findViewById(R.id.TextInputLayoutTransportDelay);
-		ImageViewMethodInfo             = findViewById(R.id.ImageViewMethodInfo);
+		ButtonMethodInfo                = findViewById(R.id.ButtonMethodInfo);
 		ImageModelButton                = new ImageButton[5];
 		ImageModelButton[0]             = findViewById(R.id.ImageButtonModel1);
 		ImageModelButton[1]             = findViewById(R.id.ImageButtonModel2);
@@ -317,7 +317,7 @@ public class IMCActivity extends AppCompatActivity
 			ComputeController();
 		});
 
-		ImageViewMethodInfo.setOnClickListener(v ->
+		ButtonMethodInfo.setOnClickListener(v ->
 		{
 			String title = getResources().getString(R.string.imc_about_title);
 			String description = getResources().getString(R.string.imc_about_description);

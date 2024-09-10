@@ -43,7 +43,7 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table1" />
 
             <TextView
@@ -60,7 +60,7 @@
                 android:layout_width="370dp"
                 android:layout_height="190dp"
                 android:layout_gravity="center"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/tl" />
 
             <TextView
@@ -76,7 +76,7 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table2" />
 
             <TextView
@@ -92,7 +92,7 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table3servosem" />
 
             <TextView
@@ -108,7 +108,7 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table4servocom" />
 
             <TextView
@@ -124,7 +124,7 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table5regulsem" />
 
             <TextView
@@ -140,7 +140,7 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table6regulcom" />
 
             <TextView
@@ -156,7 +156,7 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table7" />
 
             <TextView
@@ -172,7 +172,7 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table8" />
 
             <TextView
@@ -188,13 +188,13 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table9" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table11" />
 
             <TextView
@@ -210,13 +210,13 @@
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table10" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/formula_container"
+                android:background="@drawable/drawable_formula_container"
                 android:src="@drawable/table12" />
 
             <View

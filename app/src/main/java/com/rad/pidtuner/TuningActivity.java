@@ -1,9 +1,7 @@
 package com.rad.pidtuner;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -159,7 +157,7 @@ public class TuningActivity extends AppCompatActivity
 				{
 					LayoutInflater inflater = (LayoutInflater)getContext()
 							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					row = inflater.inflate(R.layout.listview_tunings, parent, false);
+					row = inflater.inflate(R.layout.layout_listview_model, parent, false);
 				}
 				else
 					row = convertView;

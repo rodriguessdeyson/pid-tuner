@@ -84,9 +84,9 @@ public class CHRActivity extends AppCompatActivity
 	private EditText EditTextProcessTransportDelay;
 
 	/**
-	 * ImageView reference to show about dialog.
+	 * Button reference to show about dialog.
 	 */
-	private ImageView ImageViewMethodInfo;
+	private Button ButtonMethodInfo;
 
 	//endregion
 
@@ -119,7 +119,7 @@ public class CHRActivity extends AppCompatActivity
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
 		EditTextProcessTransportDelay = findViewById(R.id.EditTextTransportDelay);
-		ImageViewMethodInfo           = findViewById(R.id.ImageViewMethodInfo);
+		ButtonMethodInfo              = findViewById(R.id.ButtonMethodInfo);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class CHRActivity extends AppCompatActivity
 			ComputeController();
 		});
 
-		ImageViewMethodInfo.setOnClickListener(v ->
+		ButtonMethodInfo.setOnClickListener(v ->
 		{
 			String title = getResources().getString(R.string.chr_about_title);
 			String description = getResources().getString(R.string.chr_about_description);

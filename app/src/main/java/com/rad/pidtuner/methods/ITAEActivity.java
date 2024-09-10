@@ -73,9 +73,9 @@ public class ITAEActivity extends AppCompatActivity
 	private EditText EditTextProcessTransportDelay;
 
 	/**
-	 * ImageView reference to show about dialog.
+	 * Button reference to show about dialog.
 	 */
-	private ImageView ImageViewMethodInfo;
+	private Button ButtonMethodInfo;
 
 	//endregion
 
@@ -106,7 +106,7 @@ public class ITAEActivity extends AppCompatActivity
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
 		EditTextProcessTransportDelay = findViewById(R.id.EditTextTransportDelay);
-		ImageViewMethodInfo           = findViewById(R.id.ImageViewMethodInfo);
+		ButtonMethodInfo              = findViewById(R.id.ButtonMethodInfo);
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class ITAEActivity extends AppCompatActivity
 			ComputeController();
 		});
 
-		ImageViewMethodInfo.setOnClickListener(v ->
+		ButtonMethodInfo.setOnClickListener(v ->
 		{
 			String title = getResources().getString(R.string.itae_about_title);
 			String description = getResources().getString(R.string.itae_about_description);

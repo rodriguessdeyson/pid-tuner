@@ -46,18 +46,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/ImageViewMethodInfo"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ButtonMethodInfo"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            app:icon="@drawable/drawable_info_icon"
+            app:iconTint="@color/colorPrimaryText"
             app:layout_constraintBottom_toBottomOf="@+id/TextViewZN"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/TextViewZN"
-            app:layout_constraintTop_toTopOf="@+id/TextViewZN"
-            app:srcCompat="@android:drawable/ic_dialog_info" />
-
+            app:layout_constraintTop_toTopOf="@+id/TextViewZN" />
         <View
             android:id="@+id/ViewContainer"
             android:layout_width="0dp"
@@ -137,7 +138,7 @@
                             android:id="@+id/ImageViewFirstOrderProcess"
                             android:layout_width="130dp"
                             android:layout_height="0dp"
-                            android:background="@drawable/formula_container"
+                            android:background="@drawable/drawable_formula_container"
                             android:contentDescription="@string/ivFirstOrderFunctionDescription"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

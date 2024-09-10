@@ -55,9 +55,9 @@ public class TLActivity extends AppCompatActivity
 	private EditText EditTextProcessTimeConstant;
 
 	/**
-	 * ImageView reference to show about dialog.
+	 * Button reference to show about dialog.
 	 */
-	private ImageView ImageViewMethodInfo;
+	private Button ButtonMethodInfo;
 
 	//endregion
 
@@ -80,12 +80,12 @@ public class TLActivity extends AppCompatActivity
 	@SuppressLint("SetTextI18n")
 	private void InitializeViews()
 	{
-		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
-		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
-		EditTextProcessGain           = findViewById(R.id.EditTextGain);
-		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
-		ImageViewMethodInfo           = findViewById(R.id.ImageViewMethodInfo);
+		ComputeButton               = findViewById(R.id.ButtonComputePID);
+		CheckBoxPI                  = findViewById(R.id.CheckBoxPI);
+		CheckBoxPID                 = findViewById(R.id.CheckBoxPID);
+		EditTextProcessGain         = findViewById(R.id.EditTextGain);
+		EditTextProcessTimeConstant = findViewById(R.id.EditTextTimeConstant);
+		ButtonMethodInfo            = findViewById(R.id.ButtonMethodInfo);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class TLActivity extends AppCompatActivity
 			ComputeController();
 		});
 
-		ImageViewMethodInfo.setOnClickListener(v ->
+		ButtonMethodInfo.setOnClickListener(v ->
 		{
 			String title = getResources().getString(R.string.tl_about_title);
 			String description = getResources().getString(R.string.tl_about_description);

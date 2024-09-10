@@ -33,7 +33,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/summary_background"
+        android:background="@drawable/drawable_card_background"
         android:elevation="5dp"
         app:layout_constraintBottom_toTopOf="@+id/ButtonStart"
         app:layout_constraintEnd_toEndOf="parent"

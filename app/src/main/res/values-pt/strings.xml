@@ -3,7 +3,7 @@
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID<br/>Tuner</string>
-    <string name="strWelcome">PID Tuner é um aplicativo abrangente projetado para ajudar engenheiros e profissionais de sistemas de controle a ajustar controladores PID usando vários métodos de ajuste estabelecidos.<br/>O aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.</string>
+    <string name="strWelcome">PID Tuner é um aplicativo projetado para ajudar estudantes, engenheiros e profissionais de sistemas de controle a ajustar controladores PID usando vários métodos de ajuste estabelecidos.\n\nO aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.</string>
     <string name="btStart">Iniciar</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
     <string name="ivPidTunerHelpDescription">Ícone de ajuda do PID Tuner. Vai para a página de ajuda do PID Tuner.</string>

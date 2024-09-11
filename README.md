@@ -1,4 +1,4 @@
-# PID Tuner Application
+# PID Tuner
 
 ### Overview:
 **PID Tuner** is a app for computing Proportional-Integral-Derivative (PID) controller parameters based on various established tuning methods. Designed to help engineers and control systems professionals to fine-tune PID controller, the app provides intuitive tools for selecting and applying different tuning algorithms based on system characteristics and desired performance.

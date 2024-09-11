@@ -3,7 +3,8 @@
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID<br/>Tuner</string>
-    <string name="strWelcome">PID Tuner is a comprehensive app designed to help engineers and control systems professionals fine-tune PID controllers using various established tuning methods.<br/>The app provides intuitive tools for selecting and applying different tuning algorithms based on system characteristics and desired performance.</string>
+    <string name="strWelcome">
+        PID Tuner is your go-to tool for precise and efficient PID controller tuning.\n\nThe app provides intuitive tools for selecting and applying different tuning algorithms based on system characteristics and desired performance.</string>
     <string name="btStart">Start</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
     <string name="ivPidTunerHelpDescription">PID Tuner help icon. Goes to PID Tuner help page.</string>
@@ -34,9 +35,11 @@
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>:
         <br/><br/>The method calculates PID parameters (proportional gain, integral time, and derivative time) using a process model that considers the system\'s time constant, process gain, and dead time. The formulas are straightforward and applicable to a wide range of industrial processes.
 ]]> </Data></string>
+    <string name="cc_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#3-cohen-coon-cc">CC Tuning</a>.]]> </Data></string>
 
     <!--Chien-Hrones-Reswick (CHR) Method-->
     <string name="tvCHR" translatable="false">Chien-Hrones-Reswick</string>
+    <string name="tvCHRDesc">This method focuses on optimizing the controller for either setpoint tracking or disturbance rejection. It provides specific tuning formulas based on the desired system response, like minimal overshoot or fast response.</string>
     <string name="swIs20UP" translatable="false">20% UP?</string>
     <string name="chr_about_title">Chien-Hrones-Reswick (CHR) Tuning Method</string>
     <string name="chr_about_description"><Data><![CDATA[
@@ -58,6 +61,7 @@
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>:
         <br/><br/>The CHR method uses formulas to calculate the PID controller gains (proportional, integral, and derivative) based on system dynamics (process gain, time constant, and dead time) and the tuning objective (setpoint or disturbance rejection).
 ]]> </Data></string>
+    <string name="chr_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#2-chien-hrones-and-reswick-chr">CHR Tuning</a>.]]> </Data></string>
 
     <!--Integral of Absolute Error (IAE) Method-->
     <string name="tvIAE" translatable="false">Integral Absolute Error</string>
@@ -82,6 +86,7 @@
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>:
         <br/><br/>IAE is typically used as a performance criterion for controller tuning, and the PID parameters (proportional, integral, and derivative gains) are adjusted to minimize the integral of the absolute error over time. It is often balanced with other tuning methods to achieve the desired performance in both transient and steady-state conditions.
 ]]> </Data></string>
+    <string name="iae_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#5-iae--itae">IAE Tuning</a>.]]> </Data></string>
 
     <!--Integral of Absolute Error (IMC) Method-->
     <string name="tvIMC" translatable="false">Internal Model Control</string>
@@ -122,7 +127,9 @@
         <br/><br/>In Internal Model Control (IMC) tuning, the lambda (λ) parameter plays a crucial role in determining the trade-off between system performance and robustness. Lambda is the filter time constant, and it directly affects the tuning of the PID controller.
 
         <br/><br/>In the IMC tuning method, after developing a mathematical model of the process (usually a first-order plus dead time, or higher-order model), the PID parameters are calculated using the process model and the λ value.
+        <i>The IMC Method in PID Tuner is based on technique proposed by Morari and Zafiriou in \'Robust Process Control\' of PID tunings for first order plus dead time function.</í>
 ]]> </Data></string>
+    <string name="imc_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#4-internal-model-control-imc">IMC Tuning</a>.]]> </Data></string>
 
     <!--Integral Time Absolute Error (ITAE) Method-->
     <string name="tvITAE" translatable="false">Integral Time Absolute Error</string>
@@ -147,6 +154,7 @@
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>:
         <br/><br/>ITAE tuning adjusts PID parameters (proportional, integral, and derivative gains) to minimize the integral of time-weighted absolute error. This results in a slower but more stable system response, ensuring minimal overshoot and smoother corrections over time.
 ]]> </Data></string>
+    <string name="itae_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#5-iae--itae">ITAE Tuning</a>.]]> </Data></string>
 
     <!--Tyreus-Luyben (TL) Method-->
     <string name="tvTL" translatable="false">Tyreus-Luyben</string>
@@ -174,6 +182,7 @@
 
         <br/><br/><b>2. Use the PI and PID formulas to calculate the parameters.</b>
 ]]> </Data></string>
+    <string name="tl_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#6-tyreus-luyben-tl">TL Tuning</a>.]]> </Data></string>
 
     <!--Ziegler & Nichols (TL) Method-->
     <string name="tvZN" translatable="false">Ziegler-Nichols</string>
@@ -200,6 +209,7 @@
         <br/><br/><b>2. Ziegler-Nichols Closed-Loop Tuning (Ultimate Gain Method)</b>
         <br/>This method requires the system to be placed in closed-loop mode, and the proportional gain (Kp) is increased until the system oscillates with a constant amplitude. The ultimate gain (Ku) and ultimate period (Pu) are then used to calculate the PID parameters.
 ]]> </Data></string>
+    <string name="zn_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#1-ziegler-nichols-zn">ZN Tuning</a>.]]> </Data></string>
 
     <!--Process Result-->
     <string name="tvProcessResults">Results</string>
@@ -249,33 +259,36 @@
     <string name="hintKu">Ultimate Gain (Ku)</string>
     <string name="hintPu">Ultimate Period (Pu)</string>
 
-    <!--Help Strings -->
-    <string name="strHelp">Welcome to PID Tuner<br/>PID Tuner gathers several PID controller tuning methods.<br/>Z&amp;N, CHR, CC, IMC, IAE and ITAE methods are available to calculate the controller parameters <br/>(Proportional, Integral and Derivative) using the process parameters <br/>(Gain, Time Constant and Dead Time).<br/><br/>This guide will help to understand how to compute the controllers parameters.<br/><br/>- First Order Function -</string>
-    <string name="strHelp2">The equation above shows the first order function with dead time (Transport Delay),<br/></string>
-    <string name="strHelp3">where:<br/>- Kp (K) is the Process Gain;<br/>- θ is the Transport Delay;<br/>- τ is the Process Time Constant.</string>
-    <string name="strHelp4">PID Turner requires only Kp, θ and τ parameters to compute Kp, Ki and Kd for PID Controller, only IMC Method requires one more parameter, Lambda λ.</string>
-    <string name="strHelp5">For controller:<br/>- P:   Kp is computed;<br/>- PI:  Kp and Ki are computed;<br/>- PD:  Kp and Kd are computed;<br/>- PID: Kp, Ki and Kd are computed.</string>
-    <string name="strHelp6"><br/>- Ziegler-Nichols -</string>
-    <string name="strHelp7"><br/>Ziegler and Nichols proposed two approach, the first approach is based on open-loop system, and the second is based on closed-loop system.<br/><br/>The Open-loop (plant) refers to methods to tune controller when it is in manual state, it is based on step response.</string>
-    <string name="strHelp8">The Closed-loop (plant) refers to methods to tune controller when it is in automatic state.<br/>It is based on sustained oscillations response.<br/>The figure below shows the step response when Gain is raised until Ultimate Gain, causing sustained oscillations; the graph helps to obtain the Ultimate Period (Pu).</string>
-    <string name="strHelp9"><br/><br/>In PID Tuner, Ziegler and Nichols Method for Opened-Loop requires only Process Gain, Time Constant and Process Transport Delay (Dead Time) and Closed-Loop requires the Ultimate Gain (Ku) and Ultimate Period (Pu).<br/><br/>PS: The method Tyreus-Luyben is closed-loop tuning, so it requires Ultimate Gain (Ku) and Ultimate Period (Pu).</string>
-    <string name="strHelp10"><br/>- Internal Model Control -</string>
-    <string name="strHelp11">Lambda Tuning is a form of Internal Model Control (IMC).<br/>Its name is from Greek letter called lambda (λ) and it is a parameter required to compute the controller parameters, besides, of course, Process Gain, Time Constant and Transport Delay.<br/><br/>The lambda is an user-specified performance/robustness parameter that specifies how fast or how long the controller must spend to process the system response (Y) to reach the setpoint.</string>
-    <string name="strHelp12">The IMC Method in PID Tuner is based on technique proposed by Morari and Zafiriou in \'Robust Process Control\' of PID tunings for first order plus dead time function.</string>
-    <string name="strHelp13">For more information about the Tuning Methods, check the tables.</string>
-    <string name="strDetails">Detailed Tables</string>
-    <string name="strDetails0" translatable="false">Tyreus-Luyben</string>
-    <string name="strDetails1">Z&amp;N - Closed-Loop</string>
-    <string name="strDetails2">Z&amp;N - Opened-Loop</string>
-    <string name="strDetails3" translatable="false">CHR - Servo 0% Overshoot </string>
-    <string name="strDetails4" translatable="false">CHR - Servo 20% Overshoot</string>
-    <string name="strDetails5">CHR - Regulator 0% Overshoot</string>
-    <string name="strDetails6">CHR - Regulator 20% Overshoot</string>
-    <string name="strDetails7" translatable="false">Cohen-Coon</string>
-    <string name="strDetails8" translatable="false">Internal Model Control</string>
-    <string name="strDetails9">IAE/ITAE Regulator</string>
-    <string name="strDetails10" translatable="false">IAE/ITAE Servo</string>
-    <string name="tvCHRDesc">This method focuses on optimizing the controller for either setpoint tracking or disturbance rejection. It provides specific tuning formulas based on the desired system response, like minimal overshoot or fast response.</string>
-    <string name="btnOpenTuning">Opened</string>
+    <!--Help Strings --><string name="tvHelpIntroduction"><Data><![CDATA[
+        <b>Welcome to PID Tuner</b>
+        <br/><br/>PID Tuner is your go-to tool for precise and efficient PID controller tuning. It brings together the most widely-used methods to calculate your controller parameters (Proportional, Integral, and Derivative) based on your process characteristics (Gain, Time Constant, and Dead Time).
+        <br/><br/>With PID Tuner, you have access to the following tuning methods:<br/>
+        <ul>
+            <li><b><font color="#CC8D46"> Chien-Hrones-Reswick (CHR)</font></b></li>
+            <li><b><font color="#CC8D46"> Cohen-Coon (CC)</font></b></li>
+            <li><b><font color="#CC8D46"> Internal Model Control (IMC)</font></b></li>
+            <li><b><font color="#CC8D46"> Integral Absolute Error (IAE)</font></b></li>
+            <li><b><font color="#CC8D46"> Integral Time Absolute Error (ITAE)</font></b></li>
+            <li><b><font color="#CC8D46"> Ziegler-Nichols (Z&N)</font></b></li>
+            <li><b><font color="#CC8D46"> Tyreus-Luyben (TL)</font></b></li>
+        </ul>
+        Each method is tailored to different system behaviors, allowing you to optimize control for stability, responsiveness, or robustness.
+        <br/><br/>Follow this guide to compute your PID controller parameters effectively.<br/>
+]]> </Data></string>
+
+    <string name="tvHelpDescription"><Data><![CDATA[
+        <br/>The equation above represents the first-order system with dead time (Transport Delay), where:
+        <ul>
+            <li><b><font color="#CC8D46"> Kp (K) is the Process Gain</font></b></li>
+            <li><b><font color="#CC8D46"> θ is the Transport Delay</font></b></li>
+            <li><b><font color="#CC8D46"> τ is the Process Time Constant</font></b></li>
+        </ul>
+        <br/>
+        PID Tuner only requires Kp, θ, and τ to calculate the controller parameters (Kp, Ki, and Kd) for a PID controller. Note that the IMC Method requires one additional parameter: Lambda (λ).<br/><br/>
+]]> </Data></string>
+
+    <string name="tvHelpMoreInformation"><Data><![CDATA[
+        For more detailed information about the app and tuning methods, visit <a href="https://github.com/rodriguessdeyson/pid-tuner/blob/main/README.md#pid-tuner">PID Tuner</a>.
+]]> </Data></string>
 
 </resources>

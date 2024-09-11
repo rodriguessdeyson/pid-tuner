@@ -27,6 +27,8 @@ import com.rad.pidtuner.methods.IMCActivity;
 import com.rad.pidtuner.methods.ITAEActivity;
 import com.rad.pidtuner.methods.TLActivity;
 import com.rad.pidtuner.methods.ZNActivity;
+import com.rad.pidtuner.utils.BottomSheetDialog;
+import com.rad.pidtuner.utils.BottomSheetDialogType;
 import com.rad.pidtuner.utils.ViewUtils;
 import com.tunings.models.Tuning;
 import com.tunings.models.TuningType;
@@ -57,31 +59,9 @@ public class TuningActivity extends AppCompatActivity
 	private ArrayAdapter<Tuning> TuningAdapter;
 
 	/**
-	 * Opens the tables of the methods.
-	 */
-	private Button ButtonTuningMethodsTables;
-
-	/**
 	 * FloatingActionButton to handle the Help event.
 	 */
 	private FloatingActionButton FBHelp;
-
-	/**
-	 * FloatingActionButton to handle the Close event.
-	 */
-	private FloatingActionButton FBClose;
-
-	/**
-	 * Reference to help layout.
-	 */
-	private View HelpContainer;
-
-	private CardView CardViewTunings;
-
-	/**
-	 * Reference to help layout.
-	 */
-	private View HelpTables;
 
 	/**
 	 * Lock for avoid returning when help is opened.
@@ -138,13 +118,7 @@ public class TuningActivity extends AppCompatActivity
 	 */
 	private void StartViewContents()
 	{
-		FBHelp                    = findViewById(R.id.FloatingActionButtonHelp);
-		FBClose                   = findViewById(R.id.FloatingActionButtonClose);
-		HelpContainer             = findViewById(R.id.HelpLayout);
-		HelpTables                = findViewById(R.id.IncludeTables);
-		ButtonTuningMethodsTables = findViewById(R.id.ButtonDetailedTables);
-		CardViewTunings           = findViewById(R.id.CardViewTunings);
-
+		FBHelp             = findViewById(R.id.FloatingActionButtonHelp);
 		ListView listView  = findViewById(R.id.ListViewTuningMethods);
 		TuningAdapter      = new ArrayAdapter<Tuning>(this, android.R.layout.simple_list_item_1,
 				0)
@@ -182,32 +156,11 @@ public class TuningActivity extends AppCompatActivity
 	 */
 	private void ControlsEvent()
 	{
-		// Handle the click to show tables.
-		ButtonTuningMethodsTables.setOnClickListener(v ->
-		{
-			HelpTables.setVisibility(View.VISIBLE);
-			IsReturnLocked = true;
-		});
-
 		// Handle the click to show help.
 		FBHelp.setOnClickListener(v ->
 		{
-			ViewUtils.FadeOut(getApplicationContext(), CardViewTunings);
-			ViewUtils.FadeIn(getApplicationContext(), HelpContainer);
-			IsReturnLocked = true;
-		});
-
-		// Handle the click to close help.
-		FBClose.setOnClickListener( v ->
-		{
-			if (HelpTables.getVisibility() == View.VISIBLE)
-				HelpTables.setVisibility(View.GONE);
-			else
-			{
-				ViewUtils.FadeOut(getApplicationContext(), HelpContainer);
-				ViewUtils.FadeIn(getApplicationContext(), CardViewTunings);
-				IsReturnLocked = false;
-			}
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(BottomSheetDialogType.Help);
+			bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
 		});
 	}
 
@@ -216,14 +169,14 @@ public class TuningActivity extends AppCompatActivity
 	 */
 	private void BuildTuningMethodsList()
 	{
-		tunings.add(BuildCC());
 		tunings.add(BuildCHR());
+		tunings.add(BuildCC());
 		tunings.add(BuildIAE());
 		tunings.add(BuildITAE());
 		tunings.add(BuildIMC());
 		// TuningMethods.add(BuildRT());
-		tunings.add(BuildZN());
 		tunings.add(BuildTL());
+		tunings.add(BuildZN());
 		TuningAdapter.addAll(tunings);
 	}
 

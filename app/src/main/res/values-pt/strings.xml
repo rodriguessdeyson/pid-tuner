@@ -3,7 +3,10 @@
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID<br/>Tuner</string>
-    <string name="strWelcome">PID Tuner é um aplicativo projetado para ajudar estudantes, engenheiros e profissionais de sistemas de controle a ajustar controladores PID usando vários métodos de ajuste estabelecidos.\n\nO aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.</string>
+    <string name="strWelcome">
+        PID Tuner é a sua ferramenta ideal para um ajuste preciso e eficiente de controladores PID.
+        \n\nO aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.
+    </string>
     <string name="btStart">Iniciar</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
     <string name="ivPidTunerHelpDescription">Ícone de ajuda do PID Tuner. Vai para a página de ajuda do PID Tuner.</string>
@@ -232,24 +235,42 @@
     <string name="hintPu">Período último (Pu)</string>
 
     <!--Help Strings -->
-    <string name="strHelp">Bem-vindo ao PID Tuner<br/><br/>PID Tuner reúne vários métodos de sintonia de Controlador PID.<br/>Os métodos Z&amp;N, CHR, IMC, IAE e ITAE estão disponíveis para calcular os parâmetros <br/>(Proporcional, Integral e Derivativo) do controlador escolhido usando os parâmetros do processo <br/>(Ganho, Constante de Tempo e Atraso de Transporte).<br/><br/>Este guia irá ajudar a entender como preencher e calcular os parâmetros para os métodos: Ziegler-Nichols e IMC.<br/><br/>- Função de Primeira Ordem -</string>
-    <string name="strHelp2">A equação acima mostra uma função de primeira ordem com tempo morto (Atraso de Transporte),<br/></string>
-    <string name="strHelp3">Em que:<br/>- Kp (K) é o Ganho do Processo;<br/>- θ é o Atraso de Transporte do Processo;<br/>- τ é a Constante de Tempo do Processo.</string>
-    <string name="strHelp4">PID Tuner requere apenas os parâmetros Kp, θ and τ para calcular Kp, Ki, Kd para o controlador escolhido, apenas o método IMC requere um parâmetro a mais, Lambda λ.</string>
-    <string name="strHelp5">Para Controlador:<br/>- P:   Kp é calculado;<br/>- PI:  Kp e Ki são calculados;<br/>- PD:  Kp e Kd são calculados;<br/>- PID: Kp, Ki e Kd são calculados.</string>
-    <string name="strHelp6"><br/>- Ziegler-Nichols -</string>
-    <string name="strHelp7"><br/>Ziegler e Nichols propuseram duas abordagem para sintonia do controlador, a primeira abordagem é baseado no sistema de malha aberta, e o segundo é baseado no sistema de malha fechado.<br/><br/>O método de Malha aberta (planta) refere-se a métodos de sintonia de controlador quando ele está em estado manual, é baseado na resposta do degrau.</string>
-    <string name="strHelp8">O método de malha fechada (planta) refere-se a métodos de sintonia de controlador quando ele está em estado automático.<br/>É baseado na resposta com oscilações sustentada.<br/>A figura abaixo mostra a resposta ao degrau quando o ganho é levantado até o Ganho último, causando oscilações sustentadas.; o gráfico ajuda a obter o Período Útimo (PU).</string>
-    <string name="strHelp9"><br/><br/>No PID Tuner, o Método de Ziegler-Nichols para Malha Aberta necessita apenas do Ganho do Processo, Constante de Tempo e o Atraso de Transporte. Já para Malha Fechada, o método necessita do Ganho Último (Ku) e do Período Último (Pu).<br/><br/>PS: o método Tyreus-Luyben de sintonia é um método de malha fechada, então ele necessita apenas do Ganho Último (Ku) e Período Último (Pu). </string>
-    <string name="strHelp10"><br/>- Método do Modelo Interno IMC -</string>
-    <string name="strHelp11">O método Sintonia Lambda é um forma do Modelo Interno (IMC).<br/>Seu nome vem da letra Grega chamada lambda (λ) e é um parâmetro necessário para calcular o parâmetro do controlador, além é claro, do Ganho do Processo, Constate de Tempo e do Atraso de Transporte.<br/><br/>O parâmetro lambda é uma especificação do usuário sobre performance/robustez que especifica o quão rápido ou quanto tempo o controlador deve gastar para processar a resposta do sistema (Y) para alcançar o que fora definido no setpoint.</string>
-    <string name="strHelp12">O método IMC no PID Tuner é baseado na técnica proposta por Morari e Zafiriou em \'Robust Process Control\' de sintonia para controlador PID  para funções de primeira ordem mais tempo morto (Atraso de Transporte).</string>
-    <string name="strHelp13">Para mais informações sobre os Métodos de Sintonias aqui disponíveis em PID Tuner, Veja as tabelas detalhadas.</string>
-    <string name="strDetails">Tabelas Detalhadas</string>
-    <string name="strDetails1">Z&amp;N - Malha Fechada</string>
-    <string name="strDetails2">Z&amp;N - Malha Aberta</string>
-    <string name="strDetails5">CHR - Regulação 0% Overshoot</string>
-    <string name="strDetails6">CHR - Regulação 20% Overshoot</string>
-    <string name="strDetails9">IAE/ITAE Regulação</string>
-    <string name="btnOpenTuning">Aberto</string>
+    <string name="tvHelpIntroduction"><Data><![CDATA[
+        <b>Bem-vindo ao PID Tuner</b>
+        <br/><br/>PID Tuner é a sua ferramenta ideal para um ajuste preciso e eficiente de controladores PID. Ele reúne os métodos mais utilizados para calcular os parâmetros do controlador (Proporcional, Integral e Derivativo) com base nas características do seu processo (Ganho, Constante de Tempo e Tempo Morto).
+        <br/><br/>Com o PID Tuner, você tem acesso aos seguintes métodos de ajuste:<br/>
+        <ul>
+            <li><b><font color="#CC8D46"> Chien-Hrones-Reswick (CHR)</font></b></li>
+            <li><b><font color="#CC8D46"> Cohen-Coon (CC)</font></b></li>
+            <li><b><font color="#CC8D46"> Internal Model Control (IMC)</font></b></li>
+            <li><b><font color="#CC8D46"> Integral Absolute Error (IAE)</font></b></li>
+            <li><b><font color="#CC8D46"> Integral Time Absolute Error (ITAE)</font></b></li>
+            <li><b><font color="#CC8D46"> Ziegler-Nichols (Z&N)</font></b></li>
+            <li><b><font color="#CC8D46"> Tyreus-Luyben (TL)</font></b></li>
+        </ul>
+        Cada método é adaptado a diferentes comportamentos do sistema, permitindo que você otimize o controle para estabilidade, resposta rápida ou robustez.
+        <br/><br/>Siga este guia para calcular os parâmetros do seu controlador PID de forma eficaz.<br/>
+]]> </Data></string>
+
+    <string name="tvHelpDescription"><Data><![CDATA[
+        <br/>A equação acima representa um sistema de primeira ordem com tempo morto (Atraso de Transporte), onde:<br/>
+        <ul>
+            <li><b><font color="#CC8D46"> Kp (K) é o Ganho do Processo</font></b></li>
+            <li><b><font color="#CC8D46"> θ é o Atraso de Transporte</font></b></li>
+            <li><b><font color="#CC8D46"> τ é a Constante de Tempo do Processo</font></b></li>
+        </ul>
+        <br/>
+        O PID Tuner requer apenas os parâmetros Kp, θ e τ para calcular os parâmetros do controlador (Kp, Ki e Kd). Observe que o método IMC requer um parâmetro adicional: Lambda (λ).<br/><br/>
+]]> </Data></string>
+
+    <string name="tvHelpMoreInformation"><Data><![CDATA[
+        Para mais informações sobre o app e os métodos detalhados de ajuste, visite <a href="https://github.com/rodriguessdeyson/pid-tuner/tree/main?tab=readme-ov-file#pid-tuner">PID Tuner</a>.
+]]> </Data></string>
+    <string name="cc_about_link"><Data><![CDATA[Para mais detalhes sobre o método, visite <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#3-cohen-coon-cc">CC Tuning</a>.]]> </Data></string>
+    <string name="chr_about_link"><Data><![CDATA[Para mais detalhes sobre o método, visite <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#2-chien-hrones-and-reswick-chr">CHR Tuning</a>.]]> </Data></string>
+    <string name="iae_about_link"><Data><![CDATA[Para mais detalhes sobre o método, visite <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#5-iae--itae">IAE Tuning</a>.]]> </Data></string>
+    <string name="imc_about_link"><Data><![CDATA[Para mais detalhes sobre o método, visite <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#4-internal-model-control-imc">IMC Tuning</a>.]]> </Data></string>
+    <string name="itae_about_link"><Data><![CDATA[Para mais detalhes sobre o método, visite <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#5-iae--itae">ITAE Tuning</a>.]]> </Data></string>
+    <string name="tl_about_link"><Data><![CDATA[Para mais detalhes sobre o método, visite <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#6-tyreus-luyben-tl">TL Tuning</a>.]]> </Data></string>
+    <string name="zn_about_link"><Data><![CDATA[Para mais detalhes sobre o método, visite <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#1-ziegler-nichols-zn">ZN Tuning</a>.]]> </Data></string>
 </resources>

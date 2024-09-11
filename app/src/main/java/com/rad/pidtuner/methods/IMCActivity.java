@@ -321,8 +321,9 @@ public class IMCActivity extends AppCompatActivity
 		{
 			String title = getResources().getString(R.string.imc_about_title);
 			String description = getResources().getString(R.string.imc_about_description);
+			String link = getResources().getString(R.string.imc_about_link);
 
-			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description);
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description, link);
 			bottomSheet.show(getSupportFragmentManager(),
 					"ModalBottomSheet");
 		});

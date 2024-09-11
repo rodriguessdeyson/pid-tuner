@@ -153,8 +153,9 @@ public class ZNActivity extends AppCompatActivity
 		{
 			String title = getString(R.string.zn_about_title);
 			String description = getString(R.string.zn_about_description);
+			String link = getResources().getString(R.string.zn_about_link);
 
-			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description);
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description, link);
 			bottomSheet.show(getSupportFragmentManager(),
 					"ModalBottomSheet");
 		});

@@ -73,7 +73,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="45dp"
                 android:layout_weight="1"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:contentDescription="@string/tvModelResult1"
                 android:src="@drawable/model1" />
 
@@ -93,7 +93,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:contentDescription="@string/tvModelResult2"
                 android:src="@drawable/model2" />
 
@@ -112,7 +112,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:contentDescription="@string/tvModelResult3"
                 android:src="@drawable/model3" />
 
@@ -131,7 +131,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:contentDescription="@string/tvModelResult4"
                 android:src="@drawable/model4" />
 
@@ -150,7 +150,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:contentDescription="@string/tvModelResult5"
                 android:src="@drawable/model5" />
 

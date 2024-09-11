@@ -124,10 +124,11 @@ public class CCActivity extends AppCompatActivity
 
 		ButtonMethodInfo.setOnClickListener(v ->
 		{
-			String title = getResources().getString(R.string.chr_about_title);
-			String description = getResources().getString(R.string.chr_about_description);
+			String title = getResources().getString(R.string.cc_about_title);
+			String description = getResources().getString(R.string.cc_about_description);
+			String link = getResources().getString(R.string.cc_about_link);
 
-			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description);
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description, link);
 			bottomSheet.show(getSupportFragmentManager(),
 					"ModalBottomSheet");
 		});

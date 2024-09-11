@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/column1">
+    android:layout_height="match_parent">
 
     <View
         android:id="@+id/ViewBackgroundContainer"
@@ -36,14 +35,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails1"
+                android:text="@string/tvZN"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table1" />
 
             <TextView
@@ -52,7 +51,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails0"
+                android:text="@string/tvTL"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
@@ -60,7 +59,7 @@
                 android:layout_width="370dp"
                 android:layout_height="190dp"
                 android:layout_gravity="center"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/tl" />
 
             <TextView
@@ -69,14 +68,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails2"
+                android:text="@string/tvZN"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table2" />
 
             <TextView
@@ -85,14 +84,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails3"
+                android:text="@string/tvCHR"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table3servosem" />
 
             <TextView
@@ -101,14 +100,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails4"
+                android:text="@string/tvCHR"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table4servocom" />
 
             <TextView
@@ -117,14 +116,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails5"
+                android:text="@string/tvCHR"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table5regulsem" />
 
             <TextView
@@ -133,14 +132,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails6"
+                android:text="@string/tvCHR"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table6regulcom" />
 
             <TextView
@@ -149,14 +148,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails7"
+                android:text="@string/tvCohenCoon"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table7" />
 
             <TextView
@@ -165,14 +164,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails8"
+                android:text="@string/tvIMC"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table8" />
 
             <TextView
@@ -180,21 +179,30 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/tvIAE"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorWhite" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails9"
+                android:text="@string/tvITAE"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table9" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table11" />
 
             <TextView
@@ -202,21 +210,30 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/tvIAE"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorWhite" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/strDetails10"
+                android:text="@string/tvITAE"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorWhite" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table10" />
 
             <ImageView
                 android:layout_width="370dp"
                 android:layout_height="190dp"
-                android:background="@drawable/drawable_formula_container"
+                android:background="@drawable/drawable_formula_background"
                 android:src="@drawable/table12" />
 
             <View

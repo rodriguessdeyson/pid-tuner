@@ -74,7 +74,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/CardViewProcessConfiguration"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="240dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
@@ -141,7 +141,7 @@
                 <LinearLayout
                     android:id="@+id/LinearLayoutBody"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     android:orientation="vertical"
                     android:padding="8dp"
                     android:showDividers="end"
@@ -154,7 +154,7 @@
                     <WebView
                         android:id="@+id/WebViewFirstOrderEquation"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="130dp" />
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

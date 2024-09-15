@@ -37,4 +37,27 @@ public class Logger
 		toast.setView(layout);
 		toast.show();
 	}
+
+	/**
+	 * Method to show toast messages.
+	 * @param context Activity context
+	 * @param message Message string to be shown
+	 */
+	public static void Show(Context context, String message)
+	{
+		LayoutInflater inflater = (LayoutInflater)context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		@SuppressLint("InflateParams")
+		View layout = inflater.inflate(R.layout.layout_toast, null);
+
+		TextView text = layout.findViewById(R.id.TextViewMessage);
+		text.setText(message);
+		text.setAllCaps(false);
+		text.setGravity(Gravity.CENTER);
+
+		Toast toast = new Toast(context);
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(layout);
+		toast.show();
+	}
 }

@@ -22,14 +22,14 @@ public class IMCTest
 	public void when_ComputePIsRequested_Expect_InvalidParameterException()
 	{
 		// Calculated values.
-		ControllerParameter sut = IMC.ComputeLambdaTuning(ProcessType.LambdaTuning, ControlType.P, LambdaFactor, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.P, LambdaFactor, Gain, TimeConstant, TransportDelay);
 	}
 
 	@Test(expected = InvalidParameterException.class)
 	public void when_ProcessIsNotLambdaTurning_Expect_InvalidParameterException()
 	{
 		// Calculated values.
-		ControllerParameter sut = IMC.ComputeLambdaTuning(ProcessType.Servo, ControlType.P, LambdaFactor, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.P, LambdaFactor, Gain, TimeConstant, TransportDelay);
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class IMCTest
 		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PI, 2.75, 5.5, 0);
 
 		// Calculated values.
-		ControllerParameter sut = IMC.ComputeLambdaTuning(ProcessType.LambdaTuning, ControlType.PI, LambdaFactor, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.PI, LambdaFactor, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -53,7 +53,7 @@ public class IMCTest
 		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PID, 2.44, 5.5, 0.45);
 
 		// Calculated values.
-		ControllerParameter sut = IMC.ComputeLambdaTuning(ProcessType.LambdaTuning, ControlType.PID, LambdaFactor, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.PID, LambdaFactor, Gain, TimeConstant, TransportDelay);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

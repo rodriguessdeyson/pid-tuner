@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="file:///android_asset/chart_layout.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+    <script type="text/javascript">
+   function updateStep(gain, timeConstant, deadTime, kp, ki, kd)
+   {
+       const K = gain;
+       const tau = timeConstant;
+       const L = deadTime;
+       const Kp = kp;
+       const Ki = ki;
+       const Kd = kd;
+
+       // Simulation.
+       const dt = 0.1;
+       const tMax = 50;
+       const steps = Math.floor(tMax / dt);
+
+       // Save the points.
+       let t = [];
+       let y = [];
+       let yPID = [];
+       let u = [];
+       let e = [];
+       let integral = 0;
+       let derivative = 0;
+       let prevError = 0;
+
+       // Init arrays.
+       for (let i = 0; i <= steps; i++)
+       {
+           t.push(i * dt);
+           y.push(0);
+           yPID.push(0);
+           u.push(0);
+           e.push(0);
+       }
+
+       // Simulate the first order system.
+       for (let i = 1; i <= steps; i++)
+       {
+           if (i * dt >= L) {
+               y[i] = y[i - 1] + (dt / tau) * (-y[i - 1] + K);
+           } else {
+               y[i] = y[i - 1];
+           }
+       }
+
+       // Simulate the system controlled by PID.
+       for (let i = 1; i <= steps; i++)
+       {
+           if (i * dt >= L) {
+               e[i] = 1 - yPID[i - 1]; // Step input.
+               integral += e[i] * dt;
+               derivative = (e[i] - prevError) / dt;
+               u[i] = Kp * e[i] + Ki * integral + Kd * derivative;
+               prevError = e[i];
+           }
+
+           // first order system with dead time and pid controller.
+           if (i * dt >= L) {
+               yPID[i] = yPID[i - 1] + (dt / tau) * (-yPID[i - 1] + K * u[i - Math.floor(L / dt)]);
+           } else {
+               yPID[i] = yPID[i - 1];
+           }
+       }
+
+       // Set up eCharts.
+       const data1 = t.map((time, index) => [time, y[index]]);
+       const data2 = t.map((time, index) => [time, yPID[index]]);
+
+       // Set up options.
+       const option = {
+           grid: {
+               left: '50'
+           },
+           xAxis: {
+               type: 'value',
+               name: 'Time (s)',
+               position: "bottom",
+               nameLocation: "middle",
+               offset: 0,
+               nameGap: 30,
+               axisLine: {
+                   show: true,
+                   lineStyle: {
+                       color: "#403a40"
+                   },
+               },
+               splitLine: {
+                   show: true,
+                   lineStyle: {
+                       color: "#403a40"
+                   }
+               }
+           },
+           yAxis: {
+               type: 'value',
+               name: 'Response',
+               axisLine: {
+                   show: true,
+                   lineStyle: {
+                       color: "#403a40"
+                   },
+               },
+               splitLine: {
+                   show: true,
+                   lineStyle: {
+                       color: "#403a40"
+                   }
+               }
+           },
+           series: [
+               {
+                   name: 'First-Order System',
+                   type: 'line',
+                   symbol: 'none',
+                   data: data1
+               },
+               {
+                   name: 'PID-Controlled System',
+                   type: 'line',
+                   symbol: 'none',
+                   data: data2
+               }
+           ],
+           legend: {
+               orient: 'horizontal',
+               top: 'bottom'
+           },
+           backgroundColor: '#0B0F12'
+       };
+
+       // Set the chart configuration.
+       chart.setOption(option);
+       chart.resize(option);
+       chart.hideLoading();
+   }
+    </script>
+</head>
+    <body>
+        <div id="stepPlot"></div>
+        <script type="text/javascript">
+            // Initialize ECharts
+            const chart = echarts.init(document.getElementById('stepPlot'));
+            chart.showLoading({text: '', color: '#CC8D46', maskColor: '#0B0F12'});
+        </script>
+    </body>
+</html>

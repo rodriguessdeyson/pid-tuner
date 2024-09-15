@@ -1,0 +1,18 @@
+body {
+  display: flex;
+  align-item: center;
+  background-color: #0B0F12
+}
+
+#equation {
+    display: block;                /* Torna o elemento um bloco */
+    text-align: center;            /* Centraliza horizontalmente */
+    margin: 20px auto;             /* Adiciona margem ao redor e centraliza */
+    width: fit-content;            /* Ajusta a largura ao conteúdo */
+    padding: 20px;                 /* Adiciona um pouco de preenchimento interno */
+    border: 1px solid #333333;        /* Adiciona uma borda ao redor da fórmula */
+    border-radius: 10px;           /* Borda arredondada */
+    background-color: #333333;     /* Fundo levemente cinza */
+    color: #ECDCC9;
+    font-size: 1.1rem
+}

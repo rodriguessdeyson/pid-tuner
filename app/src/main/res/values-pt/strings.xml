@@ -94,12 +94,12 @@
     <string name="DampingRatio">Fator de Amortecimento</string>
     <string name="hintDampingRatio">Fator de Amortecimento</string>
     <string name="DampingRatioError">Fator de Amortecimento não pode ficar Vazio</string>
-    <string name="tvModelTitle">Escolha um Modelo de Processo</string>
-    <string name="tvModelResult1">Modelo 1: Controlador PI </string>
-    <string name="tvModelResult2">Modelo 2: Controlador PID </string>
-    <string name="tvModelResult3">Modelo 3: Controlador PID</string>
-    <string name="tvModelResult4">Modelo 4: Controlador P</string>
-    <string name="tvModelResult5">Modelo 5: Controlador PD</string>
+    <string name="tvModelTitle">Selecione o Modelo de Processo associado ao controlador desejado</string>
+    <string name="tvModelResult1">Modelo Controlador PI </string>
+    <string name="tvModelResult2">Modelo Controlador PID </string>
+    <string name="tvModelResult3">Modelo Controlador PID</string>
+    <string name="tvModelResult4">Modelo Controlador P</string>
+    <string name="tvModelResult5">Modelo Controlador PD</string>
     <string name="imc_about_title">Método de Ajuste de Controle de Modelo Interno (IMC)</string>
     <string name="imc_about_description"><Data><![CDATA[
         O método Controle de Modelo Interno (IMC) é uma abordagem baseada em modelo para o ajuste de PID, onde o controlador é projetado com base em um modelo interno do processo.

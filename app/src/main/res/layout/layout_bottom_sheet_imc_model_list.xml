@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayoutDialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/viewContainer"
+            android:layout_width="50dp"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.082" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/TextViewIMC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="28sp"
+        tools:text="@string/imc_about_title" />
+
+    <TextView
+        android:id="@+id/TextViewModels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        tools:text="@string/tvModelTitle" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/ScrollViewContainer"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp">
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutPModelHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/TextViewPController"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/cbP"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="16sp"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:id="@+id/TextViewPControllerInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/tvModelResult4"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/ImageButtonPModel"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/drawable_formula_background"
+                    android:contentDescription="@string/tvModelResult4"
+                    android:src="@drawable/model4"
+                    android:tag="P" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutPDModelHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/TextViewPDController"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/cbPD"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="16sp"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:id="@+id/TextViewPDControllerInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/tvModelResult5"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/ImageButtonPDModel"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/drawable_formula_background"
+                    android:contentDescription="@string/tvModelResult5"
+                    android:src="@drawable/model5"
+                    android:tag="PD" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutPIModelHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/TextViewPIController"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/cbPI"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="16sp"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:id="@+id/TextViewPIControllerInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/tvModelResult1"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/ImageButtonPIModel"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/drawable_formula_background"
+                    android:contentDescription="@string/tvModelResult1"
+                    android:src="@drawable/model1"
+                    android:tag="PI" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutPIDModelHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/TextViewPIDController"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/cbPID"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="16sp"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:id="@+id/TextViewPIDControllerInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/tvModelResult2"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/ImageButtonPIDModel"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/drawable_formula_background"
+                    android:contentDescription="@string/tvModelResult2"
+                    android:src="@drawable/model2"
+                    android:tag="PID1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutPI2DModelHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/TextViewPID2Controller"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/cbPID"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="16sp"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:id="@+id/TextViewPID2ControllerInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/tvModelResult3"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/ImageButtonPID2Model"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/drawable_formula_background"
+                    android:contentDescription="@string/tvModelResult3"
+                    android:src="@drawable/model3"
+                    android:tag="PID2" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

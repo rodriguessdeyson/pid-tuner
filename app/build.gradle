@@ -23,7 +23,7 @@ android {
     sourceSets {
         main {
             java {
-                srcDirs 'src\\main\\java', 'src\\main\\java\\com\\tunings\\models\\enums'
+                srcDirs 'src\\main\\java', 'src\\main\\java\\com\\domain\\models\\tuning\\enums'
             }
         }
     }

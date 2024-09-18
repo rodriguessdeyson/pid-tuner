@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ResultActivity" />
-        <activity android:name=".methods.IMCActivity" />
+        <activity android:name=".methods.IMC.IMCActivity" />
         <activity android:name=".methods.ZNActivity" />
         <activity android:name=".methods.TLActivity" />
         <activity android:name=".methods.ITAEActivity" />

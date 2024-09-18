@@ -138,7 +138,7 @@
                         <ImageView
                             android:id="@+id/ImageViewFirstOrderProcess"
                             android:layout_width="130dp"
-                            android:layout_height="0dp"
+                            android:layout_height="70dp"
                             android:background="@drawable/drawable_formula_background"
                             android:contentDescription="@string/ivFirstOrderFunctionDescription"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -206,7 +206,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:hint="@string/hintGain"
+                            android:hint="@string/hintKu"
                             android:inputType="numberDecimal"
                             android:textColor="@color/colorSecondaryText"
                             android:textColorHint="@color/colorTextHint"
@@ -228,38 +228,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:hint="@string/hintTime"
+                            android:hint="@string/hintPu"
                             android:inputType="numberDecimal"
                             android:paddingTop="20dp"
                             android:textColor="@color/colorSecondaryText"
                             android:textColorHint="@color/colorTextHint"
                             app:backgroundTint="@color/colorAccent"
                             tools:layout_editor_absoluteY="5dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/TextInputLayoutTransportDelay"
-                        style="@style/TextInputLayoutStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColorHint="@color/colorTextHint"
-                        tools:layout_editor_absoluteX="5dp"
-                        tools:layout_editor_absoluteY="128dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/EditTextTransportDelay"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:hint="@string/hintDelay"
-                            android:imeOptions="actionDone"
-                            android:inputType="numberDecimal"
-                            android:paddingTop="20dp"
-                            android:singleLine="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textColorHint="@color/colorTextHint"
-                            app:backgroundTint="@color/colorAccent"
-                            tools:layout_editor_absoluteY="6dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>

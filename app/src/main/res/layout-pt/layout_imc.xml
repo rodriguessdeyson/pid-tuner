@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/middle_background"
-    tools:context=".methods.IMCActivity">
+    tools:context=".methods.IMC.IMCActivity">
 
     <View
         android:id="@+id/ViewBackgroundContainer"
@@ -209,6 +209,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="@string/hintGain"
+                            android:imeOptions="actionNext"
                             android:inputType="numberDecimal"
                             android:textColor="@color/colorSecondaryText"
                             android:textColorHint="@color/colorTextHint"
@@ -231,6 +232,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="@string/hintTime"
+                            android:imeOptions="actionNext"
                             android:inputType="numberDecimal"
                             android:paddingTop="20dp"
                             android:textColor="@color/colorSecondaryText"
@@ -254,7 +256,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="@string/hintDelay"
-                            android:imeOptions="actionDone"
+                            android:imeOptions="actionNext"
                             android:inputType="numberDecimal"
                             android:paddingTop="20dp"
                             android:singleLine="true"
@@ -364,6 +366,28 @@
                     app:layout_constraintVertical_bias="0.751">
 
                     <CheckBox
+                        android:id="@+id/CheckBoxP"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:buttonTint="@color/colorAccent"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:text="@string/cbP"
+                        android:textColor="@color/colorPrimaryText"
+                        tools:layout_editor_absoluteX="184dp" />
+
+                    <CheckBox
+                        android:id="@+id/CheckBoxPD"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:buttonTint="@color/colorAccent"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:text="@string/cbPD"
+                        android:textColor="@color/colorPrimaryText"
+                        tools:layout_editor_absoluteX="184dp" />
+
+                    <CheckBox
                         android:id="@+id/CheckBoxPI"
                         android:layout_width="70dp"
                         android:layout_height="match_parent"
@@ -411,18 +435,6 @@
                 android:text="@string/btnCalculate"
                 app:backgroundTint="@color/colorButton" />
         </LinearLayout>
-
-        <include
-            android:id="@+id/ViewPIDModels"
-            layout="@layout/layout_model_list"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:elevation="10dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

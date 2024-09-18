@@ -17,10 +17,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/MainLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layoutDescription="@xml/layout_result_xml_mainlayout_scene"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:contentDescription="Help"
             app:icon="@drawable/drawable_info_icon"
             app:iconTint="@color/colorPrimaryText"
             app:layout_constraintBottom_toBottomOf="@+id/TextViewTuningName"
@@ -176,6 +178,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CardViewProcessConfiguration">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/viewContainer"
+                    android:layout_width="50dp"
+                    android:layout_height="2dp"
+                    android:background="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.082" />
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -192,38 +213,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/TextViewControllerResultHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvProcessResults"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
+
+                    <TextView
+                        android:id="@+id/TextViewControllerResultInfo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/TextViewControllerResultHeader"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:text="@string/tvProcessResults"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="16sp"
-                            android:typeface="normal" />
-
-                        <TextView
-                            android:id="@+id/TextViewControllerResultInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/roboto"
-                            android:text="@string/tvConfiguredResult"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="13sp" />
-
-                    </LinearLayout>
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvConfiguredResult"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
-                <ScrollView
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginBottom="8dp"
+                    android:descendantFocusability="blocksDescendants"
+                    android:overScrollMode="ifContentScrolls"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -234,12 +250,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" />
-                </ScrollView>
+                </androidx.core.widget.NestedScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

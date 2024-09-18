@@ -100,12 +100,12 @@
     <string name="DampingRatio">Damping Ratio</string>
     <string name="DampingRatioError">Damping Ratio cannot be empty</string>
     <string name="hintDampingRatio">Damping Ratio (ε)</string>
-    <string name="tvModelTitle">Choose the Process Model with the controller</string>
-    <string name="tvModelResult1">Model 1: PI Controller</string>
-    <string name="tvModelResult2">Model 2: PID Controller</string>
-    <string name="tvModelResult3">Model 3: PID Controller</string>
-    <string name="tvModelResult4">Model 4: P Controller</string>
-    <string name="tvModelResult5">Model 5: PD Controller</string>
+    <string name="tvModelTitle">Select the Process Model associate to the desired controller</string>
+    <string name="tvModelResult1">Model PI Controller</string>
+    <string name="tvModelResult2">Model PID Controller</string>
+    <string name="tvModelResult3">Model PID Controller</string>
+    <string name="tvModelResult4">Model P Controller</string>
+    <string name="tvModelResult5">Model PD Controller</string>
     <string name="imc_about_title">Internal Model Control (IMC) Tuning Method</string>
     <string name="imc_about_description"><Data><![CDATA[
         The Internal Model Control (IMC) tuning method is a model-based approach to PID tuning, where the controller is designed based on an internal model of the process.

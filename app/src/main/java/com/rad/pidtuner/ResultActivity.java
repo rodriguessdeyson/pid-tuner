@@ -15,13 +15,13 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.charts.services.ChartService;
-import com.rad.pidtuner.utils.Katex;
-import com.rad.pidtuner.utils.Parser;
-import com.tunings.models.ControllerParameter;
-import com.tunings.models.Tuning;
+import com.domain.services.chart.ChartService;
+import com.domain.services.katex.Katex;
+import com.domain.services.utils.Parser;
+import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.Tuning;
 import com.rad.pidtuner.database.DataAccess;
-import com.tunings.models.TuningConfiguration;
+import com.domain.models.tuning.TuningConfiguration;
 
 import java.util.Locale;
 

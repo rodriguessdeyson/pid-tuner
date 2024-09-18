@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,22 +15,20 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rad.pidtuner.database.DataAccess;
 import com.rad.pidtuner.methods.CCActivity;
 import com.rad.pidtuner.methods.CHRActivity;
 import com.rad.pidtuner.methods.IAEActivity;
-import com.rad.pidtuner.methods.IMCActivity;
+import com.rad.pidtuner.methods.IMC.IMCActivity;
 import com.rad.pidtuner.methods.ITAEActivity;
 import com.rad.pidtuner.methods.TLActivity;
 import com.rad.pidtuner.methods.ZNActivity;
-import com.rad.pidtuner.utils.BottomSheetDialog;
-import com.rad.pidtuner.utils.BottomSheetDialogType;
-import com.rad.pidtuner.utils.ViewUtils;
-import com.tunings.models.Tuning;
-import com.tunings.models.TuningType;
+import com.domain.services.utils.BottomSheetDialog;
+import com.domain.services.utils.BottomSheetDialogType;
+import com.domain.models.tuning.Tuning;
+import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;

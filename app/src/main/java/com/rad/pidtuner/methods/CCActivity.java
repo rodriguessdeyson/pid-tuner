@@ -3,28 +3,30 @@ package com.rad.pidtuner.methods;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.domain.services.katex.Katex;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
-import com.rad.pidtuner.utils.BottomSheetDialog;
-import com.rad.pidtuner.utils.Logger;
-import com.rad.pidtuner.utils.Parser;
-import com.tunings.methods.CC;
-import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameter;
-import com.tunings.models.ProcessType;
-import com.tunings.models.TuningConfiguration;
-import com.tunings.models.Tuning;
-import com.tunings.models.TuningType;
+import com.domain.services.utils.BottomSheetDialog;
+import com.domain.services.utils.Logger;
+import com.domain.services.utils.Parser;
+import com.domain.services.tuning.CC;
+import com.domain.models.tuning.types.ControlType;
+import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.types.ProcessType;
+import com.domain.models.tuning.TuningConfiguration;
+import com.domain.models.tuning.Tuning;
+import com.domain.models.tuning.types.TuningType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CCActivity extends AppCompatActivity
 {

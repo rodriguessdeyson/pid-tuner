@@ -3,15 +3,14 @@ package com.rad.pidtuner.methods;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.domain.services.katex.Katex;
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
 import com.domain.services.utils.BottomSheetDialog;
@@ -21,12 +20,9 @@ import com.domain.services.tuning.CC;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
 import com.domain.models.tuning.types.ProcessType;
-import com.domain.models.tuning.TuningConfiguration;
-import com.domain.models.tuning.Tuning;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CCActivity extends AppCompatActivity
 {
@@ -142,16 +138,6 @@ public class CCActivity extends AppCompatActivity
 	 */
 	private boolean ValidateProcessParameters()
 	{
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxP.isChecked()  &&
-			!CheckBoxPI.isChecked() &&
-			!CheckBoxPD.isChecked() &&
-			!CheckBoxPID.isChecked())
-		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
-			return false;
-		}
-
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
@@ -176,6 +162,16 @@ public class CCActivity extends AppCompatActivity
 			return false;
 		}
 
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxP.isChecked()  &&
+			!CheckBoxPI.isChecked() &&
+			!CheckBoxPD.isChecked() &&
+			!CheckBoxPID.isChecked())
+		{
+			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			return false;
+		}
+
 		return true;
 	}
 
@@ -196,23 +192,22 @@ public class CCActivity extends AppCompatActivity
 		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
+
 		// Compute the CC Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType: controlTypes)
-			controllerParameters.add(CC.Compute(controlType, pGain, pTime, pDead));
+			controllerParameters.add(CC.Compute(controlType, tf));
 
-		// Set the tuning configuration.
-		TuningConfiguration config = new TuningConfiguration(ProcessType.None,
-			controllerParameters, pGain, pTime, pDead);
-
-		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
-		configuration.add(config);
-		// Get the tuning information.
-		Tuning ccMethod = new Tuning("Cohen-Coon", "", TuningType.CC, configuration);
+		// Set up the model.
+		String description = getString(R.string.tvCohenCoonDesc);
+		TuningModel ccMethod = new TuningModel("Cohen-Coon", description, TuningType.CC, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CCActivity.this, ResultActivity.class);
-		resultActivity.putExtra("RESULT", ccMethod);
+		resultActivity.putExtra("CONFIGURATION", ccMethod);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
 		startActivity(resultActivity);
 	}
 }

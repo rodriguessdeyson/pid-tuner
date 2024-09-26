@@ -10,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 import com.domain.services.utils.BottomSheetDialog;
@@ -21,8 +23,6 @@ import com.domain.services.tuning.ZN;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
 import com.domain.models.tuning.types.ProcessType;
-import com.domain.models.tuning.Tuning;
-import com.domain.models.tuning.TuningConfiguration;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
@@ -179,13 +179,6 @@ public class ZNActivity extends AppCompatActivity
 
 	private boolean ValidateProcessParameters()
 	{
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
-		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
-			return false;
-		}
-
 		// Validates if the process data are filled and is not zero.
 		if (EditTextProcessGain.getText().toString().isEmpty() && RadioButtonOpened.isChecked())
 		{
@@ -223,6 +216,13 @@ public class ZNActivity extends AppCompatActivity
 			return false;
 		}
 
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
+		{
+			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			return false;
+		}
+
 		return true;
 	}
 
@@ -233,20 +233,39 @@ public class ZNActivity extends AppCompatActivity
 		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
-		Tuning tuning = RadioButtonOpened.isChecked()
-				? BuildOpenedTuningParameters(pGain, pTime, pDead)
-				: BuildClosedTuningParameters(pTime, pDead);
+		if (RadioButtonOpened.isChecked()) BuildOpenedTuningParameters(pGain, pTime, pDead);
+		else BuildClosedTuningParameters(pTime, pDead);
+	}
+
+	private void BuildOpenedTuningParameters(double pGain, double pTime, double pDead)
+	{
+		// Get the control types.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
+
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
+
+		// Compute the ZN Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(ZN.ComputeOpenLoop(controlType, tf));
+
+		// Set up the model.
+		String description = getString(R.string.tvZNDesc);
+		TuningModel znMethod = new TuningModel("Ziegler and Nichols", description,
+				TuningType.ZN, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
-		resultActivity.putExtra("RESULT", tuning);
-		resultActivity.putExtra("Gain", pGain);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
+		resultActivity.putExtra("CONFIGURATION", znMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
 		startActivity(resultActivity);
 	}
 
-	private Tuning BuildOpenedTuningParameters(double pGain, double pTime, double pDead)
+	private void BuildClosedTuningParameters(double pUltimateGain, double pUltimatePeriod)
 	{
 		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
@@ -254,41 +273,23 @@ public class ZNActivity extends AppCompatActivity
 		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
-		// Compute the ZN Controller.
-		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
-		for (ControlType controlType : controlTypes)
-			controllerParameters.add(ZN.ComputeOpenLoop(controlType, pGain, pTime, pDead));
-
-		// Set the tuning configuration.
-		TuningConfiguration config = new TuningConfiguration(ProcessType.Open,
-			controllerParameters, pGain, pTime, pDead);
-		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
-		configuration.add(config);
-
-		// Get the tuning information.
-		return new Tuning("Ziegler and Nichols", "", TuningType.ZN, configuration);
-	}
-
-	private Tuning BuildClosedTuningParameters(double pTime, double pDead)
-	{
-		// Get the control types.
-		ArrayList<ControlType> controlTypes = new ArrayList<>();
-		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
-		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
-		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pUltimateGain, pUltimatePeriod);
 
 		// Compute the ZN Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType : controlTypes)
-			controllerParameters.add(ZN.ComputeClosedLoop(controlType, pTime, pDead));
+			controllerParameters.add(ZN.ComputeClosedLoop(controlType, tf));
 
-		// Set the tuning configuration.
-		TuningConfiguration config = new TuningConfiguration(ProcessType.Open,
-			controllerParameters, pTime, pDead);
-		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
-		configuration.add(config);
+		// Set up the model.
+		String description = getString(R.string.tvZNDesc);
+		TuningModel znMethod = new TuningModel("Ziegler and Nichols", description,
+				TuningType.ZN, tf);
 
-		// Get the tuning information.
-		return new Tuning("Ziegler and Nichols", "", TuningType.ZN, configuration);
+		// Pass through intent to the next activity the results information.
+		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
+		resultActivity.putExtra("CONFIGURATION", znMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
+		startActivity(resultActivity);
 	}
 }

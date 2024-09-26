@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Color when the CheckBox is checked and enabled -->
+    <item android:color="@color/colorAccent" android:state_checked="true" android:state_enabled="true"/>
+
+    <!-- Color when the CheckBox is unchecked and enabled -->
+    <item android:color="@color/colorAccent" android:state_checked="false" android:state_enabled="true"/>
+
+    <!-- Color when the CheckBox is checked and disabled -->
+    <item android:color="@color/colorCheckedDisabled" android:state_checked="true" android:state_enabled="false"/>
+
+    <!-- Color when the CheckBox is unchecked and disabled -->
+    <item android:color="@color/colorUncheckedDisabled" android:state_checked="false" android:state_enabled="false"/>
+</selector>

@@ -1,7 +1,16 @@
 package com.domain.models.tuning.types;
 
+import static android.provider.Settings.System.getString;
+
+import static xdroid.core.Global.getContext;
+import static xdroid.core.Global.getResources;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import com.rad.pidtuner.R;
 
 public enum ProcessType implements Parcelable
 {
@@ -43,12 +52,17 @@ public enum ProcessType implements Parcelable
 	/**
 	 * Closed Loop Feedback.
 	 */
-	Closed(7);
+	Closed(7),
+
+	/**
+	 * Lambda Tuning Process.
+	 */
+	LambdaModelBasedTuning(8);
 
 	/**
 	 * Selected enum.
 	 */
-	private final int Process;
+	private final int process;
 
 	/**
 	 * Enum constructor.
@@ -56,7 +70,7 @@ public enum ProcessType implements Parcelable
 	 */
 	ProcessType(int process)
 	{
-		this.Process = process;
+		this.process = process;
 	}
 
 	public static final Creator<ProcessType> CREATOR = new Creator<ProcessType>()
@@ -82,6 +96,21 @@ public enum ProcessType implements Parcelable
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(Process);
+		dest.writeInt(process);
+	}
+
+	@NonNull
+	@Override
+	public String toString() {
+		if (process == ProcessType.Regulator.ordinal())
+			return getContext().getResources().getString(R.string.cbRegula);
+		else if (process == ProcessType.Regulator20.ordinal())
+			return getContext().getResources().getString(R.string.cbRegula) + " +20% UP";
+		else if(process == ProcessType.Servo.ordinal())
+			return getContext().getResources().getString(R.string.cbServo);
+		else if(process == ProcessType.Servo20.ordinal())
+			return getContext().getResources().getString(R.string.cbServo) + " +20% UP";
+		else
+			return "";
 	}
 }

@@ -42,7 +42,13 @@ public enum TuningType implements Parcelable
 	/**
 	 * Ziegler and Nichols.
 	 */
-	ZN(6);
+	ZN(6),
+
+	/**
+	 * Ziegler and Nichols.
+	 */
+	RT(7);
+
 
 	/**
 	 * Selected enum.

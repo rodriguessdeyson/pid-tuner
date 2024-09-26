@@ -1,46 +1,41 @@
 package com.domain.services.tuning;
 
+import androidx.annotation.NonNull;
+
+import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.types.IMCModelBasedType;
+import com.domain.models.tuning.types.ProcessType;
+import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 
 public class IMC
 {
 	/**
-	 * IMC Transfer Function Model without dead time (Transport Delay).
-	 */
-	public enum TransferFunctionModel
-	{
-		P_Controller_Model,
-		PD_Controller_Model,
-		PI_Controller_Model,
-		PID_Controller_Model1,
-		PID_Controller_Model2,
-	}
-
-	/**
 	 * Compute the parameters of a controller based on IMC approach with lambda and dead time.
 	 * @param controlType Type of controller.
-	 * @param kGain Gain.
-	 * @param tTime Time constant.
-	 * @param tDelay Transport delay.
-	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
+	 * @param transferFunction Transfer function of process.
 	 * @return Return the controller PID parameters.
 	 */
-	public static ControllerParameter ComputeLambdaTuning(ControlType controlType,
-                                                          double kGain, double tTime, double tDelay,
-														  double lambdaValue)
+	public static ControllerParameter ComputeLambdaTuning(@NonNull ControlType controlType,
+														  @NonNull TransferFunction transferFunction)
 	{
 		if (controlType == ControlType.P)
 			throw new InvalidParameterException(controlType.toString());
 
+		double kGain = transferFunction.getGain();
+		double tTime = transferFunction.getTimeConstant();
+		double tDelay = transferFunction.getTransportDelay();
+		double lambdaValue = transferFunction.getLambdaCoefficient();
+
 		switch (controlType)
 		{
 			case PI:
-				return LambdaPIController(kGain, tTime, tDelay, lambdaValue);
+				return firstOrderLambdaPIController(kGain, tTime, tDelay, lambdaValue);
 			case PID:
-				return LambdaPIDController(kGain, tTime, tDelay, lambdaValue);
+				return firstOrderLambdaPIDController(kGain, tTime, tDelay, lambdaValue);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
@@ -54,14 +49,16 @@ public class IMC
 	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
 	 * @return PI controller.
 	 */
-	private static ControllerParameter LambdaPIController(double kGain, double tTime, double tDelay,
-														  double lambdaValue)
+	private static ControllerParameter firstOrderLambdaPIController(double kGain, double tTime,
+																	double tDelay,
+																	double lambdaValue)
 	{
 		double kp = ((2 * tTime + tDelay) / (kGain * 2 * lambdaValue));
 		double ki = tTime + (tDelay / 2);
 		double kd = 0;
 
-		return new ControllerParameter(ControlType.PI, kp, ki, kd);
+		return new ControllerParameter(TuningType.IMC, ProcessType.LambdaTuning, ControlType.PI,
+				kp, ki, kd);
 	}
 
 	/**
@@ -72,45 +69,46 @@ public class IMC
 	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
 	 * @return PID controller;
 	 */
-	private static ControllerParameter LambdaPIDController(double kGain, double tTime,
-														   double tDelay, double lambdaValue)
+	private static ControllerParameter firstOrderLambdaPIDController(double kGain, double tTime,
+																	 double tDelay, double lambdaValue)
 	{
 		double kp = ((2 * tTime + tDelay) / (kGain * (2 * lambdaValue + tDelay)));
 		double ki = tTime + (tDelay / 2);
 		double kd = (tTime * tDelay / (2 * tTime + tDelay));
 
-		return new ControllerParameter(ControlType.PID, kp, ki, kd);
+		return new ControllerParameter(TuningType.IMC, ProcessType.LambdaTuning, ControlType.PID,
+				kp, ki, kd);
 	}
 
 	/**
 	 * Compute the parameters of a controller based on IMC approach with lambda value and
 	 * without dead time (Model type required).
-	 * @param kGain Gain.
-	 * @param tTime First time constant.
-	 * @param tSTime Second time constant.
-	 * @param epsilon Epsilon coefficient.
-	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
+	 * @param transferFunction Transfer function of process.
 	 * @return Return the controller PID parameters.
 	 */
-	public static ControllerParameter ComputeLambdaTuning(TransferFunctionModel tfModel,
-														  double kGain, double tTime,
-														  double tSTime, double epsilon,
-														  double lambdaValue)
+	public static ControllerParameter ComputeLambdaTuning(@NonNull TransferFunction transferFunction)
 	{
-		switch (tfModel)
+		double kGain = transferFunction.getGain();
+		double tTime = transferFunction.getTimeConstant();
+		double tSTime = transferFunction.getSecondTimeConstant();
+		double epsilon = transferFunction.getDampingRatio();
+		double lambdaValue = transferFunction.getLambdaCoefficient();
+		IMCModelBasedType imcModelBasedType = transferFunction.getIMCModelType();
+
+		switch (imcModelBasedType)
 		{
-			case P_Controller_Model:
+			case P:
 				return LambdaPControllerModel(kGain, lambdaValue);
-			case PD_Controller_Model:
+			case PD:
 				return LambdaPDControllerModel(kGain, tTime, lambdaValue);
-			case PI_Controller_Model:
+			case PI:
 				return LambdaPIControllerModel(kGain, tTime, lambdaValue);
-			case PID_Controller_Model1:
+			case PID1:
 				return LambdaPIDControllerFirstModel(kGain, tTime, tSTime, lambdaValue);
-			case PID_Controller_Model2:
+			case PID2:
 				return LambdaPIDControllerSecondModel(kGain, tTime, epsilon, lambdaValue);
 			default:
-				throw new InvalidParameterException(tfModel.toString());
+				throw new InvalidParameterException(imcModelBasedType.toString());
 		}
 	}
 
@@ -126,7 +124,8 @@ public class IMC
 		double ki = 0;
 		double kd = 0;
 
-		return new ControllerParameter(ControlType.P, kp, ki, kd);
+		return new ControllerParameter(TuningType.IMC, ProcessType.LambdaModelBasedTuning,
+				ControlType.P, kp, ki, kd);
 	}
 
 	/**
@@ -143,7 +142,8 @@ public class IMC
 		double ki = 0;
 		double kd = tTime;
 
-		return new ControllerParameter(ControlType.PD, kp, ki, kd);
+		return new ControllerParameter(TuningType.IMC, ProcessType.LambdaModelBasedTuning,
+				ControlType.PD, kp, ki, kd);
 	}
 
 	/**
@@ -160,7 +160,8 @@ public class IMC
 		double ki = tTime;
 		double kd = 0;
 
-		return new ControllerParameter(ControlType.PI, kp, ki, kd);
+		return new ControllerParameter(TuningType.IMC, ProcessType.LambdaModelBasedTuning,
+				ControlType.PI, kp, ki, kd);
 	}
 
 	/**
@@ -179,7 +180,8 @@ public class IMC
 		double ki = (tTime + tSTime);
 		double kd = ((tTime * tSTime) / (tTime + tSTime));
 
-		return new ControllerParameter(ControlType.PID, kp, ki, kd);
+		return new ControllerParameter(TuningType.IMC, ProcessType.LambdaModelBasedTuning,
+				ControlType.PID, kp, ki, kd);
 	}
 
 	/**
@@ -198,7 +200,8 @@ public class IMC
 		double ki = (2 * epsilon * tTime);
 		double kd = (tTime / (2 * epsilon));
 
-		return new ControllerParameter(ControlType.PID, kp, ki, kd);
+		return new ControllerParameter(TuningType.IMC, ProcessType.LambdaModelBasedTuning,
+				ControlType.PID, kp, ki, kd);
 	}
 
 }

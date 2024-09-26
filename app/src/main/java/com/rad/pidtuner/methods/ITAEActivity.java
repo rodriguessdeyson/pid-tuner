@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
 import com.domain.services.utils.BottomSheetDialog;
@@ -18,8 +20,6 @@ import com.domain.services.tuning.ITAE;
 import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
-import com.domain.models.tuning.Tuning;
-import com.domain.models.tuning.TuningConfiguration;
 import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
@@ -136,20 +136,6 @@ public class ITAEActivity extends AppCompatActivity
 
 	private boolean ValidateProcessParameters()
 	{
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxServo.isChecked() && !CheckBoxRegulator.isChecked())
-		{
-			Logger.Show(this, R.string.ProcessTypeIsRequired);
-			return false;
-		}
-
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
-		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
-			return false;
-		}
-
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
@@ -173,6 +159,21 @@ public class ITAEActivity extends AppCompatActivity
 			Logger.Show(this, R.string.TransportDelayError);
 			return false;
 		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxServo.isChecked() && !CheckBoxRegulator.isChecked())
+		{
+			Logger.Show(this, R.string.ProcessTypeIsRequired);
+			return false;
+		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
+		{
+			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			return false;
+		}
+
 		return true;
 	}
 
@@ -193,39 +194,40 @@ public class ITAEActivity extends AppCompatActivity
 		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
-		// Compute the ITAE Controller.
-		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
+
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ProcessType processType : processTypes)
 		{
-			ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 			for (ControlType controlType :  controlTypes)
 			{
 				ControllerParameter cp;
 				switch (processType)
 				{
 					case Servo:
-						cp = ITAE.ComputeServo(controlType, pGain, pTime, pDead);
+						cp = ITAE.ComputeServo(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					case Regulator:
-						cp = ITAE.ComputeRegulator(controlType, pGain, pTime, pDead);
+						cp = ITAE.ComputeRegulator(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					default:
 						throw new InvalidParameterException(processType.toString());
 				}
 			}
-			configuration.add(new TuningConfiguration(processType, controllerParameters, pGain,
-				pTime, pDead));
 		}
 
-		// Get the tuning information.
-		Tuning itaeMethod = new Tuning("Integral Time of Absolute Error", "", TuningType.ITAE,
-				configuration);
+		// Set up the model.
+		String description = getString(R.string.tvITAEDesc);
+		TuningModel itaeMethod = new TuningModel("Integral Time of Absolute Error",
+				description, TuningType.ITAE, tf, processTypes);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ITAEActivity.this, ResultActivity.class);
-		resultActivity.putExtra("RESULT", itaeMethod);
+		resultActivity.putExtra("CONFIGURATION", itaeMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
 		startActivity(resultActivity);
 	}
 }

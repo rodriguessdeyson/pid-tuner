@@ -11,17 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.domain.services.tuning.interfaces.imc.ImageSelectedListener;
+import com.domain.services.tuning.interfaces.imc.IMCModelListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.rad.pidtuner.R;
 
 public class BottomSheetDialogIMCModel extends BottomSheetDialogFragment
 {
 	private boolean ImageSelected = false; // Flag to check if an image was selected
-	private ImageSelectedListener ImageSelectedListener;
+
+	private IMCModelListener ImageSelectedListener;
 
 	// Use this method to set the listener from the parent
-	public void setOnImageSelectedListener(ImageSelectedListener listener)
+	public void setOnImageSelectedListener(IMCModelListener listener)
 	{
 		this.ImageSelectedListener = listener;
 	}
@@ -52,7 +53,7 @@ public class BottomSheetDialogIMCModel extends BottomSheetDialogFragment
 			{
 				if (ImageSelectedListener != null)
 				{
-					ImageSelectedListener.onImageSelected((String) model.getTag());
+					ImageSelectedListener.onModelSelected((String) model.getTag());
 					ImageSelected = true;
 				}
 				dismiss();

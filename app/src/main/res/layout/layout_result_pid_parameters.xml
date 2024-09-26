@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusableInTouchMode="false">
@@ -11,7 +10,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/colorTertiary"
-        app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +30,11 @@
                 android:layout_marginEnd="8dp"
                 android:elevation="5dp"
                 android:orientation="horizontal"
-                android:padding="16dp"
+                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -51,29 +53,53 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:id="@+id/TextViewControllerResult"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:text="@string/tvProcess"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="16sp"
-                            android:typeface="normal" />
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <!-- The colored line (divider) on the left side -->
+                            <View
+                                android:layout_width="4dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="8dp"
+                                android:background="@color/colorAccent" /> <!-- Use your desired color -->
+
+                            <!-- TextView anchored to the left -->
+                            <TextView
+                                android:id="@+id/TextViewControllerResultType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:text="@string/cbPID"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="16sp"
+                                android:typeface="normal" />
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/TextViewControllerProcessResult"
+                            android:id="@+id/TextViewPIDControllerResultEquation"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/roboto"
-                            android:text="@string/tvConfiguredResult"
-                            android:textColor="@color/colorSecondaryText"
+                            android:text="@string/tvPIDParallelFunction"
+                            android:textColor="@color/colorPrimaryText"
                             android:textSize="13sp" />
 
                         <WebView
                             android:id="@+id/WebViewPIDParallelEquation"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/TextViewPIDControllerResultEquationParameters"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/tvPIDResultParameters"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="13sp" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -81,23 +107,62 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
+                android:id="@+id/LinearLayoutPIDStepResponse"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="0dp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/LinearLayoutHeader">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <!-- The colored line (divider) on the left side -->
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:background="@color/colorAccent" /> <!-- Use your desired color -->
+
+                    <!-- TextView anchored to the left -->
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvStepResponse"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
                 <WebView
                     android:id="@+id/WebViewPlotly"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp" />
+                    android:layout_height="350dp">
+
+                </WebView>
+
+                <View
+                    android:id="@+id/viewContainer4"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#171E23"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </LinearLayout>
 

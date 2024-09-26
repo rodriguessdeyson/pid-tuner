@@ -9,17 +9,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
 import com.domain.services.utils.BottomSheetDialog;
 import com.domain.services.utils.Logger;
 import com.domain.services.utils.Parser;
 import com.domain.services.tuning.TL;
-import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
-import com.domain.models.tuning.Tuning;
-import com.domain.models.tuning.TuningConfiguration;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
@@ -116,13 +115,6 @@ public class TLActivity extends AppCompatActivity
 
 	private boolean ValidateProcessParameters()
 	{
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
-		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
-			return false;
-		}
-
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
@@ -138,6 +130,14 @@ public class TLActivity extends AppCompatActivity
 			Logger.Show(this, R.string.TimeConstantError);
 			return false;
 		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
+		{
+			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			return false;
+		}
+
 		return true;
 	}
 
@@ -149,26 +149,26 @@ public class TLActivity extends AppCompatActivity
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
 		// Get the transfer function parameters.
-		double pTime = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		double pDead = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
+		double pUltimateGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
+		double pUltimatePeriod = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
+
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pUltimateGain, pUltimatePeriod);
 
 		// Compute the TL Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType : controlTypes)
-			controllerParameters.add(TL.Compute(ProcessType.Closed, controlType, pTime, pDead));
+			controllerParameters.add(TL.Compute(controlType, tf));
 
-		// Set the tuning configuration.
-		TuningConfiguration config = new TuningConfiguration(ProcessType.None,
-				controllerParameters, pTime, pDead);
-		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
-		configuration.add(config);
-
-		// Get the tuning information.
-		Tuning tlTuning = new Tuning("Tyreus and Luyben", "", TuningType.TL, configuration);
+		// Set up the model.
+		String description = getString(R.string.tvTLDesc);
+		TuningModel tlMethod = new TuningModel("Tyreus and Luyben", description,
+				TuningType.ITAE, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(TLActivity.this, ResultActivity.class);
-		resultActivity.putExtra("RESULT", tlTuning);
+		resultActivity.putExtra("CONFIGURATION", tlMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
 		startActivity(resultActivity);
 	}
 }

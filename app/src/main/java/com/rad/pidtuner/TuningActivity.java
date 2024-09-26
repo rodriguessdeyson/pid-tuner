@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.domain.models.tuning.TuningModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rad.pidtuner.database.DataAccess;
 import com.rad.pidtuner.methods.CCActivity;
@@ -27,7 +28,6 @@ import com.rad.pidtuner.methods.TLActivity;
 import com.rad.pidtuner.methods.ZNActivity;
 import com.domain.services.utils.BottomSheetDialog;
 import com.domain.services.utils.BottomSheetDialogType;
-import com.domain.models.tuning.Tuning;
 import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
@@ -48,12 +48,12 @@ public class TuningActivity extends AppCompatActivity
 	/**
 	 * List with all available tuning methods.
 	 */
-	private final ArrayList<Tuning> tunings = new ArrayList<>();
+	private final ArrayList<TuningModel> tuningModels = new ArrayList<>();
 
 	/**
 	 * Object adapter for list view to show tuning methods.
 	 */
-	private ArrayAdapter<Tuning> TuningAdapter;
+	private ArrayAdapter<TuningModel> TuningAdapter;
 
 	/**
 	 * FloatingActionButton to handle the Help event.
@@ -117,7 +117,7 @@ public class TuningActivity extends AppCompatActivity
 	{
 		FBHelp             = findViewById(R.id.FloatingActionButtonHelp);
 		ListView listView  = findViewById(R.id.ListViewTuningMethods);
-		TuningAdapter      = new ArrayAdapter<Tuning>(this, android.R.layout.simple_list_item_1,
+		TuningAdapter      = new ArrayAdapter<TuningModel>(this, android.R.layout.simple_list_item_1,
 				0)
 		{
 			@NonNull @Override
@@ -138,9 +138,9 @@ public class TuningActivity extends AppCompatActivity
 				TextView textViewTuningInfo = row.findViewById(R.id.TextViewTuningInfo);
 
 				// Set text to the correspondent textView.
-				Tuning tMethods = tunings.get(position);
-				textViewTuningType.setText(tMethods.getTuningName());
-				textViewTuningInfo.setText(tMethods.getTuningDescription());
+				TuningModel tMethods = tuningModels.get(position);
+				textViewTuningType.setText(tMethods.getName());
+				textViewTuningInfo.setText(tMethods.getDescription());
 				return row;
 			}
 		};
@@ -166,15 +166,15 @@ public class TuningActivity extends AppCompatActivity
 	 */
 	private void BuildTuningMethodsList()
 	{
-		tunings.add(BuildCHR());
-		tunings.add(BuildCC());
-		tunings.add(BuildIAE());
-		tunings.add(BuildITAE());
-		tunings.add(BuildIMC());
+		tuningModels.add(BuildCHR());
+		tuningModels.add(BuildCC());
+		tuningModels.add(BuildIAE());
+		tuningModels.add(BuildITAE());
+		tuningModels.add(BuildIMC());
 		// TuningMethods.add(BuildRT());
-		tunings.add(BuildTL());
-		tunings.add(BuildZN());
-		TuningAdapter.addAll(tunings);
+		tuningModels.add(BuildTL());
+		tuningModels.add(BuildZN());
+		TuningAdapter.addAll(tuningModels);
 	}
 
 	/**
@@ -183,32 +183,32 @@ public class TuningActivity extends AppCompatActivity
 	private final AdapterView.OnItemClickListener OnTuningListClickListener = (av, v, position, id) ->
 	{
 		// Get the selected device address.
-		Tuning tuning = (Tuning) av.getAdapter().getItem(position);
+		TuningModel tuningModel = (TuningModel) av.getAdapter().getItem(position);
 
-		OnTuningAdRequest(tuning);
+		OnTuningAdRequest(tuningModel);
 	};
 
 	/**
 	 * Method to show an ad when tuning button is clicked.
-	 * @param tuning The selected tuning method.
+	 * @param tuningModel The selected tuning method.
 	 */
-	private void OnTuningAdRequest(Tuning tuning)
+	private void OnTuningAdRequest(TuningModel tuningModel)
 	{
 		TuningDatabase.Update();
-		GoToMethod(tuning);
+		GoToMethod(tuningModel);
 	}
 
 	/**
 	 * Throw the intent to other activity
-	 * @param tuning The tuning method to be shown.
+	 * @param tuningModel The tuning method to be shown.
 	 */
-	private void GoToMethod(Tuning tuning)
+	private void GoToMethod(TuningModel tuningModel)
 	{
 		// Creates an intent object.
 		Intent startTuning;
 
 		// Checks which tuning type is.
-		switch (tuning.getTuningType())
+		switch (tuningModel.getType())
 		{
 			case CC:
 				startTuning = new Intent(TuningActivity.this, CCActivity.class);
@@ -232,7 +232,7 @@ public class TuningActivity extends AppCompatActivity
 				startTuning = new Intent(TuningActivity.this, ZNActivity.class);
 				break;
 			default:
-				throw new InvalidParameterException(tuning.toString());
+				throw new InvalidParameterException(tuningModel.toString());
 		}
 		startActivity(startTuning);
 	}
@@ -243,12 +243,12 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the CC method.
 	 * @return The TuningMethod
 	 */
-	private Tuning BuildCC()
+	private TuningModel BuildCC()
 	{
-		Tuning t = new Tuning();
-		t.setTuningType(TuningType.CC);
-		t.setTuningName(getResources().getString(R.string.tvCohenCoon));
-		t.setTuningDescription(getResources().getString(R.string.tvCohenCoonDesc));
+		TuningModel t = new TuningModel();
+		t.setType(TuningType.CC);
+		t.setName(getResources().getString(R.string.tvCohenCoon));
+		t.setDescription(getResources().getString(R.string.tvCohenCoonDesc));
 		return t;
 	}
 
@@ -256,12 +256,12 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the CHR method.
 	 * @return The TuningMethod
 	 */
-	private Tuning BuildCHR()
+	private TuningModel BuildCHR()
 	{
-		Tuning t = new Tuning();
-		t.setTuningType(TuningType.CHR);
-		t.setTuningName(getResources().getString(R.string.tvCHR));
-		t.setTuningDescription(getResources().getString(R.string.tvCHRDesc));
+		TuningModel t = new TuningModel();
+		t.setType(TuningType.CHR);
+		t.setName(getResources().getString(R.string.tvCHR));
+		t.setDescription(getResources().getString(R.string.tvCHRDesc));
 		return t;
 	}
 
@@ -269,12 +269,12 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the IAE method.
 	 * @return The TuningMethod
 	 */
-	private Tuning BuildIAE()
+	private TuningModel BuildIAE()
 	{
-		Tuning t = new Tuning();
-		t.setTuningType(TuningType.IAE);
-		t.setTuningName(getResources().getString(R.string.tvIAE));
-		t.setTuningDescription(getResources().getString(R.string.tvIAEDesc));
+		TuningModel t = new TuningModel();
+		t.setType(TuningType.IAE);
+		t.setName(getResources().getString(R.string.tvIAE));
+		t.setDescription(getResources().getString(R.string.tvIAEDesc));
 		return t;
 	}
 
@@ -282,12 +282,12 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the IMC method.
 	 * @return The TuningMethod
 	 */
-	private Tuning BuildIMC()
+	private TuningModel BuildIMC()
 	{
-		Tuning t = new Tuning();
-		t.setTuningType(TuningType.IMC);
-		t.setTuningName(getResources().getString(R.string.tvIMC));
-		t.setTuningDescription(getResources().getString(R.string.tvIMCDesc));
+		TuningModel t = new TuningModel();
+		t.setType(TuningType.IMC);
+		t.setName(getResources().getString(R.string.tvIMC));
+		t.setDescription(getResources().getString(R.string.tvIMCDesc));
 		return t;
 	}
 
@@ -295,12 +295,12 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the ITAE method.
 	 * @return The TuningMethod
 	 */
-	private Tuning BuildITAE()
+	private TuningModel BuildITAE()
 	{
-		Tuning t = new Tuning();
-		t.setTuningType(TuningType.ITAE);
-		t.setTuningName(getResources().getString(R.string.tvITAE));
-		t.setTuningDescription(getResources().getString(R.string.tvITAEDesc));
+		TuningModel t = new TuningModel();
+		t.setType(TuningType.ITAE);
+		t.setName(getResources().getString(R.string.tvITAE));
+		t.setDescription(getResources().getString(R.string.tvITAEDesc));
 		return t;
 	}
 
@@ -308,12 +308,12 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the TL method.
 	 * @return The TuningMethod
 	 */
-	private Tuning BuildTL()
+	private TuningModel BuildTL()
 	{
-		Tuning t = new Tuning();
-		t.setTuningType(TuningType.TL);
-		t.setTuningName(getResources().getString(R.string.tvTL));
-		t.setTuningDescription(getResources().getString(R.string.tvTLDesc));
+		TuningModel t = new TuningModel();
+		t.setType(TuningType.TL);
+		t.setName(getResources().getString(R.string.tvTL));
+		t.setDescription(getResources().getString(R.string.tvTLDesc));
 		return t;
 	}
 
@@ -321,12 +321,12 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the ZN method.
 	 * @return The TuningMethod
 	 */
-	private Tuning BuildZN()
+	private TuningModel BuildZN()
 	{
-		Tuning t = new Tuning();
-		t.setTuningType(TuningType.ZN);
-		t.setTuningName(getResources().getString(R.string.tvZN));
-		t.setTuningDescription(getResources().getString(R.string.tvZNDesc));
+		TuningModel t = new TuningModel();
+		t.setType(TuningType.ZN);
+		t.setName(getResources().getString(R.string.tvZN));
+		t.setDescription(getResources().getString(R.string.tvZNDesc));
 		return t;
 	}
 

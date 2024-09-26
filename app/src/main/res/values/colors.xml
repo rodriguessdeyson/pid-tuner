@@ -24,4 +24,6 @@
     <color name="formula">#FF333333</color>
     <color name="colorWhite">#ffffff</color>
 
+    <color name="colorCheckedDisabled">#A0A0A0</color>
+    <color name="colorUncheckedDisabled">#A0A0A0</color>
 </resources>

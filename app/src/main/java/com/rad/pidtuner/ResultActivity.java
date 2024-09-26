@@ -2,12 +2,10 @@ package com.rad.pidtuner;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Looper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -15,14 +13,18 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.types.ControlType;
+import com.domain.models.tuning.types.ProcessType;
 import com.domain.services.chart.ChartService;
 import com.domain.services.katex.Katex;
 import com.domain.services.utils.Parser;
 import com.domain.models.tuning.ControllerParameter;
-import com.domain.models.tuning.Tuning;
+import com.domain.models.tuning.TuningModel;
+import com.domain.services.utils.ViewUtils;
 import com.rad.pidtuner.database.DataAccess;
-import com.domain.models.tuning.TuningConfiguration;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity
@@ -52,12 +54,21 @@ public class ResultActivity extends AppCompatActivity
 	/**
 	 * Tuning method.
 	 */
-	private Tuning Tuning;
+	private TuningModel TuningModel;
+
+	private ArrayList<ControllerParameter> ControllerParameters;
 
 	/**
 	 * LinearLayout where the result will take place.
 	 */
 	private LinearLayout LinearResultContainer;
+
+	//endregion
+
+	//region Constants
+
+	private static final String KATEX_URL = "file:///android_asset/katex_function_layout.html";
+	private static final String CHART_URL = "file:///android_asset/chart_layout.html";
 
 	//endregion
 
@@ -70,16 +81,16 @@ public class ResultActivity extends AppCompatActivity
 		setContentView(R.layout.layout_result);
 
 		// Find the Views references.
-		StartViewContents();
+		startViewContents();
 
 		// Initialize the database settings.
-		ConfigureDatabase();
+		configureDatabase();
 
 		// Retrieve the values passed.
-		RetrieveResults();
+		retrieveResults();
 
 		// Builds the result layout.
-		BuildResult();
+		buildResult();
 
 		getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
 			@Override
@@ -97,7 +108,7 @@ public class ResultActivity extends AppCompatActivity
 	/**
 	 * Configures the database server
 	 */
-	private void ConfigureDatabase()
+	private void configureDatabase()
 	{
 		// Creates the database.
 		TuningDatabase = new DataAccess(this, "Tuner");
@@ -106,7 +117,7 @@ public class ResultActivity extends AppCompatActivity
 	/**
 	 * Starts the control views.
 	 */
-	private void StartViewContents()
+	private void startViewContents()
 	{
 		LinearResultContainer = findViewById(R.id.LinearLayoutResults);
 	}
@@ -114,93 +125,152 @@ public class ResultActivity extends AppCompatActivity
 	/**
 	 * Retrieve the results information.
 	 */
-	private void RetrieveResults()
+	private void retrieveResults()
 	{
 		// Deserialize the result.
-		Tuning = getIntent().getParcelableExtra("RESULT");
+		TuningModel = getIntent().getParcelableExtra("CONFIGURATION");
+		ControllerParameters = getIntent().getParcelableArrayListExtra("RESULT");
 	}
 
-	/**
-	 * Builds the layout for the result.
-	 */
+
 	@SuppressLint("SetJavaScriptEnabled")
-	private void BuildResult()
+	private void buildResult()
 	{
 		Locale currentLocale = getResources().getConfiguration().locale;
 
-		TextView header = findViewById(R.id.TextViewTuningName);
-		header.setText(Tuning.getTuningName());
+		// Set the tuning name.
+		TextView textViewHeader = findViewById(R.id.TextViewTuningName);
+		setTextView(textViewHeader, TuningModel.getName());
 
-		WebView webView = findViewById(R.id.WebViewFirstOrderEquation);
-		webView.getSettings().setJavaScriptEnabled(true);
-		webView.addJavascriptInterface(new Katex(this), "Android");
-		webView.loadUrl("file:///android_asset/katex_layout.html");
-		webView.setWebViewClient(new WebViewClient() {
+		// Set the transfer function model.
+		setUpTransferFunction(currentLocale, TuningModel.getTransferFunction());
+
+		// Set the results
+		for (ControllerParameter controllerParameter : ControllerParameters)
+		{
+			LayoutInflater inflater = getLayoutInflater();
+			View resultView = inflater.inflate(R.layout.layout_result_pid_parameters, null);
+
+			// Set the control title.
+			TextView textViewControlTitle = resultView.findViewById(R.id.TextViewControllerResultType);
+			setTextView(textViewControlTitle, controllerParameter.getTuningAndProcess());
+
+			// Set the controller transfer function.
+			setUpControllerTransferFunction(currentLocale, resultView, controllerParameter);
+
+			// Set the controller transfer function parameters value.
+			TextView textViewPidParameters = resultView.findViewById(R.id.TextViewPIDControllerResultEquationParameters);
+			String formatedString = getString(R.string.tvPIDResultParameters,
+					controllerParameter.getKP(),
+					controllerParameter.getKI(),
+					controllerParameter.getKD());
+			setTextView(textViewPidParameters, formatedString);
+
+			// Set up the step response.
+			switch (controllerParameter.getProcessType())
+			{
+				case None:
+				case Servo:
+				case Servo20:
+				case Regulator:
+				case Regulator20:
+				case LambdaTuning:
+				case Open:
+					setUpStepResponse(currentLocale, resultView, controllerParameter);
+					break;
+				case Closed:
+				case LambdaModelBasedTuning:
+					LinearLayout linearLayoutPidStepResponse = resultView.findViewById(R.id.LinearLayoutPIDStepResponse);
+					// linearLayoutPidStepResponse.setVisibility(View.GONE);
+					ViewUtils.FadeOut(this, linearLayoutPidStepResponse);
+					break;
+			}
+			LinearResultContainer.addView(resultView);
+		}
+
+	}
+
+	private void setTextView(TextView textView, String textToShow)
+	{
+		textView.setText(textToShow);
+	}
+
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setUpTransferFunction(Locale locale, TransferFunction transferFunction)
+	{
+		WebView firstOrderFuncWebView = findViewById(R.id.WebViewFirstOrderEquation);
+		firstOrderFuncWebView.getSettings().setJavaScriptEnabled(true);
+		firstOrderFuncWebView.addJavascriptInterface(new Katex(locale), "Android");
+		firstOrderFuncWebView.loadUrl(KATEX_URL);
+		firstOrderFuncWebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url)
 			{
-				TuningConfiguration configuration = Tuning.getConfiguration().get(0);
-				String gain = Parser.SanitizeDouble(configuration.getGain());
-				String timeConstant = Parser.SanitizeDouble(configuration.getTimeConstant());
-				String transportDelay = Parser.SanitizeDouble(configuration.getTransportDelay());
-				String params = String.format(currentLocale, "updateEquation(Android.getDynamicEquation(" + "%s,%s,%s" + "))", gain, timeConstant, transportDelay);
-				webView.evaluateJavascript(params, null);
+				String gain = Parser.SanitizeDouble(transferFunction.getGain());
+				String timeConstant = Parser.SanitizeDouble(transferFunction.getTimeConstant());
+				if (transferFunction.getIMCModelType() != null)
+				{
+					String secondTimeConstant = Parser.SanitizeDouble(transferFunction.getSecondTimeConstant());
+					String dampingRatio = Parser.SanitizeDouble(transferFunction.getDampingRatio());
+
+					String params = String.format(locale, "updateEquation(Android.getCustomDynamicEquation(" + "%s,%s,%s,%s,%s" + "))", transferFunction.getIMCModelType().ordinal(), gain, timeConstant, secondTimeConstant, dampingRatio);
+					firstOrderFuncWebView.evaluateJavascript(params, null);
+				}
+				else
+				{
+					String transportDelay = Parser.SanitizeDouble(transferFunction.getTransportDelay());
+
+					String params = String.format(locale, "updateEquation(Android.getDynamicEquation(" + "%s,%s,%s" + "))", gain, timeConstant, transportDelay);
+					firstOrderFuncWebView.evaluateJavascript(params, null);
+				}
 			}
 		});
-
-		for (TuningConfiguration configuration : Tuning.getConfiguration())
-		{
-			TextView tuningConfiguration = new TextView(getApplicationContext());
-			tuningConfiguration.setId(configuration.getProcessType().ordinal());
-			tuningConfiguration.setText(String.format("%s", configuration.getProcessType()));
-			tuningConfiguration.setTextSize(18);
-			tuningConfiguration.setGravity(Gravity.CENTER);
-			tuningConfiguration.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
-			LinearResultContainer.addView(tuningConfiguration);
-
-			LayoutInflater inflater = getLayoutInflater();
-			for (ControllerParameter controllerParameter : configuration.getControllerParameters())
-			{
-				@SuppressLint("InflateParams")
-				View resultView = inflater.inflate(R.layout.layout_result_pid_parameters, null);
-				resultView.setId(controllerParameter.getControlType().ordinal());
-				resultView.setPadding(0, 10, 0, 10);
-
-				TextView tvResultFor = resultView.findViewById(R.id.TextViewControllerResult);
-				//TextView tvKP = resultView.findViewById(R.id.TextViewKPR);
-				//TextView tvKI = resultView.findViewById(R.id.TextViewKIR);
-				//TextView tvKD = resultView.findViewById(R.id.TextViewKDR);
-
-				WebView chartWebView = resultView.findViewById(R.id.WebViewPlotly);
-				chartWebView.getSettings().setJavaScriptEnabled(true);
-				chartWebView.addJavascriptInterface(new ChartService(this), "Android");
-				chartWebView.loadUrl("file:///android_asset/chart_layout.html");
-				chartWebView.setWebViewClient(new WebViewClient()
-				{
-					@Override
-					public void onPageFinished(WebView view, String url)
-					{
-						new android.os.Handler(Looper.getMainLooper()).postDelayed(() ->
-						{
-							String jsCode = "updateStep(" + configuration.getGain() + ", " + configuration.getTimeConstant() + ", " + configuration.getTransportDelay() + ", " + controllerParameter.getKP() + ", " + controllerParameter.getKI()+ ", " + controllerParameter.getKD() + ")";
-							chartWebView.evaluateJavascript(jsCode, null);
-						}, 1000);
-					}
-				});
-
-				tvResultFor.setText(String.format("%s", controllerParameter.getControlType().toString()));
-//				tvKP.setText(String.format(currentLocale, "%.3f", controllerParameter.getKP()));
-//				tvKI.setText(String.format(currentLocale, "%.3f", controllerParameter.getKI()));
-//				tvKD.setText(String.format(currentLocale, "%.3f", controllerParameter.getKD()));
-
-				LinearResultContainer.addView(resultView);
-			}
-		}
 	}
 
-	private String buildPlot(TuningConfiguration configuration, ControllerParameter parameter)
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setUpControllerTransferFunction(Locale locale, View resultView,
+												 ControllerParameter controllerParameter)
 	{
-		return "<div id=\"plot\"></div>";
+		WebView pidControllerFuncWebView = resultView.findViewById(R.id.WebViewPIDParallelEquation);
+		pidControllerFuncWebView.getSettings().setJavaScriptEnabled(true);
+		pidControllerFuncWebView.addJavascriptInterface(new Katex(locale), "Android");
+		pidControllerFuncWebView.loadUrl(KATEX_URL);
+		pidControllerFuncWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				String params = String.format(locale, "updateEquation(Android.getPIDEquation(" + "%s" + "))", controllerParameter.getControlType().ordinal());
+				pidControllerFuncWebView.evaluateJavascript(params, null);
+			}
+		});
+	}
+
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setUpStepResponse(Locale locale, View resultView,
+								   ControllerParameter controllerParameter)
+	{
+		WebView stepResponseWebView = resultView.findViewById(R.id.WebViewPlotly);
+		stepResponseWebView.getSettings().setJavaScriptEnabled(true);
+		stepResponseWebView.addJavascriptInterface(new ChartService(locale), "Android");
+		stepResponseWebView.loadUrl(CHART_URL);
+		stepResponseWebView.setWebViewClient(new WebViewClient()
+		{
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				double gain = TuningModel.getTransferFunction().getGain();
+				double timeConstant = TuningModel.getTransferFunction().getTimeConstant();
+				double transportDelay = TuningModel.getTransferFunction().getTransportDelay();
+				double kp = controllerParameter.getKP();
+				double ki = controllerParameter.getKI();
+				double kd = controllerParameter.getKD();
+				new android.os.Handler(Looper.getMainLooper()).postDelayed(() ->
+				{
+					String jsCode = "updateStep(" + gain + ", " + timeConstant + ", " + transportDelay + ", " + kp + ", " + ki+ ", " + kd + ")";
+					stepResponseWebView.evaluateJavascript(jsCode, null);
+				}, 1000);
+			}
+		});
 	}
 
 	//endregion

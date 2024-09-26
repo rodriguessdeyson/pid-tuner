@@ -4,7 +4,7 @@
     <string name="app_name">PID Tuner</string>
     <string name="tvHome">PID<br/>Tuner</string>
     <string name="strWelcome">
-        PID Tuner is your go-to tool for precise and efficient PID controller tuning.\n\nThe app provides intuitive tools for selecting and applying different tuning algorithms based on system characteristics and desired performance.</string>
+        PID Tuner is your go-to tool for precise and efficient PID controller tuningModel.\n\nThe app provides intuitive tools for selecting and applying different tuningModel algorithms based on system characteristics and desired performance.</string>
     <string name="btStart">Start</string>
     <string name="ivPidTunerBackgroundDescription">PID Tuner background image</string>
     <string name="ivPidTunerHelpDescription">PID Tuner help icon. Goes to PID Tuner help page.</string>
@@ -12,85 +12,85 @@
 
     <!--Tuning Information-->
     <string name="tvTuningMethods">Tuning Methods</string>
-    <string name="tvTuningInfo">Select the tuning method to obtain the proportional, integral and derivative parameters</string>
+    <string name="tvTuningInfo">Select the tuningModel method to obtain the proportional, integral and derivative parameters</string>
     <string name="tvHelp">Help</string>
 
     <!--Cohen-Coon (CC) Method-->
     <string name="tvCohenCoon" translatable="false">Cohen-Coon</string>
-    <string name="tvCohenCoonDesc">The Cohen-Coon method is a popular PID tuning technique mainly for first-order systems with time delay. It aims to improve disturbance rejection and has better performance for processes with dead time.</string>
+    <string name="tvCohenCoonDesc">The Cohen-Coon method is a popular PID tuningModel technique mainly for first-order systems with time delay. It aims to improve disturbance rejection and has better performance for processes with dead time.</string>
     <string name="cc_about_title">Cohen-Coon (CC) Tuning Method</string>
     <string name="cc_about_description"><Data><![CDATA[
-        The Cohen-Coon (CC) tuning method is a widely used technique for PID controller tuning, particularly for first-order systems with time delay. It provides formulas to calculate the PID parameters based on the system\'s dynamic response.
+        The Cohen-Coon (CC) tuningModel method is a widely used technique for PID controller tuningModel, particularly for first-order systems with time delay. It provides formulas to calculate the PID parameters based on the system\'s dynamic response.
         <br/><br/>The CC method improves both setpoint tracking and disturbance rejection, making it suitable for systems with significant dead time.
         <br/><br/><b><font color="#CC8D46">Key Characteristics</font></b>
         <br/><br/><b>1. Designed for Dead-Time Systems</b>
-        <br/>The CC method is well-suited for systems with a noticeable time delay (dead time), where other tuning methods may not perform as effectively.
+        <br/>The CC method is well-suited for systems with a noticeable time delay (dead time), where other tuningModel methods may not perform as effectively.
 
         <br/><br/><b>2. Balanced Control</b>
         <br/>It offers a balance between quick response and minimal overshoot, making it a good choice for processes that require moderate to fast response times without excessive oscillations.
 
         <br/><br/><b>3. Setpoint and Disturbance Rejection</b>
-        <br/>Cohen-Coon tuning can be adjusted for optimizing both setpoint changes and disturbance rejection, improving overall system performance in varying conditions.
+        <br/>Cohen-Coon tuningModel can be adjusted for optimizing both setpoint changes and disturbance rejection, improving overall system performance in varying conditions.
 
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>:
         <br/><br/>The method calculates PID parameters (proportional gain, integral time, and derivative time) using a process model that considers the system\'s time constant, process gain, and dead time. The formulas are straightforward and applicable to a wide range of industrial processes.
 ]]> </Data></string>
-    <string name="cc_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#3-cohen-coon-cc">CC Tuning</a>.]]> </Data></string>
+    <string name="cc_about_link"><Data><![CDATA[For more detailed information about the tuningModel method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#3-cohen-coon-cc">CC Tuning</a>.]]> </Data></string>
 
     <!--Chien-Hrones-Reswick (CHR) Method-->
     <string name="tvCHR" translatable="false">Chien-Hrones-Reswick</string>
-    <string name="tvCHRDesc">This method focuses on optimizing the controller for either setpoint tracking or disturbance rejection. It provides specific tuning formulas based on the desired system response, like minimal overshoot or fast response.</string>
+    <string name="tvCHRDesc">This method focuses on optimizing the controller for either setpoint tracking or disturbance rejection. It provides specific tuningModel formulas based on the desired system response, like minimal overshoot or fast response.</string>
     <string name="swIs20UP" translatable="false">20% UP?</string>
     <string name="chr_about_title">Chien-Hrones-Reswick (CHR) Tuning Method</string>
     <string name="chr_about_description"><Data><![CDATA[
-        The Chien-Hrones-Reswick (CHR) tuning method is a technique designed to optimize PID controller parameters for specific system behaviors, focusing on either setpoint tracking or disturbance rejection.
-        <br/><br/>It provides different tuning rules based on the desired control objectives, making it adaptable to various performance requirements.
+        The Chien-Hrones-Reswick (CHR) tuningModel method is a technique designed to optimize PID controller parameters for specific system behaviors, focusing on either setpoint tracking or disturbance rejection.
+        <br/><br/>It provides different tuningModel rules based on the desired control objectives, making it adaptable to various performance requirements.
         <br/><br/><b><font color="#CC8D46">Key Characteristics</font></b>
         <br/><br/><b>1. Setpoint Tracking vs. Disturbance Rejection</b>
-        <br/>The CHR method offers two tuning criteria:
+        <br/>The CHR method offers two tuningModel criteria:
 
            <br/><br/>- Setpoint Tracking: Prioritizes quick system response to changes in the setpoint (target value).
            <br/><br/>- Disturbance Rejection: Focuses on minimizing the effects of disturbances while maintaining stability.
 
         <br/><br/><b>2. Minimal Overshoot and Fast Response</b>
-        <br/>CHR tuning can be adjusted for either minimal overshoot or fast response times, depending on the desired system behavior.
+        <br/>CHR tuningModel can be adjusted for either minimal overshoot or fast response times, depending on the desired system behavior.
 
         <br/><br/><b>3. Suitable for Second-Order Systems</b>
         <br/>This method is particularly effective for systems that can be modeled as second-order, providing a balance between stability and performance.
 
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>:
-        <br/><br/>The CHR method uses formulas to calculate the PID controller gains (proportional, integral, and derivative) based on system dynamics (process gain, time constant, and dead time) and the tuning objective (setpoint or disturbance rejection).
+        <br/><br/>The CHR method uses formulas to calculate the PID controller gains (proportional, integral, and derivative) based on system dynamics (process gain, time constant, and dead time) and the tuningModel objective (setpoint or disturbance rejection).
 ]]> </Data></string>
-    <string name="chr_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#2-chien-hrones-and-reswick-chr">CHR Tuning</a>.]]> </Data></string>
+    <string name="chr_about_link"><Data><![CDATA[For more detailed information about the tuningModel method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#2-chien-hrones-and-reswick-chr">CHR Tuning</a>.]]> </Data></string>
 
     <!--Integral of Absolute Error (IAE) Method-->
     <string name="tvIAE" translatable="false">Integral Absolute Error</string>
     <string name="tvIAEDesc">The IAE method minimizes the absolute error over time. It prioritizes the total error accumulation, leading to smoother control but potentially slower response times.</string>
     <string name="iae_about_title">Integral Absolute Error (IAE) Tuning Method</string>
     <string name="iae_about_description"><Data><![CDATA[
-        The Integral Absolute Error (IAE) tuning method focuses on minimizing the total absolute error over time. It is commonly used in control systems where smooth, long-term performance is prioritized over fast response times.
-        <br/><br/>IAE tuning emphasizes reducing the accumulated error, leading to a more gradual and stable response.
+        The Integral Absolute Error (IAE) tuningModel method focuses on minimizing the total absolute error over time. It is commonly used in control systems where smooth, long-term performance is prioritized over fast response times.
+        <br/><br/>IAE tuningModel emphasizes reducing the accumulated error, leading to a more gradual and stable response.
         <br/><br/><b><font color="#CC8D46">Key Characteristics</font></b>
         <br/><br/><b>1. Error Minimization</b>
-        <br/>IAE tuning seeks to minimize the absolute error between the setpoint and the process variable over time. It integrates the error to give more weight to long-term deviations from the setpoint.
+        <br/>IAE tuningModel seeks to minimize the absolute error between the setpoint and the process variable over time. It integrates the error to give more weight to long-term deviations from the setpoint.
 
         <br/><br/><b>2. Smoother Control</b>
-        <br/>By prioritizing long-term error reduction, IAE tuning results in smoother control actions with less aggressive changes in the control output, making it ideal for processes where overshoot and oscillations need to be avoided.
+        <br/>By prioritizing long-term error reduction, IAE tuningModel results in smoother control actions with less aggressive changes in the control output, making it ideal for processes where overshoot and oscillations need to be avoided.
 
         <br/><br/><b>3. Longer Settling Time</b>
         <br/>Due to the focus on minimizing total error, systems tuned with IAE often exhibit longer settling times, trading off speed for stability and lower overshoot.
 
         <br/><br/><b>4. Robust in Presence of Noise</b>
-        <br/>IAE tuning is robust when dealing with noise in the system, as it avoids abrupt control changes and focuses on long-term error correction.
+        <br/>IAE tuningModel is robust when dealing with noise in the system, as it avoids abrupt control changes and focuses on long-term error correction.
 
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>:
-        <br/><br/>IAE is typically used as a performance criterion for controller tuning, and the PID parameters (proportional, integral, and derivative gains) are adjusted to minimize the integral of the absolute error over time. It is often balanced with other tuning methods to achieve the desired performance in both transient and steady-state conditions.
+        <br/><br/>IAE is typically used as a performance criterion for controller tuningModel, and the PID parameters (proportional, integral, and derivative gains) are adjusted to minimize the integral of the absolute error over time. It is often balanced with other tuningModel methods to achieve the desired performance in both transient and steady-state conditions.
 ]]> </Data></string>
-    <string name="iae_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#5-iae--itae">IAE Tuning</a>.]]> </Data></string>
+    <string name="iae_about_link"><Data><![CDATA[For more detailed information about the tuningModel method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#5-iae--itae">IAE Tuning</a>.]]> </Data></string>
 
     <!--Integral of Absolute Error (IMC) Method-->
     <string name="tvIMC" translatable="false">Internal Model Control</string>
-    <string name="tvIMCDesc">IMC is based on the principle that the controller contains an explicit model of the process. It provides a systematic way of tuning controllers with the ability to handle model uncertainties and process delays.</string>
+    <string name="tvIMCDesc">IMC is based on the principle that the controller contains an explicit model of the process. It provides a systematic way of tuningModel controllers with the ability to handle model uncertainties and process delays.</string>
     <string name="swUseLambda">Lambda Tuning:</string>
     <string name="hintLambda">Lambda (λ)</string>
     <string name="rbLambda" translatable="false">Lambda</string>
@@ -108,71 +108,71 @@
     <string name="tvModelResult5">Model PD Controller</string>
     <string name="imc_about_title">Internal Model Control (IMC) Tuning Method</string>
     <string name="imc_about_description"><Data><![CDATA[
-        The Internal Model Control (IMC) tuning method is a model-based approach to PID tuning, where the controller is designed based on an internal model of the process.
+        The Internal Model Control (IMC) tuningModel method is a model-based approach to PID tuningModel, where the controller is designed based on an internal model of the process.
         <br/><br/>The primary goal of IMC is to provide robust and stable control, even in the presence of process uncertainties and disturbances. It is commonly used in industrial applications due to its simplicity and effectiveness.
         <br/><br/><b><font color="#CC8D46">Key Characteristics</font></b>
         <br/><br/><b>1. Model-Based Approach</b>
         <br/>IMC uses a mathematical model of the process to design the controller, assuming that the better the model matches the actual process, the better the control performance will be.
 
         <br/><br/><b>2. Robust to Process Disturbances and Uncertainties</b>
-        <br/>IMC tuning provides a controller that is more robust against process disturbances and variations in system parameters, making it highly effective for systems with uncertainties or noise.
+        <br/>IMC tuningModel provides a controller that is more robust against process disturbances and variations in system parameters, making it highly effective for systems with uncertainties or noise.
 
         <br/><br/><b>3. Adjustable Performance via Filter</b>
-        <br/>IMC tuning includes a low-pass filter that can be adjusted to trade off between performance (speed of response) and robustness (stability in the face of disturbances). This allows for flexible tuning depending on the desired level of control aggressiveness.
+        <br/>IMC tuningModel includes a low-pass filter that can be adjusted to trade off between performance (speed of response) and robustness (stability in the face of disturbances). This allows for flexible tuningModel depending on the desired level of control aggressiveness.
 
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>
         <br/><br/>The IMC method calculates the PID parameters based on the process model, which typically includes process gain, time constant, and dead time. The filter time constant is selected to control the trade-off between speed and stability. The resulting PID controller tends to be stable and less aggressive, with smoother control actions.
 
         <br/><br/><b><font color="#CC8D46">Lambda (λ)</font></b>
-        <br/><br/>In Internal Model Control (IMC) tuning, the lambda (λ) parameter plays a crucial role in determining the trade-off between system performance and robustness. Lambda is the filter time constant, and it directly affects the tuning of the PID controller.
+        <br/><br/>In Internal Model Control (IMC) tuningModel, the lambda (λ) parameter plays a crucial role in determining the trade-off between system performance and robustness. Lambda is the filter time constant, and it directly affects the tuningModel of the PID controller.
 
-        <br/><br/>In the IMC tuning method, after developing a mathematical model of the process (usually a first-order plus dead time, or higher-order model), the PID parameters are calculated using the process model and the λ value.
+        <br/><br/>In the IMC tuningModel method, after developing a mathematical model of the process (usually a first-order plus dead time, or higher-order model), the PID parameters are calculated using the process model and the λ value.
         <i>The IMC Method in PID Tuner is based on technique proposed by Morari and Zafiriou in \'Robust Process Control\' of PID tunings for first order plus dead time function.</í>
 ]]> </Data></string>
-    <string name="imc_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#4-internal-model-control-imc">IMC Tuning</a>.]]> </Data></string>
+    <string name="imc_about_link"><Data><![CDATA[For more detailed information about the tuningModel method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#4-internal-model-control-imc">IMC Tuning</a>.]]> </Data></string>
 
     <!--Integral Time Absolute Error (ITAE) Method-->
     <string name="tvITAE" translatable="false">Integral Time Absolute Error</string>
     <string name="tvITAEDesc">ITAE minimizes the integral of time-weighted absolute error, focusing on reducing error over longer periods. It generally results in less oscillatory responses compared to other methods.</string>
     <string name="itae_about_title">Integral Time Absolute Error (ITAE) Tuning Method</string>
     <string name="itae_about_description"><Data><![CDATA[
-        The Integral Time Absolute Error (ITAE) tuning method focuses on minimizing the time-weighted absolute error between the process variable and the setpoint. ITAE adds more emphasis on errors that persist over time, resulting in smoother control actions and reduced overshoot and oscillations.
+        The Integral Time Absolute Error (ITAE) tuningModel method focuses on minimizing the time-weighted absolute error between the process variable and the setpoint. ITAE adds more emphasis on errors that persist over time, resulting in smoother control actions and reduced overshoot and oscillations.
         <br/><br/>It\'s particularly useful in systems where long-term performance and stability are more important than short-term speed.
         <br/><br/><b><font color="#CC8D46">Key Characteristics</font></b>
         <br/><br/><b>1. Time-Weighted Error Minimization</b>
         <br/>ITAE gives more importance to errors that occur over longer periods of time, aiming to reduce the overall error in the long run rather than focusing on short-term correction.
 
         <br/><br/><b>2. Reduced Overshoot and Oscillations</b>
-        <br/>The method is known for producing less aggressive control actions, leading to smoother responses with minimal overshoot and reduced oscillations compared to other tuning methods.
+        <br/>The method is known for producing less aggressive control actions, leading to smoother responses with minimal overshoot and reduced oscillations compared to other tuningModel methods.
 
         <br/><br/><b>3. Improved Long-Term Stability</b>
-        <br/>ITAE tuning often results in slower initial response but better long-term stability, making it suitable for processes where avoiding overshoot and ensuring smooth transitions are critical.
+        <br/>ITAE tuningModel often results in slower initial response but better long-term stability, making it suitable for processes where avoiding overshoot and ensuring smooth transitions are critical.
 
         <br/><br/><b>4. Delayed Response for Noise Reduction</b>
         <br/>Because of the time-weighted nature of the error, ITAE tends to delay corrective action slightly, which helps in reducing the impact of noise and short-term disturbances.
 
         <br/><br/><b><font color="#CC8D46">Tuning Parameters</font></b>:
-        <br/><br/>ITAE tuning adjusts PID parameters (proportional, integral, and derivative gains) to minimize the integral of time-weighted absolute error. This results in a slower but more stable system response, ensuring minimal overshoot and smoother corrections over time.
+        <br/><br/>ITAE tuningModel adjusts PID parameters (proportional, integral, and derivative gains) to minimize the integral of time-weighted absolute error. This results in a slower but more stable system response, ensuring minimal overshoot and smoother corrections over time.
 ]]> </Data></string>
-    <string name="itae_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#5-iae--itae">ITAE Tuning</a>.]]> </Data></string>
+    <string name="itae_about_link"><Data><![CDATA[For more detailed information about the tuningModel method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#5-iae--itae">ITAE Tuning</a>.]]> </Data></string>
 
     <!--Tyreus-Luyben (TL) Method-->
     <string name="tvTL" translatable="false">Tyreus-Luyben</string>
     <string name="tvTLMethod">Method</string>
-    <string name="tvTLDesc">This method is similar to Ziegler-Nichols but is better suited for tuning PI and PID controllers in slower, more oscillatory systems. It provides more stable control with less aggressive behavior.</string>
+    <string name="tvTLDesc">This method is similar to Ziegler-Nichols but is better suited for tuningModel PI and PID controllers in slower, more oscillatory systems. It provides more stable control with less aggressive behavior.</string>
     <string name="tl_about_title">Tyreus-Luyben (TL) Tuning Method</string>
     <string name="tl_about_description"><Data><![CDATA[
-        The Tyreus-Luyben (TL) tuning method is a variation of the Ziegler-Nichols method, but it is more conservative, designed to provide better stability and control with less aggressive behavior.
+        The Tyreus-Luyben (TL) tuningModel method is a variation of the Ziegler-Nichols method, but it is more conservative, designed to provide better stability and control with less aggressive behavior.
         <br/><br/>It is commonly used for systems that exhibit oscillatory behavior, particularly for processes where maintaining stability and reducing oscillations are more critical than fast responses.
         <br/><br/><b><font color="#CC8D46">Key Characteristics</font></b>
         <br/><br/><b>1. Oscillatory Systems</b>
-        <br/>TL tuning is especially useful for controlling systems that tend to oscillate, as it is designed to reduce the risk of overshoot and minimize oscillations while still maintaining adequate performance.
+        <br/>TL tuningModel is especially useful for controlling systems that tend to oscillate, as it is designed to reduce the risk of overshoot and minimize oscillations while still maintaining adequate performance.
 
         <br/><br/><b>2. Conservative Tuning</b>
-        <br/>Compared to other tuning methods like Ziegler-Nichols, TL tuning produces more conservative PID settings, resulting in smoother, more stable control. It prioritizes stability and avoids aggressive tuning that could lead to instability.
+        <br/>Compared to other tuningModel methods like Ziegler-Nichols, TL tuningModel produces more conservative PID settings, resulting in smoother, more stable control. It prioritizes stability and avoids aggressive tuningModel that could lead to instability.
 
         <br/><br/><b>3. Primarily for PI and PID Controllers</b>
-        <br/>The method provides specific guidelines for tuning both Proportional-Integral (PI) and Proportional-Integral-Derivative (PID) controllers, with different sets of parameters depending on whether derivative control is used.
+        <br/>The method provides specific guidelines for tuningModel both Proportional-Integral (PI) and Proportional-Integral-Derivative (PID) controllers, with different sets of parameters depending on whether derivative control is used.
 
         <br/><br/><b>4. Step-by-Step Procedure</b>
         <br/>Similar to Ziegler-Nichols, the TL method requires the system to be brought to the ultimate gain and period through trial and error, and then the controller parameters are calculated based on those values.
@@ -182,22 +182,22 @@
 
         <br/><br/><b>2. Use the PI and PID formulas to calculate the parameters.</b>
 ]]> </Data></string>
-    <string name="tl_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#6-tyreus-luyben-tl">TL Tuning</a>.]]> </Data></string>
+    <string name="tl_about_link"><Data><![CDATA[For more detailed information about the tuningModel method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#6-tyreus-luyben-tl">TL Tuning</a>.]]> </Data></string>
 
     <!--Ziegler & Nichols (TL) Method-->
     <string name="tvZN" translatable="false">Ziegler-Nichols</string>
     <string name="tvZNMethod">Method</string>
-    <string name="tvZNDesc">One of the earliest tuning methods, Ziegler-Nichols uses experimental testing to set PID parameters. It aims for an aggressive, fast response but often results in overshoot and oscillations.</string>
+    <string name="tvZNDesc">One of the earliest tuningModel methods, Ziegler-Nichols uses experimental testing to set PID parameters. It aims for an aggressive, fast response but often results in overshoot and oscillations.</string>
     <string name="zn_about_title">Ziegler-Nichols (ZN) Tuning Method</string>
     <string name="zn_about_description"><Data><![CDATA[
-        The Ziegler-Nichols (ZN) tuning method is one of the most widely used techniques for tuning PID controllers. It is designed to provide initial settings for the proportional, integral, and derivative gains of a controller. There are two primary Ziegler-Nichols methods: open-loop and closed-loop.
-        <br/><br/>These methods aim to achieve a compromise between fast response and minimal oscillation, but the resulting controller may require further fine-tuning for specific applications.
+        The Ziegler-Nichols (ZN) tuningModel method is one of the most widely used techniques for tuningModel PID controllers. It is designed to provide initial settings for the proportional, integral, and derivative gains of a controller. There are two primary Ziegler-Nichols methods: open-loop and closed-loop.
+        <br/><br/>These methods aim to achieve a compromise between fast response and minimal oscillation, but the resulting controller may require further fine-tuningModel for specific applications.
         <br/><br/><b><font color="#CC8D46">Key Characteristics</font></b>
         <br/><br/><b>1. Aggressive Tuning</b>
-        <br/>Ziegler-Nichols tends to produce more aggressive tuning, which can lead to fast response but may cause overshoot and oscillations.
+        <br/>Ziegler-Nichols tends to produce more aggressive tuningModel, which can lead to fast response but may cause overshoot and oscillations.
 
         <br/><br/><b>2. Good Starting Point</b>
-        <br/>This method provides a good initial guess for PID parameters, but often requires additional fine-tuning to optimize for specific processes.
+        <br/>This method provides a good initial guess for PID parameters, but often requires additional fine-tuningModel to optimize for specific processes.
 
         <br/><br/><b>3. Widely Used</b>
         <br/>The Ziegler-Nichols method is simple and widely applicable, making it a popular choice for many industrial processes
@@ -209,11 +209,13 @@
         <br/><br/><b>2. Ziegler-Nichols Closed-Loop Tuning (Ultimate Gain Method)</b>
         <br/>This method requires the system to be placed in closed-loop mode, and the proportional gain (Kp) is increased until the system oscillates with a constant amplitude. The ultimate gain (Ku) and ultimate period (Pu) are then used to calculate the PID parameters.
 ]]> </Data></string>
-    <string name="zn_about_link"><Data><![CDATA[For more detailed information about the tuning method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#1-ziegler-nichols-zn">ZN Tuning</a>.]]> </Data></string>
+    <string name="zn_about_link"><Data><![CDATA[For more detailed information about the tuningModel method, visit <a href="https://github.com/rodriguessdeyson/pid-tuner?tab=readme-ov-file#1-ziegler-nichols-zn">ZN Tuning</a>.]]> </Data></string>
 
     <!--Process Result-->
     <string name="tvProcessResults">Results</string>
     <string name="tvConfiguredResult">The controller parameters were computed for the following configuration: </string>
+    <string name="tvPIDParallelFunction">The parallel PID equation is defined as follows:</string>
+    <string name="tvPIDResultParameters">Where Kp = %1$.2f; Ki = %2$.2f; Kd = %3$.2f.</string>
 
     <!--Validation Messages-->
     <string name="ProcessTypeIsRequired">At least one process type is required</string>
@@ -261,8 +263,8 @@
 
     <!--Help Strings --><string name="tvHelpIntroduction"><Data><![CDATA[
         <b>Welcome to PID Tuner</b>
-        <br/><br/>PID Tuner is your go-to tool for precise and efficient PID controller tuning. It brings together the most widely-used methods to calculate your controller parameters (Proportional, Integral, and Derivative) based on your process characteristics (Gain, Time Constant, and Dead Time).
-        <br/><br/>With PID Tuner, you have access to the following tuning methods:<br/>
+        <br/><br/>PID Tuner is your go-to tool for precise and efficient PID controller tuningModel. It brings together the most widely-used methods to calculate your controller parameters (Proportional, Integral, and Derivative) based on your process characteristics (Gain, Time Constant, and Dead Time).
+        <br/><br/>With PID Tuner, you have access to the following tuningModel methods:<br/>
         <ul>
             <li><b><font color="#CC8D46"> Chien-Hrones-Reswick (CHR)</font></b></li>
             <li><b><font color="#CC8D46"> Cohen-Coon (CC)</font></b></li>
@@ -288,7 +290,8 @@
 ]]> </Data></string>
 
     <string name="tvHelpMoreInformation"><Data><![CDATA[
-        For more detailed information about the app and tuning methods, visit <a href="https://github.com/rodriguessdeyson/pid-tuner/blob/main/README.md#pid-tuner">PID Tuner</a>.
+        For more detailed information about the app and tuningModel methods, visit <a href="https://github.com/rodriguessdeyson/pid-tuner/blob/main/README.md#pid-tuner">PID Tuner</a>.
 ]]> </Data></string>
+    <string name="tvStepResponse">Step response</string>
 
 </resources>

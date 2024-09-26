@@ -10,11 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - This CHANGELOG based on Keep a Changelog.
-- Z&N tuning method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
-- CHR tuning method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
-- CC tuning method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
-- IMC tuning method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
-- IAE/ITAE tuning method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
-- Tyreus-Luyben tuning method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
+- Z&N tuningModel method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
+- CHR tuningModel method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
+- CC tuningModel method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
+- IMC tuningModel method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
+- IAE/ITAE tuningModel method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
+- Tyreus-Luyben tuningModel method by [@rodriguessdeyson](https://github.com/rodriguessdeyson).
 
 [1.0.0]: https://github.com/rodriguessdeyson/pid-tuner/compare/main...pid-tuner-v1

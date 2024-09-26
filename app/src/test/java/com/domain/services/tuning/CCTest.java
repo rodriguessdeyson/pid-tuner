@@ -1,7 +1,10 @@
 package com.domain.services.tuning;
 
+import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.types.ProcessType;
+import com.domain.models.tuning.types.TuningType;
 
 import org.junit.Test;
 
@@ -9,18 +12,25 @@ import static org.junit.Assert.*;
 
 public class CCTest
 {
-	private final double Gain           = 0.5;
-	private final double TimeConstant   = 5.0;
-	private final double TransportDelay = 1.0;
+	private final TransferFunction TF;
+
+	public CCTest()
+	{
+		double gain = 0.5;
+		double timeConstant = 5.0;
+		double transportDelay = 1.0;
+		TF = new TransferFunction(gain, timeConstant, transportDelay);
+	}
 
 	@Test
 	public void computeP()
 	{
 		// Expected values.
-		ControllerParameter expectedParameters = new ControllerParameter(ControlType.P, 11, 0, 0);
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
+				ProcessType.None, ControlType.P, 11, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CC.Compute(ControlType.P, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = CC.Compute(ControlType.P, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
@@ -31,9 +41,12 @@ public class CCTest
 	@Test
 	public void computePD()
 	{
-		// Desired values.
-		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PD, 12.72, 0, 0.25);
-		ControllerParameter sut = CC.Compute(ControlType.PD, Gain, TimeConstant, TransportDelay);
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
+				ProcessType.None, ControlType.PD, 12.72, 0, 0.25);
+
+		// Calculated values.
+		ControllerParameter sut = CC.Compute(ControlType.PD, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
@@ -44,9 +57,12 @@ public class CCTest
 	@Test
 	public void computePI()
 	{
-		// Desired values.
-		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PI, 9.1, 0.66, 0);
-		ControllerParameter sut = CC.Compute(ControlType.PI, Gain, TimeConstant, TransportDelay);
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
+				ProcessType.None, ControlType.PI, 9.1, 0.66, 0);
+
+		// Calculated values.
+		ControllerParameter sut = CC.Compute(ControlType.PI, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.1);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.1);
@@ -57,9 +73,12 @@ public class CCTest
 	@Test
 	public void computePID()
 	{
-		// Desired values.
-		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PID, 14, 2.32, 0.36);
-		ControllerParameter sut = CC.Compute(ControlType.PID, Gain, TimeConstant, TransportDelay);
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
+				ProcessType.None, ControlType.PID, 14, 2.32, 0.36);
+
+		// Calculated values.
+		ControllerParameter sut = CC.Compute(ControlType.PID, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);

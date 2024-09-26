@@ -1,7 +1,10 @@
 package com.domain.services.tuning;
 
+import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.types.ProcessType;
+import com.domain.models.tuning.types.TuningType;
 
 import org.junit.Test;
 
@@ -11,33 +14,32 @@ import java.security.InvalidParameterException;
 
 public class IMCTest
 {
-	private final double Gain           = 0.5;
-	private final double TimeConstant   = 5.0;
-	private final double TransportDelay = 1.0;
-	private final double LambdaFactor   = 4;
+	private final TransferFunction TF;
+	public IMCTest()
+	{
+		double gain           = 0.5;
+		double timeConstant   = 5.0;
+		double transportDelay = 1.0;
+		double lambdaFactor   = 4;
+		TF = new TransferFunction(gain, timeConstant, transportDelay, lambdaFactor);
+	}
 
 	@Test(expected = InvalidParameterException.class)
 	public void when_ComputePIsRequested_Expect_InvalidParameterException()
 	{
 		// Calculated values.
-		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.P, LambdaFactor, Gain, TimeConstant, TransportDelay);
-	}
-
-	@Test(expected = InvalidParameterException.class)
-	public void when_ProcessIsNotLambdaTurning_Expect_InvalidParameterException()
-	{
-		// Calculated values.
-		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.P, LambdaFactor, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.P, TF);
 	}
 
 	@Test
 	public void computePI()
 	{
 		// Expected values.
-		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PI, 2.75, 5.5, 0);
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.IMC,
+				ProcessType.LambdaTuning, ControlType.PI, 2.75, 5.5, 0);
 
 		// Calculated values.
-		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.PI, LambdaFactor, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -48,10 +50,11 @@ public class IMCTest
 	public void computePID()
 	{
 		// Expected values.
-		ControllerParameter expectedParameters = new ControllerParameter(ControlType.PID, 2.44, 5.5, 0.45);
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.IMC,
+				ProcessType.LambdaTuning, ControlType.PID, 2.44, 5.5, 0.45);
 
 		// Calculated values.
-		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.PID, LambdaFactor, Gain, TimeConstant, TransportDelay);
+		ControllerParameter sut = IMC.ComputeLambdaTuning(ControlType.PID, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

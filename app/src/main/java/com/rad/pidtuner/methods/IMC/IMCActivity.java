@@ -1,13 +1,9 @@
 package com.rad.pidtuner.methods.IMC;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -16,28 +12,27 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.domain.services.tuning.interfaces.imc.ImageSelectedListener;
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
+import com.domain.models.tuning.types.IMCModelBasedType;
+import com.domain.services.tuning.interfaces.imc.IMCModelListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.domain.services.utils.BottomSheetDialog;
 import com.domain.services.tuning.IMC;
-import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
-import com.domain.models.tuning.Tuning;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
 import com.domain.services.utils.Logger;
 import com.domain.services.utils.Parser;
 import com.domain.services.utils.ViewUtils;
-import com.domain.models.tuning.TuningConfiguration;
 import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class IMCActivity extends AppCompatActivity implements ImageSelectedListener
+public class IMCActivity extends AppCompatActivity implements IMCModelListener
 {
 	//region Attributes
 
@@ -96,11 +91,10 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 	 */
 	private SwitchMaterial SwitchUseFirstOrderDynamic;
 
-
 	/**
 	 * Reference of the selected transfer model.
 	 */
-	private IMC.TransferFunctionModel ModelSelected = null;
+	private IMCModelBasedType IMCModelType = null;
 
 	/**
 	 * Layout for hint gain.
@@ -124,6 +118,8 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 
 	//endregion
 
+	//region Callbacks
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -138,23 +134,28 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 	}
 
 	@Override
-	public void onImageSelected(String imageTag)
+	public void onModelSelected(String imageTag)
 	{
 		switch (imageTag)
 		{
 			case "P":
+				IMCModelType = IMCModelBasedType.P;
 				ConfigureIMCPModel();
 				break;
 			case "PD":
+				IMCModelType = IMCModelBasedType.PD;
 				ConfigureIMCPDModel();
 				break;
 			case "PI":
+				IMCModelType = IMCModelBasedType.PI;
 				ConfigureIMCPIModel();
 				break;
 			case "PID1":
+				IMCModelType = IMCModelBasedType.PID1;
 				ConfigureIMCPID1Model();
 				break;
 			case "PID2":
+				IMCModelType = IMCModelBasedType.PID2;
 				ConfigureIMCPID2Model();
 				break;
 			default:
@@ -173,10 +174,13 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		ConfigureIMCFirstOrderModel();
 	}
 
+	//endregion
+
+	//region Private Methods
+
 	/**
 	 Initialize the control views.
 	 */
-	@SuppressLint("SetTextI18n")
 	private void InitializeViews()
 	{
 		ComputeButton                   = findViewById(R.id.ButtonComputePID);
@@ -206,6 +210,11 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		{
 			if (!isChecked) ShowBottomSheet();
 			else ConfigureIMCFirstOrderModel();
+
+			EditTextProcessGain.setText("");
+			EditTextProcessTimeConstant.setText("");
+			EditTextProcessTransportDelay.setText("");
+			EditTextLambdaTuning.setText("");
 		});
 
 		// Handle the image model click.
@@ -239,6 +248,9 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		});
 	}
 
+	/**
+	 * Show the bottom sheet dialog.
+	 */
 	private void ShowBottomSheet()
 	{
 		BottomSheetDialogIMCModel bottomSheet = new BottomSheetDialogIMCModel();
@@ -246,8 +258,29 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		bottomSheet.show(getSupportFragmentManager(), "ImageSelectionBottomSheet");
 	}
 
+	/**
+	 * Validates the process parameters.
+	 * @return True if valid, false otherwise.
+	 */
 	private boolean ValidateProcessParameters()
 	{
+		// If the dynamic is first order, compute this validation.
+		if (SwitchUseFirstOrderDynamic.isChecked())
+			return ValidateFirstOrderDynamic();
+
+		switch (IMCModelType)
+		{
+			case P:
+				return ValidatePModel();
+			case PI:
+			case PD:
+				return ValidatePIAndPIDModel();
+			case PID1:
+				return ValidatePIDModel1();
+			case PID2:
+				return ValidatePIDModel2();
+		}
+
 		// Validate the lambda value.
 		if (EditTextLambdaTuning.getText().toString().isEmpty())
 		{
@@ -256,27 +289,13 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 			return false;
 		}
 
-		// If the dynamic is first order, compute this validation.
-		if (SwitchUseFirstOrderDynamic.isChecked())
-		{
-			return ValidateFirstOrderDynamic();
-		}
-
-		switch (ModelSelected)
-		{
-			case P_Controller_Model:
-				return ValidatePModel();
-			case PI_Controller_Model:
-			case PD_Controller_Model:
-				return ValidatePIAndPIDModel();
-			case PID_Controller_Model1:
-				return ValidatePIDModel1();
-			case PID_Controller_Model2:
-				return ValidatePIDModel2();
-		}
 		return true;
 	}
 
+	/**
+	 * Validates the first order dynamic parameters.
+	 * @return True if valid, false otherwise.
+	 */
 	private boolean ValidateFirstOrderDynamic()
 	{
 		// Validates if at least one controller type is checked.
@@ -312,6 +331,10 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		return true;
 	}
 
+	/**
+	 * Validates the P model parameters.
+	 * @return True if valid, false otherwise.
+	 */
 	private boolean ValidatePModel()
 	{
 		// Validates if the process data are filled.
@@ -324,6 +347,10 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		return true;
 	}
 
+	/**
+	 * Validates the PI and PID model parameters.
+	 * @return True if valid, false otherwise.
+	 */
 	private boolean ValidatePIAndPIDModel()
 	{
 		// Validates if the process data are filled.
@@ -344,6 +371,10 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		return true;
 	}
 
+	/**
+	 * Validates the PID model 1 parameters.
+	 * @return True if valid, false otherwise.
+	 */
 	private boolean ValidatePIDModel1()
 	{
 		// Validates if the process data are filled.
@@ -372,6 +403,10 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		return true;
 	}
 
+	/**
+	 * Validates the PID model 2 parameters.
+	 * @return True if valid, false otherwise.
+	 */
 	private boolean ValidatePIDModel2()
 	{
 		// Validates if the process data are filled.
@@ -400,47 +435,35 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		return true;
 	}
 
-	private void ComputeController()
-	{
-		// Get the transfer function parameters.
-		double gain             = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		double timeConstant     = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		double dynamicParameter = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
-		double lambda           = Parser.GetDouble(EditTextLambdaTuning.getText().toString());
-
-		Tuning imcMethod = SwitchUseFirstOrderDynamic.isChecked() ?
-			FirstOrderModelTuning(gain, timeConstant, dynamicParameter, lambda) :
-			ModelBasedTuning(gain, timeConstant, dynamicParameter, lambda);
-
-		// Pass through intent to the next activity the results information.
-		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
-		resultActivity.putExtra("RESULT", imcMethod);
-		startActivity(resultActivity);
-	}
-
+	/**
+	 * Configures the UI for IMC P model.
+	 */
 	private void ConfigureIMCPModel()
 	{
-		ModelSelected = IMC.TransferFunctionModel.P_Controller_Model;
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model4, null));
-		CheckBoxP.setChecked(true);
-		CheckBoxPD.setChecked(false);
-		CheckBoxPI.setChecked(false);
-		CheckBoxPI.setClickable(false);
-		CheckBoxPID.setChecked(false);
-		CheckBoxPID.setClickable(false);
+
+		// Set up checkboxes.
+		pCheckbox(true, true);
+		pdCheckbox(false, false);
+		piCheckbox(false, false, false);
+		pidCheckbox(false, false, false);
+
 		ViewUtils.FadeOut(getApplicationContext(), EditTextProcessTimeConstant, EditTextProcessTransportDelay);
 	}
 
+	/**
+	 * Configures the UI for IMC PD model.
+	 */
 	private void ConfigureIMCPDModel()
 	{
-		ModelSelected = IMC.TransferFunctionModel.PD_Controller_Model;
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model5, null));
-		CheckBoxP.setChecked(false);
-		CheckBoxPD.setChecked(true);
-		CheckBoxPI.setChecked(false);
-		CheckBoxPI.setClickable(false);
-		CheckBoxPID.setChecked(false);
-		CheckBoxPID.setClickable(false);
+
+		// Set up checkboxes.
+		pCheckbox(false, false);
+		pdCheckbox(true, true);
+		piCheckbox(false, false, false);
+		pidCheckbox(false, false, false);
+
 		ViewUtils.FadeOut(getApplicationContext(), EditTextProcessTimeConstant, EditTextProcessTransportDelay);
 
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
@@ -450,17 +473,19 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		ViewUtils.FadeOut(getApplicationContext(), EditTextProcessTransportDelay);
 	}
 
+	/**
+	 * Configures the UI for IMC PI model.
+	 */
 	private void ConfigureIMCPIModel()
 	{
 		// Notify the model selected.
-		ModelSelected = IMC.TransferFunctionModel.PI_Controller_Model;
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model1, null));
-		CheckBoxP.setChecked(false);
-		CheckBoxPD.setChecked(false);
-		CheckBoxPI.setChecked(true);
-		CheckBoxPI.setClickable(false);
-		CheckBoxPID.setChecked(false);
-		CheckBoxPID.setClickable(false);
+
+		// Set up checkboxes.
+		pCheckbox(false, false);
+		pdCheckbox(false, false);
+		piCheckbox(true, false, true);
+		pidCheckbox(false, false, false);
 
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
 		LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
@@ -468,17 +493,19 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		ViewUtils.FadeOut(getApplicationContext(),EditTextProcessTransportDelay);
 	}
 
+	/**
+	 * Configures the UI for IMC PID model.
+	 */
 	private void ConfigureIMCPID1Model()
 	{
 		// Notify the model selected.
-		ModelSelected = IMC.TransferFunctionModel.PID_Controller_Model1;
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model2, null));
-		CheckBoxP.setChecked(false);
-		CheckBoxPD.setChecked(false);
-		CheckBoxPI.setChecked(false);
-		CheckBoxPI.setClickable(false);
-		CheckBoxPID.setChecked(true);
-		CheckBoxPID.setClickable(false);
+
+		// Set up checkboxes.
+		pCheckbox(false, false);
+		pdCheckbox(false, false);
+		piCheckbox(false, false, false);
+		pidCheckbox(true, false, true);
 
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
 		LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
@@ -486,17 +513,19 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		ViewUtils.FadeIn(getApplicationContext(), EditTextProcessGain, EditTextProcessTimeConstant, EditTextProcessTransportDelay);
 	}
 
+	/**
+	 * Configures the UI for IMC PID model.
+	 */
 	private void ConfigureIMCPID2Model()
 	{
 		// Notify the model selected.
-		ModelSelected = IMC.TransferFunctionModel.PID_Controller_Model2;
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model3, null));
-		CheckBoxP.setChecked(false);
-		CheckBoxPD.setChecked(false);
-		CheckBoxPI.setChecked(false);
-		CheckBoxPI.setClickable(false);
-		CheckBoxPID.setChecked(true);
-		CheckBoxPID.setClickable(false);
+
+		// Set up checkboxes.
+		pCheckbox(false, false);
+		pdCheckbox(false, false);
+		piCheckbox(false, false, false);
+		pidCheckbox(true, false, true);
 
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
 		LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
@@ -504,17 +533,19 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 		ViewUtils.FadeIn(getApplicationContext(), EditTextProcessGain, EditTextProcessTimeConstant, EditTextProcessTransportDelay);
 	}
 
+	/**
+	 * Configures the UI for IMC first order model.
+	 */
 	private void ConfigureIMCFirstOrderModel()
 	{
 		// Notify the model selected.
-		ModelSelected = null;
 		SwitchUseFirstOrderDynamic.setChecked(true);
-		CheckBoxP.setChecked(false);
-		CheckBoxPD.setChecked(false);
-		CheckBoxPI.setChecked(false);
-		CheckBoxPI.setClickable(true);
-		CheckBoxPID.setChecked(false);
-		CheckBoxPID.setClickable(true);
+
+		// Set up checkboxes.
+		pCheckbox(false, false);
+		pdCheckbox(false, false);
+		piCheckbox(true, true, false);
+		pidCheckbox(true, true, false);
 
 		// Get the background (the border) of the ImageView
 		GradientDrawable borderDrawable = (GradientDrawable) ImageViewSelectedModel.getBackground();
@@ -529,15 +560,40 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 	}
 
 	/**
+	 * Compute the controller.
+	 */
+	private void ComputeController()
+	{
+		Editable processGain = EditTextProcessGain.getText();
+		Editable processTimeConstant = EditTextProcessTimeConstant.getText();
+		Editable processTransportDelay = EditTextProcessTransportDelay.getText();
+		Editable lambdaTuning = EditTextLambdaTuning.getText();
+
+		// Get the transfer function parameters.
+		double gain = Parser
+			.GetDouble(processGain.length() > 0 ? processGain.toString() : "0");
+		double timeConstant = Parser
+			.GetDouble(processTimeConstant.length() > 0 ? processTimeConstant.toString() : "0");
+		double dynamicParameter = Parser
+			.GetDouble(processTransportDelay.length() > 0 ? processTransportDelay.toString() : "0");
+		double lambda = Parser
+			.GetDouble(lambdaTuning.length() > 0 ? lambdaTuning.toString() : "0");
+
+		if (SwitchUseFirstOrderDynamic.isChecked())
+			FirstOrderModelTuning(gain, timeConstant, dynamicParameter, lambda);
+		else
+			ModelBasedTuning(gain, timeConstant, dynamicParameter, lambda);
+	}
+
+	/**
 	 * Generates the IMC first order model tuning.
 	 * @param gain Gain.
 	 * @param timeConstant Time constant.
 	 * @param transportDelay Transport delay.
 	 * @param lambda Lambda.
-	 * @return Tuning configuration.
 	 */
-	private Tuning FirstOrderModelTuning(double gain, double timeConstant, double transportDelay,
-										 double lambda)
+	private void FirstOrderModelTuning(double gain, double timeConstant, double transportDelay,
+									   double lambda)
 	{
 		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
@@ -547,20 +603,24 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 			if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 		}
 
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(gain, timeConstant, transportDelay, lambda);
+
 		// Compute the IMC Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType : controlTypes)
-			controllerParameters.add(IMC.ComputeLambdaTuning(controlType, gain, timeConstant,
-					transportDelay, lambda));
+			controllerParameters.add(IMC.ComputeLambdaTuning(controlType, tf));
 
-		// Set the tuning configuration.
-		TuningConfiguration config = new TuningConfiguration(ProcessType.LambdaTuning,
-				controllerParameters, gain, timeConstant, transportDelay);
-		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
-		configuration.add(config);
+		// Set up the model.
+		String description = getString(R.string.tvIMCDesc);
+		TuningModel imcMethod = new TuningModel("Internal Model Control", description,
+				TuningType.IMC, tf);
 
-		// Get the tuning information.
-		return new Tuning("Internal Model Control", "", TuningType.IMC, configuration);
+		// Pass through intent to the next activity the results information.
+		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
+		resultActivity.putExtra("CONFIGURATION", imcMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
+		startActivity(resultActivity);
 	}
 
 	/**
@@ -569,29 +629,81 @@ public class IMCActivity extends AppCompatActivity implements ImageSelectedListe
 	 * @param timeConstant Time constant.
 	 * @param dynamicParameter dynamic parameter (Second time constant or Dumping ratio)
 	 * @param lambda Lambda.
-	 * @return Tuning configuration.
 	 */
-	private Tuning ModelBasedTuning(double gain, double timeConstant, double dynamicParameter,
-									double lambda)
+	private void ModelBasedTuning(double gain, double timeConstant, double dynamicParameter,
+								  double lambda)
 	{
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(IMCModelType, gain, timeConstant,
+				dynamicParameter, lambda);
+
 		// Compute the IMC Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
-			controllerParameters.add(IMC.ComputeLambdaTuning(ModelSelected,
-					gain,
-					timeConstant,
-					dynamicParameter,
-					dynamicParameter,
-					lambda));
+			controllerParameters.add(IMC.ComputeLambdaTuning(tf));
 
-		// Set the tuning configuration.
-		TuningConfiguration config = new TuningConfiguration(ProcessType.LambdaTuning,
-				controllerParameters, gain, timeConstant, lambda, dynamicParameter);
-		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
-		configuration.add(config);
+		// Set up the model.
+		String description = getString(R.string.tvIMCDesc);
+		TuningModel imcMethod = new TuningModel("Internal Model Control",
+				description, TuningType.IMC, tf);
 
-		// Get the tuning information.
-		return new Tuning("Internal Model Control", "", TuningType.IMC, configuration);
+		// Pass through intent to the next activity the results information.
+		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
+		resultActivity.putExtra("CONFIGURATION", imcMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
+		startActivity(resultActivity);
 	}
 
+
+	/**
+	 * Set up the p checkbox states.
+	 * @param enabled Enabled state.
+	 * @param checked Checked state.
+	 */
+	private void pCheckbox(boolean enabled, boolean checked)
+	{
+		CheckBoxP.setEnabled(enabled);
+		CheckBoxP.setChecked(checked);
+		CheckBoxP.setClickable(false);
+	}
+
+	/**
+	 * Set up the pd checkbox states.
+	 * @param enabled Enabled state.
+	 * @param checked Checked state.
+	 */
+	private void pdCheckbox(boolean enabled, boolean checked)
+	{
+		CheckBoxPD.setEnabled(enabled);
+		CheckBoxPD.setChecked(checked);
+		CheckBoxPD.setClickable(false);
+	}
+
+	/**
+	 * Set up the pi checkbox states.
+	 * @param enabled Enabled state.
+	 * @param clickable Clickable state.
+	 * @param checked Checked state.
+	 */
+	private void piCheckbox(boolean enabled, boolean clickable, boolean checked)
+	{
+		CheckBoxPI.setEnabled(enabled);
+		CheckBoxPI.setChecked(checked);
+		CheckBoxPI.setClickable(clickable);
+	}
+
+	/**
+	 * Set up the pid checkbox states.
+	 * @param enabled Enabled state.
+	 * @param clickable Clickable state.
+	 * @param checked Checked state.
+	 */
+	private void pidCheckbox(boolean enabled, boolean clickable, boolean checked)
+	{
+		CheckBoxPID.setEnabled(enabled);
+		CheckBoxPID.setChecked(checked);
+		CheckBoxPID.setClickable(clickable);
+	}
+
+	//endregion
 }
 

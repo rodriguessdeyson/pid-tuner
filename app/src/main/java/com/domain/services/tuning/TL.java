@@ -2,22 +2,24 @@ package com.domain.services.tuning;
 
 import androidx.annotation.NonNull;
 
+import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 
 public class TL
 {
-	public static ControllerParameter Compute(ProcessType loopType, ControlType controlType,
-                                              double kuGain, double uPeriod)
+	public static ControllerParameter Compute(@NonNull ControlType controlType,
+											  @NonNull TransferFunction transferFunction)
 	{
-		if (loopType != ProcessType.Closed)
-			throw new InvalidParameterException(loopType.toString());
-
 		if (controlType == ControlType.P)
 			throw new InvalidParameterException(controlType.toString());
+
+		double kuGain = transferFunction.getUltimateGain();
+		double uPeriod = transferFunction.getUltimatePeriod();
 
 		switch (controlType)
 		{
@@ -37,7 +39,8 @@ public class TL
 		double ki = 2.2 * uPeriod;
 		double kd = 0;
 
-		return new ControllerParameter(ControlType.PI, kp, ki, kd);
+		return new ControllerParameter(TuningType.TL, ProcessType.Closed, ControlType.PI,
+				kp, ki, kd);
 	}
 
 	private static ControllerParameter PIDController(double kuGain, double uPeriod)
@@ -46,6 +49,7 @@ public class TL
 		double ki = 2.2 * uPeriod;
 		double kd = uPeriod / 6.3;
 
-		return new ControllerParameter(ControlType.PID, kp, ki, kd);
+		return new ControllerParameter(TuningType.TL, ProcessType.Closed, ControlType.PID,
+				kp, ki, kd);
 	}
 }

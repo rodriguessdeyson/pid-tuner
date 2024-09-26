@@ -9,9 +9,7 @@
         motion:duration="1000">
        <KeyFrameSet>
            <KeyAttribute
-               motion:motionTarget="@+id/CardViewProcessConfiguration"
-               motion:framePosition="50"
-               android:alpha="0.5" />
+               motion:motionTarget="@+id/CardViewProcessConfiguration" />
            <KeyAttribute
                motion:motionTarget="@+id/CardViewProcessConfiguration"
                motion:framePosition="100"

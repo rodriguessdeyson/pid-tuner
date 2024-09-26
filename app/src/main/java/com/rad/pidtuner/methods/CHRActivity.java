@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
@@ -20,8 +22,6 @@ import com.domain.services.tuning.CHR;
 import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
-import com.domain.models.tuning.Tuning;
-import com.domain.models.tuning.TuningConfiguration;
 import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
@@ -149,20 +149,6 @@ public class CHRActivity extends AppCompatActivity
 
 	private boolean ValidateProcessParameters()
 	{
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxServo.isChecked() && !CheckBoxRegulator.isChecked())
-		{
-			Logger.Show(this, R.string.ProcessTypeIsRequired);
-			return false;
-		}
-
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
-		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
-			return false;
-		}
-
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
@@ -186,6 +172,21 @@ public class CHRActivity extends AppCompatActivity
 			Logger.Show(this, R.string.TransportDelayError);
 			return false;
 		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxServo.isChecked() && !CheckBoxRegulator.isChecked())
+		{
+			Logger.Show(this, R.string.ProcessTypeIsRequired);
+			return false;
+		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
+		{
+			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			return false;
+		}
+
 		return true;
 	}
 
@@ -209,47 +210,49 @@ public class CHRActivity extends AppCompatActivity
 		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
 		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
 
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
+
 		// Compute the CHR Controller.
-		ArrayList<TuningConfiguration> configuration = new ArrayList<>();
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ProcessType processType : processTypes)
 		{
-			ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 			for (ControlType controlType :  controlTypes)
 			{
 				ControllerParameter cp;
 				switch (processType)
 				{
 					case Servo:
-						cp = CHR.ComputeServo(controlType, pGain, pTime, pDead);
+						cp = CHR.ComputeServo(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					case Servo20:
-						cp = CHR.ComputeServo20UP(controlType, pGain, pTime, pDead);
+						cp = CHR.ComputeServo20UP(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					case Regulator:
-						cp = CHR.ComputeRegulator(controlType, pGain, pTime, pDead);
+						cp = CHR.ComputeRegulator(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					case Regulator20:
-						cp = CHR.ComputeRegulator20UP(controlType, pGain, pTime, pDead);
+						cp = CHR.ComputeRegulator20UP(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					default:
 						throw new InvalidParameterException(processType.toString());
 				}
 			}
-			configuration.add(new TuningConfiguration(processType, controllerParameters, pGain,
-				pTime, pDead));
 		}
 
-		// Get the tuning information.
-		Tuning chrMethod = new Tuning("Chien-Hrones-Reswick", "", TuningType.CHR,
-				configuration);
+		// Set up the model.
+		String description = getString(R.string.tvCHRDesc);
+		TuningModel chrMethod = new TuningModel("Chien-Hrones-Reswick", description,
+				TuningType.CHR, tf, processTypes);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CHRActivity.this, ResultActivity.class);
-		resultActivity.putExtra("RESULT", chrMethod);
+		resultActivity.putExtra("CONFIGURATION", chrMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
 		startActivity(resultActivity);
 	}
 }

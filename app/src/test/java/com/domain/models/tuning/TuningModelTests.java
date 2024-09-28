@@ -49,7 +49,7 @@ public class TuningModelTests
     @Test(expected = InvalidParameterException.class)
     public void when_TuningNameMethodIsInvalid_Expect_InvalidException()
     {
-        String tuningName = "";
+        String tuningName = "  ";
         sut.setName(tuningName);
     }
 
@@ -93,4 +93,38 @@ public class TuningModelTests
         TransferFunction transferFunction = null;
         sut.setTransferFunction(transferFunction);
     }
+
+//    @Test
+//    public void when_ParcelableIsRequested_Expect_Parcelable()
+//    {
+//        // 1. Obtain a Parcel object
+//        Parcel parcel = Parcel.obtain();
+//
+//        // 2. Write the TransferFunction object to the Parcel
+//        sut.setName("Test 01");
+//        sut.setDescription("Test 01");
+//        sut.setType(TuningType.ZN);
+//        sut.setTransferFunction(new TransferFunction(1, 2, 3));
+//        sut.setProcessTypes(new ArrayList<>());
+//        sut.writeToParcel(parcel, 0);
+//
+//        // 3. Reset the Parcel's data position
+//        parcel.setDataPosition(0);
+//
+//        // 4. Create a new TransferFunction object from the Parcel
+//        TuningModel recreatedTuningModel = TuningModel.CREATOR.createFromParcel(parcel);
+//
+//        // 5. Assert that the original and recreated objects are equal
+//        assertEquals(sut.getName(), recreatedTuningModel.getName());
+//        assertEquals(sut.getName(), recreatedTuningModel.toString());
+//        assertEquals(sut.getDescription(), recreatedTuningModel.getDescription());
+//        assertEquals(sut.getType(), recreatedTuningModel.getType());
+//        assertEquals(sut.getTransferFunction().getGain(), recreatedTuningModel.getTransferFunction().getGain(), 0.01);
+//        assertEquals(sut.getTransferFunction().getTimeConstant(), recreatedTuningModel.getTransferFunction().getTimeConstant(), 0.01);
+//        assertEquals(sut.getTransferFunction().getTransportDelay(), recreatedTuningModel.getTransferFunction().getTransportDelay(), 0.01);
+//
+//        // 6. Recycle the Parcel
+//        parcel.recycle();
+//    }
 }
+

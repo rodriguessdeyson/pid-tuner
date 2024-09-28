@@ -10,6 +10,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.security.InvalidParameterException;
+import java.util.Enumeration;
+
 public class CCTest
 {
 	private final TransferFunction TF;
@@ -23,7 +26,7 @@ public class CCTest
 	}
 
 	@Test
-	public void computeP()
+	public void when_computeIsCalled_then_returnCorrectPControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
@@ -39,7 +42,7 @@ public class CCTest
 	}
 
 	@Test
-	public void computePD()
+	public void when_computeIsCalled_then_returnCorrectPDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
@@ -55,7 +58,7 @@ public class CCTest
 	}
 
 	@Test
-	public void computePI()
+	public void when_computeIsCalled_then_returnCorrectPIControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
@@ -71,7 +74,7 @@ public class CCTest
 	}
 
 	@Test
-	public void computePID()
+	public void when_computeIsCalled_then_returnCorrectPIDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
@@ -79,6 +82,22 @@ public class CCTest
 
 		// Calculated values.
 		ControllerParameter sut = CC.Compute(ControlType.PID, TF);
+
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeIsInvalid_then_throwException()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CC,
+				ProcessType.None, ControlType.P, 11, 0, 0);
+
+		// Calculated values.
+		ControllerParameter sut = CC.Compute(ControlType.None, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);

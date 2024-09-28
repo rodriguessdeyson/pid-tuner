@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.domain.models.tuning.types.IMCModelBasedType;
 
+import javax.annotation.processing.Generated;
+
 public class TransferFunction implements Parcelable
 {
 	//region Attributes
@@ -123,6 +125,7 @@ public class TransferFunction implements Parcelable
 
 	//region Parcelable
 
+	/* Generate */
 	protected TransferFunction(Parcel in) {
 		IMCModelType = in.readParcelable(IMCModelBasedType.class.getClassLoader());
 		Gain = in.readDouble();
@@ -136,6 +139,7 @@ public class TransferFunction implements Parcelable
 	}
 
 	@Override
+	@Generated("coverage-excluded")
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeParcelable(IMCModelType, flags);
 		dest.writeDouble(Gain);

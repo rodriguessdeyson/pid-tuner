@@ -7,7 +7,7 @@ import org.junit.Test;
 public class ParserTest
 {
 	@Test
-	public void SanitizeDouble()
+	public void when_SanitizeDoubleMethodIsRequested_then_TheCorrectValueIsReturned()
 	{
 		// Expected values.
 		String expectedValueWithDecimals = "1.25";
@@ -22,5 +22,23 @@ public class ParserTest
 		assertEquals("Check decimals", expectedValueWithDecimals, calculatedValueWithDecimals);
 		assertEquals("Check decimals", expectedValueWithManyDecimals, calculatedValueWithManyDecimals);
 		assertEquals("Check decimals", expectedValueWithNoDecimals, calculatedValueWithNoDecimals);
+	}
+
+	@Test
+	public void when_GetDoubleMethodIsRequested_then_TheCorrectValueIsReturned()
+	{
+		String value = "1.25";
+		Double expectedValue = 1.25;
+		Double calculatedValue = Parser.GetDouble(value);
+		assertEquals("Check decimals", expectedValue, calculatedValue);
+	}
+
+	@Test
+	public void when_GetIntMethodIsRequested_then_TheCorrectValueIsReturned()
+	{
+		String value = "2";
+		Integer expectedValue = 2;
+		Integer calculatedValue = Parser.GetInt(value);
+		assertEquals("Check decimals", expectedValue, calculatedValue);
 	}
 }

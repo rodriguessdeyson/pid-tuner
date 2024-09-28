@@ -57,24 +57,6 @@ public class TuningModel implements Parcelable
 	 * @param description Tuning description.
 	 * @param type Type of model.
 	 * @param transferFunction Transfer function object.
-	 * @param processTypes Set of process types.
-	 */
-	public TuningModel(String name, String description, TuningType type,
-					   TransferFunction transferFunction, ArrayList<ProcessType> processTypes)
-	{
-		setName(name);
-		setDescription(description);
-		setType(type);
-		setTransferFunction(transferFunction);
-		setProcessTypes(processTypes);
-	}
-
-	/**
-	 * Initialize a new object of type TuningModel.
-	 * @param name Tuning method name.
-	 * @param description Tuning description.
-	 * @param type Type of model.
-	 * @param transferFunction Transfer function object.
 	 */
 	public TuningModel(String name, String description, TuningType type,
 					   TransferFunction transferFunction)
@@ -83,6 +65,21 @@ public class TuningModel implements Parcelable
 		setDescription(description);
 		setType(type);
 		setTransferFunction(transferFunction);
+	}
+
+	/**
+	 * Initialize a new object of type TuningModel.
+	 * @param name Tuning method name.
+	 * @param description Tuning description.
+	 * @param type Type of model.
+	 * @param transferFunction Transfer function object.
+	 * @param processTypes Set of process types.
+	 */
+	public TuningModel(String name, String description, TuningType type,
+					   TransferFunction transferFunction, ArrayList<ProcessType> processTypes)
+	{
+		this(name, description, type, transferFunction);
+		setProcessTypes(processTypes);
 	}
 
 	//endregion
@@ -134,7 +131,9 @@ public class TuningModel implements Parcelable
 	public void setName(String name)
 	{
 		if (name.trim().isEmpty())
+		{
 			throw new InvalidParameterException("Name must be not null");
+		}
 
 		Name = name;
 	}

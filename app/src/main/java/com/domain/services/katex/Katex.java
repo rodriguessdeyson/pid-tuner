@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public class Katex
 {
-	private Locale locale;
+	private final Locale locale;
 
 	/**
 	 * Initialize an object of Katex.
@@ -20,6 +20,13 @@ public class Katex
 		this.locale = locale;
 	}
 
+	/**
+	 * Get dynamic transfer function.
+	 * @param gain Proportional Gain
+	 * @param timeConstant Time Constant
+	 * @param transportDelay Transport Delay
+	 * @return KATEX dynamic equation.
+	 */
 	@JavascriptInterface
 	public String getDynamicEquation(String gain, String timeConstant, String transportDelay)
 	{
@@ -27,6 +34,15 @@ public class Katex
 				gain, transportDelay, timeConstant);
 	}
 
+	/**
+	 * Get custom dynamic transfer function.
+	 * @param imcModelBased IMC model based.
+	 * @param gain Proportional Gain
+	 * @param timeConstant Time Constant
+	 * @param secondTimeConstant Second Time Constant
+	 * @param dampingRatio Damping Ratio
+	 * @return KATEX dynamic equation.
+	 */
 	@JavascriptInterface
 	public String getCustomDynamicEquation(String imcModelBased, String gain, String timeConstant,
 										   String secondTimeConstant, String dampingRatio)
@@ -52,6 +68,11 @@ public class Katex
 		}
 	}
 
+	/**
+	 * Get PID parallel transfer function.
+	 * @param controller Controller type.
+	 * @return KATEX PID equation.
+	 */
 	@JavascriptInterface
 	public String getPIDEquation(int controller)
 	{
@@ -62,12 +83,11 @@ public class Katex
 			case 1: // Proportional Integral.
 				return "C(S) = K_p + \\frac{K_i}{S}";
 			case 2: // Proportional Derivative.
-				return "S(S) = K_p + K_d \\cdot S";
+				return "C(S) = K_p + K_d \\cdot S";
 			case 3: // Proportional Integral Derivative.
 				return "C(S) = K_p + \\frac{K_i}{S} + K_d \\cdot S";
 			default:
 				return "";
-
 		}
 	}
 }

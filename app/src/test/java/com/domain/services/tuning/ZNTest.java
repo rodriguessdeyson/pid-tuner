@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.security.InvalidParameterException;
+
 public class ZNTest
 {
 	private final TransferFunction TFOpenedLoop;
@@ -28,7 +30,7 @@ public class ZNTest
 
 
 	@Test
-	public void computeOpenP()
+	public void when_computeOpenIsCalled_then_returnCorrectPControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ZN,
@@ -43,7 +45,7 @@ public class ZNTest
 	}
 
 	@Test
-	public void computeOpenPI()
+	public void when_computeOpenIsCalled_then_returnCorrectPIControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ZN,
@@ -58,7 +60,7 @@ public class ZNTest
 	}
 
 	@Test
-	public void computeOpenPID()
+	public void when_computeOpenIsCalled_then_returnCorrectPIDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ZN,
@@ -73,7 +75,7 @@ public class ZNTest
 	}
 
 	@Test
-	public void computeClosedP()
+	public void when_computeClosedIsCalled_then_returnCorrectPControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ZN,
@@ -88,7 +90,7 @@ public class ZNTest
 	}
 
 	@Test
-	public void computeClosedPI()
+	public void when_computeClosedIsCalled_then_returnCorrectPIControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ZN,
@@ -103,7 +105,7 @@ public class ZNTest
 	}
 
 	@Test
-	public void computeClosedPID()
+	public void when_computeClosedIsCalled_then_returnCorrectPIDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ZN,
@@ -114,6 +116,36 @@ public class ZNTest
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.1);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeOpenIsInvalid_then_throwException()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ZN,
+				ProcessType.Open, ControlType.PD, 10, 0, 2);
+
+		// Calculated values.
+		ControllerParameter sut = ZN.ComputeOpenLoop(ControlType.PD, TFOpenedLoop);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeClosedIsInvalid_then_throwException()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ZN,
+				ProcessType.Closed, ControlType.PD, 10, 0, 2);
+
+		// Calculated values.
+		ControllerParameter sut = ZN.ComputeClosedLoop(ControlType.PD, TFOpenedLoop);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
 		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
 	}
 }

@@ -8,6 +8,8 @@ import android.os.Parcelable;
  */
 public enum ControlType implements Parcelable
 {
+	None(-1),
+
 	/**
 	 * Proportional Controller.
 	 */

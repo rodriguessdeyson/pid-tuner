@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.security.InvalidParameterException;
+
 public class CHRTest
 {
 	private final TransferFunction TF;
@@ -24,7 +26,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computeP()
+	public void when_computeServoIsCalled_then_returnCorrectPControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -39,7 +41,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computePI()
+	public void when_computeServoIsCalled_then_returnCorrectPIControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -54,7 +56,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computePID()
+	public void when_computeServoIsCalled_then_returnCorrectPIDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -69,7 +71,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computePRegulator()
+	public void when_computeRegulatorIsCalled_then_returnCorrectPControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -84,7 +86,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computePIRegulator()
+	public void when_computeRegulatorIsCalled_then_returnCorrectPIControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -99,7 +101,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computePIDRegulator()
+	public void when_computeRegulatorIsCalled_then_returnCorrectPIDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -114,7 +116,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computeP20()
+	public void when_computeServo20UPIsCalled_then_returnCorrectPControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -129,7 +131,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computePI20()
+	public void when_computeServo20UPIsCalled_then_returnCorrectPIControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -144,7 +146,7 @@ public class CHRTest
 	}
 
 	@Test
-	public void computePID20()
+	public void when_computeServo20UPIsCalled_then_returnCorrectPIDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
@@ -152,6 +154,111 @@ public class CHRTest
 
 		// Calculated values.
 		ControllerParameter sut = CHR.ComputeServo20UP(ControlType.PID, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test
+	public void when_computeRegulator20UPIsCalled_then_returnCorrectPControllerValues()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
+				ProcessType.Regulator20, ControlType.P, 3.5, 0, 0);
+
+		// Calculated values.
+		ControllerParameter sut = CHR.ComputeRegulator20UP(ControlType.P, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test
+	public void when_computeRegulator20UPIsCalled_then_returnCorrectPIControllerValues()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
+				ProcessType.Regulator20, ControlType.PI, 3.5, 2.3, 0);
+
+		// Calculated values.
+		ControllerParameter sut = CHR.ComputeRegulator20UP(ControlType.PI, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test
+	public void when_computeRegulator20UPIsCalled_then_returnCorrectPIDControllerValues()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
+				ProcessType.Regulator20, ControlType.PID, 6, 2, 0.42);
+
+		// Calculated values.
+		ControllerParameter sut = CHR.ComputeRegulator20UP(ControlType.PID, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeServoIsCalled_then_throwExceptionForInvalidControlType()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
+				ProcessType.Servo, ControlType.PID, 6, 5, 0.5);
+
+		// Calculated values.
+		ControllerParameter sut = CHR.ComputeServo(ControlType.None, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeServo20UPIsCalled_then_throwExceptionForInvalidControlType()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
+				ProcessType.Servo20, ControlType.PID, 9.5, 6.78, 0.473);
+
+		// Calculated values.
+		ControllerParameter sut = CHR.ComputeServo20UP(ControlType.None, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeRegulatorIsCalled_then_throwExceptionForInvalidControlType()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
+				ProcessType.Regulator, ControlType.PI, 6, 4, 0);
+
+		// Calculated values.
+		ControllerParameter sut = CHR.ComputeRegulator(ControlType.None, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeRegulator20UPIsCalled_then_throwExceptionForInvalidControlType()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.CHR,
+				ProcessType.Regulator20, ControlType.PID, 6, 2, 0.42);
+
+		// Calculated values.
+		ControllerParameter sut = CHR.ComputeRegulator20UP(ControlType.None, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

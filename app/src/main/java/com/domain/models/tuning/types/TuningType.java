@@ -3,7 +3,6 @@ package com.domain.models.tuning.types;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
 /**
  * Controller tunings types.
  */
@@ -48,7 +47,6 @@ public enum TuningType implements Parcelable
 	 * Ziegler and Nichols.
 	 */
 	RT(7);
-
 
 	/**
 	 * Selected enum.

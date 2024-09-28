@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.security.InvalidParameterException;
+
 public class ITAETest
 {
 	private final TransferFunction TF;
@@ -23,7 +25,7 @@ public class ITAETest
 	}
 
 	@Test
-	public void computeRegulatorPI()
+	public void when_computeRegulatorIsCalled_then_returnCorrectPIControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ITAE,
@@ -38,7 +40,7 @@ public class ITAETest
 	}
 
 	@Test
-	public void computeRegulatorPID()
+	public void when_computeRegulatorIsCalled_then_returnCorrectPIDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ITAE,
@@ -53,7 +55,7 @@ public class ITAETest
 	}
 
 	@Test
-	public void computeServoPI()
+	public void when_computeServoIsCalled_then_returnCorrectPIControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ITAE,
@@ -68,7 +70,7 @@ public class ITAETest
 	}
 
 	@Test
-	public void computeServoPID()
+	public void when_computeServoIsCalled_then_returnCorrectPIDControllerValues()
 	{
 		// Expected values.
 		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ITAE,
@@ -76,6 +78,36 @@ public class ITAETest
 
 		// Calculated values.
 		ControllerParameter sut = ITAE.ComputeServo(ControlType.PID, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeServoIsInvalid_then_throwException()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ITAE,
+				ProcessType.Servo, ControlType.PD, 5.11, 5.01, 0);
+
+		// Calculated values.
+		ControllerParameter sut = ITAE.ComputeServo(ControlType.PD, TF);
+		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
+		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
+		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
+		assertEquals("Check Control Type", expectedParameters.getControlType(), sut.getControlType());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void when_computeRegulatorIsInvalid_then_throwException()
+	{
+		// Expected values.
+		ControllerParameter expectedParameters = new ControllerParameter(TuningType.ITAE,
+				ProcessType.Regulator, ControlType.P, 12.46, 1.81, 0.384);
+
+		// Calculated values.
+		ControllerParameter sut = ITAE.ComputeRegulator(ControlType.P, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

@@ -116,6 +116,7 @@ public class ControllerParameter implements Parcelable
 
 	//region Methods
 
+
 	/**
 	 * Set tuning type.
 	 * @param tuningType Tuning type selected.

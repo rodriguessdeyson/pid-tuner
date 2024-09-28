@@ -15,9 +15,6 @@ public class TL
 	public static ControllerParameter Compute(@NonNull ControlType controlType,
 											  @NonNull TransferFunction transferFunction)
 	{
-		if (controlType == ControlType.P)
-			throw new InvalidParameterException(controlType.toString());
-
 		double kuGain = transferFunction.getUltimateGain();
 		double uPeriod = transferFunction.getUltimatePeriod();
 

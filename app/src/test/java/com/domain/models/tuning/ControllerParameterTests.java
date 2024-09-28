@@ -2,6 +2,8 @@ package com.domain.models.tuning;
 
 import static org.junit.Assert.assertEquals;
 
+import android.os.Parcel;
+
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.TuningType;
@@ -90,4 +92,57 @@ public class ControllerParameterTests
 
         assertEquals("Check Kd parameters", kd, sut.getKD(), 0);
     }
+
+    @Test
+    public void when_GetTuningAndProcessMethodIsRequested_Expect_TuningName()
+    {
+        sut.setControlType(ControlType.PD);
+        sut.setProcessType(ProcessType.LambdaTuning);
+
+        String tuningAndProcess = sut.getTuningAndProcess();
+        assertEquals("Check Tuning and Process", "PD", tuningAndProcess);
+    }
+
+    @Test
+    public void when_GetTuningAndProcessMethodIsRequested_Expect_TuningAndProcessName()
+    {
+        sut.setControlType(ControlType.PD);
+        sut.setProcessType(ProcessType.Servo20);
+
+        String tuningAndProcess = sut.getTuningAndProcess();
+        assertEquals("Check Tuning and Process", "PD - Servo +20% UP", tuningAndProcess);
+    }
+
+//    @Test
+//    public void when_ParcelableIsRequested_Expect_Parcelable()
+//    {
+//        // 1. Obtain a Parcel object
+//        Parcel parcel = Parcel.obtain();
+//
+//        // 2. Write the TransferFunction object to the Parcel
+//        sut.setProcessType(ProcessType.Servo);
+//        sut.setControlType(ControlType.PD);
+//        sut.setTuningType(TuningType.ZN);
+//        sut.setKP(1);
+//        sut.setKD(2);
+//        sut.setKI(40);
+//        sut.writeToParcel(parcel, 0);
+//
+//        // 3. Reset the Parcel's data position
+//        parcel.setDataPosition(0);
+//
+//        // 4. Create a new TransferFunction object from the Parcel
+//        ControllerParameter recreatedControllerParameter = ControllerParameter.CREATOR.createFromParcel(parcel);
+//
+//        // 5. Assert that the original and recreated objects are equal
+//        assertEquals(sut.getControlType(), recreatedControllerParameter.getControlType());
+//        assertEquals(sut.getProcessType(), recreatedControllerParameter.getProcessType());
+//        assertEquals(sut.getTuningType(), recreatedControllerParameter.getTuningType());
+//        assertEquals(sut.getKP(), recreatedControllerParameter.getKP(), 0.01);
+//        assertEquals(sut.getKD(), recreatedControllerParameter.getKD(), 0.01);
+//        assertEquals(sut.getKI(), recreatedControllerParameter.getKI(), 0.01);
+//
+//        // 6. Recycle the Parcel
+//        parcel.recycle();
+//    }
 }

@@ -1,9 +1,6 @@
 package com.domain.models.tuning.types;
 
-import static android.provider.Settings.System.getString;
-
 import static xdroid.core.Global.getContext;
-import static xdroid.core.Global.getResources;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -102,15 +99,10 @@ public enum ProcessType implements Parcelable
 	@NonNull
 	@Override
 	public String toString() {
-		if (process == ProcessType.Regulator.ordinal())
-			return getContext().getResources().getString(R.string.cbRegula);
-		else if (process == ProcessType.Regulator20.ordinal())
-			return getContext().getResources().getString(R.string.cbRegula) + " +20% UP";
-		else if(process == ProcessType.Servo.ordinal())
-			return getContext().getResources().getString(R.string.cbServo);
+		if (process == ProcessType.Regulator20.ordinal())
+			return "Regulator +20% UP";
 		else if(process == ProcessType.Servo20.ordinal())
-			return getContext().getResources().getString(R.string.cbServo) + " +20% UP";
-		else
-			return "";
+			return "Servo +20% UP";
+		return super.toString();
 	}
 }

@@ -1,5 +1,6 @@
 package com.domain.models.tuning;
 import static org.junit.Assert.assertEquals;
+
 import com.domain.models.tuning.types.IMCModelBasedType;
 import org.junit.Test;
 
@@ -48,12 +49,50 @@ public class TransferFunctionTests
 		double gain = 0.5;
 		double timeConstant = 1.75;
 		double lambdaCoefficient = 0.79;
+		IMCModelBasedType type = IMCModelBasedType.P;
 
-		sut = new TransferFunction(IMCModelBasedType.P, gain, timeConstant, -1, lambdaCoefficient);
+		sut = new TransferFunction(type, gain, timeConstant, -1, lambdaCoefficient);
 
 		assertEquals("Check Gain", gain, sut.getGain(), 0);
 		assertEquals("Check Time Constant", timeConstant, sut.getTimeConstant(), 0);
 		assertEquals("Check Lambda Coefficient", lambdaCoefficient, sut.getLambdaCoefficient(), 0);
+		assertEquals("Check IMC Model Type", type, sut.getIMCModelType());
+	}
+
+	@Test
+	public void when_ConstructorIsRequested_Expect_ObjectCreatedWithIMCPIDModel1()
+	{
+		double gain = 0.5;
+		double timeConstant = 1.75;
+		double dynamicParameter = 5;
+		double lambdaCoefficient = 0.79;
+		IMCModelBasedType type = IMCModelBasedType.PID1;
+
+		sut = new TransferFunction(type, gain, timeConstant, dynamicParameter, lambdaCoefficient);
+
+		assertEquals("Check Gain", gain, sut.getGain(), 0);
+		assertEquals("Check Time Constant", timeConstant, sut.getTimeConstant(), 0);
+		assertEquals("Check Second Time Constant", dynamicParameter, sut.getSecondTimeConstant(), 0);
+		assertEquals("Check Lambda Coefficient", lambdaCoefficient, sut.getLambdaCoefficient(), 0);
+		assertEquals("Check IMC Model Type", type, sut.getIMCModelType());
+	}
+
+	@Test
+	public void when_ConstructorIsRequested_Expect_ObjectCreatedWithIMCPIDModel2()
+	{
+		double gain = 1;
+		double timeConstant = 2;
+		double dynamicParameter = 3;
+		double lambdaCoefficient = 4;
+		IMCModelBasedType type = IMCModelBasedType.PID2;
+
+		sut = new TransferFunction(type, gain, timeConstant, dynamicParameter, lambdaCoefficient);
+
+		assertEquals("Check Gain", gain, sut.getGain(), 0);
+		assertEquals("Check Time Constant", timeConstant, sut.getTimeConstant(), 0);
+		assertEquals("Check Damping Ratio", dynamicParameter, sut.getDampingRatio(), 0);
+		assertEquals("Check Lambda Coefficient", lambdaCoefficient, sut.getLambdaCoefficient(), 0);
+		assertEquals("Check IMC Model Type", type, sut.getIMCModelType());
 	}
 
 	@Test
@@ -136,4 +175,29 @@ public class TransferFunctionTests
 
 		assertEquals("Check Ultimate Period", ultimatePeriod, sut.getUltimatePeriod(), 0);
 	}
+//
+//	@Test
+//	public void when_ParcelableIsRequested_Expect_Parcelable()
+//	{
+//		// 1. Obtain a Parcel object
+//		Parcel parcel = Parcel.obtain();
+//
+//		// 2. Write the TransferFunction object to the Parcel
+//		sut.setGain(0.5);
+//		sut.setTimeConstant(2);
+//		sut.writeToParcel(parcel, 0);
+//
+//		// 3. Reset the Parcel's data position
+//		parcel.setDataPosition(0);
+//
+//		// 4. Create a new TransferFunction object from the Parcel
+//		TransferFunction recreatedTransferFunction = TransferFunction.CREATOR.createFromParcel(parcel);
+//
+//		// 5. Assert that the original and recreated objects are equal
+//		assertEquals(sut.getGain(), recreatedTransferFunction.getGain(), 0.01);
+//		assertEquals(sut.getTimeConstant(), recreatedTransferFunction.getTimeConstant(), 0.01);
+//
+//		// 6. Recycle the Parcel
+//		parcel.recycle();
+//	}
 }

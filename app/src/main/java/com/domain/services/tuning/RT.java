@@ -18,8 +18,8 @@ public class RT
 		if (controlType != ControlType.PID)
 			throw new InvalidParameterException(controlType.toString());
 
-		double kuGain = transferFunction.getGain();
-		double uPeriod = transferFunction.getTimeConstant();
+		double kuGain = transferFunction.getUltimateGain();
+		double uPeriod = transferFunction.getUltimatePeriod();
 
 		double kp = 0.5 * kuGain;
 		double ki = 0.8 * uPeriod;

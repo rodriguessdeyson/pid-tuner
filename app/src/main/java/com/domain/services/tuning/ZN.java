@@ -12,7 +12,7 @@ import java.security.InvalidParameterException;
 
 public class ZN
 {
-	public static ControllerParameter ComputeOpenLoop(@NonNull ControlType controlType,
+	public static ControllerParameter computeOpenLoop(@NonNull ControlType controlType,
 													  @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -22,17 +22,17 @@ public class ZN
 		switch (controlType)
 		{
 			case P:
-				return OpenLoopPController(kGain, tTime, tDelay);
+				return openLoopPController(kGain, tTime, tDelay);
 			case PI:
-				return OpenLoopPIController(kGain, tTime, tDelay);
+				return openLoopPIController(kGain, tTime, tDelay);
 			case PID:
-				return OpenLoopPIDController(kGain, tTime, tDelay);
+				return openLoopPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	public static ControllerParameter ComputeClosedLoop(@NonNull ControlType controlType,
+	public static ControllerParameter computeClosedLoop(@NonNull ControlType controlType,
 														@NonNull TransferFunction transferFunction)
 	{
 		double kuGain = transferFunction.getUltimateGain();
@@ -41,17 +41,17 @@ public class ZN
 		switch (controlType)
 		{
 			case P:
-				return ClosedLoopPController(kuGain, uPeriod);
+				return closedLoopPController(kuGain, uPeriod);
 			case PI:
-				return ClosedLoopPIController(kuGain, uPeriod);
+				return closedLoopPIController(kuGain, uPeriod);
 			case PID:
-				return ClosedLoopPIDController(kuGain, uPeriod);
+				return closedLoopPIDController(kuGain, uPeriod);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	private static ControllerParameter OpenLoopPController(double kGain, double tTime,
+	private static ControllerParameter openLoopPController(double kGain, double tTime,
 														   double tDelay)
 	{
 		double kp = tTime / (kGain * tDelay);
@@ -62,7 +62,7 @@ public class ZN
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter OpenLoopPIController(double kGain, double tTime,
+	private static ControllerParameter openLoopPIController(double kGain, double tTime,
 															double tDelay)
 	{
 		double kp = 0.9 * tTime / (kGain * tDelay);
@@ -73,7 +73,7 @@ public class ZN
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter OpenLoopPIDController(double kGain, double tTime,
+	private static ControllerParameter openLoopPIDController(double kGain, double tTime,
 															 double tDelay)
 	{
 		double kp = 1.2 * tTime / (kGain * tDelay);
@@ -84,7 +84,7 @@ public class ZN
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter ClosedLoopPController(double kuGain, double uPeriod)
+	private static ControllerParameter closedLoopPController(double kuGain, double uPeriod)
 	{
 		double kp = 0.5 * kuGain;
 		double ki = 0;
@@ -94,7 +94,7 @@ public class ZN
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter ClosedLoopPIController(double kuGain, double uPeriod)
+	private static ControllerParameter closedLoopPIController(double kuGain, double uPeriod)
 	{
 		double kp = 0.45 * kuGain;
 		double ki = (uPeriod / 1.2);
@@ -104,7 +104,7 @@ public class ZN
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter ClosedLoopPIDController(double kuGain, double uPeriod)
+	private static ControllerParameter closedLoopPIDController(double kuGain, double uPeriod)
 	{
 		double kp = 0.6 * kuGain;
 		double ki = uPeriod / 2;

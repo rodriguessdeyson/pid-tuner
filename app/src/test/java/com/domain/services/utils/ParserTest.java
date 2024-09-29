@@ -15,9 +15,9 @@ public class ParserTest
 		String expectedValueWithNoDecimals = "2";
 
 		// Calculated values.
-		String calculatedValueWithDecimals = Parser.SanitizeDouble(1.25);
-		String calculatedValueWithManyDecimals = Parser.SanitizeDouble(1.0000000025);
-		String calculatedValueWithNoDecimals = Parser.SanitizeDouble(2);
+		String calculatedValueWithDecimals = Parser.sanitizeDouble(1.25);
+		String calculatedValueWithManyDecimals = Parser.sanitizeDouble(1.0000000025);
+		String calculatedValueWithNoDecimals = Parser.sanitizeDouble(2);
 
 		assertEquals("Check decimals", expectedValueWithDecimals, calculatedValueWithDecimals);
 		assertEquals("Check decimals", expectedValueWithManyDecimals, calculatedValueWithManyDecimals);
@@ -29,7 +29,7 @@ public class ParserTest
 	{
 		String value = "1.25";
 		Double expectedValue = 1.25;
-		Double calculatedValue = Parser.GetDouble(value);
+		Double calculatedValue = Parser.getDouble(value);
 		assertEquals("Check decimals", expectedValue, calculatedValue);
 	}
 
@@ -38,7 +38,7 @@ public class ParserTest
 	{
 		String value = "2";
 		Integer expectedValue = 2;
-		Integer calculatedValue = Parser.GetInt(value);
+		Integer calculatedValue = Parser.getInt(value);
 		assertEquals("Check decimals", expectedValue, calculatedValue);
 	}
 }

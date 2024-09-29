@@ -12,7 +12,7 @@ import java.security.InvalidParameterException;
 
 public class RT
 {
-	public static ControllerParameter Compute(@NonNull ControlType controlType,
+	public static ControllerParameter compute(@NonNull ControlType controlType,
 											  @NonNull TransferFunction transferFunction)
 	{
 		if (controlType != ControlType.PID)

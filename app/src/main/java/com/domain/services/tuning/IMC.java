@@ -19,12 +19,9 @@ public class IMC
 	 * @param transferFunction Transfer function of process.
 	 * @return Return the controller PID parameters.
 	 */
-	public static ControllerParameter ComputeLambdaTuning(@NonNull ControlType controlType,
+	public static ControllerParameter computeLambdaTuning(@NonNull ControlType controlType,
 														  @NonNull TransferFunction transferFunction)
 	{
-		if (controlType == ControlType.P)
-			throw new InvalidParameterException(controlType.toString());
-
 		double kGain = transferFunction.getGain();
 		double tTime = transferFunction.getTimeConstant();
 		double tDelay = transferFunction.getTransportDelay();
@@ -86,27 +83,27 @@ public class IMC
 	 * @param transferFunction Transfer function of process.
 	 * @return Return the controller PID parameters.
 	 */
-	public static ControllerParameter ComputeLambdaTuning(@NonNull TransferFunction transferFunction)
+	public static ControllerParameter computeLambdaTuning(@NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
 		double tTime = transferFunction.getTimeConstant();
 		double tSTime = transferFunction.getSecondTimeConstant();
-		double epsilon = transferFunction.getDampingRatio();
+		double dampingRatio = transferFunction.getDampingRatio();
 		double lambdaValue = transferFunction.getLambdaCoefficient();
 		IMCModelBasedType imcModelBasedType = transferFunction.getIMCModelType();
 
 		switch (imcModelBasedType)
 		{
 			case P:
-				return LambdaPControllerModel(kGain, lambdaValue);
+				return lambdaPControllerModel(kGain, lambdaValue);
 			case PD:
-				return LambdaPDControllerModel(kGain, tTime, lambdaValue);
+				return lambdaPDControllerModel(kGain, tTime, lambdaValue);
 			case PI:
-				return LambdaPIControllerModel(kGain, tTime, lambdaValue);
+				return lambdaPIControllerModel(kGain, tTime, lambdaValue);
 			case PID1:
-				return LambdaPIDControllerFirstModel(kGain, tTime, tSTime, lambdaValue);
+				return lambdaPIDControllerFirstModel(kGain, tTime, tSTime, lambdaValue);
 			case PID2:
-				return LambdaPIDControllerSecondModel(kGain, tTime, epsilon, lambdaValue);
+				return lambdaPIDControllerSecondModel(kGain, tTime, dampingRatio, lambdaValue);
 			default:
 				throw new InvalidParameterException(imcModelBasedType.toString());
 		}
@@ -118,7 +115,7 @@ public class IMC
 	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
 	 * @return P controller;
 	 */
-	private static ControllerParameter LambdaPControllerModel(double kGain, double lambdaValue)
+	private static ControllerParameter lambdaPControllerModel(double kGain, double lambdaValue)
 	{
 		double kp = (1 / (kGain * lambdaValue));
 		double ki = 0;
@@ -135,7 +132,7 @@ public class IMC
 	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
 	 * @return PD controller;
 	 */
-	private static ControllerParameter LambdaPDControllerModel(double kGain, double tTime,
+	private static ControllerParameter lambdaPDControllerModel(double kGain, double tTime,
 															   double lambdaValue)
 	{
 		double kp = (1 / (kGain * lambdaValue));
@@ -153,7 +150,7 @@ public class IMC
 	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
 	 * @return  controller;
 	 */
-	private static ControllerParameter LambdaPIControllerModel(double kGain, double tTime,
+	private static ControllerParameter lambdaPIControllerModel(double kGain, double tTime,
 															   double lambdaValue)
 	{
 		double kp = (tTime / (kGain * lambdaValue));
@@ -172,7 +169,7 @@ public class IMC
 	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
 	 * @return PID controller;
 	 */
-	private static ControllerParameter LambdaPIDControllerFirstModel(double kGain, double tTime,
+	private static ControllerParameter lambdaPIDControllerFirstModel(double kGain, double tTime,
 																	 double tSTime,
 																	 double lambdaValue)
 	{
@@ -192,7 +189,7 @@ public class IMC
 	 * @param lambdaValue Adjust lambda value. It is null when default is applied.
 	 * @return PID controller;
 	 */
-	private static ControllerParameter LambdaPIDControllerSecondModel(double kGain, double tTime,
+	private static ControllerParameter lambdaPIDControllerSecondModel(double kGain, double tTime,
 																	  double epsilon,
 																	  double lambdaValue)
 	{

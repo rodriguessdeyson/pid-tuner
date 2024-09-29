@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.domain.models.tuning.TransferFunction;
-import com.domain.models.tuning.types.ControlType;
-import com.domain.models.tuning.types.ProcessType;
 import com.domain.services.chart.ChartService;
 import com.domain.services.katex.Katex;
 import com.domain.services.utils.Parser;
@@ -206,19 +204,19 @@ public class ResultActivity extends AppCompatActivity
 			@Override
 			public void onPageFinished(WebView view, String url)
 			{
-				String gain = Parser.SanitizeDouble(transferFunction.getGain());
-				String timeConstant = Parser.SanitizeDouble(transferFunction.getTimeConstant());
+				String gain = Parser.sanitizeDouble(transferFunction.getGain());
+				String timeConstant = Parser.sanitizeDouble(transferFunction.getTimeConstant());
 				if (transferFunction.getIMCModelType() != null)
 				{
-					String secondTimeConstant = Parser.SanitizeDouble(transferFunction.getSecondTimeConstant());
-					String dampingRatio = Parser.SanitizeDouble(transferFunction.getDampingRatio());
+					String secondTimeConstant = Parser.sanitizeDouble(transferFunction.getSecondTimeConstant());
+					String dampingRatio = Parser.sanitizeDouble(transferFunction.getDampingRatio());
 
 					String params = String.format(locale, "updateEquation(Android.getCustomDynamicEquation(" + "%s,%s,%s,%s,%s" + "))", transferFunction.getIMCModelType().ordinal(), gain, timeConstant, secondTimeConstant, dampingRatio);
 					firstOrderFuncWebView.evaluateJavascript(params, null);
 				}
 				else
 				{
-					String transportDelay = Parser.SanitizeDouble(transferFunction.getTransportDelay());
+					String transportDelay = Parser.sanitizeDouble(transferFunction.getTransportDelay());
 
 					String params = String.format(locale, "updateEquation(Android.getDynamicEquation(" + "%s,%s,%s" + "))", gain, timeConstant, transportDelay);
 					firstOrderFuncWebView.evaluateJavascript(params, null);

@@ -8,7 +8,6 @@ import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.TuningType;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.security.InvalidParameterException;
@@ -33,7 +32,7 @@ public class RTTest
 				ProcessType.Open, ControlType.PID, 2.5, 2.048, 0.2048);
 
 		// Calculated values.
-		ControllerParameter sut = RT.Compute(ControlType.PID, TF);
+		ControllerParameter sut = RT.compute(ControlType.PID, TF);
 		assertEquals("Check Tuning Type", expectedParameters.getTuningType(), sut.getTuningType());
 		assertEquals("Check Process Type", expectedParameters.getProcessType(), sut.getProcessType());
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
@@ -49,7 +48,7 @@ public class RTTest
 				ProcessType.Open, ControlType.PI, 2.5, 2.048, 0.2048);
 
 		// Calculated values.
-		ControllerParameter sut = RT.Compute(ControlType.PI, TF);
+		ControllerParameter sut = RT.compute(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

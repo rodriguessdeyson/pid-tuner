@@ -12,7 +12,7 @@ import java.security.InvalidParameterException;
 
 public class CC
 {
-	public static ControllerParameter Compute(@NonNull ControlType controlType,
+	public static ControllerParameter compute(@NonNull ControlType controlType,
 											  @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -22,19 +22,19 @@ public class CC
 		switch (controlType)
 		{
 			case P:
-                return PController(kGain, tTime, tDelay);
+                return pController(kGain, tTime, tDelay);
 			case PI:
-				return PIController(kGain, tTime, tDelay);
+				return piController(kGain, tTime, tDelay);
 			case PD:
-				return PDController(kGain, tTime, tDelay);
+				return pdController(kGain, tTime, tDelay);
 			case PID:
-				return PIDController(kGain, tTime, tDelay);
+				return pidController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	private static ControllerParameter PController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter pController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (1.03 + (0.35 * (tDelay / tTime))) * (tTime / (kGain * tDelay));
 		double ki = 0;
@@ -43,7 +43,7 @@ public class CC
         return new ControllerParameter(TuningType.CC, ProcessType.None, ControlType.P, kp, ki, kd);
 	}
 
-	private static ControllerParameter PIController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter piController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.9 + (0.083 * (tDelay / tTime))) * (tTime / (kGain * tDelay));
 		double ki = ((0.9 + (0.083 * (tDelay / tTime))) / (1.27 + (0.6 * (tDelay / tTime)))) * tDelay;
@@ -52,7 +52,7 @@ public class CC
 		return new ControllerParameter(TuningType.CC, ProcessType.None, ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameter PDController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter pdController(double kGain, double tTime, double tDelay)
 	{
 		double kp = ((1.24 / kGain) * ((tTime / tDelay) + 0.129));
 		double ki = 0;
@@ -61,7 +61,7 @@ public class CC
 		return new ControllerParameter(TuningType.CC, ProcessType.None, ControlType.PD, kp, ki, kd);
 	}
 
-	private static ControllerParameter PIDController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter pidController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (1.35 + (0.25 * (tDelay / tTime))) * (tTime / (kGain * tDelay));
 		double ki = ((1.35 + (0.25 * (tDelay / tTime))) / (0.54 + (0.33 * (tDelay / tTime)))) * tDelay;

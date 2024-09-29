@@ -127,10 +127,10 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		setContentView(R.layout.layout_imc);
 
 		// Find Views Reference.
-		InitializeViews();
+		initializeViews();
 
 		// Start the listener event handler.
-		InitializeEventListener();
+		initializeEventListener();
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		{
 			case "P":
 				IMCModelType = IMCModelBasedType.P;
-				ConfigureIMCPModel();
+				configureIMCPModel();
 				break;
 			case "PD":
 				IMCModelType = IMCModelBasedType.PD;
@@ -148,15 +148,15 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 				break;
 			case "PI":
 				IMCModelType = IMCModelBasedType.PI;
-				ConfigureIMCPIModel();
+				configureIMCPIModel();
 				break;
 			case "PID1":
 				IMCModelType = IMCModelBasedType.PID1;
-				ConfigureIMCPID1Model();
+				configureIMCPID1Model();
 				break;
 			case "PID2":
 				IMCModelType = IMCModelBasedType.PID2;
-				ConfigureIMCPID2Model();
+				configureIMCPID2Model();
 				break;
 			default:
 				throw new InvalidParameterException("IMC model not valid");
@@ -171,7 +171,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	@Override
 	public void onDialogDismissed()
 	{
-		ConfigureIMCFirstOrderModel();
+		configureIMCFirstOrderModel();
 	}
 
 	//endregion
@@ -181,7 +181,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 Initialize the control views.
 	 */
-	private void InitializeViews()
+	private void initializeViews()
 	{
 		ComputeButton                   = findViewById(R.id.ButtonComputePID);
 		CheckBoxP                       = findViewById(R.id.CheckBoxP);
@@ -203,13 +203,13 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 Initialize the buttons events.
 	 */
-	private void InitializeEventListener()
+	private void initializeEventListener()
 	{
 		// Handle the button click.
 		SwitchUseFirstOrderDynamic.setOnCheckedChangeListener((buttonView, isChecked) ->
 		{
-			if (!isChecked) ShowBottomSheet();
-			else ConfigureIMCFirstOrderModel();
+			if (!isChecked) showBottomSheet();
+			else configureIMCFirstOrderModel();
 
 			EditTextProcessGain.setText("");
 			EditTextProcessTimeConstant.setText("");
@@ -222,7 +222,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		{
 			if (!SwitchUseFirstOrderDynamic.isChecked())
 			{
-				ShowBottomSheet();
+				showBottomSheet();
 			}
 		});
 
@@ -230,10 +230,10 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		ComputeButton.setOnClickListener(v ->
 		{
 			// Validates the input, from top-down approach.
-			if (!ValidateProcessParameters())
+			if (!validateProcessParameters())
 				return;
 
-			ComputeController();
+			computeController();
 		});
 
 		ButtonMethodInfo.setOnClickListener(v ->
@@ -251,7 +251,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 * Show the bottom sheet dialog.
 	 */
-	private void ShowBottomSheet()
+	private void showBottomSheet()
 	{
 		BottomSheetDialogIMCModel bottomSheet = new BottomSheetDialogIMCModel();
 		bottomSheet.setOnImageSelectedListener(this);
@@ -262,29 +262,29 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 * Validates the process parameters.
 	 * @return True if valid, false otherwise.
 	 */
-	private boolean ValidateProcessParameters()
+	private boolean validateProcessParameters()
 	{
 		// If the dynamic is first order, compute this validation.
 		if (SwitchUseFirstOrderDynamic.isChecked())
-			return ValidateFirstOrderDynamic();
+			return validateFirstOrderDynamic();
 
 		switch (IMCModelType)
 		{
 			case P:
-				return ValidatePModel();
+				return validatePModel();
 			case PI:
 			case PD:
-				return ValidatePIAndPIDModel();
+				return validatePIAndPIDModel();
 			case PID1:
-				return ValidatePIDModel1();
+				return validatePIDModel1();
 			case PID2:
-				return ValidatePIDModel2();
+				return validatePIDModel2();
 		}
 
 		// Validate the lambda value.
 		if (EditTextLambdaTuning.getText().toString().isEmpty())
 		{
-			Logger.Show(this, R.string.LambdaTuningValueRequired);
+			Logger.show(this, R.string.LambdaTuningValueRequired);
 			EditTextLambdaTuning.setError(getResources().getString(R.string.LambdaTuningValueRequired));
 			return false;
 		}
@@ -296,12 +296,12 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 * Validates the first order dynamic parameters.
 	 * @return True if valid, false otherwise.
 	 */
-	private boolean ValidateFirstOrderDynamic()
+	private boolean validateFirstOrderDynamic()
 	{
 		// Validates if at least one controller type is checked.
 		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
 		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			Logger.show(this, R.string.ControllerTypeIsRequired);
 			return false;
 		}
 
@@ -309,7 +309,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -317,7 +317,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -325,7 +325,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
 		{
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
-			Logger.Show(this, R.string.TransportDelayError);
+			Logger.show(this, R.string.TransportDelayError);
 			return false;
 		}
 		return true;
@@ -335,13 +335,13 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 * Validates the P model parameters.
 	 * @return True if valid, false otherwise.
 	 */
-	private boolean ValidatePModel()
+	private boolean validatePModel()
 	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 		return true;
@@ -351,13 +351,13 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 * Validates the PI and PID model parameters.
 	 * @return True if valid, false otherwise.
 	 */
-	private boolean ValidatePIAndPIDModel()
+	private boolean validatePIAndPIDModel()
 	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -365,7 +365,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 		return true;
@@ -375,13 +375,13 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 * Validates the PID model 1 parameters.
 	 * @return True if valid, false otherwise.
 	 */
-	private boolean ValidatePIDModel1()
+	private boolean validatePIDModel1()
 	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -389,7 +389,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -397,7 +397,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
 		{
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.SecondTimeConstantError));
-			Logger.Show(this, R.string.SecondTimeConstantError);
+			Logger.show(this, R.string.SecondTimeConstantError);
 			return false;
 		}
 		return true;
@@ -407,13 +407,13 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 * Validates the PID model 2 parameters.
 	 * @return True if valid, false otherwise.
 	 */
-	private boolean ValidatePIDModel2()
+	private boolean validatePIDModel2()
 	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -421,7 +421,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -429,7 +429,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
 		{
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.DampingRatioError));
-			Logger.Show(this, R.string.DampingRatioError);
+			Logger.show(this, R.string.DampingRatioError);
 			return false;
 		}
 		return true;
@@ -438,7 +438,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 * Configures the UI for IMC P model.
 	 */
-	private void ConfigureIMCPModel()
+	private void configureIMCPModel()
 	{
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model4, null));
 
@@ -476,7 +476,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 * Configures the UI for IMC PI model.
 	 */
-	private void ConfigureIMCPIModel()
+	private void configureIMCPIModel()
 	{
 		// Notify the model selected.
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model1, null));
@@ -496,7 +496,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 * Configures the UI for IMC PID model.
 	 */
-	private void ConfigureIMCPID1Model()
+	private void configureIMCPID1Model()
 	{
 		// Notify the model selected.
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model2, null));
@@ -516,7 +516,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 * Configures the UI for IMC PID model.
 	 */
-	private void ConfigureIMCPID2Model()
+	private void configureIMCPID2Model()
 	{
 		// Notify the model selected.
 		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model3, null));
@@ -536,7 +536,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 * Configures the UI for IMC first order model.
 	 */
-	private void ConfigureIMCFirstOrderModel()
+	private void configureIMCFirstOrderModel()
 	{
 		// Notify the model selected.
 		SwitchUseFirstOrderDynamic.setChecked(true);
@@ -558,101 +558,6 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		LayoutTransportDelay.setHint(getResources().getString(R.string.hintDampingRatio));
 		ViewUtils.FadeIn(getApplicationContext(), EditTextProcessGain, EditTextProcessTimeConstant, EditTextProcessTransportDelay);
 	}
-
-	/**
-	 * Compute the controller.
-	 */
-	private void ComputeController()
-	{
-		Editable processGain = EditTextProcessGain.getText();
-		Editable processTimeConstant = EditTextProcessTimeConstant.getText();
-		Editable processTransportDelay = EditTextProcessTransportDelay.getText();
-		Editable lambdaTuning = EditTextLambdaTuning.getText();
-
-		// Get the transfer function parameters.
-		double gain = Parser
-			.GetDouble(processGain.length() > 0 ? processGain.toString() : "0");
-		double timeConstant = Parser
-			.GetDouble(processTimeConstant.length() > 0 ? processTimeConstant.toString() : "0");
-		double dynamicParameter = Parser
-			.GetDouble(processTransportDelay.length() > 0 ? processTransportDelay.toString() : "0");
-		double lambda = Parser
-			.GetDouble(lambdaTuning.length() > 0 ? lambdaTuning.toString() : "0");
-
-		if (SwitchUseFirstOrderDynamic.isChecked())
-			FirstOrderModelTuning(gain, timeConstant, dynamicParameter, lambda);
-		else
-			ModelBasedTuning(gain, timeConstant, dynamicParameter, lambda);
-	}
-
-	/**
-	 * Generates the IMC first order model tuning.
-	 * @param gain Gain.
-	 * @param timeConstant Time constant.
-	 * @param transportDelay Transport delay.
-	 * @param lambda Lambda.
-	 */
-	private void FirstOrderModelTuning(double gain, double timeConstant, double transportDelay,
-									   double lambda)
-	{
-		// Get the control types.
-		ArrayList<ControlType> controlTypes = new ArrayList<>();
-		if (SwitchUseFirstOrderDynamic.isChecked())
-		{
-			if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
-			if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
-		}
-
-		// Set up the transfer function.
-		TransferFunction tf = new TransferFunction(gain, timeConstant, transportDelay, lambda);
-
-		// Compute the IMC Controller.
-		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
-		for (ControlType controlType : controlTypes)
-			controllerParameters.add(IMC.ComputeLambdaTuning(controlType, tf));
-
-		// Set up the model.
-		String description = getString(R.string.tvIMCDesc);
-		TuningModel imcMethod = new TuningModel("Internal Model Control", description,
-				TuningType.IMC, tf);
-
-		// Pass through intent to the next activity the results information.
-		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
-		resultActivity.putExtra("CONFIGURATION", imcMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
-	}
-
-	/**
-	 * Generates the IMC model bases tuning.
-	 * @param gain Gain.
-	 * @param timeConstant Time constant.
-	 * @param dynamicParameter dynamic parameter (Second time constant or Dumping ratio)
-	 * @param lambda Lambda.
-	 */
-	private void ModelBasedTuning(double gain, double timeConstant, double dynamicParameter,
-								  double lambda)
-	{
-		// Set up the transfer function.
-		TransferFunction tf = new TransferFunction(IMCModelType, gain, timeConstant,
-				dynamicParameter, lambda);
-
-		// Compute the IMC Controller.
-		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
-			controllerParameters.add(IMC.ComputeLambdaTuning(tf));
-
-		// Set up the model.
-		String description = getString(R.string.tvIMCDesc);
-		TuningModel imcMethod = new TuningModel("Internal Model Control",
-				description, TuningType.IMC, tf);
-
-		// Pass through intent to the next activity the results information.
-		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
-		resultActivity.putExtra("CONFIGURATION", imcMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
-	}
-
 
 	/**
 	 * Set up the p checkbox states.
@@ -702,6 +607,100 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		CheckBoxPID.setEnabled(enabled);
 		CheckBoxPID.setChecked(checked);
 		CheckBoxPID.setClickable(clickable);
+	}
+
+	/**
+	 * Compute the controller.
+	 */
+	private void computeController()
+	{
+		Editable processGain = EditTextProcessGain.getText();
+		Editable processTimeConstant = EditTextProcessTimeConstant.getText();
+		Editable processTransportDelay = EditTextProcessTransportDelay.getText();
+		Editable lambdaTuning = EditTextLambdaTuning.getText();
+
+		// Get the transfer function parameters.
+		double gain = Parser
+			.getDouble(processGain.length() > 0 ? processGain.toString() : "0");
+		double timeConstant = Parser
+			.getDouble(processTimeConstant.length() > 0 ? processTimeConstant.toString() : "0");
+		double dynamicParameter = Parser
+			.getDouble(processTransportDelay.length() > 0 ? processTransportDelay.toString() : "0");
+		double lambda = Parser
+			.getDouble(lambdaTuning.length() > 0 ? lambdaTuning.toString() : "0");
+
+		if (SwitchUseFirstOrderDynamic.isChecked())
+			firstOrderModelTuning(gain, timeConstant, dynamicParameter, lambda);
+		else
+			modelBasedTuning(gain, timeConstant, dynamicParameter, lambda);
+	}
+
+	/**
+	 * Generates the IMC first order model tuning.
+	 * @param gain Gain.
+	 * @param timeConstant Time constant.
+	 * @param transportDelay Transport delay.
+	 * @param lambda Lambda.
+	 */
+	private void firstOrderModelTuning(double gain, double timeConstant, double transportDelay,
+									   double lambda)
+	{
+		// Get the control types.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (SwitchUseFirstOrderDynamic.isChecked())
+		{
+			if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+			if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
+		}
+
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(gain, timeConstant, transportDelay, lambda);
+
+		// Compute the IMC Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(IMC.computeLambdaTuning(controlType, tf));
+
+		// Set up the model.
+		String description = getString(R.string.tvIMCDesc);
+		TuningModel imcMethod = new TuningModel("Internal Model Control", description,
+				TuningType.IMC, tf);
+
+		// Pass through intent to the next activity the results information.
+		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
+		resultActivity.putExtra("CONFIGURATION", imcMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
+		startActivity(resultActivity);
+	}
+
+	/**
+	 * Generates the IMC model bases tuning.
+	 * @param gain Gain.
+	 * @param timeConstant Time constant.
+	 * @param dynamicParameter dynamic parameter (Second time constant or Dumping ratio)
+	 * @param lambda Lambda.
+	 */
+	private void modelBasedTuning(double gain, double timeConstant, double dynamicParameter,
+								  double lambda)
+	{
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(IMCModelType, gain, timeConstant,
+				dynamicParameter, lambda);
+
+		// Compute the IMC Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+			controllerParameters.add(IMC.computeLambdaTuning(tf));
+
+		// Set up the model.
+		String description = getString(R.string.tvIMCDesc);
+		TuningModel imcMethod = new TuningModel("Internal Model Control",
+				description, TuningType.IMC, tf);
+
+		// Pass through intent to the next activity the results information.
+		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
+		resultActivity.putExtra("CONFIGURATION", imcMethod);
+		resultActivity.putExtra("RESULT", controllerParameters);
+		startActivity(resultActivity);
 	}
 
 	//endregion

@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.layout_main);
 
 		// Find the Views references.
-		StartViewContents();
+		startViewContents();
 
 		// Initialize the database settings.
-		ConfigureDatabase();
+		configureDatabase();
 
 		// Method to treat all events.
-		ControlsEvent();
+		controlsEvent();
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 	/**
 	 * Initialize all the views controls references.
 	 */
-	private void StartViewContents()
+	private void startViewContents()
 	{
 		StartTuningButton = findViewById(R.id.ButtonStart);
 	}
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 	/**
 	 * Configures the database server
 	 */
-	private void ConfigureDatabase()
+	private void configureDatabase()
 	{
 		// Creates the database.
 		DataAccess tuningDatabase = new DataAccess(this, "Tuner");
@@ -72,15 +72,15 @@ public class MainActivity extends AppCompatActivity
 	/**
 	 * Handle the views control events.
 	 */
-	private void ControlsEvent()
+	private void controlsEvent()
 	{
-		StartTuningButton.setOnClickListener(v -> OpenTunings());
+		StartTuningButton.setOnClickListener(v -> openTunings());
 	}
 
 	/**
 	 * Method to show an ad when tuning button is clicked.
 	 */
-	private void OpenTunings()
+	private void openTunings()
 	{
 		Intent goTuning = new Intent(MainActivity.this, TuningActivity.class);
 		ActivityOptions options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);

@@ -83,17 +83,17 @@ public class IAEActivity extends AppCompatActivity
 		setContentView(R.layout.layout_iae);
 
 		// Find Views Reference.
-		InitializeViews();
+		initializeViews();
 
 		// Start the listener event handler.
-		InitializeEventListener();
+		initializeEventListener();
 	}
 
 	/**
 	 Initialize the control views.
 	 */
 	@SuppressLint("SetTextI18n")
-	private void InitializeViews()
+	private void initializeViews()
 	{
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
 		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
@@ -109,16 +109,16 @@ public class IAEActivity extends AppCompatActivity
 	/**
 	 Initialize the buttons events.
 	 */
-	private void InitializeEventListener()
+	private void initializeEventListener()
 	{
 		// Handle the button click.
 		ComputeButton.setOnClickListener(v ->
 		{
 			// Validates the input, from top-down approach.
-			if (!ValidateProcessParameters())
+			if (!validateProcessParameters())
 				return;
 
-			ComputeController();
+			computeController();
 		});
 
 		ButtonMethodInfo.setOnClickListener(v ->
@@ -133,13 +133,13 @@ public class IAEActivity extends AppCompatActivity
 		});
 	}
 
-	private boolean ValidateProcessParameters()
+	private boolean validateProcessParameters()
 	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -147,7 +147,7 @@ public class IAEActivity extends AppCompatActivity
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -155,28 +155,28 @@ public class IAEActivity extends AppCompatActivity
 		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
 		{
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
-			Logger.Show(this, R.string.TransportDelayError);
+			Logger.show(this, R.string.TransportDelayError);
 			return false;
 		}
 
 		// Validates if at least one controller type is checked.
 		if (!CheckBoxServo.isChecked() && !CheckBoxRegulator.isChecked())
 		{
-			Logger.Show(this, R.string.ProcessTypeIsRequired);
+			Logger.show(this, R.string.ProcessTypeIsRequired);
 			return false;
 		}
 
 		// Validates if at least one controller type is checked.
 		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
 		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			Logger.show(this, R.string.ControllerTypeIsRequired);
 			return false;
 		}
 
 		return true;
 	}
 
-	private void ComputeController()
+	private void computeController()
 	{
 		// Get the selected process.
 		ArrayList<ProcessType> processTypes = new ArrayList<>();
@@ -189,9 +189,9 @@ public class IAEActivity extends AppCompatActivity
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
 		// Get the transfer function parameters.
-		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+		double pGain = Parser.getDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
 
 		// Set up the transfer function.
 		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
@@ -206,11 +206,11 @@ public class IAEActivity extends AppCompatActivity
 				switch (processType)
 				{
 					case Servo:
-						cp = IAE.ComputeServo(controlType, tf);
+						cp = IAE.computeServo(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					case Regulator:
-						cp = IAE.ComputeRegulator(controlType, tf);
+						cp = IAE.computeRegulator(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					default:

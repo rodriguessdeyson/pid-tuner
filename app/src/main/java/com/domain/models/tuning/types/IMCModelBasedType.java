@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public enum IMCModelBasedType implements Parcelable
 {
+	None(-1),
+
 	/**
 	 * P Model controller.
 	 */

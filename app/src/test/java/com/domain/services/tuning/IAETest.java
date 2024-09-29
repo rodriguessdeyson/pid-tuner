@@ -33,7 +33,7 @@ public class IAETest
 				ProcessType.Regulator, ControlType.PI, 9.621, 2.636, 0);
 
 		// Calculated values.
-		ControllerParameter sut = IAE.ComputeRegulator(ControlType.PI, TF);
+		ControllerParameter sut = IAE.computeRegulator(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -48,7 +48,7 @@ public class IAETest
 				ProcessType.Regulator, ControlType.PID, 12.637, 1.706, 0.387);
 
 		// Calculated values.
-		ControllerParameter sut = IAE.ComputeRegulator(ControlType.PID, TF);
+		ControllerParameter sut = IAE.computeRegulator(ControlType.PID, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -63,7 +63,7 @@ public class IAETest
 				ProcessType.Servo, ControlType.PI, 6.06, 5.23, 0);
 
 		// Calculated values.
-		ControllerParameter sut = IAE.ComputeServo(ControlType.PI, TF);
+		ControllerParameter sut = IAE.computeServo(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -78,7 +78,7 @@ public class IAETest
 				ProcessType.Servo, ControlType.PID, 8.796, 7.003, 0.400);
 
 		// Calculated values.
-		ControllerParameter sut = IAE.ComputeServo(ControlType.PID, TF);
+		ControllerParameter sut = IAE.computeServo(ControlType.PID, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -93,7 +93,7 @@ public class IAETest
 				ProcessType.Servo, ControlType.P, 8.796, 7.003, 0.400);
 
 		// Calculated values.
-		ControllerParameter sut = IAE.ComputeServo(ControlType.P, TF);
+		ControllerParameter sut = IAE.computeServo(ControlType.P, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -108,7 +108,7 @@ public class IAETest
 				ProcessType.Regulator, ControlType.PD, 12.637, 1.706, 0.387);
 
 		// Calculated values.
-		ControllerParameter sut = IAE.ComputeRegulator(ControlType.PD, TF);
+		ControllerParameter sut = IAE.computeRegulator(ControlType.PD, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

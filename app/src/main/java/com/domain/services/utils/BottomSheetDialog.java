@@ -68,15 +68,15 @@ public class BottomSheetDialog extends BottomSheetDialogFragment
 		switch (DialogType)
 		{
 			case About:
-				return AboutView(inflater, container);
+				return aboutView(inflater, container);
 			case Help:
-				return HelpView(inflater, container);
+				return helpView(inflater, container);
 			default:
 				return null;
 		}
 	}
 
-	private View AboutView(LayoutInflater inflater, @Nullable ViewGroup container)
+	private View aboutView(LayoutInflater inflater, @Nullable ViewGroup container)
 	{
 		View v = inflater.inflate(R.layout.layout_bottom_sheet_tuning_about, container, false);
 
@@ -91,7 +91,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment
 		return v;
 	}
 
-	private View HelpView(LayoutInflater inflater, @Nullable ViewGroup container)
+	private View helpView(LayoutInflater inflater, @Nullable ViewGroup container)
 	{
 		View v = inflater.inflate(R.layout.layout_bottom_sheet_tuning_help, container, false);
 

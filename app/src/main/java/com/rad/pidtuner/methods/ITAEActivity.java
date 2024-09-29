@@ -140,7 +140,7 @@ public class ITAEActivity extends AppCompatActivity
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -148,7 +148,7 @@ public class ITAEActivity extends AppCompatActivity
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -156,21 +156,21 @@ public class ITAEActivity extends AppCompatActivity
 		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
 		{
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
-			Logger.Show(this, R.string.TransportDelayError);
+			Logger.show(this, R.string.TransportDelayError);
 			return false;
 		}
 
 		// Validates if at least one controller type is checked.
 		if (!CheckBoxServo.isChecked() && !CheckBoxRegulator.isChecked())
 		{
-			Logger.Show(this, R.string.ProcessTypeIsRequired);
+			Logger.show(this, R.string.ProcessTypeIsRequired);
 			return false;
 		}
 
 		// Validates if at least one controller type is checked.
 		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
 		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			Logger.show(this, R.string.ControllerTypeIsRequired);
 			return false;
 		}
 
@@ -190,9 +190,9 @@ public class ITAEActivity extends AppCompatActivity
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
 		// Get the transfer function parameters.
-		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+		double pGain = Parser.getDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
 
 		// Set up the transfer function.
 		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
@@ -206,11 +206,11 @@ public class ITAEActivity extends AppCompatActivity
 				switch (processType)
 				{
 					case Servo:
-						cp = ITAE.ComputeServo(controlType, tf);
+						cp = ITAE.computeServo(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					case Regulator:
-						cp = ITAE.ComputeRegulator(controlType, tf);
+						cp = ITAE.computeRegulator(controlType, tf);
 						controllerParameters.add(cp);
 						break;
 					default:

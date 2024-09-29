@@ -2,7 +2,6 @@ package com.rad.pidtuner.methods;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -22,7 +21,6 @@ import com.domain.services.utils.Parser;
 import com.domain.services.tuning.ZN;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
-import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
@@ -105,16 +103,16 @@ public class ZNActivity extends AppCompatActivity
 		setContentView(R.layout.layout_zn);
 
 		// Find Views Reference.
-		InitializeViews();
+		initializeViews();
 
 		// Start the listener event handler.
-		InitializeEventListener();
+		initializeEventListener();
 	}
 
 	/**
 	 Initialize the control views.
 	 */
-	private void InitializeViews()
+	private void initializeViews()
 	{
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
 		CheckBoxP                     = findViewById(R.id.CheckBoxP);
@@ -134,17 +132,16 @@ public class ZNActivity extends AppCompatActivity
 	/**
 	 Initialize the buttons events.
 	 */
-	@SuppressLint("SetTextI18n")
-	private void InitializeEventListener()
+	private void initializeEventListener()
 	{
 		// Handle the button click.
 		ComputeButton.setOnClickListener(v ->
 		{
 			// Validates the input, from top-down approach.
-			if (!ValidateProcessParameters())
+			if (!validateProcessParameters())
 				return;
 
-			ComputeController();
+			computeController();
 		});
 
 		ButtonMethodInfo.setOnClickListener(v ->
@@ -177,13 +174,13 @@ public class ZNActivity extends AppCompatActivity
 		});
 	}
 
-	private boolean ValidateProcessParameters()
+	private boolean validateProcessParameters()
 	{
 		// Validates if the process data are filled and is not zero.
 		if (EditTextProcessGain.getText().toString().isEmpty() && RadioButtonOpened.isChecked())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -193,12 +190,12 @@ public class ZNActivity extends AppCompatActivity
 			if (RadioButtonClosed.isChecked())
 			{
 				EditTextProcessTimeConstant.setError(getResources().getString(R.string.KuError));
-				Logger.Show(this, R.string.KuError);
+				Logger.show(this, R.string.KuError);
 				return false;
 			}
 
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -208,36 +205,36 @@ public class ZNActivity extends AppCompatActivity
 			if (RadioButtonClosed.isChecked())
 			{
 				EditTextProcessTransportDelay.setError(getResources().getString(R.string.PuError));
-				Logger.Show(this, R.string.PuError);
+				Logger.show(this, R.string.PuError);
 				return false;
 			}
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
-			Logger.Show(this, R.string.TransportDelayError);
+			Logger.show(this, R.string.TransportDelayError);
 			return false;
 		}
 
 		// Validates if at least one controller type is checked.
 		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
 		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			Logger.show(this, R.string.ControllerTypeIsRequired);
 			return false;
 		}
 
 		return true;
 	}
 
-	private void ComputeController()
+	private void computeController()
 	{
 		// Get the transfer function parameters.
-		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+		double pGain = Parser.getDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
 
-		if (RadioButtonOpened.isChecked()) BuildOpenedTuningParameters(pGain, pTime, pDead);
-		else BuildClosedTuningParameters(pTime, pDead);
+		if (RadioButtonOpened.isChecked()) buildOpenedTuningParameters(pGain, pTime, pDead);
+		else buildClosedTuningParameters(pTime, pDead);
 	}
 
-	private void BuildOpenedTuningParameters(double pGain, double pTime, double pDead)
+	private void buildOpenedTuningParameters(double pGain, double pTime, double pDead)
 	{
 		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
@@ -251,7 +248,7 @@ public class ZNActivity extends AppCompatActivity
 		// Compute the ZN Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType : controlTypes)
-			controllerParameters.add(ZN.ComputeOpenLoop(controlType, tf));
+			controllerParameters.add(ZN.computeOpenLoop(controlType, tf));
 
 		// Set up the model.
 		String description = getString(R.string.tvZNDesc);
@@ -265,7 +262,7 @@ public class ZNActivity extends AppCompatActivity
 		startActivity(resultActivity);
 	}
 
-	private void BuildClosedTuningParameters(double pUltimateGain, double pUltimatePeriod)
+	private void buildClosedTuningParameters(double pUltimateGain, double pUltimatePeriod)
 	{
 		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
@@ -279,7 +276,7 @@ public class ZNActivity extends AppCompatActivity
 		// Compute the ZN Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType : controlTypes)
-			controllerParameters.add(ZN.ComputeClosedLoop(controlType, tf));
+			controllerParameters.add(ZN.computeClosedLoop(controlType, tf));
 
 		// Set up the model.
 		String description = getString(R.string.tvZNDesc);

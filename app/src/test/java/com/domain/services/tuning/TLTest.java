@@ -31,7 +31,7 @@ public class TLTest
 				ProcessType.Closed, ControlType.PI, 1.56, 5.632, 0);
 
 		// Calculated values.
-		ControllerParameter sut = TL.Compute(ControlType.PI, TF);
+		ControllerParameter sut = TL.compute(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -46,7 +46,7 @@ public class TLTest
 				ProcessType.Closed, ControlType.PID, 2.27, 5.632, 0.41);
 
 		// Calculated values.
-		ControllerParameter sut = TL.Compute(ControlType.PID, TF);
+		ControllerParameter sut = TL.compute(ControlType.PID, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -61,7 +61,7 @@ public class TLTest
 				ProcessType.Closed, ControlType.P, 2.27, 5.632, 0.41);
 
 		// Calculated values.
-		ControllerParameter sut = TL.Compute(ControlType.P, TF);
+		ControllerParameter sut = TL.compute(ControlType.P, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

@@ -2,8 +2,6 @@ package com.domain.services.katex;
 
 import android.webkit.JavascriptInterface;
 
-import com.domain.models.tuning.types.IMCModelBasedType;
-
 import java.security.InvalidParameterException;
 import java.util.Locale;
 
@@ -62,7 +60,7 @@ public class Katex
 						gain, timeConstant, secondTimeConstant);
 			case "4":
 				return String.format(locale, "G(S) = \\frac{%s}{%s^{2}S^{2} + 2 \\cdot %s \\cdot %s S + 1}",
-						gain, timeConstant, timeConstant, dampingRatio);
+						gain, timeConstant, dampingRatio, timeConstant);
 			default:
 				throw new InvalidParameterException("IMC model not valid");
 		}

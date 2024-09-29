@@ -6,7 +6,7 @@ import java.util.Locale;
 
 public class ChartService
 {
-	private Locale locale;
+	private final Locale locale;
 
 	/**
 	 * Initialize an object of ChartService.

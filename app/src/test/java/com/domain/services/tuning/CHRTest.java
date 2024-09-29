@@ -33,7 +33,7 @@ public class CHRTest
 				ProcessType.Servo, ControlType.P, 3, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeServo(ControlType.P, TF);
+		ControllerParameter sut = CHR.computeServo(ControlType.P, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -48,7 +48,7 @@ public class CHRTest
 				ProcessType.Servo, ControlType.PI, 3.5, 5.8, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeServo(ControlType.PI, TF);
+		ControllerParameter sut = CHR.computeServo(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -63,7 +63,7 @@ public class CHRTest
 				ProcessType.Servo, ControlType.PID, 6, 5, 0.5);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeServo(ControlType.PID, TF);
+		ControllerParameter sut = CHR.computeServo(ControlType.PID, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -78,7 +78,7 @@ public class CHRTest
 				ProcessType.Regulator, ControlType.P, 3, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeRegulator(ControlType.P, TF);
+		ControllerParameter sut = CHR.computeRegulator(ControlType.P, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -93,7 +93,7 @@ public class CHRTest
 				ProcessType.Regulator, ControlType.PI, 6, 4, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeRegulator(ControlType.PI, TF);
+		ControllerParameter sut = CHR.computeRegulator(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -108,7 +108,7 @@ public class CHRTest
 				ProcessType.Regulator, ControlType.PID, 9.5, 2.375, 0.421);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeRegulator(ControlType.PID, TF);
+		ControllerParameter sut = CHR.computeRegulator(ControlType.PID, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -123,7 +123,7 @@ public class CHRTest
 				ProcessType.Servo20, ControlType.P, 7, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeServo20UP(ControlType.P, TF);
+		ControllerParameter sut = CHR.computeServo20UP(ControlType.P, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -138,7 +138,7 @@ public class CHRTest
 				ProcessType.Servo20, ControlType.PI, 6, 5, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeServo20UP(ControlType.PI, TF);
+		ControllerParameter sut = CHR.computeServo20UP(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -153,7 +153,7 @@ public class CHRTest
 				ProcessType.Servo20, ControlType.PID, 9.5, 6.78, 0.473);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeServo20UP(ControlType.PID, TF);
+		ControllerParameter sut = CHR.computeServo20UP(ControlType.PID, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -168,7 +168,7 @@ public class CHRTest
 				ProcessType.Regulator20, ControlType.P, 3.5, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeRegulator20UP(ControlType.P, TF);
+		ControllerParameter sut = CHR.computeRegulator20UP(ControlType.P, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -183,7 +183,7 @@ public class CHRTest
 				ProcessType.Regulator20, ControlType.PI, 3.5, 2.3, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeRegulator20UP(ControlType.PI, TF);
+		ControllerParameter sut = CHR.computeRegulator20UP(ControlType.PI, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -198,7 +198,7 @@ public class CHRTest
 				ProcessType.Regulator20, ControlType.PID, 6, 2, 0.42);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeRegulator20UP(ControlType.PID, TF);
+		ControllerParameter sut = CHR.computeRegulator20UP(ControlType.PID, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -213,7 +213,7 @@ public class CHRTest
 				ProcessType.Servo, ControlType.PID, 6, 5, 0.5);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeServo(ControlType.None, TF);
+		ControllerParameter sut = CHR.computeServo(ControlType.None, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -228,7 +228,7 @@ public class CHRTest
 				ProcessType.Servo20, ControlType.PID, 9.5, 6.78, 0.473);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeServo20UP(ControlType.None, TF);
+		ControllerParameter sut = CHR.computeServo20UP(ControlType.None, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -243,7 +243,7 @@ public class CHRTest
 				ProcessType.Regulator, ControlType.PI, 6, 4, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeRegulator(ControlType.None, TF);
+		ControllerParameter sut = CHR.computeRegulator(ControlType.None, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -258,7 +258,7 @@ public class CHRTest
 				ProcessType.Regulator20, ControlType.PID, 6, 2, 0.42);
 
 		// Calculated values.
-		ControllerParameter sut = CHR.ComputeRegulator20UP(ControlType.None, TF);
+		ControllerParameter sut = CHR.computeRegulator20UP(ControlType.None, TF);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

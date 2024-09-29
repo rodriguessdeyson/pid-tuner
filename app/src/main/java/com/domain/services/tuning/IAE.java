@@ -12,7 +12,7 @@ import java.security.InvalidParameterException;
 
 public class IAE
 {
-	public static ControllerParameter ComputeServo(@NonNull ControlType controlType,
+	public static ControllerParameter computeServo(@NonNull ControlType controlType,
 												   @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -22,15 +22,15 @@ public class IAE
 		switch (controlType)
 		{
 			case PI:
-				return ServoPIController(kGain, tTime, tDelay);
+				return servoPIController(kGain, tTime, tDelay);
 			case PID:
-				return ServoPIDController(kGain, tTime, tDelay);
+				return servoPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	public static ControllerParameter ComputeRegulator(@NonNull ControlType controlType,
+	public static ControllerParameter computeRegulator(@NonNull ControlType controlType,
 													   @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -40,15 +40,15 @@ public class IAE
 		switch (controlType)
 		{
 			case PI:
-				return RegulatorPIController(kGain, tTime, tDelay);
+				return regulatorPIController(kGain, tTime, tDelay);
 			case PID:
-				return RegulatorPIDController(kGain, tTime, tDelay);
+				return regulatorPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	private static ControllerParameter ServoPIController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter servoPIController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (1 / kGain) * (0.758 * Math.pow((tDelay / tTime), (-0.861)));
 		double ki = (tTime / (1.02 + ((-0.323) * (tDelay / tTime))));
@@ -58,7 +58,7 @@ public class IAE
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter ServoPIDController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter servoPIDController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (1 / kGain) * (1.086 * Math.pow((tDelay / tTime), (-0.869)));
 		double ki = (tTime / (0.740 + ((-0.130) * (tDelay / tTime))));
@@ -68,7 +68,7 @@ public class IAE
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter RegulatorPIController(double kGain, double tTime,
+	private static ControllerParameter regulatorPIController(double kGain, double tTime,
 															 double tDelay)
 	{
 		double kp = (1 / kGain) * (0.984 * Math.pow((tDelay / tTime), (-0.986)));
@@ -79,7 +79,7 @@ public class IAE
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter RegulatorPIDController(double kGain, double tTime,
+	private static ControllerParameter regulatorPIDController(double kGain, double tTime,
 															  double tDelay)
 	{
 		double kp = (1 / kGain) * (1.435 * Math.pow((tDelay / tTime), (-0.921)));

@@ -12,7 +12,7 @@ import java.security.InvalidParameterException;
 
 public class CHR
 {
-	public static ControllerParameter ComputeServo(@NonNull ControlType controlType,
+	public static ControllerParameter computeServo(@NonNull ControlType controlType,
 												   @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -22,17 +22,17 @@ public class CHR
 		switch (controlType)
 		{
 			case P:
-				return ServoPController(kGain, tTime, tDelay);
+				return servoPController(kGain, tTime, tDelay);
 			case PI:
-				return ServoPIController(kGain, tTime, tDelay);
+				return servoPIController(kGain, tTime, tDelay);
 			case PID:
-				return ServoPIDController(kGain, tTime, tDelay);
+				return servoPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	public static ControllerParameter ComputeServo20UP(@NonNull ControlType controlType,
+	public static ControllerParameter computeServo20UP(@NonNull ControlType controlType,
 													   @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -42,17 +42,17 @@ public class CHR
 		switch (controlType)
 		{
 			case P:
-				return Servo20UPPController(kGain, tTime, tDelay);
+				return servo20UPPController(kGain, tTime, tDelay);
 			case PI:
-				return Servo20UPPIController(kGain, tTime, tDelay);
+				return servo20UPPIController(kGain, tTime, tDelay);
 			case PID:
-				return Servo20UPPIDController(kGain, tTime, tDelay);
+				return servo20UPPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	public static ControllerParameter ComputeRegulator(@NonNull ControlType controlType,
+	public static ControllerParameter computeRegulator(@NonNull ControlType controlType,
 													   @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -62,17 +62,17 @@ public class CHR
 		switch (controlType)
 		{
 			case P:
-				return RegulatorPController(kGain, tTime, tDelay);
+				return regulatorPController(kGain, tTime, tDelay);
 			case PI:
-				return RegulatorPIController(kGain, tTime, tDelay);
+				return regulatorPIController(kGain, tTime, tDelay);
 			case PID:
-				return RegulatorPIDController(kGain, tTime, tDelay);
+				return regulatorPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	public static ControllerParameter ComputeRegulator20UP(@NonNull ControlType controlType,
+	public static ControllerParameter computeRegulator20UP(@NonNull ControlType controlType,
 														   @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -82,17 +82,17 @@ public class CHR
 		switch (controlType)
 		{
 			case P:
-				return Regulator20UPPController(kGain, tTime, tDelay);
+				return regulator20UPPController(kGain, tTime, tDelay);
 			case PI:
-				return Regulator20UPPIController(kGain, tTime, tDelay);
+				return regulator20UPPIController(kGain, tTime, tDelay);
 			case PID:
-				return Regulator20UPPIDController(kGain, tTime, tDelay);
+				return regulator20UPPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	private static ControllerParameter ServoPController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter servoPController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.3 * tTime) / (kGain * tDelay);
 		double ki = 0;
@@ -101,7 +101,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Servo, ControlType.P, kp, ki, kd);
 	}
 
-	private static ControllerParameter ServoPIController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter servoPIController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.35 * tTime) / (kGain * tDelay);
 		double ki = 1.16 * tTime;
@@ -110,7 +110,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Servo, ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameter ServoPIDController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter servoPIDController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.6 * tTime) / (kGain * tDelay);
 		double ki = tTime;
@@ -119,7 +119,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Servo, ControlType.PID, kp, ki, kd);
 	}
 
-	private static ControllerParameter Servo20UPPController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter servo20UPPController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.7 * tTime) / (kGain * tDelay);
 		double ki = 0;
@@ -128,7 +128,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Servo20, ControlType.P, kp, ki, kd);
 	}
 
-	private static ControllerParameter Servo20UPPIController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter servo20UPPIController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.6 * tTime) / (kGain * tDelay);
 		double ki = tTime;
@@ -137,7 +137,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Servo20, ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameter Servo20UPPIDController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter servo20UPPIDController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.95 * tTime) / (kGain*tDelay);
 		double ki = 1.357 * tTime;
@@ -146,7 +146,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Servo20, ControlType.PID, kp, ki, kd);
 	}
 
-	private static ControllerParameter RegulatorPController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter regulatorPController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.3 * tTime) / (kGain * tDelay);
 		double ki = 0;
@@ -155,7 +155,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Regulator, ControlType.P, kp, ki, kd);
 	}
 
-	private static ControllerParameter RegulatorPIController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter regulatorPIController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.6 * tTime) / (kGain * tDelay);
 		double ki = 4 * tDelay;
@@ -164,7 +164,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Regulator, ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameter RegulatorPIDController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter regulatorPIDController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.95 * tTime) / (kGain * tDelay);
 		double ki = 2.375 * tDelay;
@@ -173,7 +173,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Regulator, ControlType.PID, kp, ki, kd);
 	}
 
-	private static ControllerParameter Regulator20UPPController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter regulator20UPPController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.7 * tTime) / tDelay;
 		double ki = 0;
@@ -182,7 +182,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Regulator20, ControlType.P, kp, ki, kd);
 	}
 
-	private static ControllerParameter Regulator20UPPIController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter regulator20UPPIController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.7 * tTime) / tDelay;
 		double ki = 2.3 * tDelay;
@@ -191,7 +191,7 @@ public class CHR
 		return new ControllerParameter(TuningType.CHR, ProcessType.Regulator20, ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameter Regulator20UPPIDController(double kGain, double tTime, double tDelay)
+	private static ControllerParameter regulator20UPPIDController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (1.2 * tTime) / tDelay;
 		double ki = 2 * tDelay;

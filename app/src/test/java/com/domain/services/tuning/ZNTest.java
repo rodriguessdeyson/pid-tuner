@@ -37,7 +37,7 @@ public class ZNTest
 				ProcessType.Open, ControlType.P, 10, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = ZN.ComputeOpenLoop(ControlType.P, TFOpenedLoop);
+		ControllerParameter sut = ZN.computeOpenLoop(ControlType.P, TFOpenedLoop);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -52,7 +52,7 @@ public class ZNTest
 				ProcessType.Open, ControlType.PI, 9, 3.33, 0);
 
 		// Calculated values.
-		ControllerParameter sut = ZN.ComputeOpenLoop(ControlType.PI, TFOpenedLoop);
+		ControllerParameter sut = ZN.computeOpenLoop(ControlType.PI, TFOpenedLoop);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -67,7 +67,7 @@ public class ZNTest
 				ProcessType.Open, ControlType.PID, 12, 2, 0.5);
 
 		// Calculated values.
-		ControllerParameter sut = ZN.ComputeOpenLoop(ControlType.PID, TFOpenedLoop);
+		ControllerParameter sut = ZN.computeOpenLoop(ControlType.PID, TFOpenedLoop);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -82,7 +82,7 @@ public class ZNTest
 				ProcessType.Closed, ControlType.P, 2.5, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = ZN.ComputeClosedLoop(ControlType.P, TFClosedLoop);
+		ControllerParameter sut = ZN.computeClosedLoop(ControlType.P, TFClosedLoop);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -97,7 +97,7 @@ public class ZNTest
 				ProcessType.Closed, ControlType.PI, 2.25, 7.5, 0);
 
 		// Calculated values.
-		ControllerParameter sut = ZN.ComputeClosedLoop(ControlType.PI, TFClosedLoop);
+		ControllerParameter sut = ZN.computeClosedLoop(ControlType.PI, TFClosedLoop);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -112,7 +112,7 @@ public class ZNTest
 				ProcessType.Closed, ControlType.PID, 3, 4.5, 1.12);
 
 		// Calculated values.
-		ControllerParameter sut = ZN.ComputeClosedLoop(ControlType.PID, TFClosedLoop);
+		ControllerParameter sut = ZN.computeClosedLoop(ControlType.PID, TFClosedLoop);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.1);
@@ -127,7 +127,7 @@ public class ZNTest
 				ProcessType.Open, ControlType.PD, 10, 0, 2);
 
 		// Calculated values.
-		ControllerParameter sut = ZN.ComputeOpenLoop(ControlType.PD, TFOpenedLoop);
+		ControllerParameter sut = ZN.computeOpenLoop(ControlType.PD, TFOpenedLoop);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);
@@ -142,7 +142,7 @@ public class ZNTest
 				ProcessType.Closed, ControlType.PD, 10, 0, 2);
 
 		// Calculated values.
-		ControllerParameter sut = ZN.ComputeClosedLoop(ControlType.PD, TFOpenedLoop);
+		ControllerParameter sut = ZN.computeClosedLoop(ControlType.PD, TFOpenedLoop);
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
 		assertEquals("Check Kd parameters", expectedParameters.getKD(), sut.getKD(), 0.01);

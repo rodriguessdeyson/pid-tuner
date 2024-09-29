@@ -4,17 +4,17 @@ import java.util.Locale;
 
 public class Parser
 {
-	public static Double GetDouble(String value)
+	public static Double getDouble(String value)
 	{
 		return Double.parseDouble(value);
 	}
 
-	public static Integer GetInt(String value)
+	public static Integer getInt(String value)
 	{
 		return Integer.parseInt(value);
 	}
 
-	public static String SanitizeDouble(double d)
+	public static String sanitizeDouble(double d)
 	{
 		Locale locale = Locale.getDefault();
 		if (d == Math.floor(d))

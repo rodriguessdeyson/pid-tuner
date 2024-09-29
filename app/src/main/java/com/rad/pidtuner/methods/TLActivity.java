@@ -66,17 +66,17 @@ public class TLActivity extends AppCompatActivity
 		setContentView(R.layout.layout_tl);
 
 		// Find Views Reference.
-		InitializeViews();
+		initializeViews();
 
 		// Start the listener event handler.
-		InitializeEventListener();
+		initializeEventListener();
 	}
 
 	/**
 	 Initialize the control views.
 	 */
 	@SuppressLint("SetTextI18n")
-	private void InitializeViews()
+	private void initializeViews()
 	{
 		ComputeButton               = findViewById(R.id.ButtonComputePID);
 		CheckBoxPI                  = findViewById(R.id.CheckBoxPI);
@@ -89,16 +89,16 @@ public class TLActivity extends AppCompatActivity
 	/**
 	 Initialize the buttons events.
 	 */
-	private void InitializeEventListener()
+	private void initializeEventListener()
 	{
 		// Handle the button click.
 		ComputeButton.setOnClickListener(v ->
 		{
 			// Validates the input, from top-down approach.
-			if (!ValidateProcessParameters())
+			if (!validateProcessParameters())
 				return;
 
-			ComputeController();
+			computeController();
 		});
 
 		ButtonMethodInfo.setOnClickListener(v ->
@@ -113,13 +113,13 @@ public class TLActivity extends AppCompatActivity
 		});
 	}
 
-	private boolean ValidateProcessParameters()
+	private boolean validateProcessParameters()
 	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -127,21 +127,21 @@ public class TLActivity extends AppCompatActivity
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
 		// Validates if at least one controller type is checked.
 		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
 		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			Logger.show(this, R.string.ControllerTypeIsRequired);
 			return false;
 		}
 
 		return true;
 	}
 
-	private void ComputeController()
+	private void computeController()
 	{
 		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
@@ -149,8 +149,8 @@ public class TLActivity extends AppCompatActivity
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
 		// Get the transfer function parameters.
-		double pUltimateGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		double pUltimatePeriod = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
+		double pUltimateGain = Parser.getDouble(EditTextProcessGain.getText().toString());
+		double pUltimatePeriod = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
 
 		// Set up the transfer function.
 		TransferFunction tf = new TransferFunction(pUltimateGain, pUltimatePeriod);
@@ -158,7 +158,7 @@ public class TLActivity extends AppCompatActivity
 		// Compute the TL Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType : controlTypes)
-			controllerParameters.add(TL.Compute(controlType, tf));
+			controllerParameters.add(TL.compute(controlType, tf));
 
 		// Set up the model.
 		String description = getString(R.string.tvTLDesc);

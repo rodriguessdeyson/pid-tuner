@@ -12,7 +12,7 @@ import java.security.InvalidParameterException;
 
 public class TL
 {
-	public static ControllerParameter Compute(@NonNull ControlType controlType,
+	public static ControllerParameter compute(@NonNull ControlType controlType,
 											  @NonNull TransferFunction transferFunction)
 	{
 		double kuGain = transferFunction.getUltimateGain();
@@ -21,16 +21,16 @@ public class TL
 		switch (controlType)
 		{
 			case PI:
-				return PIController(kuGain, uPeriod);
+				return piController(kuGain, uPeriod);
 			case PID:
-				return PIDController(kuGain, uPeriod);
+				return pidController(kuGain, uPeriod);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
 	@NonNull
-	private static ControllerParameter PIController(double kuGain, double uPeriod)
+	private static ControllerParameter piController(double kuGain, double uPeriod)
 	{
 		double kp = kuGain / 3.2;
 		double ki = 2.2 * uPeriod;
@@ -40,7 +40,7 @@ public class TL
 				kp, ki, kd);
 	}
 
-	private static ControllerParameter PIDController(double kuGain, double uPeriod)
+	private static ControllerParameter pidController(double kuGain, double uPeriod)
 	{
 		double kp = kuGain / 2.2;
 		double ki = 2.2 * uPeriod;

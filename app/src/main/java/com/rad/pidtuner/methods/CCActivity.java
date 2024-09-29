@@ -19,7 +19,6 @@ import com.domain.services.utils.Parser;
 import com.domain.services.tuning.CC;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
-import com.domain.models.tuning.types.ProcessType;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
@@ -85,7 +84,7 @@ public class CCActivity extends AppCompatActivity
 		InitializeViews();
 
 		// Start the listener event handler.
-		InitializeEventListener();
+		initializeEventListener();
 	}
 
 	/**
@@ -108,16 +107,16 @@ public class CCActivity extends AppCompatActivity
 	/**
 	Initialize the buttons events.
 	 */
-	private void InitializeEventListener()
+	private void initializeEventListener()
 	{
 		// Handle the button click.
 		ComputeButton.setOnClickListener(v ->
 		{
 			// Validates the input, from top-down approach.
-			if (!ValidateProcessParameters())
+			if (!validateProcessParameters())
 				return;
 
-			ComputeController();
+			computeController();
 		});
 
 		ButtonMethodInfo.setOnClickListener(v ->
@@ -136,13 +135,13 @@ public class CCActivity extends AppCompatActivity
 	 * Validates the parameters.
 	 * @return True if the parameters are ok.
 	 */
-	private boolean ValidateProcessParameters()
+	private boolean validateProcessParameters()
 	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -150,7 +149,7 @@ public class CCActivity extends AppCompatActivity
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -158,7 +157,7 @@ public class CCActivity extends AppCompatActivity
 		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
 		{
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
-			Logger.Show(this, R.string.TransportDelayError);
+			Logger.show(this, R.string.TransportDelayError);
 			return false;
 		}
 
@@ -168,7 +167,7 @@ public class CCActivity extends AppCompatActivity
 			!CheckBoxPD.isChecked() &&
 			!CheckBoxPID.isChecked())
 		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
+			Logger.show(this, R.string.ControllerTypeIsRequired);
 			return false;
 		}
 
@@ -178,7 +177,7 @@ public class CCActivity extends AppCompatActivity
 	/**
 	 * Computes the controller.
 	 */
-	private void ComputeController()
+	private void computeController()
 	{
 		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
@@ -188,9 +187,9 @@ public class CCActivity extends AppCompatActivity
 		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
 		// Get the transfer function parameters.
-		double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
+		double pGain = Parser.getDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
 
 		// Set up the transfer function.
 		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
@@ -198,7 +197,7 @@ public class CCActivity extends AppCompatActivity
 		// Compute the CC Controller.
 		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
 		for (ControlType controlType: controlTypes)
-			controllerParameters.add(CC.Compute(controlType, tf));
+			controllerParameters.add(CC.compute(controlType, tf));
 
 		// Set up the model.
 		String description = getString(R.string.tvCohenCoonDesc);

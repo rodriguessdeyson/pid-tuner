@@ -32,6 +32,8 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Allows to create an object of type TuningActivity to shown tuning methods.
@@ -82,10 +84,10 @@ public class TuningActivity extends AppCompatActivity
 		StartViewContents();
 
 		// Handle the events.
-		ControlsEvent();
+		controlsEvent();
 
 		// Build a list with all tuning methods.
-		BuildTuningMethodsList();
+		buildTuningMethodsList();
 
 		getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
 			@Override
@@ -145,13 +147,13 @@ public class TuningActivity extends AppCompatActivity
 			}
 		};
 		listView.setAdapter(TuningAdapter);
-		listView.setOnItemClickListener(OnTuningListClickListener);
+		listView.setOnItemClickListener(onTuningListClickListener);
 	}
 
 	/**
 	 * Handle the views control events.
 	 */
-	private void ControlsEvent()
+	private void controlsEvent()
 	{
 		// Handle the click to show help.
 		FBHelp.setOnClickListener(v ->
@@ -164,76 +166,65 @@ public class TuningActivity extends AppCompatActivity
 	/**
 	 * Build a list with all tuning methods configuration.
 	 */
-	private void BuildTuningMethodsList()
+	private void buildTuningMethodsList()
 	{
-		tuningModels.add(BuildCHR());
-		tuningModels.add(BuildCC());
-		tuningModels.add(BuildIAE());
-		tuningModels.add(BuildITAE());
-		tuningModels.add(BuildIMC());
+		tuningModels.add(buildCHR());
+		tuningModels.add(buildCC());
+		tuningModels.add(buildIAE());
+		tuningModels.add(buildITAE());
+		tuningModels.add(buildIMC());
 		// TuningMethods.add(BuildRT());
-		tuningModels.add(BuildTL());
-		tuningModels.add(BuildZN());
+		tuningModels.add(buildTL());
+		tuningModels.add(buildZN());
 		TuningAdapter.addAll(tuningModels);
 	}
 
 	/**
 	 * Listener to handle ListView clicks.
 	 */
-	private final AdapterView.OnItemClickListener OnTuningListClickListener = (av, v, position, id) ->
+	private final AdapterView.OnItemClickListener onTuningListClickListener = (av, v, position, id) ->
 	{
 		// Get the selected device address.
 		TuningModel tuningModel = (TuningModel) av.getAdapter().getItem(position);
 
-		OnTuningAdRequest(tuningModel);
+		onTuningAdRequest(tuningModel);
 	};
 
 	/**
 	 * Method to show an ad when tuning button is clicked.
 	 * @param tuningModel The selected tuning method.
 	 */
-	private void OnTuningAdRequest(TuningModel tuningModel)
+	private void onTuningAdRequest(TuningModel tuningModel)
 	{
 		TuningDatabase.Update();
-		GoToMethod(tuningModel);
+		goToMethod(tuningModel);
 	}
 
 	/**
 	 * Throw the intent to other activity
 	 * @param tuningModel The tuning method to be shown.
 	 */
-	private void GoToMethod(TuningModel tuningModel)
+	private void goToMethod(TuningModel tuningModel)
 	{
-		// Creates an intent object.
-		Intent startTuning;
+		// Create a map to link the tuning type to the corresponding activity class
+		Map<TuningType, Class<?>> activityMap = new HashMap<>();
+		activityMap.put(TuningType.CC, CCActivity.class);
+		activityMap.put(TuningType.CHR, CHRActivity.class);
+		activityMap.put(TuningType.IAE, IAEActivity.class);
+		activityMap.put(TuningType.IMC, IMCActivity.class);
+		activityMap.put(TuningType.ITAE, ITAEActivity.class);
+		activityMap.put(TuningType.TL, TLActivity.class);
+		activityMap.put(TuningType.ZN, ZNActivity.class);
 
-		// Checks which tuning type is.
-		switch (tuningModel.getType())
-		{
-			case CC:
-				startTuning = new Intent(TuningActivity.this, CCActivity.class);
-				break;
-			case CHR:
-				startTuning = new Intent(TuningActivity.this, CHRActivity.class);
-				break;
-			case IAE:
-				startTuning = new Intent(TuningActivity.this, IAEActivity.class);
-				break;
-			case IMC:
-				startTuning = new Intent(TuningActivity.this, IMCActivity.class);
-				break;
-			case ITAE:
-				startTuning = new Intent(TuningActivity.this, ITAEActivity.class);
-				break;
-			case TL:
-				startTuning = new Intent(TuningActivity.this, TLActivity.class);
-				break;
-			case ZN:
-				startTuning = new Intent(TuningActivity.this, ZNActivity.class);
-				break;
-			default:
-				throw new InvalidParameterException(tuningModel.toString());
+		// Retrieve the activity class based on the tuning type
+		Class<?> activityClass = activityMap.get(tuningModel.getType());
+
+		if (activityClass == null) {
+			throw new InvalidParameterException(tuningModel.toString());
 		}
+
+		// Create and start the intent
+		Intent startTuning = new Intent(TuningActivity.this, activityClass);
 		startActivity(startTuning);
 	}
 
@@ -243,7 +234,7 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the CC method.
 	 * @return The TuningMethod
 	 */
-	private TuningModel BuildCC()
+	private TuningModel buildCC()
 	{
 		TuningModel t = new TuningModel();
 		t.setType(TuningType.CC);
@@ -256,7 +247,7 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the CHR method.
 	 * @return The TuningMethod
 	 */
-	private TuningModel BuildCHR()
+	private TuningModel buildCHR()
 	{
 		TuningModel t = new TuningModel();
 		t.setType(TuningType.CHR);
@@ -269,7 +260,7 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the IAE method.
 	 * @return The TuningMethod
 	 */
-	private TuningModel BuildIAE()
+	private TuningModel buildIAE()
 	{
 		TuningModel t = new TuningModel();
 		t.setType(TuningType.IAE);
@@ -282,7 +273,7 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the IMC method.
 	 * @return The TuningMethod
 	 */
-	private TuningModel BuildIMC()
+	private TuningModel buildIMC()
 	{
 		TuningModel t = new TuningModel();
 		t.setType(TuningType.IMC);
@@ -295,7 +286,7 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the ITAE method.
 	 * @return The TuningMethod
 	 */
-	private TuningModel BuildITAE()
+	private TuningModel buildITAE()
 	{
 		TuningModel t = new TuningModel();
 		t.setType(TuningType.ITAE);
@@ -308,7 +299,7 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the TL method.
 	 * @return The TuningMethod
 	 */
-	private TuningModel BuildTL()
+	private TuningModel buildTL()
 	{
 		TuningModel t = new TuningModel();
 		t.setType(TuningType.TL);
@@ -321,7 +312,7 @@ public class TuningActivity extends AppCompatActivity
 	 * Builds the ZN method.
 	 * @return The TuningMethod
 	 */
-	private TuningModel BuildZN()
+	private TuningModel buildZN()
 	{
 		TuningModel t = new TuningModel();
 		t.setType(TuningType.ZN);

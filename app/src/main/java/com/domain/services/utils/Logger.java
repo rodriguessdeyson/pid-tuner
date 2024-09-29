@@ -20,7 +20,7 @@ public class Logger
 	 * @param context Activity context
 	 * @param messageResource Id of the resource string to be shown
 	 */
-	public static void Show(Context context, int messageResource)
+	public static void show(Context context, int messageResource)
 	{
 		LayoutInflater inflater = (LayoutInflater)context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -43,7 +43,7 @@ public class Logger
 	 * @param context Activity context
 	 * @param message Message string to be shown
 	 */
-	public static void Show(Context context, String message)
+	public static void show(Context context, String message)
 	{
 		LayoutInflater inflater = (LayoutInflater)context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

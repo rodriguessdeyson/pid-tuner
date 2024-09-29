@@ -11,7 +11,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.security.InvalidParameterException;
-import java.util.Enumeration;
 
 public class CCTest
 {
@@ -33,7 +32,7 @@ public class CCTest
 				ProcessType.None, ControlType.P, 11, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CC.Compute(ControlType.P, TF);
+		ControllerParameter sut = CC.compute(ControlType.P, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
@@ -49,7 +48,7 @@ public class CCTest
 				ProcessType.None, ControlType.PD, 12.72, 0, 0.25);
 
 		// Calculated values.
-		ControllerParameter sut = CC.Compute(ControlType.PD, TF);
+		ControllerParameter sut = CC.compute(ControlType.PD, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
@@ -65,7 +64,7 @@ public class CCTest
 				ProcessType.None, ControlType.PI, 9.1, 0.66, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CC.Compute(ControlType.PI, TF);
+		ControllerParameter sut = CC.compute(ControlType.PI, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.1);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.1);
@@ -81,7 +80,7 @@ public class CCTest
 				ProcessType.None, ControlType.PID, 14, 2.32, 0.36);
 
 		// Calculated values.
-		ControllerParameter sut = CC.Compute(ControlType.PID, TF);
+		ControllerParameter sut = CC.compute(ControlType.PID, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);
@@ -97,7 +96,7 @@ public class CCTest
 				ProcessType.None, ControlType.P, 11, 0, 0);
 
 		// Calculated values.
-		ControllerParameter sut = CC.Compute(ControlType.None, TF);
+		ControllerParameter sut = CC.compute(ControlType.None, TF);
 
 		assertEquals("Check Kp parameters", expectedParameters.getKP(), sut.getKP(), 0.01);
 		assertEquals("Check Ki parameters", expectedParameters.getKI(), sut.getKI(), 0.01);

@@ -12,7 +12,7 @@ import java.security.InvalidParameterException;
 
 public class ITAE
 {
-	public static ControllerParameter ComputeServo(@NonNull ControlType controlType,
+	public static ControllerParameter computeServo(@NonNull ControlType controlType,
 												   @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -22,15 +22,15 @@ public class ITAE
 		switch (controlType)
 		{
 			case PI:
-				return ServoPIController(kGain, tTime, tDelay);
+				return servoPIController(kGain, tTime, tDelay);
 			case PID:
-				return ServoPIDController(kGain, tTime, tDelay);
+				return servoPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
 
-	public static ControllerParameter ComputeRegulator(@NonNull ControlType controlType,
+	public static ControllerParameter computeRegulator(@NonNull ControlType controlType,
 													   @NonNull TransferFunction transferFunction)
 	{
 		double kGain = transferFunction.getGain();
@@ -40,14 +40,14 @@ public class ITAE
 		switch (controlType)
 		{
 			case PI:
-				return RegulatorPIController(kGain, tTime, tDelay);
+				return regulatorPIController(kGain, tTime, tDelay);
 			case PID:
-				return RegulatorPIDController(kGain, tTime, tDelay);
+				return regulatorPIDController(kGain, tTime, tDelay);
 			default:
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
-	private static ControllerParameter ServoPIController(double kGain, double tTime,
+	private static ControllerParameter servoPIController(double kGain, double tTime,
 														 double tDelay)
 	{
 		double kp = (1 / kGain) * (0.586 * Math.pow((tDelay / tTime), (-0.916)));
@@ -58,7 +58,7 @@ public class ITAE
 				ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameter ServoPIDController(double kGain, double tTime,
+	private static ControllerParameter servoPIDController(double kGain, double tTime,
 														  double tDelay)
 	{
 		double kp = (1 / kGain) * (0.965 * Math.pow((tDelay / tTime), (-0.850)));
@@ -69,7 +69,7 @@ public class ITAE
 				ControlType.PID, kp, ki, kd);
 	}
 
-	private static ControllerParameter RegulatorPIController(double kGain, double tTime,
+	private static ControllerParameter regulatorPIController(double kGain, double tTime,
 															 double tDelay)
 	{
 		double kp = (1 / kGain) * (0.859 * Math.pow((tDelay / tTime), (-0.977)));
@@ -80,7 +80,7 @@ public class ITAE
 				ControlType.PI, kp, ki, kd);
 	}
 
-	private static ControllerParameter RegulatorPIDController(double kGain, double tTime,
+	private static ControllerParameter regulatorPIDController(double kGain, double tTime,
 															  double tDelay)
 	{
 		double kp = (1 / kGain) * (1.357 * Math.pow((tDelay / tTime), (-0.947)));

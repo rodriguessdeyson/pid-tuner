@@ -4,11 +4,14 @@ package com.rad.pidtuner.methods;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.TuningModel;
@@ -26,6 +29,7 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CHRActivity extends AppCompatActivity
 {
@@ -245,14 +249,23 @@ public class CHRActivity extends AppCompatActivity
 		}
 
 		// Set up the model.
-		String description = getString(R.string.tvCHRDesc);
-		TuningModel chrMethod = new TuningModel("Chien-Hrones-Reswick", description,
+		String name = getResources().getString(R.string.tvCHR);
+		String description = getResources().getString(R.string.chr_about_description);
+		TuningModel chrMethod = new TuningModel(name, description,
 				TuningType.CHR, tf, processTypes);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CHRActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				CHRActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
 		resultActivity.putExtra("CONFIGURATION", chrMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
 }

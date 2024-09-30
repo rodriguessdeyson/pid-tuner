@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 public enum IMCModelBasedType implements Parcelable
 {
-	None(-1),
-
 	/**
 	 * P Model controller.
 	 */
@@ -30,7 +28,12 @@ public enum IMCModelBasedType implements Parcelable
 	/**
 	 * PID Second Model controller.
 	 */
-	PID2(4);
+	PID2(4),
+
+	/**
+	 * Unknown Model controller.
+	 */
+	None(-1);
 
 	/**
 	 * Selected enum.

@@ -1,10 +1,13 @@
 package com.rad.pidtuner.methods;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,6 +25,7 @@ import com.domain.models.tuning.ControllerParameter;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TLActivity extends AppCompatActivity
 {
@@ -161,14 +165,23 @@ public class TLActivity extends AppCompatActivity
 			controllerParameters.add(TL.compute(controlType, tf));
 
 		// Set up the model.
-		String description = getString(R.string.tvTLDesc);
-		TuningModel tlMethod = new TuningModel("Tyreus and Luyben", description,
+		String name = getResources().getString(R.string.tvTL);
+		String description = getResources().getString(R.string.tl_about_description);
+		TuningModel tlMethod = new TuningModel(name, description,
 				TuningType.ITAE, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(TLActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				TLActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
 		resultActivity.putExtra("CONFIGURATION", tlMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
 }

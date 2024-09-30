@@ -3,11 +3,14 @@ package com.rad.pidtuner.methods;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.TuningModel;
@@ -20,8 +23,10 @@ import com.domain.services.tuning.CC;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
 import com.domain.models.tuning.types.TuningType;
+import com.rad.pidtuner.TuningActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CCActivity extends AppCompatActivity
 {
@@ -200,13 +205,22 @@ public class CCActivity extends AppCompatActivity
 			controllerParameters.add(CC.compute(controlType, tf));
 
 		// Set up the model.
-		String description = getString(R.string.tvCohenCoonDesc);
-		TuningModel ccMethod = new TuningModel("Cohen-Coon", description, TuningType.CC, tf);
+		String name = getResources().getString(R.string.tvCohenCoon);
+		String description = getResources().getString(R.string.cc_about_description);
+		TuningModel ccMethod = new TuningModel(name, description, TuningType.CC, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CCActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				CCActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
 		resultActivity.putExtra("CONFIGURATION", ccMethod);
 		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
+		startActivity(resultActivity, options.toBundle());
 	}
 }

@@ -8,8 +8,6 @@ import android.os.Parcelable;
  */
 public enum ControlType implements Parcelable
 {
-	None(-1),
-
 	/**
 	 * Proportional Controller.
 	 */
@@ -28,7 +26,12 @@ public enum ControlType implements Parcelable
 	/**
 	 * Proportional Integral Derivative Controller.
 	 */
-	PID(3);
+	PID(3),
+
+	/**
+	 * Unknown Controller.
+	 */
+	None(-1);
 
 	/**
 	 * Selected enum.

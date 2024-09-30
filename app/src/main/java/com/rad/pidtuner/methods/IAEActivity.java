@@ -1,10 +1,13 @@
 package com.rad.pidtuner.methods;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -24,6 +27,7 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class IAEActivity extends AppCompatActivity
 {
@@ -220,14 +224,23 @@ public class IAEActivity extends AppCompatActivity
 		}
 
 		// Set up the model.
-		String description = getString(R.string.tvIAEDesc);
-		TuningModel iaeMethod = new TuningModel("Integral of Absolute Error", description,
+		String name = getResources().getString(R.string.tvIAE);
+		String description = getResources().getString(R.string.iae_about_description);
+		TuningModel iaeMethod = new TuningModel(name, description,
 				TuningType.IAE, tf, processTypes);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(IAEActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				IAEActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
 		resultActivity.putExtra("CONFIGURATION", iaeMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
 }

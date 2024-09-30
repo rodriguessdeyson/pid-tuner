@@ -1,9 +1,12 @@
 package com.rad.pidtuner.methods;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -24,6 +27,7 @@ import com.domain.models.tuning.ControllerParameter;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ZNActivity extends AppCompatActivity
 {
@@ -251,15 +255,24 @@ public class ZNActivity extends AppCompatActivity
 			controllerParameters.add(ZN.computeOpenLoop(controlType, tf));
 
 		// Set up the model.
-		String description = getString(R.string.tvZNDesc);
-		TuningModel znMethod = new TuningModel("Ziegler and Nichols", description,
+		String name = getResources().getString(R.string.tvZN);
+		String description = getResources().getString(R.string.zn_about_description);
+		TuningModel znMethod = new TuningModel(name, description,
 				TuningType.ZN, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				ZNActivity.this,
+				view,
+				Objects.requireNonNull(ViewCompat.getTransitionName(view))
+		);
+
 		resultActivity.putExtra("CONFIGURATION", znMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
 
 	private void buildClosedTuningParameters(double pUltimateGain, double pUltimatePeriod)
@@ -279,14 +292,23 @@ public class ZNActivity extends AppCompatActivity
 			controllerParameters.add(ZN.computeClosedLoop(controlType, tf));
 
 		// Set up the model.
-		String description = getString(R.string.tvZNDesc);
-		TuningModel znMethod = new TuningModel("Ziegler and Nichols", description,
+		String name = getResources().getString(R.string.tvZN);
+		String description = getResources().getString(R.string.zn_about_description);
+		TuningModel znMethod = new TuningModel(name, description,
 				TuningType.ZN, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				ZNActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
 		resultActivity.putExtra("CONFIGURATION", znMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
 }

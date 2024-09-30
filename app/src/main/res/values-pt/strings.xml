@@ -200,10 +200,11 @@
     <!--Process Result-->
     <string name="tvProcessResults">Resultado</string>
     <string name="tvConfiguredResult">Os parâmetros do controlador foram calculados para a seguinte configuração:</string>
-
-    <!--Validation Messages-->
     <string name="tvPIDParallelFunction">A equação PID paralelo é definida a seguir:</string>
     <string name="tvPIDResultParameters">Em que Kp = %1$.2f; Ki = %2$.2f; Kd = %3$.2f.</string>
+    <string name="tvControllerContinuousTime">Controlador de tempo contínuo em forma paralela.</string>
+
+    <!--Validation Messages-->
     <string name="tvStepResponse">Resposta de passo</string>
     <string name="ProcessTypeIsRequired">É necessário pelo menos um tipo de processo</string>
     <string name="ControllerTypeIsRequired">É necessário pelo menos um tipo de controlador</string>

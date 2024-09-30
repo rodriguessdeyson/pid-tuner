@@ -155,8 +155,10 @@
 
                     <WebView
                         android:id="@+id/WebViewFirstOrderEquation"
+                        android:background="@color/colorAccent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:transitionName="shared_view"/>
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -231,7 +233,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/roboto"
-                        android:text="@string/tvConfiguredResult"
+                        android:text="@string/tvControllerContinuousTime"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="13sp" />
 
@@ -240,6 +242,7 @@
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:descendantFocusability="blocksDescendants"
                     android:overScrollMode="ifContentScrolls"

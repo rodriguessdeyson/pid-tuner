@@ -15,6 +15,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import com.domain.models.tuning.TuningModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -184,10 +186,9 @@ public class TuningActivity extends AppCompatActivity
 	 */
 	private final AdapterView.OnItemClickListener onTuningListClickListener = (av, v, position, id) ->
 	{
-		// Get the selected device address.
 		TuningModel tuningModel = (TuningModel) av.getAdapter().getItem(position);
-
 		onTuningAdRequest(tuningModel);
+		goToMethod(tuningModel, v);
 	};
 
 	/**
@@ -197,14 +198,13 @@ public class TuningActivity extends AppCompatActivity
 	private void onTuningAdRequest(TuningModel tuningModel)
 	{
 		TuningDatabase.Update();
-		goToMethod(tuningModel);
 	}
 
 	/**
 	 * Throw the intent to other activity
 	 * @param tuningModel The tuning method to be shown.
 	 */
-	private void goToMethod(TuningModel tuningModel)
+	private void goToMethod(TuningModel tuningModel, View view)
 	{
 		// Create a map to link the tuning type to the corresponding activity class
 		Map<TuningType, Class<?>> activityMap = new HashMap<>();
@@ -223,9 +223,21 @@ public class TuningActivity extends AppCompatActivity
 			throw new InvalidParameterException(tuningModel.toString());
 		}
 
-		// Create and start the intent
+		// Inside your onItemClick listener for the ListView
 		Intent startTuning = new Intent(TuningActivity.this, activityClass);
-		startActivity(startTuning);
+
+		// Get the view you want to transition
+		View titleView = view.findViewById(R.id.TextViewTuningType); // 'view' is the clicked item in the ListView
+
+		// Set up the shared element transition
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				TuningActivity.this,
+				titleView, // The view to transition
+				ViewCompat.getTransitionName(titleView) // The transition name
+		);
+
+		// Start the activity with the animation
+		startActivity(startTuning, options.toBundle());
 	}
 
 	//region Tunings

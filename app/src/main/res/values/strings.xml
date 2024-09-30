@@ -216,6 +216,7 @@
     <string name="tvConfiguredResult">The controller parameters were computed for the following configuration: </string>
     <string name="tvPIDParallelFunction">The parallel PID equation is defined as follows:</string>
     <string name="tvPIDResultParameters">Where Kp = %1$.2f; Ki = %2$.2f; Kd = %3$.2f.</string>
+    <string name="tvControllerContinuousTime">Continuous-time controller in parallel form.</string>
 
     <!--Validation Messages-->
     <string name="ProcessTypeIsRequired">At least one process type is required</string>

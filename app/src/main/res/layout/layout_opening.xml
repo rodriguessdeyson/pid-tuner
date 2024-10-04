@@ -17,6 +17,7 @@
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryText"
         android:textSize="40sp"
+        android:transitionName="shared_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.811"

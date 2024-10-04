@@ -7,13 +7,17 @@ import androidx.core.view.ViewCompat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.TuningModel;
+import com.domain.services.katex.Katex;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
 import com.domain.services.utils.BottomSheetDialog;
@@ -25,10 +29,17 @@ import com.domain.models.tuning.ControllerParameter;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class TLActivity extends AppCompatActivity
 {
+	//region Constants
+
+	private static final String KATEX_URL = "file:///android_asset/katex_function_layout.html";
+
+	//endregion
+
 	//region Attributes
 
 	/**
@@ -74,6 +85,9 @@ public class TLActivity extends AppCompatActivity
 
 		// Start the listener event handler.
 		initializeEventListener();
+
+		// Configure transfer function.
+		setUpTransferFunction();
 	}
 
 	/**
@@ -117,6 +131,30 @@ public class TLActivity extends AppCompatActivity
 		});
 	}
 
+	/**
+	 * Set up the transfer function.
+	 */
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setUpTransferFunction()
+	{
+		Locale locale = Locale.getDefault();
+		WebView firstOrderFuncWebView = findViewById(R.id.WebViewFirstOrderEquation);
+		firstOrderFuncWebView.getSettings().setJavaScriptEnabled(true);
+		firstOrderFuncWebView.addJavascriptInterface(new Katex(locale), "Android");
+		firstOrderFuncWebView.loadUrl(KATEX_URL);
+		firstOrderFuncWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				// Resume transition after the web page is fully loaded
+				startPostponedEnterTransition();
+
+				// Set shared element transition (can add other types as needed)
+				getWindow().setSharedElementEnterTransition(new ChangeBounds());
+				getWindow().setSharedElementExitTransition(new ChangeBounds());
+			}
+		});
+	}
 	private boolean validateProcessParameters()
 	{
 		// Validates if the process data are filled.
@@ -172,7 +210,7 @@ public class TLActivity extends AppCompatActivity
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(TLActivity.this, ResultActivity.class);
-		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+		View view = findViewById(R.id.WebViewFirstOrderEquation);
 
 		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
 				TLActivity.this,

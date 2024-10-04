@@ -105,12 +105,13 @@
                         android:layout_height="match_parent">
 
                         <LinearLayout
+                            android:id="@+id/linearLayout"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/ImageViewFirstOrderProcess"
+                            app:layout_constraintEnd_toStartOf="@+id/WebViewFirstOrderEquation"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
@@ -134,17 +135,16 @@
                                 android:textSize="13sp" />
                         </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/ImageViewFirstOrderProcess"
-                            android:layout_width="130dp"
-                            android:layout_height="70dp"
-                            android:background="@drawable/drawable_formula_background"
-                            android:contentDescription="@string/ivFirstOrderFunctionDescription"
+                        <WebView
+                            android:id="@+id/WebViewFirstOrderEquation"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
                             android:transitionName="shared_view"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/first_order_dynamic" />
+                            app:layout_constraintVertical_bias="0.0" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

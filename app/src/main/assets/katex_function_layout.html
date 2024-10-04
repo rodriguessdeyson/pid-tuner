@@ -14,13 +14,22 @@
 
     <script type="text/javascript">
         function updateEquation(equation) {
-            // Atualiza o conteúdo do <p> com a equação recebida e renderiza o KaTeX
             document.getElementById("equation").innerHTML = "\\(" + equation + "\\)";
-            renderMathInElement(document.body);  // Renderiza novamente a equação com KaTeX
+            renderMathInElement(document.body);
+        }
+
+        function updateTag(tag) {
+            const eq = document.getElementById("equation");
+            eq.setAttribute("data-model-type", tag);
+        }
+
+        function sendClick() {
+            const eq = document.getElementById("equation");
+            Android.onModelSelected(eq.getAttribute("data-model-type"));
         }
     </script>
 </head>
 <body>
-<p id="equation">\(G(S) = \frac{5 * e^{-0.5 s}}{5 S + 1}\)</p>
+<p id="equation" data-model-type="" onclick="sendClick()">\(G(S) = \frac{K_p \cdot e^{-\theta S}}{\tau S + 1}\)</p>
 </body>
 </html>

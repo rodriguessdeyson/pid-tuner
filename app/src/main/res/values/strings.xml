@@ -2,7 +2,7 @@
 
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
-    <string name="tvHome">PID<br/>Tuner</string>
+    <string name="tvHome">PID\nTuner</string>
     <string name="strWelcome">
         PID Tuner is your go-to tool for precise and efficient PID controller tuningModel.\n\nThe app provides intuitive tools for selecting and applying different tuningModel algorithms based on system characteristics and desired performance.</string>
     <string name="btStart">Start</string>
@@ -95,9 +95,9 @@
     <string name="hintLambda">Lambda (λ)</string>
     <string name="rbLambda" translatable="false">Lambda</string>
     <string name="swFirstOrder">First Order Model?</string>
-    <string name="SecondTimeConstant">Time Constant</string>
-    <string name="hintSecondTimeConstant">Second Time Constant (τ)</string>
-    <string name="DampingRatio">Damping Ratio</string>
+    <string name="SecondTimeConstant">Time Constant (τ)</string>
+    <string name="hintSecondTimeConstant">Time Constant (τ2)</string>
+    <string name="DampingRatio">Damping Ratio (ξ)</string>
     <string name="DampingRatioError">Damping Ratio cannot be empty</string>
     <string name="hintDampingRatio">Damping Ratio (ε)</string>
     <string name="tvModelTitle">Select the Process Model associate to the desired controller</string>

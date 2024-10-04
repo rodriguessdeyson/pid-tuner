@@ -1,21 +1,28 @@
 package com.rad.pidtuner.methods.IMC;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.transition.ChangeBounds;
+import android.util.Log;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.TuningModel;
 import com.domain.models.tuning.types.IMCModelBasedType;
-import com.domain.services.tuning.interfaces.imc.IMCModelListener;
+import com.domain.services.katex.Katex;
+import com.domain.services.katex.KatexListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.domain.services.utils.BottomSheetDialog;
 import com.domain.services.tuning.IMC;
@@ -31,10 +38,25 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class IMCActivity extends AppCompatActivity implements IMCModelListener
+public class IMCActivity extends AppCompatActivity implements IMCModelListener, KatexListener
 {
+	//region Constants
+
+	/**
+	 * URL for the katex function layout.
+	 */
+	private static final String KATEX_URL = "file:///android_asset/katex_function_layout.html";
+
+	//endregion
+
 	//region Attributes
+
+	/**
+	 * ViewModel Observable Pattern reference.
+	 */
+	private IMCViewModel imcViewModel;
 
 	/**
 	 * Button reference to compute event.
@@ -84,7 +106,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	/**
 	 * Selected Model.
 	 */
-	private ImageView ImageViewSelectedModel;
+	private WebView WebViewTransferModel;
 
 	/**
 	 * Switch reference to first order model.
@@ -131,47 +153,56 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 
 		// Start the listener event handler.
 		initializeEventListener();
+
+		// Configure transfer function.
+		setTransferFunction();
 	}
 
 	@Override
-	public void onModelSelected(String imageTag)
+	public void onModelSelected(String modelTag)
 	{
-		switch (imageTag)
+		runOnUiThread(() -> imcViewModel.setMyVariable(modelTag));
+
+		switch (modelTag)
 		{
 			case "P":
 				IMCModelType = IMCModelBasedType.P;
-				configureIMCPModel();
+				runOnUiThread(this::configureIMCPModel);
 				break;
 			case "PD":
 				IMCModelType = IMCModelBasedType.PD;
-				ConfigureIMCPDModel();
+				runOnUiThread(this::configureIMCPDModel);
 				break;
 			case "PI":
 				IMCModelType = IMCModelBasedType.PI;
-				configureIMCPIModel();
+				runOnUiThread(this::configureIMCPIModel);
 				break;
 			case "PID1":
 				IMCModelType = IMCModelBasedType.PID1;
-				configureIMCPID1Model();
+				runOnUiThread(this::configureIMCPID1Model);
 				break;
 			case "PID2":
 				IMCModelType = IMCModelBasedType.PID2;
-				configureIMCPID2Model();
+				runOnUiThread(this::configureIMCPID2Model);
 				break;
 			default:
 				throw new InvalidParameterException("IMC model not valid");
 		}
-
-		// Get the background (the border) of the ImageView
-		GradientDrawable borderDrawable = (GradientDrawable) ImageViewSelectedModel.getBackground();
-		int colorExtra = getResources().getColor(R.color.colorAccent);
-		borderDrawable.setStroke(1, colorExtra);
 	}
 
 	@Override
 	public void onDialogDismissed()
 	{
 		configureIMCFirstOrderModel();
+	}
+
+	@Override
+	public void onTransferFunctionClick(String model)
+	{
+		if (!SwitchUseFirstOrderDynamic.isChecked())
+		{
+			showBottomSheet();
+		}
 	}
 
 	//endregion
@@ -183,21 +214,21 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 */
 	private void initializeViews()
 	{
-		ComputeButton                   = findViewById(R.id.ButtonComputePID);
-		CheckBoxP                       = findViewById(R.id.CheckBoxP);
-		CheckBoxPD                      = findViewById(R.id.CheckBoxPD);
-		CheckBoxPI                      = findViewById(R.id.CheckBoxPI);
-		CheckBoxPID                     = findViewById(R.id.CheckBoxPID);
-		SwitchUseFirstOrderDynamic      = findViewById(R.id.SwitchUseFirstOrderDynamic);
-		EditTextProcessGain             = findViewById(R.id.EditTextGain);
-		EditTextProcessTimeConstant     = findViewById(R.id.EditTextParam01);
-		EditTextProcessTransportDelay   = findViewById(R.id.EditTextParam02);
-		EditTextLambdaTuning            = findViewById(R.id.EditTextLambda);
-		ImageViewSelectedModel          = findViewById(R.id.ImageViewSelectedModel);
-		LayoutGain                      = findViewById(R.id.TextInputLayoutGain);
-		LayoutTimeConstant              = findViewById(R.id.TextInputLayoutTimeConstant);
-		LayoutTransportDelay            = findViewById(R.id.TextInputLayoutTransportDelay);
-		ButtonMethodInfo                = findViewById(R.id.ButtonMethodInfo);
+		ComputeButton                 = findViewById(R.id.ButtonComputePID);
+		CheckBoxP                     = findViewById(R.id.CheckBoxP);
+		CheckBoxPD                    = findViewById(R.id.CheckBoxPD);
+		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
+		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
+		SwitchUseFirstOrderDynamic    = findViewById(R.id.SwitchUseFirstOrderDynamic);
+		EditTextProcessGain           = findViewById(R.id.EditTextGain);
+		EditTextProcessTimeConstant   = findViewById(R.id.EditTextParam01);
+		EditTextProcessTransportDelay = findViewById(R.id.EditTextParam02);
+		EditTextLambdaTuning          = findViewById(R.id.EditTextLambda);
+		WebViewTransferModel          = findViewById(R.id.WebViewTransferModel);
+		LayoutGain                    = findViewById(R.id.TextInputLayoutGain);
+		LayoutTimeConstant            = findViewById(R.id.TextInputLayoutTimeConstant);
+		LayoutTransportDelay          = findViewById(R.id.TextInputLayoutTransportDelay);
+		ButtonMethodInfo              = findViewById(R.id.ButtonMethodInfo);
 	}
 
 	/**
@@ -217,14 +248,12 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 			EditTextLambdaTuning.setText("");
 		});
 
-		// Handle the image model click.
-		ImageViewSelectedModel.setOnClickListener(v ->
-		{
-			if (!SwitchUseFirstOrderDynamic.isChecked())
-			{
-				showBottomSheet();
-			}
-		});
+		// Initialize ViewModel.
+		imcViewModel = new ViewModelProvider(this).get(IMCViewModel.class);
+
+		// Observe LiveData for changes
+		// Trigger a method when the variable changes
+		imcViewModel.getMyVariable().observe(this, this::updateWebViewTransferFunction);
 
 		// Handle the button click.
 		ComputeButton.setOnClickListener(v ->
@@ -249,13 +278,49 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	}
 
 	/**
+	 * Set up the transfer function.
+	 */
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setTransferFunction()
+	{
+		Locale locale = Locale.getDefault();
+		Katex katex = new Katex(locale);
+		katex.setOnClickListener(this);
+		WebViewTransferModel.getSettings().setJavaScriptEnabled(true);
+		WebViewTransferModel.addJavascriptInterface(katex, "Android");
+		WebViewTransferModel.loadUrl(KATEX_URL);
+		WebViewTransferModel.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				// Resume transition after the web page is fully loaded
+				startPostponedEnterTransition();
+
+				// Set shared element transition (can add other types as needed)
+				getWindow().setSharedElementEnterTransition(new ChangeBounds());
+				getWindow().setSharedElementExitTransition(new ChangeBounds());
+			}
+		});
+	}
+
+	/**
+	 * Update transfer function model..
+	 */
+	private void updateWebViewTransferFunction(String model)
+	{
+		Locale locale = Locale.getDefault();
+		String params = String.format(locale, "updateEquation(Android.setModelEquation('" + "%s" + "'))", model);
+		WebViewTransferModel.evaluateJavascript(params, null);
+	}
+
+	/**
 	 * Show the bottom sheet dialog.
 	 */
 	private void showBottomSheet()
 	{
 		BottomSheetDialogIMCModel bottomSheet = new BottomSheetDialogIMCModel();
-		bottomSheet.setOnImageSelectedListener(this);
-		bottomSheet.show(getSupportFragmentManager(), "ImageSelectionBottomSheet");
+		bottomSheet.setOnModelSelectedListener(this);
+		bottomSheet.show(getSupportFragmentManager(), "ModelSelectionBottomSheet");
 	}
 
 	/**
@@ -440,37 +505,37 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 */
 	private void configureIMCPModel()
 	{
-		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model4, null));
-
 		// Set up checkboxes.
 		pCheckbox(true, true);
 		pdCheckbox(false, false);
 		piCheckbox(false, false, false);
 		pidCheckbox(false, false, false);
 
-		ViewUtils.FadeOut(getApplicationContext(), EditTextProcessTimeConstant, EditTextProcessTransportDelay);
+		ViewUtils.FadeOut(getApplicationContext(),
+			LayoutTimeConstant,
+			LayoutTransportDelay);
 	}
 
 	/**
 	 * Configures the UI for IMC PD model.
 	 */
-	private void ConfigureIMCPDModel()
+	private void configureIMCPDModel()
 	{
-		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model5, null));
-
 		// Set up checkboxes.
 		pCheckbox(false, false);
 		pdCheckbox(true, true);
 		piCheckbox(false, false, false);
 		pidCheckbox(false, false, false);
 
-		ViewUtils.FadeOut(getApplicationContext(), EditTextProcessTimeConstant, EditTextProcessTransportDelay);
-
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
 		LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 
-		ViewUtils.FadeIn(getApplicationContext(),EditTextProcessGain, EditTextProcessTimeConstant);
-		ViewUtils.FadeOut(getApplicationContext(), EditTextProcessTransportDelay);
+		ViewUtils.FadeIn(getApplicationContext(),
+				LayoutGain,
+				LayoutTimeConstant);
+
+		ViewUtils.FadeOut(getApplicationContext(),
+				LayoutTransportDelay);
 	}
 
 	/**
@@ -478,9 +543,6 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 */
 	private void configureIMCPIModel()
 	{
-		// Notify the model selected.
-		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model1, null));
-
 		// Set up checkboxes.
 		pCheckbox(false, false);
 		pdCheckbox(false, false);
@@ -489,8 +551,13 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
 		LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
-		ViewUtils.FadeIn(getApplicationContext(), EditTextProcessGain, EditTextProcessTimeConstant);
-		ViewUtils.FadeOut(getApplicationContext(),EditTextProcessTransportDelay);
+
+		ViewUtils.FadeIn(getApplicationContext(),
+				LayoutGain,
+				LayoutTimeConstant);
+
+		ViewUtils.FadeOut(getApplicationContext(),
+				LayoutTransportDelay);
 	}
 
 	/**
@@ -498,9 +565,6 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 */
 	private void configureIMCPID1Model()
 	{
-		// Notify the model selected.
-		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model2, null));
-
 		// Set up checkboxes.
 		pCheckbox(false, false);
 		pdCheckbox(false, false);
@@ -510,7 +574,11 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
 		LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 		LayoutTransportDelay.setHint(getResources().getString(R.string.hintSecondTimeConstant));
-		ViewUtils.FadeIn(getApplicationContext(), EditTextProcessGain, EditTextProcessTimeConstant, EditTextProcessTransportDelay);
+
+		ViewUtils.FadeIn(getApplicationContext(),
+				LayoutGain,
+				LayoutTimeConstant,
+				LayoutTransportDelay);
 	}
 
 	/**
@@ -518,9 +586,6 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	 */
 	private void configureIMCPID2Model()
 	{
-		// Notify the model selected.
-		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.model3, null));
-
 		// Set up checkboxes.
 		pCheckbox(false, false);
 		pdCheckbox(false, false);
@@ -530,7 +595,11 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
 		LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 		LayoutTransportDelay.setHint(getResources().getString(R.string.hintDampingRatio));
-		ViewUtils.FadeIn(getApplicationContext(), EditTextProcessGain, EditTextProcessTimeConstant, EditTextProcessTransportDelay);
+
+		ViewUtils.FadeIn(getApplicationContext(),
+				LayoutGain,
+				LayoutTimeConstant,
+				LayoutTransportDelay);
 	}
 
 	/**
@@ -539,6 +608,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 	private void configureIMCFirstOrderModel()
 	{
 		// Notify the model selected.
+		imcViewModel.setMyVariable("");
 		SwitchUseFirstOrderDynamic.setChecked(true);
 
 		// Set up checkboxes.
@@ -547,16 +617,14 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 		piCheckbox(true, true, false);
 		pidCheckbox(true, true, false);
 
-		// Get the background (the border) of the ImageView
-		GradientDrawable borderDrawable = (GradientDrawable) ImageViewSelectedModel.getBackground();
-		int colorExtra = getResources().getColor(R.color.formula);
-		borderDrawable.setStroke(1, colorExtra);
-
-		ImageViewSelectedModel.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.first_order_dynamic, null));
 		LayoutGain.setHint(getResources().getString(R.string.hintGain));
 		LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
-		LayoutTransportDelay.setHint(getResources().getString(R.string.hintDampingRatio));
-		ViewUtils.FadeIn(getApplicationContext(), EditTextProcessGain, EditTextProcessTimeConstant, EditTextProcessTransportDelay);
+		LayoutTransportDelay.setHint(getResources().getString(R.string.hintDelay));
+
+		ViewUtils.FadeIn(getApplicationContext(),
+				LayoutGain,
+				LayoutTimeConstant,
+				LayoutTransportDelay);
 	}
 
 	/**
@@ -668,9 +736,17 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.WebViewTransferModel);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				IMCActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
 		resultActivity.putExtra("CONFIGURATION", imcMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
 
 	/**
@@ -698,9 +774,17 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(IMCActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.WebViewTransferModel);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				IMCActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
 		resultActivity.putExtra("CONFIGURATION", imcMethod);
-		resultActivity.putExtra("RESULT", controllerParameters);
-		startActivity(resultActivity);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
 
 	//endregion

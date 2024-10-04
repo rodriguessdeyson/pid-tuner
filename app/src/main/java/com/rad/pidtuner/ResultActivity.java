@@ -104,8 +104,7 @@ public class ResultActivity extends AppCompatActivity
 			String description = TuningModel.getDescription();
 
 			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description, "");
-			bottomSheet.show(getSupportFragmentManager(),
-					"ModalBottomSheet");
+			bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
 		});
 	}
 

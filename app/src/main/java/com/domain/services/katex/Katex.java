@@ -10,12 +10,51 @@ public class Katex
 	private final Locale locale;
 
 	/**
+	 * Listener for Katex.
+	 */
+	private KatexListener katexListener;
+
+	/**
 	 * Initialize an object of Katex.
 	 * @param locale Locale.
 	 */
 	public Katex(Locale locale)
 	{
 		this.locale = locale;
+	}
+
+	/**
+	 * Set the listener.
+	 * @param katexListener Katex listener.
+	 */
+	public void setOnClickListener(KatexListener katexListener)
+	{
+		this.katexListener = katexListener;
+	}
+
+	/**
+	 * Get dynamic transfer function.
+	 * @param model IMC model.
+	 * @return KATEX dynamic equation.
+	 */
+	@JavascriptInterface
+	public String setModelEquation(String model)
+	{
+		switch (model)
+		{
+			case "P":
+				return "G(S) = \\frac{K_p}{S}";
+			case "PD":
+				return "G(S) = \\frac{K_p}{S(\\tau S + 1)}";
+			case "PI":
+				return "G(S) = \\frac{K_p}{\\tau S + 1}";
+			case "PID1":
+				return "G(S) = \\frac{K_p}{(\\tau_1 S + 1)(\\tau_2 S + 1)}";
+			case "PID2":
+				return "G(S) = \\frac{K_p}{\\tau^{2}S^{2} + 2 \\xi \\tau S + 1}";
+			default:
+				return "G(S) = \\frac{K_p \\cdot e^{-\\theta S}}{\\tau S + 1}";
+		}
 	}
 
 	/**
@@ -86,6 +125,15 @@ public class Katex
 				return "C(S) = K_p + \\frac{K_i}{S} + K_d \\cdot S";
 			default:
 				return "";
+		}
+	}
+
+	@JavascriptInterface
+	public void onModelSelected(String model)
+	{
+		if (katexListener != null)
+		{
+			katexListener.onTransferFunctionClick(model);
 		}
 	}
 }

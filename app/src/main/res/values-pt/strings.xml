@@ -2,7 +2,7 @@
 
     <!--Welcome Layout, Main Layout and About-->
     <string name="app_name">PID Tuner</string>
-    <string name="tvHome">PID<br/>Tuner</string>
+    <string name="tvHome">PID\nTuner</string>
     <string name="strWelcome">
         PID Tuner é a sua ferramenta ideal para um ajuste preciso e eficiente de controladores PID.
         \n\nO aplicativo fornece ferramentas intuitivas para selecionar e aplicar diferentes algoritmos de ajuste com base nas características do sistema e no desempenho desejado.
@@ -89,10 +89,10 @@
     <string name="swUseLambda">Sintonia Lambda:</string>
     <string name="hintLambda">Lambda (λ)</string>
     <string name="swFirstOrder">Modelo de primeira ordem?</string>
-    <string name="SecondTimeConstant">Constante de Tempo</string>
-    <string name="hintSecondTimeConstant">Segunda Constante de Tempo</string>
-    <string name="DampingRatio">Fator de Amortecimento</string>
-    <string name="hintDampingRatio">Fator de Amortecimento</string>
+    <string name="SecondTimeConstant">Constante de Tempo (τ)</string>
+    <string name="hintSecondTimeConstant">Constante de Tempo (τ2)</string>
+    <string name="DampingRatio">Fator de Amortecimento (ξ)</string>
+    <string name="hintDampingRatio">Amortecimento (ξ)</string>
     <string name="DampingRatioError">Fator de Amortecimento não pode ficar Vazio</string>
     <string name="tvModelTitle">Selecione o Modelo de Processo associado ao controlador desejado</string>
     <string name="tvModelResult1">Modelo Controlador PI </string>
@@ -231,9 +231,9 @@
     <string name="rbClosed">Malha Fechada</string>
 
     <string name="btnCalculate">Calcular</string>
-    <string name="hintGain">Ganho</string>
-    <string name="hintTime">Constante de Tempo</string>
-    <string name="hintDelay">Atraso de Transporte</string>
+    <string name="hintGain">Ganho (k)</string>
+    <string name="hintTime">Constante de Tempo (τ)</string>
+    <string name="hintDelay">Atraso de Transporte (θ)</string>
     <string name="hintClosed">Malha Fechada</string>
     <string name="hintKu">Ganho Último (Ku)</string>
     <string name="hintPu">Período último (Pu)</string>

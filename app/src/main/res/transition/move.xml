@@ -3,4 +3,5 @@
     <changeBounds />
     <changeTransform />
     <changeClipBounds />
+    <explode/>
 </transitionSet>

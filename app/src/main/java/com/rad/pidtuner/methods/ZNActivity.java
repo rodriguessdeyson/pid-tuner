@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,6 +18,7 @@ import android.widget.RadioButton;
 
 import com.domain.models.tuning.TransferFunction;
 import com.domain.models.tuning.TuningModel;
+import com.domain.services.katex.Katex;
 import com.google.android.material.textfield.TextInputLayout;
 
 import com.domain.services.utils.BottomSheetDialog;
@@ -27,10 +32,17 @@ import com.domain.models.tuning.ControllerParameter;
 import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ZNActivity extends AppCompatActivity
 {
+	//region Constants
+
+	private static final String KATEX_URL = "file:///android_asset/katex_function_layout.html";
+
+	//endregion
+
 	//region Attributes
 
 	/**
@@ -111,6 +123,9 @@ public class ZNActivity extends AppCompatActivity
 
 		// Start the listener event handler.
 		initializeEventListener();
+
+		// Configure transfer function.
+		setUpTransferFunction();
 	}
 
 	/**
@@ -178,6 +193,31 @@ public class ZNActivity extends AppCompatActivity
 		});
 	}
 
+	/**
+	 * Set up the transfer function.
+	 */
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setUpTransferFunction()
+	{
+		Locale locale = Locale.getDefault();
+		WebView firstOrderFuncWebView = findViewById(R.id.WebViewFirstOrderEquation);
+		firstOrderFuncWebView.getSettings().setJavaScriptEnabled(true);
+		firstOrderFuncWebView.addJavascriptInterface(new Katex(locale), "Android");
+		firstOrderFuncWebView.loadUrl(KATEX_URL);
+		firstOrderFuncWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				// Resume transition after the web page is fully loaded
+				startPostponedEnterTransition();
+
+				// Set shared element transition (can add other types as needed)
+				getWindow().setSharedElementEnterTransition(new ChangeBounds());
+				getWindow().setSharedElementExitTransition(new ChangeBounds());
+			}
+		});
+	}
+
 	private boolean validateProcessParameters()
 	{
 		// Validates if the process data are filled and is not zero.
@@ -229,17 +269,17 @@ public class ZNActivity extends AppCompatActivity
 
 	private void computeController()
 	{
+		if (RadioButtonOpened.isChecked()) buildOpenedTuningParameters();
+		else buildClosedTuningParameters();
+	}
+
+	private void buildOpenedTuningParameters()
+	{
 		// Get the transfer function parameters.
 		double pGain = Parser.getDouble(EditTextProcessGain.getText().toString());
 		double pTime = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
 		double pDead = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
 
-		if (RadioButtonOpened.isChecked()) buildOpenedTuningParameters(pGain, pTime, pDead);
-		else buildClosedTuningParameters(pTime, pDead);
-	}
-
-	private void buildOpenedTuningParameters(double pGain, double pTime, double pDead)
-	{
 		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
 		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
@@ -262,12 +302,12 @@ public class ZNActivity extends AppCompatActivity
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
-		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+		View view = findViewById(R.id.WebViewFirstOrderEquation);
 
 		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
 				ZNActivity.this,
 				view,
-				Objects.requireNonNull(ViewCompat.getTransitionName(view))
+				ViewCompat.getTransitionName(view)
 		);
 
 		resultActivity.putExtra("CONFIGURATION", znMethod);
@@ -275,8 +315,12 @@ public class ZNActivity extends AppCompatActivity
 		startActivity(resultActivity, options.toBundle());
 	}
 
-	private void buildClosedTuningParameters(double pUltimateGain, double pUltimatePeriod)
+	private void buildClosedTuningParameters()
 	{
+		// Get the transfer function parameters.
+		double pUltimateGain = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
+		double pUltimatePeriod = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
+
 		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
 		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
@@ -299,7 +343,7 @@ public class ZNActivity extends AppCompatActivity
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
-		View view = findViewById(R.id.ImageViewFirstOrderProcess);
+		View view = findViewById(R.id.WebViewFirstOrderEquation);
 
 		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
 				ZNActivity.this,

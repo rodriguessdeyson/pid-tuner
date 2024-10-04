@@ -94,83 +94,62 @@
                 <LinearLayout
                     android:id="@+id/LinearLayoutHeader"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="250dp"
                     android:elevation="5dp"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/TextViewProcessHeader"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvProcess"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/TextViewProcessInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvFirstOrderProcess"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="13sp" />
+
+                    <WebView
+                        android:id="@+id/WebViewTransferModel"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:transitionName="shared_view" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/SwitchUseFirstOrderDynamic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:checked="true"
+                            android:textColorHint="@color/colorTextHint" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
                             android:gravity="center"
-                            android:orientation="vertical"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/ImageViewSelectedModel"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            android:text="@string/swFirstOrder"
+                            android:textColor="@color/colorSecondaryText"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/TextViewProcessHeader"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/tvProcess"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="16sp"
-                                android:typeface="normal" />
-
-                            <TextView
-                                android:id="@+id/TextViewProcessInfo"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/tvFirstOrderProcess"
-                                android:textColor="@color/colorSecondaryText"
-                                android:textSize="13sp" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <com.google.android.material.switchmaterial.SwitchMaterial
-                                    android:id="@+id/SwitchUseFirstOrderDynamic"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:checked="true"
-                                    android:textColorHint="@color/colorTextHint" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="5dp"
-                                    android:gravity="center"
-                                    android:text="@string/swFirstOrder"
-                                    android:textColor="@color/colorSecondaryText"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/ImageViewSelectedModel"
-                            android:layout_width="130dp"
-                            android:layout_height="0dp"
-                            android:background="@drawable/drawable_formula_background"
-                            android:transitionName="shared_view"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/first_order_dynamic" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -196,102 +175,117 @@
                         android:textSize="16sp"
                         android:typeface="normal" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/TextInputLayoutGain"
-                        style="@style/TextInputLayoutStyle"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColorHint="@color/colorTextHint"
-                        tools:layout_editor_absoluteX="5dp"
-                        tools:layout_editor_absoluteY="5dp">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/EditTextGain"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutGain"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:hint="@string/hintGain"
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"
-                            android:textColor="@color/colorSecondaryText"
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_weight="1"
                             android:textColorHint="@color/colorTextHint"
-                            app:backgroundTint="@color/colorAccent"
-                            tools:layout_editor_absoluteY="5dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            tools:visibility="visible">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/TextInputLayoutTimeConstant"
-                        style="@style/TextInputLayoutStyle"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/EditTextGain"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="@string/hintGain"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textColorHint="@color/colorTextHint"
+                                app:backgroundTint="@color/colorAccent" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutTimeConstant"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_weight="1"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/EditTextParam01"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="@string/hintTime"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textColorHint="@color/colorTextHint"
+                                app:backgroundTint="@color/colorAccent" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColorHint="@color/colorTextHint"
-                        tools:layout_editor_absoluteX="5dp"
-                        tools:layout_editor_absoluteY="63dp">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/EditTextParam01"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutTransportDelay"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:hint="@string/hintTime"
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"
-                            android:paddingTop="20dp"
-                            android:textColor="@color/colorSecondaryText"
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_weight="1"
                             android:textColorHint="@color/colorTextHint"
-                            app:backgroundTint="@color/colorAccent"
-                            tools:layout_editor_absoluteY="5dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            tools:layout_editor_absoluteX="5dp"
+                            tools:layout_editor_absoluteY="128dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/TextInputLayoutTransportDelay"
-                        style="@style/TextInputLayoutStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColorHint="@color/colorTextHint"
-                        tools:layout_editor_absoluteX="5dp"
-                        tools:layout_editor_absoluteY="128dp">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/EditTextParam02"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="@string/hintDelay"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:singleLine="true"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textColorHint="@color/colorTextHint"
+                                app:backgroundTint="@color/colorAccent"
+                                tools:layout_editor_absoluteY="6dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/EditTextParam02"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutLambda"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:hint="@string/hintDelay"
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"
-                            android:paddingTop="20dp"
-                            android:singleLine="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textColorHint="@color/colorTextHint"
-                            app:backgroundTint="@color/colorAccent"
-                            tools:layout_editor_absoluteY="6dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_weight="1"
+                            android:textColorHint="@color/colorTextHint">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/TextInputLayoutLambda"
-                        style="@style/TextInputLayoutStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColorHint="@color/colorTextHint"
-                        tools:layout_editor_absoluteX="5dp"
-                        tools:layout_editor_absoluteY="128dp">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/EditTextLambda"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="@string/hintLambda"
+                                android:imeOptions="actionDone"
+                                android:inputType="numberDecimal"
+                                android:singleLine="true"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textColorHint="@color/colorTextHint"
+                                app:backgroundTint="@color/colorAccent" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/EditTextLambda"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:hint="@string/hintLambda"
-                            android:imeOptions="actionDone"
-                            android:inputType="numberDecimal"
-                            android:paddingTop="20dp"
-                            android:singleLine="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textColorHint="@color/colorTextHint"
-                            app:backgroundTint="@color/colorAccent"
-                            tools:layout_editor_absoluteY="6dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

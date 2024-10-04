@@ -1,30 +1,49 @@
 package com.rad.pidtuner.methods.IMC;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.domain.services.tuning.interfaces.imc.IMCModelListener;
+import com.domain.services.katex.Katex;
+import com.domain.services.katex.KatexListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.rad.pidtuner.R;
 
-public class BottomSheetDialogIMCModel extends BottomSheetDialogFragment
+import java.security.InvalidParameterException;
+import java.util.Locale;
+
+public class BottomSheetDialogIMCModel extends BottomSheetDialogFragment implements KatexListener
 {
-	private boolean ImageSelected = false; // Flag to check if an image was selected
+	/**
+	 * Flag to check if a model was selected.
+	 */
+	private boolean modelSelected = false;
 
-	private IMCModelListener ImageSelectedListener;
+	/**
+	 * Listener for the model selection.
+	 */
+	private IMCModelListener modelListener;
 
-	// Use this method to set the listener from the parent
-	public void setOnImageSelectedListener(IMCModelListener listener)
+	/**
+	 * Set the listener from the parent
+	 * @param listener The listener to set.
+	 */
+	public void setOnModelSelectedListener(IMCModelListener listener)
 	{
-		this.ImageSelectedListener = listener;
+		this.modelListener = listener;
 	}
 
 	@Override
@@ -40,36 +59,65 @@ public class BottomSheetDialogIMCModel extends BottomSheetDialogFragment
 		tvModelTitle.setText(R.string.imc_about_title);
 		tvModels.setText(R.string.tvModelTitle);
 
-		ImageButton[] imageButtonModels = new ImageButton[5];
-		imageButtonModels[0] = v.findViewById(R.id.ImageButtonPModel);
-		imageButtonModels[1] = v.findViewById(R.id.ImageButtonPDModel);
-		imageButtonModels[2] = v.findViewById(R.id.ImageButtonPIModel);
-		imageButtonModels[3] = v.findViewById(R.id.ImageButtonPIDModel);
-		imageButtonModels[4] = v.findViewById(R.id.ImageButtonPID2Model);
+		WebView[] webViewModels = new WebView[5];
+		webViewModels[0] = v.findViewById(R.id.WebViewPModelEquation);
+		webViewModels[1] = v.findViewById(R.id.WebViewPDModelEquation);
+		webViewModels[2] = v.findViewById(R.id.WebViewPIModelEquation);
+		webViewModels[3] = v.findViewById(R.id.WebViewPID1ModelEquation);
+		webViewModels[4] = v.findViewById(R.id.WebViewPID2ModelEquation);
 
-		for (ImageButton model : imageButtonModels)
-		{
-			model.setOnClickListener(vv ->
-			{
-				if (ImageSelectedListener != null)
-				{
-					ImageSelectedListener.onModelSelected((String) model.getTag());
-					ImageSelected = true;
-				}
-				dismiss();
-			});
-		}
+		setWebView(webViewModels);
 
 		return v;
+	}
+
+	/**
+	 * Set the web view with models.
+	 * @param webViewModels The web view models.
+	 */
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setWebView(WebView[] webViewModels)
+	{
+		String katex_url = "file:///android_asset/katex_function_layout.html";
+		Locale locale = Locale.getDefault();
+		for (WebView webViewModel : webViewModels)
+		{
+			Katex katex = new Katex(locale);
+			katex.setOnClickListener(this);
+			webViewModel.getSettings().setJavaScriptEnabled(true);
+			webViewModel.addJavascriptInterface(katex, "Android");
+			webViewModel.loadUrl(katex_url);
+			webViewModel.setWebViewClient(new WebViewClient() {
+				@Override
+				public void onPageFinished(WebView view, String url)
+				{
+					String model = (String)webViewModel.getTag();
+					String params = String.format(locale, "updateEquation(Android.setModelEquation('" + "%s" + "'))", model);
+					webViewModel.evaluateJavascript(params, null);
+					webViewModel.evaluateJavascript("updateTag('" + model + "')", null);
+				}
+			});
+		}
 	}
 
 	@Override
 	public void onDismiss(@NonNull DialogInterface dialog)
 	{
 		super.onDismiss(dialog);
-		if (!ImageSelected && ImageSelectedListener != null)
+		if (!modelSelected && modelListener != null)
 		{
-			ImageSelectedListener.onDialogDismissed();
+			modelListener.onDialogDismissed();
 		}
+	}
+
+	@Override
+	public void onTransferFunctionClick(String model)
+	{
+		if (modelListener != null)
+		{
+			modelListener.onModelSelected(model);
+			modelSelected = true;
+		}
+		dismiss();
 	}
 }

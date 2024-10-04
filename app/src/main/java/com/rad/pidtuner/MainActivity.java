@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
 	{
 		Intent goTuning = new Intent(MainActivity.this, TuningActivity.class);
 		ActivityOptions options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);
-		startActivity(goTuning);
+		startActivity(goTuning, options.toBundle());
 	}
 
 	//endregion

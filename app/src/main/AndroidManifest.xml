@@ -46,7 +46,8 @@
         <activity android:name=".TuningActivity"/>
         <activity
             android:name=".MainActivity"
-            />
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
 
         <meta-data
             android:name="preloaded_fonts"

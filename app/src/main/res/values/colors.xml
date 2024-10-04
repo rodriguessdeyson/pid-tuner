@@ -26,4 +26,5 @@
 
     <color name="colorCheckedDisabled">#A0A0A0</color>
     <color name="colorUncheckedDisabled">#A0A0A0</color>
+    <color name="colorAccentOption">#171E23</color>
 </resources>

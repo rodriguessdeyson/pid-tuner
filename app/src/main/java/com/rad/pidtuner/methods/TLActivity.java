@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * Tyreus-Luyben Activity.
+ */
 public class TLActivity extends AppCompatActivity
 {
 	//region Constants
@@ -74,6 +77,8 @@ public class TLActivity extends AppCompatActivity
 
 	//endregion
 
+	//region Methods
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -91,7 +96,7 @@ public class TLActivity extends AppCompatActivity
 	}
 
 	/**
-	 Initialize the control views.
+	 * Initialize the control views.
 	 */
 	@SuppressLint("SetTextI18n")
 	private void initializeViews()
@@ -105,7 +110,7 @@ public class TLActivity extends AppCompatActivity
 	}
 
 	/**
-	 Initialize the buttons events.
+	 * Initialize the buttons events.
 	 */
 	private void initializeEventListener()
 	{
@@ -155,6 +160,11 @@ public class TLActivity extends AppCompatActivity
 			}
 		});
 	}
+
+	/**
+	 * Validate the process parameters.
+	 * @return True if the process parameters are valid.
+	 */
 	private boolean validateProcessParameters()
 	{
 		// Validates if the process data are filled.
@@ -183,6 +193,9 @@ public class TLActivity extends AppCompatActivity
 		return true;
 	}
 
+	/**
+	 * Compute the Controller.
+	 */
 	private void computeController()
 	{
 		// Get the control types.
@@ -222,4 +235,6 @@ public class TLActivity extends AppCompatActivity
 		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
 		startActivity(resultActivity, options.toBundle());
 	}
+
+	//endregion
 }

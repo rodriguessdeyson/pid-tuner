@@ -40,6 +40,9 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * Internal Model Control Activity.
+ */
 public class IMCActivity extends AppCompatActivity implements IMCModelListener, KatexListener
 {
 	//region Constants
@@ -207,10 +210,10 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener, 
 
 	//endregion
 
-	//region Private Methods
+	//region Methods
 
 	/**
-	 Initialize the control views.
+	 * Initialize the control views.
 	 */
 	private void initializeViews()
 	{
@@ -232,7 +235,7 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener, 
 	}
 
 	/**
-	 Initialize the buttons events.
+	 * Initialize the buttons events.
 	 */
 	private void initializeEventListener()
 	{
@@ -304,7 +307,8 @@ public class IMCActivity extends AppCompatActivity implements IMCModelListener, 
 	}
 
 	/**
-	 * Update transfer function model..
+	 * Update transfer function model.
+	 * @param model Model to update.
 	 */
 	private void updateWebViewTransferFunction(String model)
 	{

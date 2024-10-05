@@ -27,12 +27,13 @@ import com.domain.services.tuning.CC;
 import com.domain.models.tuning.types.ControlType;
 import com.domain.models.tuning.ControllerParameter;
 import com.domain.models.tuning.types.TuningType;
-import com.rad.pidtuner.TuningActivity;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
+/**
+ * Cohen-Coon Activity.
+ */
 public class CCActivity extends AppCompatActivity
 {
 	//region Constants
@@ -90,6 +91,8 @@ public class CCActivity extends AppCompatActivity
 
 	//endregion
 
+	//region Methods
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -107,7 +110,7 @@ public class CCActivity extends AppCompatActivity
 	}
 
 	/**
-	Initialize the control views.
+	 * Initialize the control views.
 	 */
 	@SuppressLint("SetTextI18n")
 	private void InitializeViews()
@@ -124,7 +127,7 @@ public class CCActivity extends AppCompatActivity
 	}
 
 	/**
-	Initialize the buttons events.
+	 * Initialize the buttons events.
 	 */
 	private void initializeEventListener()
 	{
@@ -262,4 +265,6 @@ public class CCActivity extends AppCompatActivity
 		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
 		startActivity(resultActivity, options.toBundle());
 	}
+
+	//endregion
 }

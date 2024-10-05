@@ -32,8 +32,10 @@ import com.domain.models.tuning.types.TuningType;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
+/**
+ * Integral Time Absolute Error Activity.
+ */
 public class ITAEActivity extends AppCompatActivity
 {
 	//region Constants
@@ -91,6 +93,8 @@ public class ITAEActivity extends AppCompatActivity
 
 	//endregion
 
+	//region Methods
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -108,7 +112,7 @@ public class ITAEActivity extends AppCompatActivity
 	}
 
 	/**
-	 Initialize the control views.
+	 * Initialize the control views.
 	 */
 	@SuppressLint("SetTextI18n")
 	private void InitializeViews()
@@ -125,7 +129,7 @@ public class ITAEActivity extends AppCompatActivity
 	}
 
 	/**
-	 Initialize the buttons events.
+	 * Initialize the buttons events.
 	 */
 	private void InitializeEventListener()
 	{
@@ -175,6 +179,11 @@ public class ITAEActivity extends AppCompatActivity
 			}
 		});
 	}
+
+	/**
+	 * Validate the process parameters.
+	 * @return True if the process parameters are valid.
+	 */
 	private boolean ValidateProcessParameters()
 	{
 		// Validates if the process data are filled.
@@ -218,6 +227,9 @@ public class ITAEActivity extends AppCompatActivity
 		return true;
 	}
 
+	/**
+	 * Compute the Controller.
+	 */
 	private void ComputeController()
 	{
 		// Get the selected process.
@@ -280,4 +292,6 @@ public class ITAEActivity extends AppCompatActivity
 		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
 		startActivity(resultActivity, options.toBundle());
 	}
+
+	//endregion
 }

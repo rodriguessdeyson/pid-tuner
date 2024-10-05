@@ -33,8 +33,10 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
+/**
+ * Ziegler-Nichols Activity.
+ */
 public class ZNActivity extends AppCompatActivity
 {
 	//region Constants
@@ -112,6 +114,8 @@ public class ZNActivity extends AppCompatActivity
 
 	//endregion
 
+	//region Methods
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -129,7 +133,7 @@ public class ZNActivity extends AppCompatActivity
 	}
 
 	/**
-	 Initialize the control views.
+	 * Initialize the control views.
 	 */
 	private void initializeViews()
 	{
@@ -149,7 +153,7 @@ public class ZNActivity extends AppCompatActivity
 	}
 
 	/**
-	 Initialize the buttons events.
+	 * Initialize the buttons events.
 	 */
 	private void initializeEventListener()
 	{
@@ -218,6 +222,10 @@ public class ZNActivity extends AppCompatActivity
 		});
 	}
 
+	/**
+	 * Validate the process parameters.
+	 * @return True if the process parameters are valid.
+	 */
 	private boolean validateProcessParameters()
 	{
 		// Validates if the process data are filled and is not zero.
@@ -267,12 +275,18 @@ public class ZNActivity extends AppCompatActivity
 		return true;
 	}
 
+	/**
+	 * Compute the Controller.
+	 */
 	private void computeController()
 	{
 		if (RadioButtonOpened.isChecked()) buildOpenedTuningParameters();
 		else buildClosedTuningParameters();
 	}
 
+	/**
+	 * Compute the Controller using open-loop tuning.
+	 */
 	private void buildOpenedTuningParameters()
 	{
 		// Get the transfer function parameters.
@@ -315,6 +329,9 @@ public class ZNActivity extends AppCompatActivity
 		startActivity(resultActivity, options.toBundle());
 	}
 
+	/**
+	 * Compute the Controller using closed-loop tuning.
+	 */
 	private void buildClosedTuningParameters()
 	{
 		// Get the transfer function parameters.
@@ -355,4 +372,6 @@ public class ZNActivity extends AppCompatActivity
 		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
 		startActivity(resultActivity, options.toBundle());
 	}
+
+	//endregion
 }

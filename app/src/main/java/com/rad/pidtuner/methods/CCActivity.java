@@ -160,9 +160,10 @@ public class CCActivity extends AppCompatActivity
 	private void setUpTransferFunction()
 	{
 		Locale locale = Locale.getDefault();
+		Katex katex = new Katex(locale);
 		WebView firstOrderFuncWebView = findViewById(R.id.WebViewFirstOrderEquation);
 		firstOrderFuncWebView.getSettings().setJavaScriptEnabled(true);
-		firstOrderFuncWebView.addJavascriptInterface(new Katex(locale), "Android");
+		firstOrderFuncWebView.addJavascriptInterface(katex, "Android");
 		firstOrderFuncWebView.loadUrl(KATEX_URL);
 		firstOrderFuncWebView.setWebViewClient(new WebViewClient() {
 			@Override

@@ -155,10 +155,10 @@
 
                     <WebView
                         android:id="@+id/WebViewFirstOrderEquation"
-                        android:background="@color/colorAccent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:transitionName="shared_view"/>
+                        android:layout_height="130dp"
+                        android:background="@color/colorAccent"
+                        android:transitionName="shared_view" />
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

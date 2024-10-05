@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-10-03T23:26:26.258846400Z">
+        <DropdownSelection timestamp="2024-10-05T02:56:41.002499400Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=RXCWA08CRXT" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\rodri\.android\avd\Samsung_S23_FE_API_34.avd" />
             </handle>
           </Target>
         </DropdownSelection>

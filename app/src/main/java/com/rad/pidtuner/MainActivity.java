@@ -1,14 +1,14 @@
 package com.rad.pidtuner;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rad.pidtuner.database.DataAccess;
-import com.rad.pidtuner.database.SettingModel;
+
 /**
  * Allows to manipulate the MainActivity views.
  */
@@ -21,11 +21,6 @@ public class MainActivity extends AppCompatActivity
 	 */
 	private Button StartTuningButton;
 
-	/**
-	 * TextView reference to start settings.
-	 */
-	private TextView TextViewSettings;
-
 	//endregion
 
 	//region Constructor
@@ -37,13 +32,13 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.layout_main);
 
 		// Find the Views references.
-		StartViewContents();
+		startViewContents();
 
 		// Initialize the database settings.
-		ConfigureDatabase();
+		configureDatabase();
 
 		// Method to treat all events.
-		ControlsEvent();
+		controlsEvent();
 	}
 
 	@Override
@@ -59,53 +54,37 @@ public class MainActivity extends AppCompatActivity
 	/**
 	 * Initialize all the views controls references.
 	 */
-	private void StartViewContents()
+	private void startViewContents()
 	{
 		StartTuningButton = findViewById(R.id.ButtonStart);
-		TextViewSettings  = findViewById(R.id.TextViewSettings);
 	}
 
 	/**
 	 * Configures the database server
 	 */
-	private void ConfigureDatabase()
+	private void configureDatabase()
 	{
 		// Creates the database.
 		DataAccess tuningDatabase = new DataAccess(this, "Tuner");
 		tuningDatabase.CreateDatabase();
-		if (tuningDatabase.ReadConfiguration() == null)
-		{
-			// Creates the default configuration;
-			SettingModel model = new SettingModel();
-			model.setDecimalPlaces(2);
-			model.setSameParameters(0);
-
-			// Inserts the first configuration.
-			tuningDatabase.Insert(model);
-		}
 	}
 
 	/**
 	 * Handle the views control events.
 	 */
-	private void ControlsEvent()
+	private void controlsEvent()
 	{
-		StartTuningButton.setOnClickListener(v -> OpenTunings());
-
-		TextViewSettings.setOnClickListener(v ->
-		{
-			Intent goSettings = new Intent(MainActivity.this, PreferenceActivity.class);
-			startActivity(goSettings);
-		});
+		StartTuningButton.setOnClickListener(v -> openTunings());
 	}
 
 	/**
 	 * Method to show an ad when tuning button is clicked.
 	 */
-	private void OpenTunings()
+	private void openTunings()
 	{
 		Intent goTuning = new Intent(MainActivity.this, TuningActivity.class);
-		startActivity(goTuning);
+		ActivityOptions options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);
+		startActivity(goTuning, options.toBundle());
 	}
 
 	//endregion

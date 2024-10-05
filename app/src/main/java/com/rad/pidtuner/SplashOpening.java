@@ -1,5 +1,6 @@
 package com.rad.pidtuner;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +24,8 @@ public class SplashOpening extends AppCompatActivity
         {
             // Start the activity after the process.
             Intent startActivity = new Intent(SplashOpening.this, MainActivity.class);
-            startActivity(startActivity);
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);
+            startActivity(startActivity, options.toBundle());
             this.finish();
         }, splashDisplayLength);
     }

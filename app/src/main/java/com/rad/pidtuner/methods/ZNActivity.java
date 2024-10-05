@@ -1,45 +1,56 @@
 package com.rad.pidtuner.methods;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
+import com.domain.services.katex.Katex;
 import com.google.android.material.textfield.TextInputLayout;
-import com.rad.pidtuner.database.DataAccess;
-import com.rad.pidtuner.database.SettingModel;
-import com.rad.pidtuner.utils.Logger;
+
+import com.domain.services.utils.BottomSheetDialog;
+import com.domain.services.utils.Logger;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
-import com.rad.pidtuner.utils.Parser;
-import com.tunings.methods.ZN;
-import com.tunings.models.ControlProcessType;
-import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
-import com.tunings.models.TuningType;
+import com.domain.services.utils.Parser;
+import com.domain.services.tuning.ZN;
+import com.domain.models.tuning.types.ControlType;
+import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * Ziegler-Nichols Activity.
+ */
 public class ZNActivity extends AppCompatActivity
 {
+	//region Constants
+
+	private static final String KATEX_URL = "file:///android_asset/katex_function_layout.html";
+
+	//endregion
+
 	//region Attributes
 
 	/**
 	 * Button reference to compute event.
 	 */
 	private Button ComputeButton;
-
-	/**
-	 Button reference to clean event.
-	 */
-	private Button CleanButton;
 
 	/**
 	 CheckBox reference to Proportional parameter.
@@ -96,7 +107,14 @@ public class ZNActivity extends AppCompatActivity
 	 */
 	private TextInputLayout LayoutTransportDelay;
 
+	/**
+	 * Button reference to show about dialog.
+	 */
+	private Button ButtonMethodInfo;
+
 	//endregion
+
+	//region Methods
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -105,19 +123,21 @@ public class ZNActivity extends AppCompatActivity
 		setContentView(R.layout.layout_zn);
 
 		// Find Views Reference.
-		InitializeViews();
+		initializeViews();
 
 		// Start the listener event handler.
-		InitializeEventListener();
+		initializeEventListener();
+
+		// Configure transfer function.
+		setUpTransferFunction();
 	}
 
 	/**
-	 Initialize the control views.
+	 * Initialize the control views.
 	 */
-	private void InitializeViews()
+	private void initializeViews()
 	{
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		CleanButton                   = findViewById(R.id.ButtonCleanParameters);
 		CheckBoxP                     = findViewById(R.id.CheckBoxP);
 		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
 		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
@@ -129,45 +149,33 @@ public class ZNActivity extends AppCompatActivity
 		LayoutGain                    = findViewById(R.id.TextInputLayoutGain);
 		LayoutTimeConstant            = findViewById(R.id.TextInputLayoutTimeConstant);
 		LayoutTransportDelay          = findViewById(R.id.TextInputLayoutTransportDelay);
-
-		DataAccess dbAccess = new DataAccess(this, "Tuner");
-		SettingModel userSettings = dbAccess.ReadConfiguration();
-		if (userSettings.isSameParameters())
-		{
-			// Locale.
-			Locale currentLocale = getResources().getConfiguration().locale;
-
-			EditTextProcessGain.setText(String.format(
-					currentLocale, "%." + userSettings.getDecimalPlaces() + "f", userSettings.getGain()));
-			EditTextProcessTimeConstant.setText(String.format(
-					currentLocale, "%." + userSettings.getDecimalPlaces() + "f", userSettings.getTime()));
-			EditTextProcessTransportDelay.setText(String.format(
-					currentLocale, "%." + userSettings.getDecimalPlaces() + "f", userSettings.getTransport()));
-		}
+		ButtonMethodInfo              = findViewById(R.id.ButtonMethodInfo);
 	}
 
 	/**
-	 Initialize the buttons events.
+	 * Initialize the buttons events.
 	 */
-	@SuppressLint("SetTextI18n")
-	private void InitializeEventListener()
+	private void initializeEventListener()
 	{
 		// Handle the button click.
 		ComputeButton.setOnClickListener(v ->
 		{
 			// Validates the input, from top-down approach.
-			if (!ValidateProcessParameters())
+			if (!validateProcessParameters())
 				return;
 
-			ComputeController();
+			computeController();
 		});
 
-		// Handle the button click.
-		CleanButton.setOnClickListener(v ->
+		ButtonMethodInfo.setOnClickListener(v ->
 		{
-			EditTextProcessGain.setText("");
-			EditTextProcessTimeConstant.setText("");
-			EditTextProcessTransportDelay.setText("");
+			String title = getString(R.string.zn_about_title);
+			String description = getString(R.string.zn_about_description);
+			String link = getResources().getString(R.string.zn_about_link);
+
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description, link);
+			bottomSheet.show(getSupportFragmentManager(),
+					"ModalBottomSheet");
 		});
 
 		RadioButtonOpened.setOnClickListener(v ->
@@ -176,15 +184,6 @@ public class ZNActivity extends AppCompatActivity
 			EditTextProcessGain.setEnabled(true);
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintTime));
 			LayoutTransportDelay.setHint(getResources().getString(R.string.hintDelay));
-
-			DataAccess dbAccess = new DataAccess(this, "Tuner");
-			SettingModel userSettings = dbAccess.ReadConfiguration();
-			if (userSettings.isSameParameters())
-			{
-				EditTextProcessGain.setText(userSettings.getGain().toString());
-				EditTextProcessTimeConstant.setText(userSettings.getTime().toString());
-				EditTextProcessTransportDelay.setText(userSettings.getTransport().toString());
-			}
 		});
 
 		RadioButtonClosed.setOnClickListener(v ->
@@ -195,31 +194,45 @@ public class ZNActivity extends AppCompatActivity
 			EditTextProcessGain.setEnabled(false);
 			LayoutTimeConstant.setHint(getResources().getString(R.string.hintKu));
 			LayoutTransportDelay.setHint(getResources().getString(R.string.hintPu));
+		});
+	}
 
-			DataAccess dbAccess = new DataAccess(this, "Tuner");
-			SettingModel userSettings = dbAccess.ReadConfiguration();
-			if (userSettings.isSameParameters())
+	/**
+	 * Set up the transfer function.
+	 */
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setUpTransferFunction()
+	{
+		Locale locale = Locale.getDefault();
+		WebView firstOrderFuncWebView = findViewById(R.id.WebViewFirstOrderEquation);
+		firstOrderFuncWebView.getSettings().setJavaScriptEnabled(true);
+		firstOrderFuncWebView.addJavascriptInterface(new Katex(locale), "Android");
+		firstOrderFuncWebView.loadUrl(KATEX_URL);
+		firstOrderFuncWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url)
 			{
-				EditTextProcessTimeConstant.setText(userSettings.getKu().toString());
-				EditTextProcessTransportDelay.setText(userSettings.getPu().toString());
+				// Resume transition after the web page is fully loaded
+				startPostponedEnterTransition();
+
+				// Set shared element transition (can add other types as needed)
+				getWindow().setSharedElementEnterTransition(new ChangeBounds());
+				getWindow().setSharedElementExitTransition(new ChangeBounds());
 			}
 		});
 	}
 
-	private boolean ValidateProcessParameters()
+	/**
+	 * Validate the process parameters.
+	 * @return True if the process parameters are valid.
+	 */
+	private boolean validateProcessParameters()
 	{
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
-		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
-			return false;
-		}
-
 		// Validates if the process data are filled and is not zero.
 		if (EditTextProcessGain.getText().toString().isEmpty() && RadioButtonOpened.isChecked())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -229,12 +242,12 @@ public class ZNActivity extends AppCompatActivity
 			if (RadioButtonClosed.isChecked())
 			{
 				EditTextProcessTimeConstant.setError(getResources().getString(R.string.KuError));
-				Logger.Show(this, R.string.KuError);
+				Logger.show(this, R.string.KuError);
 				return false;
 			}
 
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -244,108 +257,121 @@ public class ZNActivity extends AppCompatActivity
 			if (RadioButtonClosed.isChecked())
 			{
 				EditTextProcessTransportDelay.setError(getResources().getString(R.string.PuError));
-				Logger.Show(this, R.string.PuError);
+				Logger.show(this, R.string.PuError);
 				return false;
 			}
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
-			Logger.Show(this, R.string.TransportDelayError);
+			Logger.show(this, R.string.TransportDelayError);
+			return false;
+		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
+		{
+			Logger.show(this, R.string.ControllerTypeIsRequired);
 			return false;
 		}
 
 		return true;
 	}
 
-	private void ComputeController()
+	/**
+	 * Compute the Controller.
+	 */
+	private void computeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
+		if (RadioButtonOpened.isChecked()) buildOpenedTuningParameters();
+		else buildClosedTuningParameters();
+	}
 
-		// Check which is enabled.
-		if (RadioButtonOpened.isChecked())
-		{
-			// Gets the tuning basics information.
-			TuningMethod openTuning = new TuningMethod();
-			openTuning.setTuningName("Ziegler and Nichols");
-			openTuning.setTuningType(TuningType.ZN);
+	/**
+	 * Compute the Controller using open-loop tuning.
+	 */
+	private void buildOpenedTuningParameters()
+	{
+		// Get the transfer function parameters.
+		double pGain = Parser.getDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
 
-			// Gets the all control process type.
-			ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-			processTypes.add(ControlProcessType.Open);
-			openTuning.setControlProcessTypes(processTypes);
+		// Get the control types.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
-			ArrayList<ControlType> controlTypes = new ArrayList<>();
-			if (CheckBoxP.isChecked())
-				controlTypes.add(ControlType.P);
-			if (CheckBoxPI.isChecked())
-				controlTypes.add(ControlType.PI);
-			if (CheckBoxPID.isChecked())
-				controlTypes.add(ControlType.PID);
-			openTuning.setControlTypes(controlTypes);
-			tuningMethods.add(openTuning);
-		}
-		if (RadioButtonClosed.isChecked())
-		{
-			// Gets the tuning basics information.
-			TuningMethod closedTuning = new TuningMethod();
-			closedTuning.setTuningName("Ziegler and Nichols");
-			closedTuning.setTuningType(TuningType.ZN);
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
 
-			// Gets the all control process type.
-			ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-			processTypes.add(ControlProcessType.Closed);
-			closedTuning.setControlProcessTypes(processTypes);
+		// Compute the ZN Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(ZN.computeOpenLoop(controlType, tf));
 
-			ArrayList<ControlType> controlTypes = new ArrayList<>();
-			if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
-			if (CheckBoxPI.isChecked())	controlTypes.add(ControlType.PI);
-			if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
-			closedTuning.setControlTypes(controlTypes);
-			tuningMethods.add(closedTuning);
-		}
-
-		// Process the tuning.
-		Double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		Double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (TuningMethod tuning : tuningMethods)
-		{
-			for (ControlType controller: tuning.getControlTypes())
-			{
-				for (ControlProcessType pType : tuning.getControlProcessTypes())
-				{
-					if (pType == ControlProcessType.Open)
-					{
-						ControllerParameters cp = ZN.Compute(
-								pType,
-								controller, pGain, pTime, pDead,
-								null,
-								null);
-
-						// Updates the result.
-						parameters.add(cp);
-					}
-					else
-					{
-						ControllerParameters cp = ZN.Compute(
-								pType,
-								controller, null, null, null,
-								pTime,
-								pDead);
-
-						// Updates the result.
-						parameters.add(cp);
-					}
-				}
-			}
-			tuning.setParameters(parameters);
-		}
+		// Set up the model.
+		String name = getResources().getString(R.string.tvZN);
+		String description = getResources().getString(R.string.zn_about_description);
+		TuningModel znMethod = new TuningModel(name, description,
+				TuningType.ZN, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
-		resultActivity.putExtra("Gain", pGain);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
-		startActivity(resultActivity);
+		View view = findViewById(R.id.WebViewFirstOrderEquation);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				ZNActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
+		resultActivity.putExtra("CONFIGURATION", znMethod);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
+
+	/**
+	 * Compute the Controller using closed-loop tuning.
+	 */
+	private void buildClosedTuningParameters()
+	{
+		// Get the transfer function parameters.
+		double pUltimateGain = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
+		double pUltimatePeriod = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
+
+		// Get the control types.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
+
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pUltimateGain, pUltimatePeriod);
+
+		// Compute the ZN Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(ZN.computeClosedLoop(controlType, tf));
+
+		// Set up the model.
+		String name = getResources().getString(R.string.tvZN);
+		String description = getResources().getString(R.string.zn_about_description);
+		TuningModel znMethod = new TuningModel(name, description,
+				TuningType.ZN, tf);
+
+		// Pass through intent to the next activity the results information.
+		Intent resultActivity = new Intent(ZNActivity.this, ResultActivity.class);
+		View view = findViewById(R.id.WebViewFirstOrderEquation);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				ZNActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
+		resultActivity.putExtra("CONFIGURATION", znMethod);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
+	}
+
+	//endregion
 }

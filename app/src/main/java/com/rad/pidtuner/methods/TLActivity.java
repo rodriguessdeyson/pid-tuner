@@ -1,43 +1,54 @@
 package com.rad.pidtuner.methods;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
+import com.domain.services.katex.Katex;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
-import com.rad.pidtuner.database.DataAccess;
-import com.rad.pidtuner.database.SettingModel;
-import com.rad.pidtuner.utils.Logger;
-import com.rad.pidtuner.utils.Parser;
-import com.tunings.methods.TL;
-import com.tunings.models.ControlProcessType;
-import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
-import com.tunings.models.TuningType;
+import com.domain.services.utils.BottomSheetDialog;
+import com.domain.services.utils.Logger;
+import com.domain.services.utils.Parser;
+import com.domain.services.tuning.TL;
+import com.domain.models.tuning.types.ControlType;
+import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.types.TuningType;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
 
+/**
+ * Tyreus-Luyben Activity.
+ */
 public class TLActivity extends AppCompatActivity
 {
+	//region Constants
+
+	private static final String KATEX_URL = "file:///android_asset/katex_function_layout.html";
+
+	//endregion
+
 	//region Attributes
 
 	/**
 	 * Button reference to compute event.
 	 */
 	private Button ComputeButton;
-
-	/**
-	 Button reference to clean event.
-	 */
-	private Button CleanButton;
 
 	/**
 	 CheckBox reference to Proportional-integral parameter.
@@ -50,11 +61,6 @@ public class TLActivity extends AppCompatActivity
 	private CheckBox CheckBoxPID;
 
 	/**
-	 CheckBox reference to Proportional-Derivative-integral parameter.
-	 */
-	private RadioButton RadioButtonClosed;
-
-	/**
 	 EditText reference to process gain parameter.
 	 */
 	private EditText EditTextProcessGain;
@@ -64,7 +70,14 @@ public class TLActivity extends AppCompatActivity
 	 */
 	private EditText EditTextProcessTimeConstant;
 
+	/**
+	 * Button reference to show about dialog.
+	 */
+	private Button ButtonMethodInfo;
+
 	//endregion
+
+	//region Methods
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -73,72 +86,92 @@ public class TLActivity extends AppCompatActivity
 		setContentView(R.layout.layout_tl);
 
 		// Find Views Reference.
-		InitializeViews();
+		initializeViews();
 
 		// Start the listener event handler.
-		InitializeEventListener();
+		initializeEventListener();
+
+		// Configure transfer function.
+		setUpTransferFunction();
 	}
 
 	/**
-	 Initialize the control views.
+	 * Initialize the control views.
 	 */
 	@SuppressLint("SetTextI18n")
-	private void InitializeViews()
+	private void initializeViews()
 	{
-		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		CleanButton                   = findViewById(R.id.ButtonCleanParameters);
-		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
-		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
-		RadioButtonClosed             = findViewById(R.id.RadioButtonClosedLoop);
-		EditTextProcessGain           = findViewById(R.id.EditTextGain);
-		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
-
-		DataAccess dbAccess = new DataAccess(this, "Tuner");
-		SettingModel userSettings = dbAccess.ReadConfiguration();
-		if (userSettings.isSameParameters())
-		{
-			EditTextProcessGain.setText(userSettings.getKu().toString());
-			EditTextProcessTimeConstant.setText(userSettings.getPu().toString());
-		}
+		ComputeButton               = findViewById(R.id.ButtonComputePID);
+		CheckBoxPI                  = findViewById(R.id.CheckBoxPI);
+		CheckBoxPID                 = findViewById(R.id.CheckBoxPID);
+		EditTextProcessGain         = findViewById(R.id.EditTextGain);
+		EditTextProcessTimeConstant = findViewById(R.id.EditTextTimeConstant);
+		ButtonMethodInfo            = findViewById(R.id.ButtonMethodInfo);
 	}
 
 	/**
-	 Initialize the buttons events.
+	 * Initialize the buttons events.
 	 */
-	private void InitializeEventListener()
+	private void initializeEventListener()
 	{
 		// Handle the button click.
 		ComputeButton.setOnClickListener(v ->
 		{
 			// Validates the input, from top-down approach.
-			if (!ValidateProcessParameters())
+			if (!validateProcessParameters())
 				return;
 
-			ComputeController();
+			computeController();
 		});
 
-		// Handle the button click.
-		CleanButton.setOnClickListener(v ->
+		ButtonMethodInfo.setOnClickListener(v ->
 		{
-			EditTextProcessGain.setText("");
-			EditTextProcessTimeConstant.setText("");
+			String title = getResources().getString(R.string.tl_about_title);
+			String description = getResources().getString(R.string.tl_about_description);
+			String link = getResources().getString(R.string.tl_about_link);
+
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description, link);
+			bottomSheet.show(getSupportFragmentManager(),
+					"ModalBottomSheet");
 		});
 	}
 
-	private boolean ValidateProcessParameters()
+	/**
+	 * Set up the transfer function.
+	 */
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setUpTransferFunction()
 	{
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
-		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
-			return false;
-		}
+		Locale locale = Locale.getDefault();
+		WebView firstOrderFuncWebView = findViewById(R.id.WebViewFirstOrderEquation);
+		firstOrderFuncWebView.getSettings().setJavaScriptEnabled(true);
+		firstOrderFuncWebView.addJavascriptInterface(new Katex(locale), "Android");
+		firstOrderFuncWebView.loadUrl(KATEX_URL);
+		firstOrderFuncWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				// Resume transition after the web page is fully loaded
+				startPostponedEnterTransition();
 
+				// Set shared element transition (can add other types as needed)
+				getWindow().setSharedElementEnterTransition(new ChangeBounds());
+				getWindow().setSharedElementExitTransition(new ChangeBounds());
+			}
+		});
+	}
+
+	/**
+	 * Validate the process parameters.
+	 * @return True if the process parameters are valid.
+	 */
+	private boolean validateProcessParameters()
+	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -146,67 +179,62 @@ public class TLActivity extends AppCompatActivity
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
+		{
+			Logger.show(this, R.string.ControllerTypeIsRequired);
+			return false;
+		}
+
 		return true;
 	}
 
-	private void ComputeController()
+	/**
+	 * Compute the Controller.
+	 */
+	private void computeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
+		// Get the control types.
+		ArrayList<ControlType> controlTypes = new ArrayList<>();
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
-		// Check which is enabled.
-		if (RadioButtonClosed.isChecked())
-		{
-			// Gets the tuning basics information.
-			TuningMethod closedTuning = new TuningMethod();
-			closedTuning.setTuningName("Tyreus and Luyben");
-			closedTuning.setTuningType(TuningType.TL);
+		// Get the transfer function parameters.
+		double pUltimateGain = Parser.getDouble(EditTextProcessGain.getText().toString());
+		double pUltimatePeriod = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
 
-			// Gets the all control process type.
-			ArrayList<ControlProcessType> processTypes = new ArrayList<>();
-			processTypes.add(ControlProcessType.Closed);
-			closedTuning.setControlProcessTypes(processTypes);
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pUltimateGain, pUltimatePeriod);
 
-			ArrayList<ControlType> controlTypes = new ArrayList<>();
-			if (CheckBoxPI.isChecked())
-				controlTypes.add(ControlType.PI);
-			if (CheckBoxPID.isChecked())
-				controlTypes.add(ControlType.PID);
-			closedTuning.setControlTypes(controlTypes);
-			tuningMethods.add(closedTuning);
-		}
+		// Compute the TL Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+		for (ControlType controlType : controlTypes)
+			controllerParameters.add(TL.compute(controlType, tf));
 
-		// Process the tuning.
-		Double pTime = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pDead = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (TuningMethod tuning : tuningMethods)
-		{
-			for (ControlType controller: tuning.getControlTypes())
-			{
-				for (ControlProcessType pType : tuning.getControlProcessTypes())
-				{
-					ControllerParameters cp = TL.Compute(
-						pType,
-						controller,
-							pTime,
-							pDead
-					);
-					// Updates the result.
-					parameters.add(cp);
-				}
-			}
-			tuning.setParameters(parameters);
-		}
+		// Set up the model.
+		String name = getResources().getString(R.string.tvTL);
+		String description = getResources().getString(R.string.tl_about_description);
+		TuningModel tlMethod = new TuningModel(name, description,
+				TuningType.ITAE, tf);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(TLActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
-		resultActivity.putExtra("Gain", 0);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
-		startActivity(resultActivity);
+		View view = findViewById(R.id.WebViewFirstOrderEquation);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				TLActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
+		resultActivity.putExtra("CONFIGURATION", tlMethod);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
+
+	//endregion
 }

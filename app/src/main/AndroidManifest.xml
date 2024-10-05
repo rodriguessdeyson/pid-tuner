@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.rad.pidtuner">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,26 +13,45 @@
         tools:node="replace">
         <activity
             android:name=".SplashOpening"
-            android:label="@string/app_name"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ResultActivity" />
-        <activity android:name=".PreferenceActivity" />
-        <activity android:name=".methods.IMCActivity" />
-        <activity android:name=".methods.ZNActivity" />
-        <activity android:name=".methods.TLActivity" />
-        <activity android:name=".methods.ITAEActivity" />
-        <activity android:name=".methods.IAEActivity" />
-        <activity android:name=".methods.CHRActivity" />
-        <activity android:name=".methods.CCActivity" />
-        <activity android:name=".TuningActivity" />
+        <activity android:name=".ResultActivity"
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+        <activity android:name=".methods.IMC.IMCActivity"
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+        <activity android:name=".methods.ZNActivity"
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+        <activity android:name=".methods.TLActivity"
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+        <activity android:name=".methods.ITAEActivity"
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+        <activity android:name=".methods.IAEActivity"
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+        <activity android:name=".methods.CHRActivity"
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+        <activity android:name=".methods.CCActivity"
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+        <activity android:name=".TuningActivity"/>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" />
+            android:windowEnterTransition="@transition/move"
+            android:windowExitTransition="@transition/move" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

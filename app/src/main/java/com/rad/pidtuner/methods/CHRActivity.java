@@ -4,42 +4,54 @@ package com.rad.pidtuner.methods;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
+import com.domain.models.tuning.TransferFunction;
+import com.domain.models.tuning.TuningModel;
+import com.domain.services.katex.Katex;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.rad.pidtuner.R;
 import com.rad.pidtuner.ResultActivity;
-import com.rad.pidtuner.database.DataAccess;
-import com.rad.pidtuner.database.SettingModel;
-import com.rad.pidtuner.utils.Logger;
-import com.rad.pidtuner.utils.Parser;
-import com.tunings.methods.CHR;
-import com.tunings.models.ControlProcessType;
-import com.tunings.models.ControlType;
-import com.tunings.models.ControllerParameters;
-import com.tunings.models.TuningMethod;
-import com.tunings.models.TuningType;
+import com.domain.services.utils.BottomSheetDialog;
+import com.domain.services.utils.Logger;
+import com.domain.services.utils.Parser;
+import com.domain.services.tuning.CHR;
+import com.domain.models.tuning.types.ProcessType;
+import com.domain.models.tuning.types.ControlType;
+import com.domain.models.tuning.ControllerParameter;
+import com.domain.models.tuning.types.TuningType;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * Chien-Hrones-Reswick Activity.
+ */
 public class CHRActivity extends AppCompatActivity
 {
+	//region Constants
+
+	private static final String KATEX_URL = "file:///android_asset/katex_function_layout.html";
+
+	//endregion
+
 	//region Attributes
 
 	/**
 	 * Button reference to compute event.
 	 */
 	private Button ComputeButton;
-
-	/**
-	 Button reference to clean event.
-	 */
-	private Button CleanButton;
 
 	/**
 	 CheckBox reference to Proportional parameter.
@@ -86,7 +98,14 @@ public class CHRActivity extends AppCompatActivity
 	 */
 	private EditText EditTextProcessTransportDelay;
 
+	/**
+	 * Button reference to show about dialog.
+	 */
+	private Button ButtonMethodInfo;
+
 	//endregion
+
+	//region Methods
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -95,20 +114,22 @@ public class CHRActivity extends AppCompatActivity
 		setContentView(R.layout.layout_chr);
 
 		// Find Views Reference.
-		InitializeViews();
+		initializeViews();
 
 		// Start the listener event handler.
-		InitializeEventListener();
+		initializeEventListener();
+
+		// Configure transfer function.
+		setUpTransferFunction();
 	}
 
 	/**
-	 Initialize the control views.
+	 * Initialize the control views.
 	 */
 	@SuppressLint("SetTextI18n")
-	private void InitializeViews()
+	private void initializeViews()
 	{
 		ComputeButton                 = findViewById(R.id.ButtonComputePID);
-		CleanButton                   = findViewById(R.id.ButtonCleanParameters);
 		CheckBoxP                     = findViewById(R.id.CheckBoxP);
 		CheckBoxPI                    = findViewById(R.id.CheckBoxPI);
 		CheckBoxPID                   = findViewById(R.id.CheckBoxPID);
@@ -118,62 +139,72 @@ public class CHRActivity extends AppCompatActivity
 		EditTextProcessGain           = findViewById(R.id.EditTextGain);
 		EditTextProcessTimeConstant   = findViewById(R.id.EditTextTimeConstant);
 		EditTextProcessTransportDelay = findViewById(R.id.EditTextTransportDelay);
-
-		DataAccess dbAccess = new DataAccess(this, "Tuner");
-		SettingModel userSettings = dbAccess.ReadConfiguration();
-		if (userSettings.isSameParameters())
-		{
-			EditTextProcessGain.setText(userSettings.getGain().toString());
-			EditTextProcessTimeConstant.setText(userSettings.getTime().toString());
-			EditTextProcessTransportDelay.setText(userSettings.getTransport().toString());
-		}
+		ButtonMethodInfo              = findViewById(R.id.ButtonMethodInfo);
 	}
 
 	/**
-	 Initialize the buttons events.
+	 * Initialize the buttons events.
 	 */
-	private void InitializeEventListener()
+	private void initializeEventListener()
 	{
 		// Handle the button click.
 		ComputeButton.setOnClickListener(v ->
 		{
 			// Validates the input, from top-down approach.
-			if (!ValidateProcessParameters())
+			if (!validateProcessParameters())
 				return;
 
-			ComputeController();
+			computeController();
 		});
 
-		// Handle the button click.
-		CleanButton.setOnClickListener(v ->
+		ButtonMethodInfo.setOnClickListener(v ->
 		{
-			EditTextProcessGain.setText("");
-			EditTextProcessTimeConstant.setText("");
-			EditTextProcessTransportDelay.setText("");
+			String title = getResources().getString(R.string.chr_about_title);
+			String description = getResources().getString(R.string.chr_about_description);
+			String link = getResources().getString(R.string.chr_about_link);
+
+			BottomSheetDialog bottomSheet = new BottomSheetDialog(title, description, link);
+			bottomSheet.show(getSupportFragmentManager(),
+					"ModalBottomSheet");
 		});
 	}
 
-	private boolean ValidateProcessParameters()
+	/**
+	 * Set up the transfer function.
+	 */
+	@SuppressLint("SetJavaScriptEnabled")
+	private void setUpTransferFunction()
 	{
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxServo.isChecked() && !CheckBoxRegulator.isChecked())
-		{
-			Logger.Show(this, R.string.ProcessTypeIsRequired);
-			return false;
-		}
+		Locale locale = Locale.getDefault();
+		WebView firstOrderFuncWebView = findViewById(R.id.WebViewFirstOrderEquation);
+		firstOrderFuncWebView.getSettings().setJavaScriptEnabled(true);
+		firstOrderFuncWebView.addJavascriptInterface(new Katex(locale), "Android");
+		firstOrderFuncWebView.loadUrl(KATEX_URL);
+		firstOrderFuncWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				// Resume transition after the web page is fully loaded
+				startPostponedEnterTransition();
 
-		// Validates if at least one controller type is checked.
-		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
-		{
-			Logger.Show(this, R.string.ControllerTypeIsRequired);
-			return false;
-		}
+				// Set shared element transition (can add other types as needed)
+				getWindow().setSharedElementEnterTransition(new ChangeBounds());
+				getWindow().setSharedElementExitTransition(new ChangeBounds());
+			}
+		});
+	}
 
+	/**
+	 * Validate the process parameters.
+	 * @return True if the process parameters are valid.
+	 */
+	private boolean validateProcessParameters()
+	{
 		// Validates if the process data are filled.
 		if (EditTextProcessGain.getText().toString().isEmpty())
 		{
 			EditTextProcessGain.setError(getResources().getString(R.string.GainError));
-			Logger.Show(this, R.string.GainError);
+			Logger.show(this, R.string.GainError);
 			return false;
 		}
 
@@ -181,7 +212,7 @@ public class CHRActivity extends AppCompatActivity
 		if (EditTextProcessTimeConstant.getText().toString().isEmpty())
 		{
 			EditTextProcessTimeConstant.setError(getResources().getString(R.string.TimeConstantError));
-			Logger.Show(this, R.string.TimeConstantError);
+			Logger.show(this, R.string.TimeConstantError);
 			return false;
 		}
 
@@ -189,80 +220,104 @@ public class CHRActivity extends AppCompatActivity
 		if (EditTextProcessTransportDelay.getText().toString().isEmpty())
 		{
 			EditTextProcessTransportDelay.setError(getResources().getString(R.string.TransportDelayError));
-			Logger.Show(this, R.string.TransportDelayError);
+			Logger.show(this, R.string.TransportDelayError);
 			return false;
 		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxServo.isChecked() && !CheckBoxRegulator.isChecked())
+		{
+			Logger.show(this, R.string.ProcessTypeIsRequired);
+			return false;
+		}
+
+		// Validates if at least one controller type is checked.
+		if (!CheckBoxP.isChecked() && !CheckBoxPI.isChecked() && !CheckBoxPID.isChecked())
+		{
+			Logger.show(this, R.string.ControllerTypeIsRequired);
+			return false;
+		}
+
 		return true;
 	}
 
-	private void ComputeController()
+	/**
+	 * Compute the Controller.
+	 */
+	private void computeController()
 	{
-		ArrayList<TuningMethod> tuningMethods = new ArrayList<>();
-
-		// Gets the tuning basics information.
-		TuningMethod chrMethod = new TuningMethod();
-		chrMethod.setTuningName("Chien-Hrones-Reswick");
-		chrMethod.setTuningType(TuningType.CHR);
-
-		// Gets the selected process.
-		ArrayList<ControlProcessType> processTypes = new ArrayList<>();
+		// Get the selected process.
+		ArrayList<ProcessType> processTypes = new ArrayList<>();
 		if (CheckBoxServo.isChecked())
-		{
-			if (SwitchIs20.isChecked())
-				processTypes.add(ControlProcessType.Servo20);
-			else
-				processTypes.add(ControlProcessType.Servo);
-
-		}
+			processTypes.add(SwitchIs20.isChecked() ? ProcessType.Servo20 : ProcessType.Servo);
 		if (CheckBoxRegulator.isChecked())
-		{
-			if (SwitchIs20.isChecked())
-				processTypes.add(ControlProcessType.Regulator20);
-			else
-				processTypes.add(ControlProcessType.Regulator);
-		}
-		chrMethod.setControlProcessTypes(processTypes);
+			processTypes.add(SwitchIs20.isChecked() ? ProcessType.Regulator20 : ProcessType.Regulator);
 
-		// Gets the control to compute.
+		// Get the control types.
 		ArrayList<ControlType> controlTypes = new ArrayList<>();
-		if (CheckBoxP.isChecked())
-			controlTypes.add(ControlType.P);
-		if (CheckBoxPI.isChecked())
-			controlTypes.add(ControlType.PI);
-		if (CheckBoxPID.isChecked())
-			controlTypes.add(ControlType.PID);
-		chrMethod.setControlTypes(controlTypes);
-		tuningMethods.add(chrMethod);
+		if (CheckBoxP.isChecked()) controlTypes.add(ControlType.P);
+		if (CheckBoxPI.isChecked()) controlTypes.add(ControlType.PI);
+		if (CheckBoxPID.isChecked()) controlTypes.add(ControlType.PID);
 
-		// Process the tuning.
-		Double pGain = Parser.GetDouble(EditTextProcessGain.getText().toString());
-		Double pTime = Parser.GetDouble(EditTextProcessTimeConstant.getText().toString());
-		Double pDead = Parser.GetDouble(EditTextProcessTransportDelay.getText().toString());
-		ArrayList<ControllerParameters> parameters = new ArrayList<>();
-		for (TuningMethod tuning : tuningMethods)
+		// Get the transfer function parameters.
+		double pGain = Parser.getDouble(EditTextProcessGain.getText().toString());
+		double pTime = Parser.getDouble(EditTextProcessTimeConstant.getText().toString());
+		double pDead = Parser.getDouble(EditTextProcessTransportDelay.getText().toString());
+
+		// Set up the transfer function.
+		TransferFunction tf = new TransferFunction(pGain, pTime, pDead);
+
+		// Compute the CHR Controller.
+		ArrayList<ControllerParameter> controllerParameters = new ArrayList<>();
+		for (ProcessType processType : processTypes)
 		{
-			for (ControlType controller: tuning.getControlTypes())
+			for (ControlType controlType :  controlTypes)
 			{
-				for (ControlProcessType pType : tuning.getControlProcessTypes())
+				ControllerParameter cp;
+				switch (processType)
 				{
-					ControllerParameters cp = CHR.Compute(
-						controller,
-						pType,
-						pGain,
-						pTime,
-						pDead);
-					parameters.add(cp);
+					case Servo:
+						cp = CHR.computeServo(controlType, tf);
+						controllerParameters.add(cp);
+						break;
+					case Servo20:
+						cp = CHR.computeServo20UP(controlType, tf);
+						controllerParameters.add(cp);
+						break;
+					case Regulator:
+						cp = CHR.computeRegulator(controlType, tf);
+						controllerParameters.add(cp);
+						break;
+					case Regulator20:
+						cp = CHR.computeRegulator20UP(controlType, tf);
+						controllerParameters.add(cp);
+						break;
+					default:
+						throw new InvalidParameterException(processType.toString());
 				}
 			}
-			tuning.setParameters(parameters);
 		}
+
+		// Set up the model.
+		String name = getResources().getString(R.string.tvCHR);
+		String description = getResources().getString(R.string.chr_about_description);
+		TuningModel chrMethod = new TuningModel(name, description,
+				TuningType.CHR, tf, processTypes);
 
 		// Pass through intent to the next activity the results information.
 		Intent resultActivity = new Intent(CHRActivity.this, ResultActivity.class);
-		resultActivity.putParcelableArrayListExtra("RESULT", tuningMethods);
-		resultActivity.putExtra("Gain", pGain);
-		resultActivity.putExtra("Time", pTime);
-		resultActivity.putExtra("Dead", pDead);
-		startActivity(resultActivity);
+		View view = findViewById(R.id.WebViewFirstOrderEquation);
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+				CHRActivity.this,
+				view,
+				ViewCompat.getTransitionName(view)
+		);
+
+		resultActivity.putExtra("CONFIGURATION", chrMethod);
+		resultActivity.putParcelableArrayListExtra("RESULT", controllerParameters);
+		startActivity(resultActivity, options.toBundle());
 	}
+
+	//endregion
 }

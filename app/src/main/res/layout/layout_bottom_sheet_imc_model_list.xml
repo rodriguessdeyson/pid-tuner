@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayoutDialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/viewContainer"
+            android:layout_width="50dp"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.082" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/TextViewIMC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="28sp"
+        tools:text="@string/imc_about_title" />
+
+    <TextView
+        android:id="@+id/TextViewModels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        tools:text="@string/tvModelTitle" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/ScrollViewContainer"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp">
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <!-- The colored line (divider) on the left side -->
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/colorAccent" /> <!-- Use your desired color -->
+
+                <!-- TextView anchored to the left -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TextViewPController"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/cbP"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
+
+                    <TextView
+                        android:id="@+id/TextViewPControllerInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvModelResult4"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/WebViewPModelEquation"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:tag="P"
+                android:transitionName="shared_view" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <!-- The colored line (divider) on the left side -->
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/colorAccent" /> <!-- Use your desired color -->
+
+                <!-- TextView anchored to the left -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TextViewPDController"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/cbPD"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
+
+                    <TextView
+                        android:id="@+id/TextViewPDControllerInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvModelResult5"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/WebViewPDModelEquation"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:tag="PD"
+                android:transitionName="shared_view" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <!-- The colored line (divider) on the left side -->
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/colorAccent" /> <!-- Use your desired color -->
+
+                <!-- TextView anchored to the left -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TextViewPIController"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/cbPI"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
+
+                    <TextView
+                        android:id="@+id/TextViewPIControllerInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvModelResult1"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/WebViewPIModelEquation"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:tag="PI"
+                android:transitionName="shared_view" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <!-- The colored line (divider) on the left side -->
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/colorAccent" /> <!-- Use your desired color -->
+
+                <!-- TextView anchored to the left -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TextViewPIDController"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/cbPID"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
+
+                    <TextView
+                        android:id="@+id/TextViewPIDControllerInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvModelResult2"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/WebViewPID1ModelEquation"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:tag="PID1"
+                android:transitionName="shared_view" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <!-- The colored line (divider) on the left side -->
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/colorAccent" /> <!-- Use your desired color -->
+
+                <!-- TextView anchored to the left -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TextViewPID2Controller"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/cbPID"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="16sp"
+                        android:typeface="normal" />
+
+                    <TextView
+                        android:id="@+id/TextViewPID2ControllerInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/tvModelResult3"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/WebViewPID2ModelEquation"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorAccent"
+                android:clickable="true"
+                android:focusable="true"
+                android:tag="PID2"
+                android:transitionName="shared_view" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark Mode App. -->
-    <color name="colorPrimary">#FF9800</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF9800</color>
-
-    <!-- Buttons-->
-    <color name="colorButton">#E18600</color>
-    <color name="colorButtonPressed">#FF9800</color>
-    <color name="colorButtonText">#000000</color>
-    <color name="colorCloseButton">#CD0000</color>
-    <color name="mtrl_textinput_default_box_stroke_color">@color/colorButton</color>
+    <!-- App. -->
+    <color name="colorPrimary">#7F7B77</color>
+    <color name="colorSecondary">#121012</color>
+    <color name="colorSecondaryAlt">#CC0B0F12</color>
+    <color name="colorTertiary">#FF0B0F12</color>
+    <color name="colorAccent">#CC8D46</color>
 
     <!--Text-->
-    <color name="colorText">#C8C8C8</color>
-    <color name="colorTextHint">#969696</color>
+    <color name="colorPrimaryText">#ECDCC9</color>
+    <color name="colorPrimaryDarkText">#101419</color>
+    <color name="colorSecondaryText">#CC8D46</color>
+    <color name="colorTextHint">#B3B3B3</color>
 
-    <!--Elevations-->
-    <color name="colorDarkElevation">#CD202020</color>
-    <color name="colorDarkBackground">#121212</color>
-    <color name="colorModelBackground">#333333</color>
+    <!-- Buttons-->
+    <color name="colorButton">#CC8D46</color>
+    <color name="colorButtonText">#101419</color>
 
+    <!--Backgrounds-->
+    <color name="primaryBackground">#313539</color>
+    <color name="list_item">#BBACA1</color>
+    <color name="colorBackground">#59BBACA1</color>
+    <color name="formula">#FF333333</color>
     <color name="colorWhite">#ffffff</color>
 
+    <color name="colorCheckedDisabled">#A0A0A0</color>
+    <color name="colorUncheckedDisabled">#A0A0A0</color>
+    <color name="colorAccentOption">#171E23</color>
 </resources>

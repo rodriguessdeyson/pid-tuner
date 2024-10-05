@@ -2,85 +2,81 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstrainLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDarkBackground"
+    android:background="@drawable/mainbackground1x"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/TextViewWelcome"
-        android:layout_width="350dp"
-        android:layout_height="275dp"
-        android:layout_centerVertical="false"
-        android:gravity="center"
-        android:text="@string/strWelcome"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/colorText"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewAppName"
-        app:layout_constraintVertical_bias="0.157" />
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_pidtuner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.137" />
-
-    <TextView
-        android:id="@+id/TextViewAppName"
+        android:id="@+id/TextViewPidTuner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/app_name"
-        android:textColor="@color/colorAccent"
-        android:textSize="36sp"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="45sp"
+        android:typeface="normal"
+        android:transitionName="shared_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273" />
+        app:layout_constraintVertical_bias="0.499" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/FrameLayoutPidTunerWelcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/drawable_card_background"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewPidTuner"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/TextViewWelcome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:padding="8dp"
+            android:text="@string/strWelcome"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            android:typeface="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/ButtonStart"
-        android:layout_width="167dp"
-        android:layout_height="50dp"
-        android:background="@drawable/button_style"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/btStart"
         android:textAllCaps="false"
-        android:textColor="@color/button_text_colors"
-        android:textSize="18sp"
-        android:textStyle="normal"
-        app:backgroundTint="@null"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:typeface="normal"
+        app:backgroundTint="@color/colorButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewWelcome"
-        app:layout_constraintVertical_bias="0.369" />
-
-    <TextView
-        android:id="@+id/TextViewSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="82dp"
-        android:text="@string/tvSettings"
-        android:textColor="@color/colorText"
-        android:textSize="21sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.944" />
+        app:layout_constraintTop_toBottomOf="@+id/TextViewPidTuner"
+        app:layout_constraintVertical_bias="0.882" />
 </androidx.constraintlayout.widget.ConstraintLayout>

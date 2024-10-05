@@ -3,5 +3,6 @@
     <item android:color="@color/colorAccent" android:state_focused="true" />
     <item android:color="@color/colorAccent" android:state_hovered="true" />
     <item android:color="@color/mtrl_textinput_disabled_color" android:state_enabled="false" />
+
     <item android:color="@color/colorPrimary" />
 </selector>

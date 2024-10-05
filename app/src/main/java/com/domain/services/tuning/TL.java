@@ -10,8 +10,17 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 
+/**
+ * Tyreus-Luyben tuning algorithm.
+ */
 public class TL
 {
+	/**
+	 * Compute the Tyreus-Luyben tuning parameters.
+	 * @param controlType Control type (PI, PID).
+	 * @param transferFunction Transfer function.
+	 * @return Controller parameters (Kp, Ki and Kd).
+	 */
 	public static ControllerParameter compute(@NonNull ControlType controlType,
 											  @NonNull TransferFunction transferFunction)
 	{
@@ -29,6 +38,12 @@ public class TL
 		}
 	}
 
+	/**
+	 * Compute Tyreus-Luyben Kp and Ki tuning parameters.
+	 * @param kuGain Ultimate gain.
+	 * @param uPeriod Ultimate period.
+	 * @return Controller parameters.
+	 */
 	@NonNull
 	private static ControllerParameter piController(double kuGain, double uPeriod)
 	{
@@ -40,6 +55,12 @@ public class TL
 				kp, ki, kd);
 	}
 
+	/**
+	 * Compute Tyreus-Luyben Kp, Ki and Kd tuning parameters.
+	 * @param kuGain Ultimate gain.
+	 * @param uPeriod Ultimate period.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter pidController(double kuGain, double uPeriod)
 	{
 		double kp = kuGain / 2.2;

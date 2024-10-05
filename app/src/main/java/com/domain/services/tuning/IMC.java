@@ -11,6 +11,9 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 
+/**
+ * Internal Model Control tuning algorithm.
+ */
 public class IMC
 {
 	/**

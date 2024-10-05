@@ -10,8 +10,17 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 
+/**
+ * Integral Time Absolute Error tuning algorithm.
+ */
 public class ITAE
 {
+	/**
+	 * Compute the Integral Time Absolute Error Servo tuning parameters.
+	 * @param controlType Control type (PI, PID).
+	 * @param transferFunction Transfer function.
+	 * @return Controller parameters (Kp, Ki and Kd).
+	 */
 	public static ControllerParameter computeServo(@NonNull ControlType controlType,
 												   @NonNull TransferFunction transferFunction)
 	{
@@ -30,6 +39,12 @@ public class ITAE
 		}
 	}
 
+	/**
+	 * Compute the Integral Time Absolute Error Regulator tuning parameters.
+	 * @param controlType Control type (PI, PID).
+	 * @param transferFunction Transfer function.
+	 * @return Controller parameters (Kp, Ki and Kd).
+	 */
 	public static ControllerParameter computeRegulator(@NonNull ControlType controlType,
 													   @NonNull TransferFunction transferFunction)
 	{
@@ -47,6 +62,14 @@ public class ITAE
 				throw new InvalidParameterException(controlType.toString());
 		}
 	}
+
+	/**
+	 * Compute Integral Time Absolute Error Kp and Ki tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter servoPIController(double kGain, double tTime,
 														 double tDelay)
 	{
@@ -58,6 +81,13 @@ public class ITAE
 				ControlType.PI, kp, ki, kd);
 	}
 
+	/**
+	 * Compute Integral Time Absolute Error Kp, Ki and Kd tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter servoPIDController(double kGain, double tTime,
 														  double tDelay)
 	{
@@ -69,6 +99,13 @@ public class ITAE
 				ControlType.PID, kp, ki, kd);
 	}
 
+	/**
+	 * Compute Integral Time Absolute Error Kp and Ki tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter regulatorPIController(double kGain, double tTime,
 															 double tDelay)
 	{
@@ -80,6 +117,13 @@ public class ITAE
 				ControlType.PI, kp, ki, kd);
 	}
 
+	/**
+	 * Compute Integral Time Absolute Error Kp, Ki and Kd tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter regulatorPIDController(double kGain, double tTime,
 															  double tDelay)
 	{

@@ -10,8 +10,17 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 
+/**
+ * Cohen-Coon tuning algorithm.
+ */
 public class CC
 {
+	/**
+	 * Compute the Cohen-Coon tuning parameters.
+	 * @param controlType Control type (P, PI, PD, PID).
+	 * @param transferFunction Transfer function.
+	 * @return Controller parameters.
+	 */
 	public static ControllerParameter compute(@NonNull ControlType controlType,
 											  @NonNull TransferFunction transferFunction)
 	{
@@ -34,6 +43,13 @@ public class CC
 		}
 	}
 
+	/**
+	 * Compute Cohen-Coon Kp tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter pController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (1.03 + (0.35 * (tDelay / tTime))) * (tTime / (kGain * tDelay));
@@ -43,6 +59,13 @@ public class CC
         return new ControllerParameter(TuningType.CC, ProcessType.None, ControlType.P, kp, ki, kd);
 	}
 
+	/**
+	 * Compute Cohen-Coon Kp and Ki tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter piController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (0.9 + (0.083 * (tDelay / tTime))) * (tTime / (kGain * tDelay));
@@ -52,6 +75,12 @@ public class CC
 		return new ControllerParameter(TuningType.CC, ProcessType.None, ControlType.PI, kp, ki, kd);
 	}
 
+	/**
+	 * Compute Cohen-Coon Kp and Kd tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 */
 	private static ControllerParameter pdController(double kGain, double tTime, double tDelay)
 	{
 		double kp = ((1.24 / kGain) * ((tTime / tDelay) + 0.129));
@@ -61,6 +90,12 @@ public class CC
 		return new ControllerParameter(TuningType.CC, ProcessType.None, ControlType.PD, kp, ki, kd);
 	}
 
+	/**
+	 * Compute Cohen-Coon Kp, Ki and Kd tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 */
 	private static ControllerParameter pidController(double kGain, double tTime, double tDelay)
 	{
 		double kp = (1.35 + (0.25 * (tDelay / tTime))) * (tTime / (kGain * tDelay));

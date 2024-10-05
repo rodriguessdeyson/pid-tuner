@@ -10,8 +10,17 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 
+/**
+ * Rule of Thumb tuning algorithm.
+ */
 public class RT
 {
+	/**
+	 * Compute the Rule of Thumb tuning parameters.
+	 * @param controlType Control type (PID).
+	 * @param transferFunction Transfer function.
+	 * @return Controller parameters (Kp, Ki and Kd).
+	 */
 	public static ControllerParameter compute(@NonNull ControlType controlType,
 											  @NonNull TransferFunction transferFunction)
 	{

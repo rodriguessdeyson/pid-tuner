@@ -16,13 +16,34 @@ import com.rad.pidtuner.R;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment
 {
-	private final BottomSheetDialogType DialogType;
-	private String Title;
-	private String Description;
-	private String Link;
+	//region Attributes
 
 	/**
-	 * Bottom dialog.
+	 * Dialog type. About or Help.
+	 */
+	private final BottomSheetDialogType DialogType;
+
+	/**
+	 * Main Header title of the dialog.
+	 */
+	private String Title;
+
+	/**
+	 * The about/help description.
+	 */
+	private String Description;
+
+	/**
+	 * Link to the external page.
+	 */
+	private String Link;
+
+	//endregion
+
+	//region Constructor
+
+	/**
+	 * Initialize a BottomSheetDialog object for about/help dialog.
 	 * @param dialogType Type of dialog.
 	 */
 	public BottomSheetDialog(BottomSheetDialogType dialogType)
@@ -30,8 +51,9 @@ public class BottomSheetDialog extends BottomSheetDialogFragment
 		DialogType = dialogType;
 	}
 
+
 	/**
-	 * Initialize a Bottom dialog for about dialog.
+	 * Initialize a BottomSheetDialog object for about/help dialog.
 	 * @param title About title.
 	 * @param description About description.
 	 * @param link About description.
@@ -42,22 +64,6 @@ public class BottomSheetDialog extends BottomSheetDialogFragment
 		setTitle(title);
 		setDescription(description);
 		setLink(link);
-	}
-
-
-	public void setTitle(String title)
-	{
-		this.Title = title;
-	}
-
-	public void setDescription(String description)
-	{
-		this.Description = description;
-	}
-
-	public void setLink(String link)
-	{
-		this.Link = link;
 	}
 
 	@Override
@@ -75,6 +81,26 @@ public class BottomSheetDialog extends BottomSheetDialogFragment
 				return null;
 		}
 	}
+
+	//endregion
+
+	//region Methods
+
+	public void setTitle(String title)
+	{
+		this.Title = title;
+	}
+
+	public void setDescription(String description)
+	{
+		this.Description = description;
+	}
+
+	public void setLink(String link)
+	{
+		this.Link = link;
+	}
+
 
 	private View aboutView(LayoutInflater inflater, @Nullable ViewGroup container)
 	{
@@ -107,4 +133,6 @@ public class BottomSheetDialog extends BottomSheetDialogFragment
 		helpMore.setMovementMethod(LinkMovementMethod.getInstance());
 		return v;
 	}
+
+	//endregion
 }

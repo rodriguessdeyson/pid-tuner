@@ -6,16 +6,26 @@ import androidx.lifecycle.ViewModel;
 
 public class IMCViewModel extends ViewModel
 {
-	// MutableLiveData variable
+	/**
+	 * MutableLiveData variable.
+	 */
 	private final MutableLiveData<String> myVariable = new MutableLiveData<>();
 
-	// Getter for LiveData
-	public LiveData<String> getMyVariable() {
+	/**
+	 * Getter for LiveData.
+	 * @return Get the observable value.
+	 */
+	public LiveData<String> getMyVariable()
+	{
 		return myVariable;
 	}
 
-	// Method to change the value of the variable
-	public void setMyVariable(String value) {
+	/**
+	 * Method to change the value of the variable.
+	 * @param value Set the observable value.
+	 */
+	public void setMyVariable(String value)
+	{
 		myVariable.setValue(value);
 	}
 }

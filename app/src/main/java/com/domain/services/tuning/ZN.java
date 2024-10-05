@@ -10,8 +10,17 @@ import com.domain.models.tuning.types.TuningType;
 
 import java.security.InvalidParameterException;
 
+/**
+ * Ziegler-Nichols tuning algorithm.
+ */
 public class ZN
 {
+	/**
+	 * Compute the Ziegler-Nichols tuning parameters.
+	 * @param controlType Control type (P, PI, PID).
+	 * @param transferFunction Transfer function.
+	 * @return Controller parameters (Kp, Ki and Kd).
+	 */
 	public static ControllerParameter computeOpenLoop(@NonNull ControlType controlType,
 													  @NonNull TransferFunction transferFunction)
 	{
@@ -32,6 +41,12 @@ public class ZN
 		}
 	}
 
+	/**
+	 * Compute the Ziegler-Nichols tuning parameters.
+	 * @param controlType Control type (P, PI, PID).
+	 * @param transferFunction Transfer function.
+	 * @return Controller parameters (Kp, Ki and Kd).
+	 */
 	public static ControllerParameter computeClosedLoop(@NonNull ControlType controlType,
 														@NonNull TransferFunction transferFunction)
 	{
@@ -51,6 +66,13 @@ public class ZN
 		}
 	}
 
+	/**
+	 * Compute Ziegler-Nichols Kp tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter openLoopPController(double kGain, double tTime,
 														   double tDelay)
 	{
@@ -62,6 +84,13 @@ public class ZN
 				kp, ki, kd);
 	}
 
+	/**
+	 * Compute Ziegler-Nichols Kp, Ki tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter openLoopPIController(double kGain, double tTime,
 															double tDelay)
 	{
@@ -73,6 +102,13 @@ public class ZN
 				kp, ki, kd);
 	}
 
+	/**
+	 * Compute Ziegler-Nichols Kp, Ki and Kd tuning parameters.
+	 * @param kGain Gain.
+	 * @param tTime Time constant.
+	 * @param tDelay Transport delay.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter openLoopPIDController(double kGain, double tTime,
 															 double tDelay)
 	{
@@ -84,6 +120,12 @@ public class ZN
 				kp, ki, kd);
 	}
 
+	/**
+	 * Compute Ziegler-Nichols Kp tuning parameters.
+	 * @param kuGain Ultimate gain.
+	 * @param uPeriod Ultimate period.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter closedLoopPController(double kuGain, double uPeriod)
 	{
 		double kp = 0.5 * kuGain;
@@ -94,6 +136,12 @@ public class ZN
 				kp, ki, kd);
 	}
 
+	/**
+	 * Compute Ziegler-Nichols Kp, Ki tuning parameters.
+	 * @param kuGain Ultimate gain.
+	 * @param uPeriod Ultimate period.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter closedLoopPIController(double kuGain, double uPeriod)
 	{
 		double kp = 0.45 * kuGain;
@@ -104,6 +152,12 @@ public class ZN
 				kp, ki, kd);
 	}
 
+	/**
+	 * Compute Ziegler-Nichols Kp, Ki and Kd tuning parameters.
+	 * @param kuGain Ultimate gain.
+	 * @param uPeriod Ultimate period.
+	 * @return Controller parameters.
+	 */
 	private static ControllerParameter closedLoopPIDController(double kuGain, double uPeriod)
 	{
 		double kp = 0.6 * kuGain;

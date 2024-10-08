@@ -1,16 +1,16 @@
 # PID Tuner
 
 ### Overview:
-**PID Tuner** is a app for computing Proportional-Integral-Derivative (PID) controller parameters based on various established tuningModel methods. Designed to help engineers and control systems professionals to fine-tune PID controller, the app provides intuitive tools for selecting and applying different tuningModel algorithms based on system characteristics and desired performance.
-This tool supports tuningModel methods such as
+**PID Tuner** is a app for computing Proportional-Integral-Derivative (PID) controller parameters based on various established tuning model methods. Designed to help engineers and control systems professionals to fine-tune PID controller, the app provides intuitive tools for selecting and applying different tuning model algorithms based on system characteristics and desired performance.
+This tool supports tuning model methods such as
 
 - Cohen-Coon: Optimized for systems with time delay.
 - Chien-Hrones-Reswick: Focused on setpoint tracking or disturbance rejection.
 - Integral Absolute Error (IAE): Smooth control with minimal accumulated error.
 - Integral Time Absolute Error (ITAE): Reduced long-term error and oscillations.
-- Internal Model Control (IMC): Systematic tuningModel with a process model.
+- Internal Model Control (IMC): Systematic tuning model with a process model.
 - Ziegler-Nichols: Aggressive, fast response with potential oscillations.
-- Tyreus-Luyben: Balanced tuningModel for slower systems with less aggressive behavior.
+- Tyreus-Luyben: Balanced tuning model for slower systems with less aggressive behavior.
 
 ### Transfer Function
 For a first-order process with dead time, the system model can be represented as:
@@ -29,7 +29,7 @@ PID Tuner requires only Kp, $\theta$ and $\tau$ parameters to compute Kp, Ki and
 The following methods are available for computing the controller parameters:
 
 ### 1. Ziegler-Nichols (Z&N)
-Ziegler-Nichols provides open-loop and closed-loop tuningModel formulas. It aims to achieve quarter-wave damping in systems.
+Ziegler-Nichols provides open-loop and closed-loop tuning model formulas. It aims to achieve quarter-wave damping in systems.
 
 
 #### Open-Loop Tuning:
@@ -42,7 +42,7 @@ This method involves applying a step change to the process input and recording t
 |PID             |$$\frac{1.2\tau} {K*\theta}$$  |$$2\theta$$                 |$$0.5\theta$$  |
 
 #### Closed-Loop Tuning:
-In the closed-loop method, the system is driven into sustained oscillations by gradually increasing the proportional gain (Kp) while setting the integral (Ki) and derivative (Kd) gains to zero. The gain at which the system oscillates consistently is called the ultimate gain (Ku), and the period of the oscillations is the ultimate period (Pu). These values are used to calculate the PID parameters for fast, aggressive response tuningModel.
+In the closed-loop method, the system is driven into sustained oscillations by gradually increasing the proportional gain (Kp) while setting the integral (Ki) and derivative (Kd) gains to zero. The gain at which the system oscillates consistently is called the ultimate gain (Ku), and the period of the oscillations is the ultimate period (Pu). These values are used to calculate the PID parameters for fast, aggressive response tuning model.
 
 |    Z&amp;N     | Kp            |Ki                           |  Kd             |
 |----------------|---------------|-----------------------------|-----------------|
@@ -54,7 +54,7 @@ Where Ku is the ultimate gain and Pu is the oscillation period.
 
 ### 2. Chien, Hrones, and Reswick (CHR)
 
-The Chien-Hrones-Reswick (CHR) tuningModel method is a technique designed to optimize PID controller parameters for specific system behaviors, focusing on either setpoint tracking or disturbance rejection. It provides different tuningModel rules based on the desired control objectives, making it adaptable to various performance requirements. It has separate tuningModel formulas for setpoint tracking (servo) and disturbance rejection (regulator) with or without overshoot (UP).
+The Chien-Hrones-Reswick (CHR) tuning model method is a technique designed to optimize PID controller parameters for specific system behaviors, focusing on either setpoint tracking or disturbance rejection. It provides different tuning model rules based on the desired control objectives, making it adaptable to various performance requirements. It has separate tuning model formulas for setpoint tracking (servo) and disturbance rejection (regulator) with or without overshoot (UP).
 
 #### Servo:
 
@@ -90,7 +90,7 @@ The Chien-Hrones-Reswick (CHR) tuningModel method is a technique designed to opt
 
 ### 3. Cohen-Coon (CC)
 
-The Cohen-Coon (CC) tuningModel method is a widely used technique for PID controller tuningModel, particularly for first-order systems with time delay. It provides formulas to calculate the PID parameters based on the system's dynamic response. The CC method improves both setpoint tracking and disturbance rejection, making it suitable for systems with significant dead time.
+The Cohen-Coon (CC) tuning model method is a widely used technique for PID controller tuning model, particularly for first-order systems with time delay. It provides formulas to calculate the PID parameters based on the system's dynamic response. The CC method improves both setpoint tracking and disturbance rejection, making it suitable for systems with significant dead time.
 
 |    Z&amp;N     | Kp                                                         |Ki   | Kd|
 |----------------|------------------------------------------------------------|-----|---|
@@ -101,7 +101,7 @@ The Cohen-Coon (CC) tuningModel method is a widely used technique for PID contro
 
 ### 4. Internal Model Control (IMC)
 
-The Internal Model Control (IMC) tuningModel method is a model-based approach to PID tuningModel, where the controller is designed based on an internal model of the process. The primary goal of IMC is to provide robust and stable control, even in the presence of process uncertainties and disturbances. It is commonly used in industrial applications due to its simplicity and effectiveness.
+The Internal Model Control (IMC) tuning model method is a model-based approach to PID tuning model, where the controller is designed based on an internal model of the process. The primary goal of IMC is to provide robust and stable control, even in the presence of process uncertainties and disturbances. It is commonly used in industrial applications due to its simplicity and effectiveness.
 
 
 |    IMC         | Kp            |Ki                           |  Kd |~  |
@@ -112,7 +112,7 @@ The Internal Model Control (IMC) tuningModel method is a model-based approach to
 **The IMC Method in PID Tuner is based on technique proposed by Morari and Zafiriou in \'Robust Process Control\' of PID tunings for first order plus dead time function.**
 
 #### Lambda Tuning
-In Internal Model Control (IMC) tuningModel, the lambda (λ) parameter plays a crucial role in determining the trade-off between system performance and robustness. Lambda is the filter time constant, and it directly affects the tuningModel of the PID controller.
+In Internal Model Control (IMC) tuning model, the lambda (λ) parameter plays a crucial role in determining the trade-off between system performance and robustness. Lambda is the filter time constant, and it directly affects the tuning model of the PID controller.
 
 - Role of Lambda (λ):
 	- Lambda represents the desired closed-loop time constant, which controls the speed of the system’s response.
@@ -125,9 +125,9 @@ Lambda is typically chosen by the control engineer based on the desired level of
 
 ### 5. IAE / ITAE
 
-**Integral Absolute Error (IAE)** tuningModel method focuses on minimizing the total absolute error over time. It is commonly used in control systems where smooth, long-term performance is prioritized over fast response times. IAE tuningModel emphasizes reducing the accumulated error, leading to a more gradual and stable response.
+**Integral Absolute Error (IAE)** tuning model method focuses on minimizing the total absolute error over time. It is commonly used in control systems where smooth, long-term performance is prioritized over fast response times. IAE tuning model emphasizes reducing the accumulated error, leading to a more gradual and stable response.
 
-**The Integral Time Absolute Error (ITAE)** tuningModel method focuses on minimizing the time-weighted absolute error between the process variable and the setpoint. ITAE adds more emphasis on errors that persist over time, resulting in smoother control actions and reduced overshoot and oscillations. It's particularly useful in systems where long-term performance and stability are more important than short-term speed.
+**The Integral Time Absolute Error (ITAE)** tuning model method focuses on minimizing the time-weighted absolute error between the process variable and the setpoint. ITAE adds more emphasis on errors that persist over time, resulting in smoother control actions and reduced overshoot and oscillations. It's particularly useful in systems where long-term performance and stability are more important than short-term speed.
 
 #### Servo:
 

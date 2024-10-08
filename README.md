@@ -1,8 +1,8 @@
 # PID Tuner
 
 ### Overview:
-**PID Tuner** is a app for computing Proportional-Integral-Derivative (PID) controller parameters based on various established tuningModel methods. Designed to help engineers and control systems professionals to fine-tune PID controller, the app provides intuitive tools for selecting and applying different tuningModel algorithms based on system characteristics and desired performance.
-This tool supports tuningModel methods such as
+**PID Tuner** is a app for computing Proportional-Integral-Derivative (PID) controller parameters based on various established tuning methods. Designed to help engineers and control systems professionals to fine-tune PID controller, the app provides intuitive tools for selecting and applying different tuning algorithms based on system characteristics and desired performance.
+This tool supports tuning methods such as
 
 - Cohen-Coon: Optimized for systems with time delay.
 - Chien-Hrones-Reswick: Focused on setpoint tracking or disturbance rejection.
@@ -10,7 +10,7 @@ This tool supports tuningModel methods such as
 - Integral Time Absolute Error (ITAE): Reduced long-term error and oscillations.
 - Internal Model Control (IMC): Systematic tuningModel with a process model.
 - Ziegler-Nichols: Aggressive, fast response with potential oscillations.
-- Tyreus-Luyben: Balanced tuningModel for slower systems with less aggressive behavior.
+- Tyreus-Luyben: Balanced tuning model for slower systems with less aggressive behavior.
 
 ### Transfer Function
 For a first-order process with dead time, the system model can be represented as:

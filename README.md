@@ -191,6 +191,21 @@ Tyreus-Luyben is a conservative method offering slower performance and small ove
 
 > Where Ku and Pu are, respectively., ultimate gain e ultimate period.
 
+### 6. Trial and Error (T&E)
+
+The Trial and Error method is a manual, intuitive approach to tuning a PID (Proportional–Integral–Derivative) controller. It involves iteratively adjusting the controller's three gains, proportional (Kp), integral (Ki), and derivative (Kd), based on how the system responds to changes.
+
+This method is especially useful when a system model is available and its step response can be analyzed. By applying a step input to the model and observing its output, the tuning process becomes more structured, helping the operator make informed adjustments to each gain parameter.
+
+Typically, the process begins by:
+
+1. Start with Ki and Kd set to zero;
+2. Gradually increase Kp until the system responds with steady oscillations or a critically damped behavior;
+3. Adjust Ki to eliminate any steady-state error observed in the step response;
+4. Fine-tune Kd to reduce overshoot and improve settling time and overall system stability.
+
+While this method is straightforward, it relies heavily on the operator’s experience and judgment, which can make it less precise and time-consuming compared to analytical or automated tuning methods.
+
 # References
 - Ziegler, J.G., & Nichols, N.B. (1942). Optimum settings for automatic controllers. Transactions of the ASME, 64(11), 759-768.
 - Chien, I., Hrones, J.A., & Reswick, J.B. (1952). On the Automatic Control of Generalized Passive Systems. Transactions of the ASME, 74, 175-185.
